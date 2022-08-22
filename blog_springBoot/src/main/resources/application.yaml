@@ -1,1 +1,12 @@
-# DataSource Config
+# 数据库配置
+spring:
+  # 配置数据源
+  datasource:
+    # 连接引擎位置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # url
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    # 用户名
+    username: root
+    # 密码
+    password: 123456
