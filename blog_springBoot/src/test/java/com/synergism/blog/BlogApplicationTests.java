@@ -20,7 +20,7 @@ class BlogApplicationTests {
 		sample.setContent("123");
 		sample.setIntro("123");
 		sample.setNotice("123");
-		aboutblogMapper.insert(sample);
 		assert (!sample.getId().toString().isEmpty()):"出现空值";
+		aboutblogMapper.insert(sample);
 	}
 }
