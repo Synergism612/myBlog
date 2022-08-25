@@ -5,12 +5,12 @@ import java.util.Base64;
 
 public class base64Util {
 
-    public static String encode(String src){
-        return new String(Base64.getEncoder().encode(src.getBytes()));
+    public static <V> String encode(V src){
+        return new String(Base64.getEncoder().encode(src.toString().getBytes()));
     }
 
-    public static String decode(String src){
-        return new String(Base64.getDecoder().decode(src.getBytes()));
+    public static <V> String decode(V src){
+        return new String(Base64.getDecoder().decode(src.toString().getBytes()));
     }
 
 }
