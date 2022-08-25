@@ -2,6 +2,7 @@ package com.synergism.blog;
 
 import com.synergism.blog.entity.Aboutblog;
 import com.synergism.blog.mapper.AboutblogMapper;
+import com.synergism.blog.util.base64Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,5 +23,15 @@ class BlogApplicationTests {
 		sample.setNotice("123");
 		assert (!sample.getId().toString().isEmpty()):"出现空值";
 		aboutblogMapper.insert(sample);
+	}
+
+	@Test
+	void base64CodeTest(){
+		String src = "synergism612731";
+		String encode = base64Util.encode(src);
+		String decode = base64Util.decode(encode);
+		System.out.println(src);
+		System.out.println(encode);
+		System.out.println(decode);
 	}
 }
