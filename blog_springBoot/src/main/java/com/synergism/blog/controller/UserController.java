@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author Synergism
- * @since 2022-08-22 07:23:12
+ * @since 2022-08-25 04:30:53
  */
 @RestController
-@RequestMapping("/aboutblog")
-public class AboutblogController {
+@RequestMapping("/user")
+public class UserController {
 
 }

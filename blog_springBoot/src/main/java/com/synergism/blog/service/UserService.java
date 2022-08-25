@@ -1,6 +1,6 @@
 package com.synergism.blog.service;
 
-import com.synergism.blog.entity.Aboutblog;
+import com.synergism.blog.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Synergism
- * @since 2022-08-22 07:23:12
+ * @since 2022-08-25 04:30:53
  */
-public interface AboutblogService extends IService<Aboutblog> {
+public interface UserService extends IService<User> {
 
 }
