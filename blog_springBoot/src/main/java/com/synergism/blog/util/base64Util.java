@@ -3,7 +3,7 @@ package com.synergism.blog.util;
 
 import java.util.Base64;
 
-public class base64Util {
+public class Base64Util {
 
     public static <V> String encode(V src){
         return new String(Base64.getEncoder().encode(src.toString().getBytes()));
