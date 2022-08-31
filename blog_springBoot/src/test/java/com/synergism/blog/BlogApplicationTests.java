@@ -51,15 +51,9 @@ class BlogApplicationTests {
 	}
 
 	@Test
-	void logTest() throws Exception{
+	void logTest() {
 		logger.info("你好");
-		//测试AES加密
-		String message = "synergism612731";
-		String key = "12345645678901234";
-		System.out.println("随机生成的密钥为:" + key);
-		String messageEn = AESUtil.encrypt(message,key);
-		System.out.println("加密后的字符串为:" + messageEn);
-		String messageDe = AESUtil.decrypt(messageEn,key);
-		System.out.println("还原后的字符串为:" + messageDe);
+		logger.warn("警告");
+		logger.error("错误");
 	}
 }

@@ -63,6 +63,23 @@
         </encoder>
     </appender>
 
+    <!-- WARN级别日志 appender -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.log_dir}/warn/%d{yyyy-MM-dd}/warn_${log.log_name}-%i.log</fileNamePattern>
+            <maxHistory>${log.maxHistory}</maxHistory>
+            <MaxFileSize>${log.maxSize}</MaxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- INFO级别日志 appender -->
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -116,7 +133,7 @@
         <appender-ref ref="INFO" />
     </logger>
 
-    <!-- root级别   用于控制上面的日志输出 -->
+    <!-- root级别 用于控制上面的日志输出 -->
     <root level = "ALL">
 
         <!-- 控制台输出 -->
