@@ -1,0 +1,4 @@
+2022-08-31 10:52:56.632 [INFO ] com.synergism.blog.BlogApplicationTests - Starting BlogApplicationTests using Java 1.8.0_191 on DESKTOP-42AHSDL with PID 18880 (started by 神和五律 in D:\Program Files (x86)\GitHub\myBlog\blog_springBoot)
+2022-08-31 10:52:56.636 [INFO ] com.synergism.blog.BlogApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2022-08-31 10:52:59.432 [INFO ] com.synergism.blog.BlogApplicationTests - Started BlogApplicationTests in 3.346 seconds (JVM running for 4.611)
+2022-08-31 10:52:59.824 [INFO ] com.synergism.blog.BlogApplicationTests - 你好
