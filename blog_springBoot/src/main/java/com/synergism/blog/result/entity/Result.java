@@ -3,6 +3,10 @@ package com.synergism.blog.result.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
+import static com.synergism.blog.util.TimeUtil.now;
+
 /**
  * 结果封装类
  */
@@ -12,6 +16,7 @@ public class Result<T> {
 
     private int code; //结果代码
     private String msg; //结果消息
+    private String time; //响应时间戳
     private T data; //结果数据
 
     /**
@@ -54,21 +59,25 @@ public class Result<T> {
     private  Result(int code){
         this.code = code;
         this.msg = "成功";
+        this.time = now();
         this.data = null;
     }
     private Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
+        this.time = now();
         this.data = null;
     }
     private  Result(int code,T data){
         this.code = code;
         this.msg = "成功";
+        this.time = now();
         this.data = data;
     }
     private Result(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
+        this.time = now();
         this.data = data;
     }
 }
