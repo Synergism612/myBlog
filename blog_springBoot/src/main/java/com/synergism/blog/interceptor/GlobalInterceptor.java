@@ -4,7 +4,9 @@ import com.synergism.blog.entity.Client;
 import com.synergism.blog.enums.CookieEnum;
 import com.synergism.blog.enums.HeaderEnum;
 import com.synergism.blog.enums.RSAEnum;
-import com.synergism.blog.util.CheckUtil;
+import com.synergism.blog.enums.URLEnum;
+import com.synergism.blog.exception.custom.IllegalRequestException;
+import com.synergism.blog.util.StringUtil;
 import com.synergism.blog.util.RSAUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -15,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
+
+import static com.synergism.blog.util.StringUtil.checkStringContain;
+
 
 @Component
 public class GlobalInterceptor implements HandlerInterceptor {
@@ -33,12 +38,16 @@ public class GlobalInterceptor implements HandlerInterceptor {
         Client client = Client.getInstance(request);
         //获得cookies数据
         Cookie[] cookies = request.getCookies();
+        //获取url路径
+        String url = request.getRequestURI();
 
-        String a = request.getHeader(HeaderEnum.ANOTHER_WORLD_KEY());
-
-//        if(CheckUtil.checkStringIfEmpty(a)) {
-//            response.
-//        }
+        //检查头部中是否存在异世界钥匙
+        if(StringUtil.checkStringIfEmpty(request.getHeader(HeaderEnum.ANOTHER_WORLD_KEY()))) {
+            //检查url是否指向获取公钥
+            if(checkStringContain(url, URLEnum.PublicKeyPath())) return true;
+            //若不存在且不是去获取，就抛出异常
+            throw new IllegalRequestException("拒绝访问");
+        }
 
         String sessionid = request.getSession().getId();
 
@@ -73,36 +82,5 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
-    }
-
-    /**
-     * 用于补全缺失的cookie信息
-     * @param request
-     * @param response
-     * @param cookies
-     * @throws NoSuchAlgorithmException
-     */
-    private void completionCookie(HttpServletRequest request, HttpServletResponse response, Cookie[] cookies) throws NoSuchAlgorithmException {
-        if (cookies == null) {
-            Map<String, String> keyPair = RSAUtil.getKeyPair();
-            response.addCookie(new Cookie(CookieEnum.PUBLIC_KEY(), keyPair.get(RSAEnum.PUBLIC())));
-            request.getSession(true);
-        } else {
-            for (Cookie cookie : cookies) {
-                if (CookieEnum.PUBLIC_KEY().equals(cookie.getName())) {
-                    if (!CheckUtil.checkStringIfEmpty(cookie.getValue())){
-                    }
-                    else {
-                        Map<String, String> keyPair = RSAUtil.getKeyPair();
-                        response.addCookie(new Cookie(CookieEnum.PUBLIC_KEY(), keyPair.get(RSAEnum.PUBLIC())));
-                    }
-                }
-                if (CookieEnum.JSESSIONID().equals(cookie.getName())) {
-                    if (CheckUtil.checkStringIfEmpty(cookie.getValue())){
-                        request.getSession(true);
-                    }
-                }
-            }
-        }
     }
 }
