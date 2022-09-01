@@ -1,6 +1,7 @@
 package com.synergism.blog.controller;
 
 import com.synergism.blog.entity.Login;
+import com.synergism.blog.enums.RSAEnum;
 import com.synergism.blog.service.UserService;
 import com.synergism.blog.util.CheckUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,8 @@ public class UserController {
 
     @PostMapping("/login")
     public void login(Login login) {
-
         //判空
-        CheckUtil.checkStringIfEmpty(login.getCounts(), login.getNames());
+        CheckUtil.checkStringIsEmpty(login.getCounts(), login.getNames());
         //判长
         CheckUtil.checkStringLength(login.getUsername(), 11,login.getUsernameName());
 
