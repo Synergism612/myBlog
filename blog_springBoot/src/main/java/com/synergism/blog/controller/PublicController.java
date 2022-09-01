@@ -16,7 +16,7 @@ public class PublicController {
      */
     @GetMapping("/key")
     public Result<String> getKey() {
-        return Result.success(System.getProperty(RSAEnum.PUBLIC()));
+        return Result.success(System.getProperty(RSAEnum.PUBLIC_KEY()));
     }
 
 }

@@ -35,8 +35,8 @@ public class RSAUtil {
         //得到私钥字符串
         String privateKeyString = new String(Base64.encodeBase64((privateKey.getEncoded())));
 
-        result.put(RSAEnum.PUBLIC(), publicKeyString);  //存放公钥
-        result.put(RSAEnum.PRIVATE(), privateKeyString);  //存放私钥
+        result.put(RSAEnum.PUBLIC_KEY(), publicKeyString);  //存放公钥
+        result.put(RSAEnum.PRIVATE_KEY(), privateKeyString);  //存放私钥
 
         return result; //返回密钥对
     }
@@ -83,8 +83,8 @@ public class RSAUtil {
      */
     public static void creatKeyPair() throws NoSuchAlgorithmException {
         Map<String,String> KeyPair = getKeyPair();
-        System.setProperty(RSAEnum.PUBLIC(), KeyPair.get(RSAEnum.PUBLIC()));
-        System.setProperty(RSAEnum.PRIVATE(), KeyPair.get(RSAEnum.PRIVATE()));
+        System.setProperty(RSAEnum.PUBLIC_KEY(), KeyPair.get(RSAEnum.PUBLIC_KEY()));
+        System.setProperty(RSAEnum.PRIVATE_KEY(), KeyPair.get(RSAEnum.PRIVATE_KEY()));
     }
 
 }

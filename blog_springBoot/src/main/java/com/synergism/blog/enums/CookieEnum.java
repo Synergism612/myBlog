@@ -1,14 +1,12 @@
 package com.synergism.blog.enums;
 
+/**
+ * 用于存放一些cookie的键名
+ */
 public enum CookieEnum {
-    JSESSIONID,PUBLIC_KEY;
+    JSESSIONID;
 
     public static String JSESSIONID(){
         return JSESSIONID.name();
     }
-
-    public static String PUBLIC_KEY(){
-        return PUBLIC_KEY.name();
-    }
-
 }
