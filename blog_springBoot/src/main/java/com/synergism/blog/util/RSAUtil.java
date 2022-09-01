@@ -1,8 +1,10 @@
 package com.synergism.blog.util;
 
+import com.synergism.blog.enums.RSAEnum;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.crypto.Cipher;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -14,8 +16,7 @@ import java.util.Map;
 public class RSAUtil {
     /**
      * 随机生成密钥对
-     * @throws NoSuchAlgorithmException
-     * @return
+     * @return 返回一个包含密码对的表
      */
     public static Map<String, String> getKeyPair() throws NoSuchAlgorithmException {
         Map<String, String> result = new HashMap<>();
@@ -34,8 +35,8 @@ public class RSAUtil {
         //得到私钥字符串
         String privateKeyString = new String(Base64.encodeBase64((privateKey.getEncoded())));
 
-        result.put("public",publicKeyString);  //存放公钥
-        result.put("private",privateKeyString);  //存放私钥
+        result.put(RSAEnum.PUBLIC(), publicKeyString);  //存放公钥
+        result.put(RSAEnum.PRIVATE(), privateKeyString);  //存放私钥
 
         return result; //返回密钥对
     }
@@ -54,8 +55,7 @@ public class RSAUtil {
         //RSA加密
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-        String outStr = Base64.encodeBase64String(cipher.doFinal(str.getBytes("UTF-8")));
-        return outStr;
+        return Base64.encodeBase64String(cipher.doFinal(str.getBytes(StandardCharsets.UTF_8)));
     }
 
     /**
@@ -68,15 +68,23 @@ public class RSAUtil {
      */
     public static String decrypt(String str, String privateKey) throws Exception{
         //64位解码加密后的字符串
-        byte[] inputByte = Base64.decodeBase64(str.getBytes("UTF-8"));
+        byte[] inputByte = Base64.decodeBase64(str.getBytes(StandardCharsets.UTF_8));
         //base64编码的私钥
         byte[] decoded = Base64.decodeBase64(privateKey);
         RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
         //RSA解密
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, priKey);
-        String outStr = new String(cipher.doFinal(inputByte));
-        return outStr;
+        return new String(cipher.doFinal(inputByte));
+    }
+
+    /**
+     * 用于生成密钥对并存储到系统属性中
+     */
+    public static void creatKeyPair() throws NoSuchAlgorithmException {
+        Map<String,String> KeyPair = getKeyPair();
+        System.setProperty(RSAEnum.PUBLIC(), KeyPair.get(RSAEnum.PUBLIC()));
+        System.setProperty(RSAEnum.PRIVATE(), KeyPair.get(RSAEnum.PRIVATE()));
     }
 
 }
