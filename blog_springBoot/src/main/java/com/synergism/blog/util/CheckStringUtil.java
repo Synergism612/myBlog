@@ -2,7 +2,7 @@ package com.synergism.blog.util;
 
 import java.util.HashMap;
 
-public class CheckUtil {
+public class CheckStringUtil {
 
     /**
      * @param count
@@ -153,9 +153,9 @@ public class CheckUtil {
      *
      * @param value 字符串或者其它
      */
-    public static <V> void checkStringentUnsafe(V value) {
+    public static  void checkStringentUnsafe(String value) {
         int count = 0;
-        for (char c : ((String) value).toCharArray()) {
+        for (char c : (value).toCharArray()) {
             switch (c) {
                 case ' ':
                 case '\'':

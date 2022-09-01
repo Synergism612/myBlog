@@ -1,8 +1,10 @@
 package com.synergism.blog.entity;
 
-import com.synergism.blog.util.CheckUtil;
+import com.synergism.blog.util.CheckStringUtil;
 import lombok.Getter;
 import lombok.Setter;
+
+import static com.synergism.blog.util.CheckStringUtil.checkStringentUnsafe;
 
 @Getter
 @Setter
@@ -13,7 +15,7 @@ public class Login {
     private String passwordName = "密码";
 
     Login(String username, String password) {
-        CheckUtil.checkStringentUnsafe(username); //检查合法性
+        checkStringentUnsafe(username); //检查合法性
         setUsername(username);
         setPassword(password);
     }

@@ -1,13 +1,15 @@
 package com.synergism.blog.controller;
 
 import com.synergism.blog.entity.Login;
-import com.synergism.blog.enums.RSAEnum;
 import com.synergism.blog.service.UserService;
-import com.synergism.blog.util.CheckUtil;
+import com.synergism.blog.util.CheckStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.synergism.blog.util.CheckStringUtil.checkStringIsEmpty;
+import static com.synergism.blog.util.CheckStringUtil.checkStringLength;
 
 
 /**
@@ -28,9 +30,9 @@ public class UserController {
     @PostMapping("/login")
     public void login(Login login) {
         //判空
-        CheckUtil.checkStringIsEmpty(login.getCounts(), login.getNames());
+        checkStringIsEmpty(login.getCounts(), login.getNames());
         //判长
-        CheckUtil.checkStringLength(login.getUsername(), 11,login.getUsernameName());
+        checkStringLength(login.getUsername(), 11,login.getUsernameName());
 
     }
 }
