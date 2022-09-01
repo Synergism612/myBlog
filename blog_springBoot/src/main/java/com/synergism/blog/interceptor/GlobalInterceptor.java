@@ -1,13 +1,10 @@
 package com.synergism.blog.interceptor;
 
 import com.synergism.blog.entity.Client;
-import com.synergism.blog.enums.CookieEnum;
 import com.synergism.blog.enums.HeaderEnum;
-import com.synergism.blog.enums.RSAEnum;
 import com.synergism.blog.enums.URLEnum;
 import com.synergism.blog.exception.custom.IllegalRequestException;
 import com.synergism.blog.util.StringUtil;
-import com.synergism.blog.util.RSAUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,8 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.NoSuchAlgorithmException;
-import java.util.Map;
 
 import static com.synergism.blog.util.StringUtil.checkStringContain;
 
@@ -62,7 +57,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
      * @param response     响应
      * @param handler      执行的函数
      * @param modelAndView 视图
-     * @throws Exception
+     * @throws Exception 抛出异常
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
