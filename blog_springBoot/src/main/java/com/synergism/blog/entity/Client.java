@@ -1,7 +1,12 @@
 package com.synergism.blog.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.servlet.http.HttpServletRequest;
 
+@Getter
+@Setter
 public class Client {
     private String IP;
     private String HOST;
@@ -13,6 +18,11 @@ public class Client {
         this.AGENCY = AGENCY;
     }
 
+    /**
+     * 用于从请求中提取ip和host名
+     * @param request 请求
+     * @return 封装好的客户端信息
+     */
     public static Client getInstance(HttpServletRequest request) {
         String IP = request.getHeader("x - forwarded - for");
         Boolean AGENCY = true;
