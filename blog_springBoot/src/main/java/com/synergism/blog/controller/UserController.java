@@ -33,9 +33,9 @@ public class UserController {
     @PostMapping("/login")
     public void login(Login login) {
 
-        System.out.println(login.toString());
-
+        //判空
         CheckUtil.checkStringIfEmpty(login.getCounts(), login.getNames());
+        //判长
         CheckUtil.checkStringLength(login.getUsername(), 11,login.getUsernameName());
 
     }

@@ -1,5 +1,7 @@
 package com.synergism.blog.util;
 
+import java.util.HashMap;
+
 public class CheckUtil {
     /**
      * 检查字符串是否为空
@@ -125,5 +127,31 @@ public class CheckUtil {
         if (length != value) {
             throw new IllegalArgumentException(name + "的长度不为"+value);
         }
+    }
+
+    /**
+     * 检查传入的数据是否存在不安全字符
+     * @param value 字符串或者其它
+     */
+    public static <V> void checkStringentUnsafe(V value) {
+        int count = 0;
+        for (char c : ((String)value).toCharArray()) {
+            switch (c) {
+                case ' ':
+                case '\'':
+                case '\"':
+                case '\\':
+                case '/':
+                case '&':
+                case '|':
+                case '^':
+                case '#':
+                case '$':
+                    throw new IllegalArgumentException("不合法");
+                case '@':
+                    count++;
+            }
+        }
+        if(count>1)throw new IllegalArgumentException("不合法");
     }
 }
