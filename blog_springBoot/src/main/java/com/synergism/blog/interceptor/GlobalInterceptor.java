@@ -40,7 +40,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if(StringUtil.checkStringIfEmpty(request.getHeader(HeaderEnum.ANOTHER_WORLD_KEY()))) {
             //检查url是否指向获取公钥
             if(checkStringContain(url, URLEnum.PublicKeyPath())) return true;
-            //若不存在且不是去获取，就抛出异常
+            //若不存在且不是去获取公钥，就抛出异常
             throw new IllegalRequestException("拒绝访问");
         }
 
