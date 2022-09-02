@@ -1,12 +1,21 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
 
-Vue.config.productionTip = false
+/**
+ * 引入ElementPlus
+ */
+ import ElementPlus from 'element-plus'
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+/**
+ * 引入axios，配置$axios。
+ * 在页面中就可以用this.$axios来获取axios
+ */
+ import axios from 'axios'
+
+
+const app = createApp(App)
+app.use(router).use(store).use(ElementPlus)
+app.config.globalProperties.$axios = axios
+app.mount("#app");
