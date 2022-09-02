@@ -1,9 +1,7 @@
-package com.synergism.blog.result.entity;
+package com.synergism.blog.result;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 
 import static com.synergism.blog.util.TimeUtil.now;
 

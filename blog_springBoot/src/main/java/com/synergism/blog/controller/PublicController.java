@@ -1,7 +1,7 @@
 package com.synergism.blog.controller;
 
 import com.synergism.blog.enums.RSAEnum;
-import com.synergism.blog.result.entity.Result;
+import com.synergism.blog.result.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
