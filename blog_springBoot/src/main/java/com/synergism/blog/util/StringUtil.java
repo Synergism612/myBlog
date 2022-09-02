@@ -1,5 +1,8 @@
 package com.synergism.blog.util;
 
+/**
+ * 字符串工具类
+ */
 public class StringUtil {
 
     /**
@@ -167,6 +170,12 @@ public class StringUtil {
         if (count > 1) throw new IllegalArgumentException("不合法");
     }
 
+    /**
+     * 检查字符串中是否存在某字符串
+     * @param str 被检查字符串
+     * @param contain 被包含字符串
+     * @return 包含为真，否之为假
+     */
     public static boolean checkStringContain(String str, String contain) {
         return str.indexOf(contain,0) > -1;
     }

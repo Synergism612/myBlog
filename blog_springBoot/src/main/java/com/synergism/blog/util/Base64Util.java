@@ -2,6 +2,9 @@ package com.synergism.blog.util;
 
 import java.util.Base64;
 
+/**
+ * Base64编码工具类
+ */
 public class Base64Util {
 
     public static <V> String encode(V src){

@@ -13,6 +13,9 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * RSA非对称加密工具类
+ */
 public class RSAUtil {
     /**
      * 随机生成密钥对
