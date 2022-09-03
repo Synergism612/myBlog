@@ -1,7 +1,7 @@
 import { apiEnum } from "@/enum/apiEnum";
-import { Result } from "@/result/Result";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { ElNotification } from "element-plus";
+import Result from "@/entity/Result"
 // import store from "./store";
 // import router from "./router";
 
@@ -26,31 +26,17 @@ class Axios {
     this.service = axios.create(this.config);
     //请求拦截
     this.service.interceptors.request.use((request: AxiosRequestConfig) => {
-      console.log("拦截");
-      request.headers = {
-        ANOTHER_WORLD_KEY: "",
-      };
+      console.log("请求拦截");
+      // request.headers = {
+      //   ANOTHER_WORLD_KEY: "",
+      // };
       return request;
     });
 
     //响应拦截
     this.service.interceptors.response.use((response: AxiosResponse) => {
-      const res = response.data;
-      console.log("后置拦截");
-      // 当结果的code是否为200的情况
-      if (res.code === 200) {
-        return response;
-      } else {
-        // 弹窗异常信息
-        ElNotification({
-          title: "错误",
-          type: "error",
-          message: response.data.msg,
-          offset: 100,
-        });
-        // 直接拒绝往下面返回结果信息
-        return Promise.reject(response.data.msg);
-      }
+      console.log("响应拦截");
+      return Result.getResult(response);
     });
   }
 }
