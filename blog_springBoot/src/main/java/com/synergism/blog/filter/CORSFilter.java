@@ -1,5 +1,6 @@
 package com.synergism.blog.filter;
 
+import com.synergism.blog.enums.HeaderEnum;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -26,13 +27,18 @@ public class CORSFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse res = (HttpServletResponse) servletResponse;
         res.addHeader("Access-Control-Allow-Credentials", "true");
-        res.addHeader("Access-Control-Allow-Origin", "http://localhost:8080"); //仅仅只允许该url访问
+        //允许该url访问，url返回
+        res.addHeader("Access-Control-Allow-Origin", "http://localhost:8080");
+        //允许的请求方式，方式返回
         res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-        res.addHeader("Access-Control-Allow-Headers", "Content-Type,X-CAF-Authorization-Token,sessionToken,X-TOKEN");
+        //允许的头部，自定义头部返回
+        res.addHeader("Access-Control-Allow-Headers", ""+HeaderEnum.ANOTHER_WORLD_KEY());
+        //如果是预请求，直接返回
         if (((HttpServletRequest) servletRequest).getMethod().equals("OPTIONS")) {
             servletResponse.getWriter().println("ok");
             return;
         }
+        //启动过滤
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
