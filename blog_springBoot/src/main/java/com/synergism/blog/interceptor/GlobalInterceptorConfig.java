@@ -8,8 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Component
 public class GlobalInterceptorConfig extends WebMvcConfigurationSupport {
 
+
+    private GlobalInterceptor globalInterceptor;
+
     @Autowired
-    GlobalInterceptor globalInterceptor;
+    GlobalInterceptorConfig(GlobalInterceptor globalInterceptor){
+        this.globalInterceptor = globalInterceptor;
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
