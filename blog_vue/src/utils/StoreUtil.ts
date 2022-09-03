@@ -7,12 +7,11 @@ export default class StoreUtil {
    * @param key 键名
    * @returns 对应键值
    */
-  public static fetch(key: string): string | false {
+  public static fetch(key: string): string {
     if (localStorage.getItem(key) == null) {
-      return false;
+      return "";
     }
-    console.log(localStorage.getItem(key));
-    return JSON.parse(localStorage.getItem(key) || " ");
+    return JSON.parse(localStorage.getItem(key) || "");
   }
   /**
    * 将键值对存储到本地序列化中
@@ -20,9 +19,10 @@ export default class StoreUtil {
    * @param value 键值
    * @returns 不反回或失败
    */
-  public static save(key: string | null, value: string): void | boolean {
+  public static save(key: string | null, value: string): void | string {
+    console.log("将要存储key:" + key + "value:" + value);
     if (key == null) {
-      return false;
+      return "";
     }
     localStorage.setItem(key, JSON.stringify(value));
   }
