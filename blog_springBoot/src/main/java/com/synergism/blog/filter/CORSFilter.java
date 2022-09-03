@@ -32,7 +32,7 @@ public class CORSFilter implements Filter {
         //允许的请求方式，方式返回
         res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
         //允许的头部，自定义头部返回
-        res.addHeader("Access-Control-Allow-Headers", ""+HeaderEnum.ANOTHER_WORLD_KEY());
+        res.addHeader("Access-Control-Allow-Headers", ""+HeaderEnum.ANOTHER_WORLD_KEY);
         //如果是预请求，直接返回
         if (((HttpServletRequest) servletRequest).getMethod().equals("OPTIONS")) {
             servletResponse.getWriter().println("ok");

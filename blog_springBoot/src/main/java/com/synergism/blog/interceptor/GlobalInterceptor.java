@@ -13,11 +13,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.synergism.blog.util.StringUtil.asString;
 import static com.synergism.blog.util.StringUtil.checkStringContain;
 
 
 @Component
 public class GlobalInterceptor implements HandlerInterceptor {
+    private static String PublicKeyPath = "/api/public/key";
     /**
      * 当某个 url 已经匹配到对应的 Controller 中的某个方法，且在这个方法执行之前 去执行。
      *
@@ -35,17 +37,18 @@ public class GlobalInterceptor implements HandlerInterceptor {
         Cookie[] cookies = request.getCookies();
         //获取url路径
         String url = request.getRequestURI();
+        //获取sessionID
+        String sessionID = request.getSession().getId();
+        //获取钥匙
+        String ANOTHER_WORLD_KEY = request.getHeader(asString(HeaderEnum.ANOTHER_WORLD_KEY));
 
         //检查头部中是否存在异世界钥匙
-        if(StringUtil.checkStringIfEmpty(request.getHeader(HeaderEnum.ANOTHER_WORLD_KEY()))) {
+        if(StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
             //检查url是否指向获取公钥
-            if(checkStringContain(url, URLEnum.PublicKeyPath())) return true;
+            if(checkStringContain(url, PublicKeyPath)) return true;
             //若不存在且不是去获取公钥，就抛出异常
             throw new IllegalRequestException("拒绝访问");
         }
-
-        String sessionid = request.getSession().getId();
-
         return true;
     }
 

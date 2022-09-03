@@ -13,12 +13,15 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.synergism.blog.util.StringUtil.asString;
+
 /**
  * RSA非对称加密工具类
  */
 public class RSAUtil {
     /**
      * 随机生成密钥对
+     *
      * @return 返回一个包含密码对的表
      */
     public static Map<String, String> getKeyPair() throws NoSuchAlgorithmException {
@@ -30,28 +33,29 @@ public class RSAUtil {
         //生成密钥对存放在KeyPair中
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         //得到私钥
-        RSAPrivateKey privateKey = (RSAPrivateKey)keyPair.getPrivate();
+        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
         //得到公钥
-        RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();
+        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         //得到公钥字符串
         String publicKeyString = new String(Base64.encodeBase64(publicKey.getEncoded()));
         //得到私钥字符串
         String privateKeyString = new String(Base64.encodeBase64((privateKey.getEncoded())));
 
-        result.put(RSAEnum.PUBLIC_KEY(), publicKeyString);  //存放公钥
-        result.put(RSAEnum.PRIVATE_KEY(), privateKeyString);  //存放私钥
+        result.put(asString(RSAEnum.PUBLIC_KEY), publicKeyString);  //存放公钥
+        result.put(asString(RSAEnum.PRIVATE_KEY), privateKeyString);  //存放私钥
 
         return result; //返回密钥对
     }
+
     /**
      * RSA公钥加密
      *
-     * @param str 加密字符串
+     * @param str       加密字符串
      * @param publicKey 公钥
      * @return 密文
      * @throws Exception 加密过程中的异常信息
      */
-    public static String encrypt( String str, String publicKey ) throws Exception{
+    public static String encrypt(String str, String publicKey) throws Exception {
         //base64编码的公钥
         byte[] decoded = Base64.decodeBase64(publicKey);
         RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
@@ -64,12 +68,12 @@ public class RSAUtil {
     /**
      * RSA私钥解密
      *
-     * @param str 加密字符串
+     * @param str        加密字符串
      * @param privateKey 私钥
      * @return 铭文
      * @throws Exception 解密过程中的异常信息
      */
-    public static String decrypt(String str, String privateKey) throws Exception{
+    public static String decrypt(String str, String privateKey) throws Exception {
         //64位解码加密后的字符串
         byte[] inputByte = Base64.decodeBase64(str.getBytes(StandardCharsets.UTF_8));
         //base64编码的私钥
@@ -85,9 +89,9 @@ public class RSAUtil {
      * 用于生成密钥对并存储到系统属性中
      */
     public static void creatKeyPair() throws NoSuchAlgorithmException {
-        Map<String,String> KeyPair = getKeyPair();
-        System.setProperty(RSAEnum.PUBLIC_KEY(), KeyPair.get(RSAEnum.PUBLIC_KEY()));
-        System.setProperty(RSAEnum.PRIVATE_KEY(), KeyPair.get(RSAEnum.PRIVATE_KEY()));
+        Map<String, String> KeyPair = getKeyPair();
+        System.setProperty(asString(RSAEnum.PUBLIC_KEY), KeyPair.get(asString(RSAEnum.PUBLIC_KEY)));
+        System.setProperty(asString(RSAEnum.PRIVATE_KEY), KeyPair.get(asString(RSAEnum.PRIVATE_KEY)));
     }
 
 }

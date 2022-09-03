@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.synergism.blog.util.StringUtil.asString;
+
 @RestController
 @RequestMapping("/api/public")
 public class PublicController {
@@ -16,7 +18,7 @@ public class PublicController {
      */
     @GetMapping("/key")
     public Result<String> getKey() {
-        return Result.success(System.getProperty(RSAEnum.PUBLIC_KEY()));
+        return Result.success(System.getProperty(asString(RSAEnum.PUBLIC_KEY)));
     }
 
 }

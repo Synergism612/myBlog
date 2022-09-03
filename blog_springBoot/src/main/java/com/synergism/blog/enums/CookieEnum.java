@@ -5,8 +5,4 @@ package com.synergism.blog.enums;
  */
 public enum CookieEnum {
     JSESSIONID;
-
-    public static String JSESSIONID(){
-        return JSESSIONID.name();
-    }
 }
