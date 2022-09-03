@@ -10,3 +10,8 @@ spring:
     username: blog
     # 密码
     password: 123456
+
+# 服务配置
+server:
+  # 端口号
+  port: 8088
