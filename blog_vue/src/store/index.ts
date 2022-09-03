@@ -11,29 +11,24 @@ export default createStore({
   //存放数据
   state: {
     // 检查本地记录是否包含
-    ANOTHER_WORLD_KEY: StoreUtil.fetch("ANOTHER_WORLD_KEY") || "",
-    PUBLIC_KEY: StoreUtil.fetch("PUBLIC_KEY") || "",
+    ANOTHER_WORLD_KEY: StoreUtil.fetch("ANOTHER_WORLD_KEY") || null,
+    PUBLIC_KEY: StoreUtil.fetch("PUBLIC_KEY") || null,
+    count: 1,
   },
   //同步函数
   mutations: {
     /**
-     * 为state.ANOTHER_WORLD_KEY赋值并存储
-     * @param state state
-     * @param ANOTHER_WORLD_KEY 密钥
+     * 获取并存储新的state方法
+     * @param state state.commit("方法名")调用
      */
-    SET_ANOTHER_WORLD_KEY: (state, ANOTHER_WORLD_KEY: string) => {
-      state.ANOTHER_WORLD_KEY = ANOTHER_WORLD_KEY;
-      StoreUtil.save("ANOTHER_WORLD_KEY", ANOTHER_WORLD_KEY);
-    },
-
-    /**
-     * 为state.ANOTHER_WORLD_KEY赋值并存储
-     * @param state state
-     * @param PUBLIC_KEY 密钥
-     */
-    SET_PUBLIC_KEY: (state, PUBLIC_KEY: string) => {
-      state.PUBLIC_KEY = PUBLIC_KEY;
-      StoreUtil.save("ANOTHER_WORLD_KEY", PUBLIC_KEY);
+    SAVE_STATE: (state) => {
+      state.count++;
+      console.log();
+      state.PUBLIC_KEY = api.getPublicKey();
+      StoreUtil.save(
+        state.ANOTHER_WORLD_KEY,
+        RSAUtil.encryptedData(AESUtil.getKey(), state.PUBLIC_KEY)
+      );
     },
   },
   //异步函数

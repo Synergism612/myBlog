@@ -3,6 +3,7 @@ import axios from "@/axios/axios";
 
 export class api {
   public static getPublicKey(): string {
+    console.log("请求");
     //导出方法
     axios({
       url: "/api/public/key",
@@ -12,7 +13,7 @@ export class api {
         return data;
       })
       .catch((err) => {
-        console.log("err:\n" + err);
+        console.log(err);
         return false;
       });
     return "";

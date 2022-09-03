@@ -113,9 +113,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { reactive, toRefs } from "vue";
-import { useStore } from "vuex";
-import init from "@/init";
-import StoreUtil from "@/utils/StoreUtil";
+import { useStore } from 'vuex'
 
 export default defineComponent({
   /**
@@ -128,9 +126,9 @@ export default defineComponent({
    * 组件内setup，setup最早创建，所以没有this
    */
   setup() {
-    init();
-    const store = useStore();
-    console.log("执行");
+    const store = useStore()
+    console.log("执行")
+    store.commit("SAVE_STATE");
     /**
      * 参数定义
      */
@@ -138,8 +136,9 @@ export default defineComponent({
       msg: "aa",
     });
 
-    console.log("获得钥匙" + StoreUtil.fetch("ANOTHER_WORLD_KEY"));
-
+    /**
+     * 函数内容
+     */
     /**
      * 返回组件内数据
      */
