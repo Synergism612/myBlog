@@ -1,3 +1,5 @@
+import StringUtil from "./StringUtil";
+
 /**
  * store的工具类
  */
@@ -11,7 +13,9 @@ export default class StoreUtil {
     if (localStorage.getItem(key) == null) {
       return "";
     }
-    return JSON.parse(localStorage.getItem(key) || "");
+    return StringUtil.checkStringIfEmpty(localStorage.getItem(key))
+      ? ""
+      : JSON.parse(localStorage.getItem(key) || "");
   }
   /**
    * 将键值对存储到本地序列化中
@@ -20,7 +24,6 @@ export default class StoreUtil {
    * @returns 不反回或失败
    */
   public static save(key: string | null, value: string): void | string {
-    console.log("将要存储key:" + key + "value:" + value);
     if (key == null) {
       return "";
     }
