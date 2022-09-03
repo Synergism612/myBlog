@@ -179,4 +179,13 @@ public class StringUtil {
     public static boolean checkStringContain(String str, String contain) {
         return str.indexOf(contain,0) > -1;
     }
+
+    /**
+     * 转为字符串
+     * @param value 值
+     * @return 字符串
+     */
+    public static <V> String asString(V value){
+        return value.toString();
+    }
 }
