@@ -1,7 +1,8 @@
 import { apiEnum } from "@/enum/apiEnum";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import { ElNotification } from "element-plus";
-import Result from "@/entity/Result"
+import Result from "@/entity/Result";
+import StoreUtil from "@/utils/StoreUtil";
 // import store from "./store";
 // import router from "./router";
 
@@ -17,19 +18,20 @@ class Axios {
     timeout: apiEnum.TIMEOUT,
     //跨域设置
     withCredentials: true,
+    //添加自定义头部
+    headers: {
+      ANOTHER_WORLD_KEY: StoreUtil.fetch("ANOTHER_WORLD_KEY"),
+    },
   };
 
   // 创建axios对象
-  service: AxiosInstance ;
+  service: AxiosInstance;
   //构造函数
   constructor() {
     this.service = axios.create(this.config);
     //请求拦截
     this.service.interceptors.request.use((request: AxiosRequestConfig) => {
       console.log("请求拦截");
-      // request.headers = {
-      //   ANOTHER_WORLD_KEY: "",
-      // };
       return request;
     });
 
