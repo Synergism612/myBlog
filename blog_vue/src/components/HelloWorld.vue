@@ -42,6 +42,14 @@
           >eslint</a
         >
       </li>
+      <li>
+        <a
+          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript"
+          target="_blank"
+          rel="noopener"
+          >typescript</a
+        >
+      </li>
     </ul>
     <h3>Essential Links</h3>
     <ul>
@@ -102,28 +110,59 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "HelloWorld",
+<script lang="ts">
+import { defineComponent } from "vue";
+import { reactive, toRefs } from "vue";
+import { useStore } from 'vuex'
+
+export default defineComponent({
+  /**
+   * 使用组件时传入参数
+   */
   props: {
-    msg: String,
+    name: { type: String, required: true },
   },
-};
+  /**
+   * 组件内setup，setup最早创建，所以没有this
+   */
+  setup() {
+    const store = useStore()
+    console.log("执行")
+    store.commit("SAVE_STATE");
+    /**
+     * 参数定义
+     */
+    const data = reactive({
+      msg: "aa",
+    });
+
+    /**
+     * 函数内容
+     */
+    /**
+     * 返回组件内数据
+     */
+    return { ...toRefs(data) };
+  },
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less">
+<style scoped lang="stylus">
 h3 {
   margin: 40px 0 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   display: inline-block;
   margin: 0 10px;
 }
+
 a {
   color: #42b983;
 }
