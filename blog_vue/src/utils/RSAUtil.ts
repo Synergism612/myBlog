@@ -11,11 +11,13 @@ export default class AESUtil {
    * @param {String} publicKey 公钥
    * @returns 加密后的密文
    */
-  public static encryptedData(word: string, publicKey: string | null): string {
+  public static encryptedData(word: string, publicKey: string): string {
     //判空
     if (publicKey == null) {
       return "";
     }
+
+    console.log("密文" + word + "\n" + "公钥" + publicKey);
     //转编码
     // const key = CryptoJS.enc.Base64.parse(publicKey);
     // const srcs = CryptoJS.enc.Base64.parse(word);

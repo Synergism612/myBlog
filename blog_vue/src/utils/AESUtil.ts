@@ -10,7 +10,7 @@ export default class AESUtil {
    * @returns 解析后值
    */
   private static getHexKey(key: string) {
-    return CryptoJS.enc.Base64.parse(key);
+    return CryptoJS.enc.Utf8.parse(key);
   }
   /**
    * 加密
@@ -75,7 +75,6 @@ export default class AESUtil {
       tmp = Math.floor(Math.random() * 26);
       s = s + String.fromCharCode(97 + tmp);
     }
-    console.log("对称密钥" + s);
     return s;
   }
 }
