@@ -1,5 +1,6 @@
 package com.synergism.blog.result;
 
+import com.synergism.blog.util.Base64Util;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,24 +59,24 @@ public class Result<T> {
         this.code = code;
         this.msg = "成功";
         this.time = now();
-        this.data = null;
+        this.data = (T) "";
     }
     private Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
         this.time = now();
-        this.data = null;
+        this.data = (T) "";
     }
     private  Result(int code,T data){
         this.code = code;
         this.msg = "成功";
         this.time = now();
-        this.data = data;
+        this.data = (T) Base64Util.encode(data);
     }
     private Result(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.time = now();
-        this.data = data;
+        this.data = (T) Base64Util.encode(data);
     }
 }
