@@ -2,8 +2,11 @@ package com.synergism.blog.interceptor;
 
 import com.synergism.blog.entity.Client;
 import com.synergism.blog.enums.HeaderEnum;
-import com.synergism.blog.enums.URLEnum;
+import com.synergism.blog.enums.RSAEnum;
 import com.synergism.blog.exception.custom.IllegalRequestException;
+import com.synergism.blog.security.RequestWrapper;
+import com.synergism.blog.util.Base64Util;
+import com.synergism.blog.util.RSAUtil;
 import com.synergism.blog.util.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -42,6 +45,8 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //获取钥匙
         String ANOTHER_WORLD_KEY = request.getHeader(asString(HeaderEnum.ANOTHER_WORLD_KEY));
 
+        if(request.getMethod()=="OPTIONS") return true;
+
         //检查头部中是否存在异世界钥匙
         if(StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
             //检查url是否指向获取公钥
@@ -49,6 +54,11 @@ public class GlobalInterceptor implements HandlerInterceptor {
             //若不存在且不是去获取公钥，就抛出异常
             throw new IllegalRequestException("拒绝访问");
         }
+
+        RequestWrapper requestWrapper = new RequestWrapper(request);
+        String jsonBody = requestWrapper.getBody();
+        String aa = Base64Util.decode(ANOTHER_WORLD_KEY);
+        String key = RSAUtil.decrypt(ANOTHER_WORLD_KEY ,System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
         return true;
     }
 
