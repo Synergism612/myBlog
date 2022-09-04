@@ -58,7 +58,8 @@ public class GlobalInterceptor implements HandlerInterceptor {
         RequestWrapper requestWrapper = new RequestWrapper(request);
         String jsonBody = requestWrapper.getBody();
         String aa = Base64Util.decode(ANOTHER_WORLD_KEY);
-        String key = RSAUtil.decrypt(ANOTHER_WORLD_KEY ,System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
+        String a = System.getProperty(asString(RSAEnum.PRIVATE_KEY));
+        String key = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY ,System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
         return true;
     }
 

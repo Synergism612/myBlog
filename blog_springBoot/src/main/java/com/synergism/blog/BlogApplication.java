@@ -12,7 +12,7 @@ import static com.synergism.blog.Init.init;
 @MapperScan("com/synergism/blog/mapper")
 public class BlogApplication {
 
-	public static void main(String[] args) throws NoSuchAlgorithmException {
+	public static void main(String[] args) throws Exception {
 		//初始化
 		init();
 		//运行
