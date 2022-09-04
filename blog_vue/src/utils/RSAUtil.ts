@@ -17,6 +17,9 @@ export default class AESUtil {
       return "";
     }
 
+    // publicKey =
+    //   "-----BEGIN PUBLIC KEY-----" + publicKey + "-----END PUBLIC KEY-----";
+
     console.log("密文" + word + "\n" + "公钥" + publicKey);
     //转编码
     // const key = CryptoJS.enc.Base64.parse(publicKey);
@@ -26,7 +29,9 @@ export default class AESUtil {
     // 设置公钥
     encryptor.setPublicKey(publicKey);
     // 加密数据
-    return encryptor.encrypt(word) || "";
+    const encode = encryptor.encrypt(word);
+    console.log("加密对称钥" + encode);
+    return encode || "";
   }
 
   //前端不需要拿到私钥进行解密，故不写加密方法

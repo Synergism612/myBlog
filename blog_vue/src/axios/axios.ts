@@ -4,7 +4,6 @@ import Result from "@/entity/Result";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import CryptoJS from "crypto-js";
-import StringUtil from "@/utils/StringUtil";
 
 //请求根路径
 const baseURL = "http://localhost:8088";

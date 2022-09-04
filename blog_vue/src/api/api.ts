@@ -34,7 +34,7 @@ export class api {
           store.commit(
             "SET_ANOTHER_WORLD_KEY",
             //公钥加密密钥
-            AESUtil.encrypt(key, store.state.PUBLIC_KEY)
+            RSAUtil.encryptedData(key, data)
           );
         }
       })
