@@ -111,11 +111,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { api } from "@/api/api";
+import { store } from "@/store";
+import { defineComponent, onMounted } from "vue";
 import { reactive, toRefs } from "vue";
-import { useStore } from "vuex";
-import init from "@/init";
-import StoreUtil from "@/utils/StoreUtil";
 
 export default defineComponent({
   /**
@@ -128,17 +127,18 @@ export default defineComponent({
    * 组件内setup，setup最早创建，所以没有this
    */
   setup() {
-    init();
-    const store = useStore();
-    console.log("执行");
     /**
      * 参数定义
      */
     const data = reactive({
       msg: "aa",
     });
+    // api.getTest();
 
-    console.log("获得钥匙" + StoreUtil.fetch("ANOTHER_WORLD_KEY"));
+    onMounted(() => {
+      console.log("输出" + store.state.ANOTHER_WORLD_KEY);
+      api.getTest();
+    });
 
     /**
      * 返回组件内数据
