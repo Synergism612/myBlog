@@ -1,10 +1,12 @@
-import { createStore } from "vuex";
+import { InjectionKey } from "vue";
+import { createStore, Store } from "vuex";
 import StoreUtil from "@/utils/StoreUtil";
+import Base64Util from "@/utils/Base64Util";
 
 /**
  * 数据仓库
  */
-const store = createStore({
+export const store = createStore({
   //存放数据
   state: {
     // 检查本地记录是否包含
@@ -20,6 +22,7 @@ const store = createStore({
      * @param ANOTHER_WORLD_KEY 密钥
      */
     SET_ANOTHER_WORLD_KEY: (state, ANOTHER_WORLD_KEY: string) => {
+      ANOTHER_WORLD_KEY = Base64Util.encode(ANOTHER_WORLD_KEY);
       state.ANOTHER_WORLD_KEY = ANOTHER_WORLD_KEY;
       StoreUtil.save("ANOTHER_WORLD_KEY", ANOTHER_WORLD_KEY);
     },
@@ -30,6 +33,7 @@ const store = createStore({
      * @param PUBLIC_KEY 公钥加密密钥
      */
     SET_PUBLIC_KEY: (state, PUBLIC_KEY: string) => {
+      PUBLIC_KEY = Base64Util.encode(PUBLIC_KEY);
       state.PUBLIC_KEY = PUBLIC_KEY;
       StoreUtil.save("PUBLIC_KEY", PUBLIC_KEY);
     },
@@ -40,18 +44,23 @@ const store = createStore({
      * @param KEY 密钥
      */
     SET_KEY: (state, KEY: string) => {
+      KEY = Base64Util.encode(KEY);
       state.KEY = KEY;
       StoreUtil.save("KEY", KEY);
     },
 
+    /**
+     * 删除state中的对称钥和加密对称钥
+     * @param state state
+     */
     DELECT_ALL_KEY: (state) => {
+      console.log("删除");
       state.KEY = "";
       state.PUBLIC_KEY = "";
       state.ANOTHER_WORLD_KEY = "";
       StoreUtil.save("KEY", "");
       StoreUtil.save("PUBLIC_KEY", "");
       StoreUtil.save("ANOTHER_WORLD_KEY", "");
-
     },
   },
   //异步函数
@@ -59,5 +68,3 @@ const store = createStore({
   //分类管理
   modules: {},
 });
-
-export default store;
