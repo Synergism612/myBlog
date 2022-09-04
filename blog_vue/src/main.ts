@@ -1,7 +1,7 @@
 import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import App from "@/App.vue";
+import router from "@/router";
+import { store } from "@/store";
 
 /**
  * 引入ElementPlus
@@ -13,8 +13,16 @@ import ElementPlus from "element-plus";
  * 在页面中就可以用this.$axios来获取axios
  */
 import axios from "@/axios/axios";
+import { api } from "./api/api";
+
+store.commit("DELECT_ALL_KEY");
 
 const app = createApp(App);
-app.use(router).use(store).use(ElementPlus);
-app.config.globalProperties.$axios = axios;
-app.mount("#app");
+
+store.commit("DELECT_ALL_KEY");
+
+api.getPublicKey().then(() => {
+  app.use(router).use(store).use(ElementPlus);
+  app.config.globalProperties.$axios = axios;
+  app.mount("#app");
+});
