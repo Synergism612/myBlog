@@ -1,12 +1,13 @@
+import Base64Util from "@/utils/Base64Util";
 import { AxiosResponse } from "axios";
 
 export default class Result {
   code!: number;
   msg!: string;
   time!: string;
-  data = {};
+  data!: string;
 
-  constructor(code: number, msg: string, time: string, data: { a?: string }) {
+  constructor(code: number, msg: string, time: string, data: string) {
     this.code = code;
     this.msg = msg;
     this.time = time;
@@ -14,11 +15,13 @@ export default class Result {
   }
 
   static getResult(response: AxiosResponse): Result {
+    console.log("响应拦截: 转码" + Base64Util.decode(response.data.data));
+
     return new Result(
       response.data.code,
       response.data.msg,
       response.data.time,
-      response.data.data
+      Base64Util.decode(response.data.data)
     );
   }
 }
