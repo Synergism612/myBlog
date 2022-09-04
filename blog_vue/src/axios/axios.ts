@@ -1,12 +1,15 @@
 import { apiEnum } from "@/enum/apiEnum";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import Result from "@/entity/Result";
-import store from "@/store";
+import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
+import CryptoJS from "crypto-js";
+import StringUtil from "@/utils/StringUtil";
 
 //请求根路径
 const baseURL = "http://localhost:8088";
 
+const publicKeyURL = "/api/public/key";
 class Axios {
   //axios配置
   config = {
@@ -21,19 +24,14 @@ class Axios {
       ANOTHER_WORLD_KEY: " ",
     },
     // `transformRequest` 允许在向服务器发送前，修改请求数据
-    // transformRequest: [
-    //   (data: string) => {
-    //     // 对 data 进行加密
-    //     return AESUtil.encrypt(JSON.stringify(data), store.state.KEY);
-    //   },
-    // ],
-    // `transformResponse` 在传递给 then/catch 前，允许修改响应数据
-    // transformResponse: [
-    //   (data: string) => {
-    //     // 对 data 进行解密
-    //     return AESUtil.decrypt(JSON.stringify(data), store.state.KEY);
-    //   },
-    // ],
+    transformRequest: [
+      (data: string) => {
+        // 对 data 进行加密
+        const encJson = AESUtil.encrypt(JSON.stringify(data), store.state.KEY);
+        return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(encJson));
+        // return data;
+      },
+    ],
   };
 
   // 创建axios对象
@@ -43,17 +41,17 @@ class Axios {
     this.service = axios.create(this.config);
     //请求拦截
     this.service.interceptors.request.use((request: AxiosRequestConfig) => {
+      console.log("请求拦截:" + request.url);
       if (request && request.headers) {
+        if (request.url == publicKeyURL) return request;
         // 多一步判断
         request.headers["ANOTHER_WORLD_KEY"] = store.state.ANOTHER_WORLD_KEY;
       }
-      console.log("请求拦截:" + request.url);
       return request;
     });
 
     //响应拦截
     this.service.interceptors.response.use((response: AxiosResponse) => {
-      console.log("响应拦截:" + response.data.data);
       return Result.getResult(response);
     });
   }
