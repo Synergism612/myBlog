@@ -15,14 +15,14 @@ export default class AESUtil {
   /**
    * 加密
    * @param str 内容
-   * @param key 密钥(Base64编码)
+   * @param key 密钥
    * @returns 密文
    */
   public static encrypt(str: string, key: string): string {
     const encrypted = CryptoJS.AES.encrypt(str, this.getHexKey(key), {
       iv: this.getHexKey(key), // 这个参数我之前忘传了，使用CBC的时候一直会报错，所以千万不要忘记哦，如果创建成功，但是控制台一直报错什么undefined的呀，什么[0]啥的，就检查一下 是不是自己使用有问题
       mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.ZeroPadding,
+      padding: CryptoJS.pad.Pkcs7,
     });
     return encrypted.toString();
   }
@@ -75,6 +75,7 @@ export default class AESUtil {
       tmp = Math.floor(Math.random() * 26);
       s = s + String.fromCharCode(97 + tmp);
     }
+    s += amm[Math.floor(Math.random() * 19)] as string;
     return s;
   }
 }
