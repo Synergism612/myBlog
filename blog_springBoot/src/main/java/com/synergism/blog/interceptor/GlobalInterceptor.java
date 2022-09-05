@@ -5,6 +5,7 @@ import com.synergism.blog.enums.HeaderEnum;
 import com.synergism.blog.enums.RSAEnum;
 import com.synergism.blog.exception.custom.IllegalRequestException;
 import com.synergism.blog.security.RequestWrapper;
+import com.synergism.blog.util.AESUtil;
 import com.synergism.blog.util.Base64Util;
 import com.synergism.blog.util.RSAUtil;
 import com.synergism.blog.util.StringUtil;
@@ -45,7 +46,9 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //获取钥匙
         String ANOTHER_WORLD_KEY = request.getHeader(asString(HeaderEnum.ANOTHER_WORLD_KEY));
 
-        if(request.getMethod()=="OPTIONS") return true;
+        if(request.getMethod()=="OPTIONS")return true;
+
+        if(url=="/error") return true;
 
         //检查头部中是否存在异世界钥匙
         if(StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
@@ -57,9 +60,8 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
         RequestWrapper requestWrapper = new RequestWrapper(request);
         String jsonBody = requestWrapper.getBody();
-        String aa = Base64Util.decode(ANOTHER_WORLD_KEY);
-        String a = System.getProperty(asString(RSAEnum.PRIVATE_KEY));
         String key = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY ,System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
+        String body = AESUtil.decrypt(jsonBody,key);
         return true;
     }
 

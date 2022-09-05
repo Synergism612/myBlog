@@ -45,13 +45,13 @@ class BlogApplicationTests {
 	@Test
 	void AESCodeTest() throws Exception {
 		//测试AES加密
-		String message = "WjZDeDN2Y05ERTVZcmJUSWtOa3Z1Zz09";
-		String key = "12345645678901234";
-		System.out.println("随机生成的密钥为:" + key);
-		String messageEn = AESUtil.encrypt(message,key);
-		System.out.println("加密后的字符串为:" + messageEn);
-		String messageDe = AESUtil.decrypt(messageEn,key);
-		System.out.println("还原后的字符串为:" + messageDe);
+//		String message = "WjZDeDN2Y05ERTVZcmJUSWtOa3Z1Zz09";
+//		String key = "12345645678901234";
+//		System.out.println("随机生成的密钥为:" + key);
+//		String messageEn = AESUtil.encrypt("{ id = \"152\"}","(PITHQNTukorwan_");
+//		System.out.println("加密后的字符串为:" + messageEn);
+//		String messageDe = AESUtil.decrypt(messageEn,"(PITHQNTukorwan_");
+//		System.out.println("还原后的字符串为:" + messageDe);
 	}
 
 	@Test

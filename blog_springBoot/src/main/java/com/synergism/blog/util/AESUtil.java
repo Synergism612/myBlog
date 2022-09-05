@@ -1,52 +1,139 @@
 package com.synergism.blog.util;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.SecureRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * AES对称加密工具类
  */
 public class AESUtil {
+//    private static final String KEY = "1234567890hijklm";
 
-    //参数分别代表 算法名称/加密模式/数据填充方式
-    private static final String ALGORITHMS = "AES/ECB/PKCS5Padding";
+    //偏移量，AES 128位数据块对应偏移量为16位
+//    public static final String VIPARA = "1234567890abcdef";   //AES 128位数据块对应偏移量为16位
 
-    /**
-     * 加密
-     * @param src 加密的字符串
-     * @param key key值 16位
-     * @return 加密后字符串
-     */
-    public static String encrypt(String src, String key) throws Exception {
-        Assert.isTrue(key.length()==16,"the key length must be 16");
-        KeyGenerator kgen = KeyGenerator.getInstance("AES");
-        kgen.init(128);
-        Cipher cipher = Cipher.getInstance(ALGORITHMS);
-        cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-        byte[] b = cipher.doFinal(src.getBytes("utf-8"));
-        // 采用base64算法进行转码,避免出现中文乱码
-        return Base64.encodeBase64String(b);
-    }
+    //AES：加密方式   CBC：工作模式   PKCS5Padding：填充模式
+    private static final String CBC_PKCS5_PADDING = "AES/CBC/PKCS5Padding";
+//    private static final String CBC_PKCS5_PADDING = "CBC";
+
+
+    private static final String AES = "AES";
+
+    //编码方式
+    public static final String CODE_TYPE = "UTF-8";
+
 
     /**
-     * 解密
-     * @param src 解密的字符串
-     * @param key 解密的key值 16位
-     * @return 解密后字符串
+     * AES 加密操作
+     *
+     * @param content 待加密内容
+     * @param key     加密密钥
+     * @return 返回Base64转码后的加密数据
      */
-    public static String decrypt(String src, String key) throws Exception {
-        Assert.isTrue(key.length()==16,"the key length must be 16");
-        KeyGenerator kgen = KeyGenerator.getInstance("AES");
-        kgen.init(128);
-        Cipher cipher = Cipher.getInstance(ALGORITHMS);
-        cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key.getBytes(), "AES"));
-        // 采用base64算法进行转码,避免出现中文乱码
-        byte[] encryptBytes = Base64.decodeBase64(src);
-        byte[] decryptBytes = cipher.doFinal(encryptBytes);
-        return new String(decryptBytes);
+    public static String encrypt(String content, String key) {
+
+        if (content == null || "".equals(content)) {
+            return content;
+        }
+
+        try {
+            /*
+             * 新建一个密码编译器的实例，由三部分构成，用"/"分隔，分别代表如下
+             * 1. 加密的类型(如AES，DES，RC2等)
+             * 2. 模式(AES中包含ECB，CBC，CFB，CTR，CTS等)
+             * 3. 补码方式(包含nopadding/PKCS5Padding等等)
+             * 依据这三个参数可以创建很多种加密方式
+             */
+            Cipher cipher = Cipher.getInstance(CBC_PKCS5_PADDING);
+
+            //偏移量 使用密钥作为偏移量
+            IvParameterSpec zeroIv = new IvParameterSpec(key.getBytes(CODE_TYPE));
+
+            byte[] byteContent = content.getBytes(CODE_TYPE);
+
+            //使用加密秘钥
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(CODE_TYPE), AES);
+            //SecretKeySpec skeySpec = getSecretKey(key);
+
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, zeroIv);// 初始化为加密模式的密码器
+
+            byte[] result = cipher.doFinal(byteContent);// 加密
+
+            return Base64.encodeBase64String(result);//通过Base64转码返回
+        } catch (Exception ex) {
+            Logger.getLogger(AESUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+
     }
+
+
+    /**
+     * AES 解密操作
+     *
+     * @param content
+     * @param key
+     * @return
+     */
+    public static String decrypt(String content, String key) {
+        if (content == null || "".equals(content)) {
+            return content;
+        }
+
+        try {
+            //实例化
+            Cipher cipher = Cipher.getInstance(CBC_PKCS5_PADDING);
+            //使用密钥作为偏移量
+            IvParameterSpec zeroIv = new IvParameterSpec(key.getBytes(CODE_TYPE));
+
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(CODE_TYPE), AES);
+            //SecretKeySpec skeySpec = getSecretKey(key);
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec, zeroIv);
+
+            byte[] result = cipher.doFinal(Base64.decodeBase64(content));
+
+            return new String(result, CODE_TYPE);
+        } catch (Exception ex) {
+            Logger.getLogger(AESUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+
+    /**
+     * 生成加密秘钥
+     *
+     * @return
+     */
+    private static SecretKeySpec getSecretKey(final String key) {
+        //返回生成指定算法密钥生成器的 KeyGenerator 对象
+        KeyGenerator kg = null;
+
+        try {
+            kg = KeyGenerator.getInstance(AES);
+
+            //AES 要求密钥长度为 128
+            kg.init(128, new SecureRandom(key.getBytes()));
+
+            //生成一个密钥
+            SecretKey secretKey = kg.generateKey();
+
+            return new SecretKeySpec(secretKey.getEncoded(), AES);// 转换为AES专用密钥
+        } catch (Exception ex) {
+            Logger.getLogger(AESUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
 }
