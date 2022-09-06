@@ -15,13 +15,13 @@ export default class Result {
   }
 
   static getResult(response: AxiosResponse): Result {
-    console.log("响应拦截: 转码" + Base64Util.decode(response.data.data));
+    console.log("响应拦截: " + Base64Util.decode(response.data.data));
 
     return new Result(
       response.data.code,
       response.data.msg,
       response.data.time,
-      Base64Util.decode(response.data.data)
+      response.data.data
     );
   }
 }
