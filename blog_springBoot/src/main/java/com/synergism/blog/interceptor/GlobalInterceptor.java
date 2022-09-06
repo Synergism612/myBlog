@@ -57,11 +57,6 @@ public class GlobalInterceptor implements HandlerInterceptor {
             //若不存在且不是去获取公钥，就抛出异常
             throw new IllegalRequestException("拒绝访问");
         }
-
-        RequestWrapper requestWrapper = new RequestWrapper(request);
-        String jsonBody = requestWrapper.getBody();
-        String key = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY ,System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
-        String body = AESUtil.decrypt(jsonBody,key);
         return true;
     }
 
