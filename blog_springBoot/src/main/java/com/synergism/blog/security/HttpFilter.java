@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * 请求过滤器
- * 用于将请求替换为自定义请求
+ * http过滤器
+ * 用于将请求、响应替换为自定义请求、自定义响应
  */
 @Component
-public class RequestFilter implements Filter {
+public class HttpFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
