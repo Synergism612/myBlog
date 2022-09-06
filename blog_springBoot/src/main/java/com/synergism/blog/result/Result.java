@@ -71,12 +71,12 @@ public class Result<T> {
         this.code = code;
         this.msg = "成功";
         this.time = now();
-        this.data = (T) Base64Util.encode(data);
+        this.data = (T) data;
     }
     private Result(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.time = now();
-        this.data = (T) Base64Util.encode(data);
+        this.data = (T) data;
     }
 }
