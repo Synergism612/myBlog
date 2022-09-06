@@ -1,16 +1,28 @@
 package com.synergism.blog.security;
 
+import com.synergism.blog.enums.HeaderEnum;
+import com.synergism.blog.enums.RSAEnum;
+import com.synergism.blog.util.AESUtil;
+import com.synergism.blog.util.RSAUtil;
+import com.synergism.blog.util.StringUtil;
+
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
+import static com.synergism.blog.util.StringUtil.asString;
+
+
 public class RequestWrapper extends HttpServletRequestWrapper  {
     private final String body;
+    private final String key;
 
     public RequestWrapper(HttpServletRequest request) {
         super(request);
+        String ANOTHER_WORLD_KEY = request.getHeader(StringUtil.asString(HeaderEnum.ANOTHER_WORLD_KEY));
+        this.key = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY ,System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
         InputStream inputStream = null;
@@ -46,7 +58,7 @@ public class RequestWrapper extends HttpServletRequestWrapper  {
                 }
             }
         }
-        body = stringBuilder.toString();
+        this.body = AESUtil.decrypt(stringBuilder.toString(),key);
     }
 
     @Override
@@ -66,7 +78,8 @@ public class RequestWrapper extends HttpServletRequestWrapper  {
             }
             @Override
             public int read() throws IOException {
-                return byteArrayInputStream.read();
+                int read = byteArrayInputStream.read();
+                return read;
             }
         };
         return servletInputStream;
