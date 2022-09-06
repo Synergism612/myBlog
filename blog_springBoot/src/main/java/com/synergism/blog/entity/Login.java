@@ -10,10 +10,13 @@ import static com.synergism.blog.util.StringUtil.checkStringIsUnsafe;
 @Getter
 @Setter
 public class Login {
-    private String username;
+    private String username = "";
     private String usernameName = "账号";
-    private String password;
+    private String password = "";
     private String passwordName = "密码";
+
+    Login(){
+    }
 
     Login(String username, String password) {
         checkStringIsUnsafe(username); //检查合法性

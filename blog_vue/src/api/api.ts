@@ -49,7 +49,8 @@ export class api {
       url: "/api/public/test",
       method: "post",
       data: {
-        id: "152",
+        username: "152",
+        password: "123456",
       },
     })
       .then(({ data }) => {

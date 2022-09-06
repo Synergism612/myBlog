@@ -1,5 +1,6 @@
 package com.synergism.blog.controller;
 
+import com.synergism.blog.entity.Login;
 import com.synergism.blog.enums.RSAEnum;
 import com.synergism.blog.result.Result;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,12 @@ public class PublicController {
 
     /**
      * 测试接口
-     * @param id id
-     * @return id
+     * @param login 登录信息
+     * @return 登录信息
      */
     @PostMapping("/test")
-    public Result<String> test(@RequestBody String id) {
-        return Result.success(id);
+    public Result<String> test(@RequestBody Login login) {
+        return Result.success(login.toString());
     }
 
 }
