@@ -6,13 +6,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @Component
-public class GlobalInterceptorConfig extends WebMvcConfigurationSupport {
+public class InterceptorConfig extends WebMvcConfigurationSupport {
 
 
     private GlobalInterceptor globalInterceptor;
 
     @Autowired
-    GlobalInterceptorConfig(GlobalInterceptor globalInterceptor){
+    InterceptorConfig(GlobalInterceptor globalInterceptor){
         this.globalInterceptor = globalInterceptor;
     }
 
