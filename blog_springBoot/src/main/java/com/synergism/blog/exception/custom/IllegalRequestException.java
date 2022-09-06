@@ -1,6 +1,7 @@
 package com.synergism.blog.exception.custom;
 
 /**
+ * 自定义异常
  * 请求非法异常
  */
 public class IllegalRequestException extends RuntimeException{

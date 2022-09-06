@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import static com.synergism.blog.util.StringUtil.checkStringIsUnsafe;
-
+/**
+ * 用户登录实体类
+ */
 @Getter
 @Setter
 public class Login {

@@ -5,9 +5,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
+/**
+ * 拦截器配置类
+ */
 @Component
 public class InterceptorConfig extends WebMvcConfigurationSupport {
-
 
     private GlobalInterceptor globalInterceptor;
 

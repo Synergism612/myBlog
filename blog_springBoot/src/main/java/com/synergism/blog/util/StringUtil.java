@@ -47,10 +47,7 @@ public class StringUtil {
      * @param name  字符串名称
      */
     public static void checkStringLengthMore(String str, int max, String name) {
-        int length = str.length();
-        if (length < max) {
-            throw new IllegalArgumentException(name + "的长度大于" + max);
-        }
+        checkStringLengthMore(str.length(),max,name);
     }
 
     /**
@@ -168,16 +165,6 @@ public class StringUtil {
             }
         }
         if (count > 1) throw new IllegalArgumentException("不合法");
-    }
-
-    /**
-     * 检查字符串中是否存在某字符串
-     * @param str 被检查字符串
-     * @param contain 被包含字符串
-     * @return 包含为真，否之为假
-     */
-    public static boolean checkStringContain(String str, String contain) {
-        return str.indexOf(contain,0) > -1;
     }
 
     /**

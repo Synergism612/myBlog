@@ -2,12 +2,7 @@ package com.synergism.blog.interceptor;
 
 import com.synergism.blog.entity.Client;
 import com.synergism.blog.enums.HeaderEnum;
-import com.synergism.blog.enums.RSAEnum;
 import com.synergism.blog.exception.custom.IllegalRequestException;
-import com.synergism.blog.security.RequestWrapper;
-import com.synergism.blog.util.AESUtil;
-import com.synergism.blog.util.Base64Util;
-import com.synergism.blog.util.RSAUtil;
 import com.synergism.blog.util.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,9 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.synergism.blog.util.StringUtil.asString;
-import static com.synergism.blog.util.StringUtil.checkStringContain;
 
-
+/**
+ * 全局拦截器
+ */
 @Component
 public class GlobalInterceptor implements HandlerInterceptor {
     private static String PublicKeyPath = "/api/public/key";
@@ -46,14 +42,14 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //获取钥匙
         String ANOTHER_WORLD_KEY = request.getHeader(asString(HeaderEnum.ANOTHER_WORLD_KEY));
 
-        if(request.getMethod()=="OPTIONS")return true;
+        if(request.getMethod().equals("OPTIONS"))return true;
 
-        if(url=="/error") return true;
+        if(url.equals("/error")) return true;
 
         //检查头部中是否存在异世界钥匙
         if(StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
             //检查url是否指向获取公钥
-            if(checkStringContain(url, PublicKeyPath)) return true;
+            if(url.contains(PublicKeyPath)) return true;
             //若不存在且不是去获取公钥，就抛出异常
             throw new IllegalRequestException("拒绝访问");
         }

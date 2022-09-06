@@ -5,6 +5,10 @@ import lombok.Setter;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 客户端实体类
+ * 记录客户端信息
+ */
 @Getter
 @Setter
 public class Client {

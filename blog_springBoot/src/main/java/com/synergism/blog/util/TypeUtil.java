@@ -1,7 +1,6 @@
 package com.synergism.blog.util;
 
 import java.lang.reflect.Type;
-import java.util.Arrays;
 
 /**
  * 类型转换工具类

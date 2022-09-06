@@ -16,10 +16,14 @@ public class PublicController {
      */
     @GetMapping("/key")
     public Result<String> getKey() {
-        System.out.println(System.getProperty(asString(RSAEnum.PUBLIC_KEY)));
         return Result.success(System.getProperty(asString(RSAEnum.PUBLIC_KEY)));
     }
 
+    /**
+     * 测试接口
+     * @param id id
+     * @return id
+     */
     @PostMapping("/test")
     public Result<String> test(@RequestBody String id) {
         return Result.success(id);

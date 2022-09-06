@@ -1,4 +1,4 @@
-package com.synergism.blog.filter;
+package com.synergism.blog.CORS;
 
 import com.synergism.blog.enums.HeaderEnum;
 import org.springframework.stereotype.Component;
