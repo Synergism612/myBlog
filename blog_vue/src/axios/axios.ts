@@ -21,16 +21,14 @@ class Axios {
     //自定义头部
     headers: {
       ANOTHER_WORLD_KEY: " ",
+      "Content-Type": "application/json; charset=utf-8",
+      Accept: "application/json",
     },
     // `transformRequest` 允许在向服务器发送前，修改请求数据
     transformRequest: [
       (data: string) => {
         // 对 data 进行加密
-        const encJson = AESUtil.encrypt(JSON.stringify(data), store.state.KEY);
-        // return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(encJson));
-        // return AESUtil.encrypt(data, store.state.KEY);
-        console.log("对data进行加密" + encJson);
-        return encJson;
+        return AESUtil.encrypt(JSON.stringify(data), store.state.KEY);
       },
     ],
   };
