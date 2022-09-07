@@ -1,18 +1,12 @@
 package com.synergism.blog.security;
 
-import com.synergism.blog.enums.HeaderEnum;
-import com.synergism.blog.enums.RSAEnum;
 import com.synergism.blog.util.AESUtil;
-import com.synergism.blog.util.RSAUtil;
-import com.synergism.blog.util.StringUtil;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
-
-import static com.synergism.blog.util.StringUtil.asString;
 
 /**
  * 自定义请求
@@ -32,13 +26,11 @@ public class RequestWrapper extends HttpServletRequestWrapper  {
      * 从原请求中构造自定义请求
      * @param request 原请求
      */
-    public RequestWrapper(HttpServletRequest request) {
+    public RequestWrapper(HttpServletRequest request,String key) {
         //super HttpServletRequestWrapper 构造方法构造请求
         super(request);
-        //获得加密的密钥
-        String ANOTHER_WORLD_KEY = request.getHeader(StringUtil.asString(HeaderEnum.ANOTHER_WORLD_KEY));
-        //解密得到密钥
-        this.key = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY ,System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
+        //获得密钥
+        this.key = key;
         //定义后续使用变量
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
