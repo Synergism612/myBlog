@@ -4,6 +4,7 @@ import Result from "@/entity/Result";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import CryptoJS from "crypto-js";
+import StringUtil from "@/utils/StringUtil";
 
 //请求根路径
 const baseURL = "http://localhost:8088";
@@ -51,7 +52,20 @@ class Axios {
 
     //响应拦截
     this.service.interceptors.response.use((response: AxiosResponse) => {
-      return Result.getResult(response);
+      console.log("接收到的加密数据" + response.data);
+      if (StringUtil.checkStringIfEmpty(store.state.ANOTHER_WORLD_KEY)) {
+        return Result.getResult(response);
+      }
+      console.log("密钥" + store.state.KEY);
+
+      console.log(
+        "解密后的json" + AESUtil.decrypt(response.data, store.state.KEY)
+      );
+
+      const json = JSON.parse(
+        AESUtil.decrypt(response.data, store.state.KEY)
+      ).ANOTHER_WORLD_RESPONSE;
+      return new Result(json.code, json.msg, json.time, json.data);
     });
   }
 }

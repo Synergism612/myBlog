@@ -34,8 +34,9 @@ export default class AESUtil {
    * @returns 内容
    */
   public static decrypt(str: string, key: string): string {
-    const decrypted = CryptoJS.DES.decrypt(str, this.getHexKey(key), {
-      mode: CryptoJS.mode.ECB,
+    const decrypted = CryptoJS.AES.decrypt(str, this.getHexKey(key), {
+      iv: this.getHexKey(key),
+      mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7,
     });
     return decrypted.toString(CryptoJS.enc.Utf8);
