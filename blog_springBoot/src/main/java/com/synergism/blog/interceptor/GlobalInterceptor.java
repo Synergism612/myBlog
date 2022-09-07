@@ -1,7 +1,7 @@
 package com.synergism.blog.interceptor;
 
 import com.synergism.blog.entity.Client;
-import com.synergism.blog.enums.HeaderEnum;
+import com.synergism.blog.enums.KeyEnum;
 import com.synergism.blog.exception.custom.IllegalRequestException;
 import com.synergism.blog.util.StringUtil;
 import org.springframework.stereotype.Component;
@@ -40,7 +40,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //获取sessionID
         String sessionID = request.getSession().getId();
         //获取钥匙
-        String ANOTHER_WORLD_KEY = request.getHeader(asString(HeaderEnum.ANOTHER_WORLD_KEY));
+        String ANOTHER_WORLD_KEY = request.getHeader(asString(KeyEnum.ANOTHER_WORLD_KEY));
 
         if(request.getMethod().equals("OPTIONS"))return true;
 
