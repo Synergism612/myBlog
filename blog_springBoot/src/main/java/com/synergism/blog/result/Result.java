@@ -1,6 +1,5 @@
 package com.synergism.blog.result;
 
-import com.synergism.blog.util.Base64Util;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +16,13 @@ public class Result<T> {
     private String msg; //结果消息
     private String time; //响应时间戳
     private T data; //结果数据
+
+    public Result() {
+        this.code = 500100;
+        this.msg = "服务端异常";
+        this.time = now();
+        this.data = (T) "";
+    }
 
     /**
      * 无返回数据的请求成功时调用
