@@ -52,20 +52,20 @@ class Axios {
 
     //响应拦截
     this.service.interceptors.response.use((response: AxiosResponse) => {
-      console.log("接收到的加密数据" + response.data);
       if (StringUtil.checkStringIfEmpty(store.state.ANOTHER_WORLD_KEY)) {
         return Result.getResult(response);
+      } else {
+        console.log("接收到的加密数据" + response.data);
+        console.log("密钥" + store.state.KEY);
+        console.log(
+          "解密后的json" + AESUtil.decrypt(response.data, store.state.KEY)
+        );
+
+        const json = JSON.parse(
+          AESUtil.decrypt(response.data, store.state.KEY)
+        ).ANOTHER_WORLD_RESPONSE;
+        return new Result(json.code, json.msg, json.time, json.data);
       }
-      console.log("密钥" + store.state.KEY);
-
-      console.log(
-        "解密后的json" + AESUtil.decrypt(response.data, store.state.KEY)
-      );
-
-      const json = JSON.parse(
-        AESUtil.decrypt(response.data, store.state.KEY)
-      ).ANOTHER_WORLD_RESPONSE;
-      return new Result(json.code, json.msg, json.time, json.data);
     });
   }
 }

@@ -1,4 +1,3 @@
-import Base64Util from "@/utils/Base64Util";
 import { AxiosResponse } from "axios";
 
 export default class Result {
@@ -15,7 +14,7 @@ export default class Result {
   }
 
   static getResult(response: AxiosResponse): Result {
-    console.log("响应拦截: " + response);
+    console.log("响应拦截: " + response.data.data);
 
     return new Result(
       response.data.code,

@@ -18,9 +18,6 @@ import { api } from "./api/api";
 store.commit("DELECT_ALL_KEY");
 
 const app = createApp(App);
-
-store.commit("DELECT_ALL_KEY");
-
 api.getPublicKey().then(() => {
   app.use(router).use(store).use(ElementPlus);
   app.config.globalProperties.$axios = axios;
