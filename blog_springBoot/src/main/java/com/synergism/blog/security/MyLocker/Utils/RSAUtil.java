@@ -1,7 +1,7 @@
 //
 //package com.synergism.blog.util;
 //
-//import com.synergism.blog.enums.RSAEnum;
+//import com.synergism.blog.security.MyLocker.Enums.RSAEnum;
 //import org.apache.tomcat.util.codec.binary.Base64;
 //
 //import javax.crypto.Cipher;
@@ -103,9 +103,9 @@
 
 
 
-package com.synergism.blog.util;
+package com.synergism.blog.security.MyLocker.Utils;
 
-import com.synergism.blog.enums.RSAEnum;
+import com.synergism.blog.security.MyLocker.Enums.RSAEnum;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.io.ByteArrayOutputStream;
@@ -119,7 +119,7 @@ import java.util.Map;
 
 import javax.crypto.Cipher;
 
-import static com.synergism.blog.util.StringUtil.asString;
+import static com.synergism.blog.utils.StringUtil.asString;
 
 /**
  *

@@ -1,9 +1,9 @@
 package com.synergism.blog.interceptor;
 
 import com.synergism.blog.entity.Client;
-import com.synergism.blog.enums.KeyEnum;
+import com.synergism.blog.security.MyLocker.Enums.KeyEnum;
 import com.synergism.blog.exception.custom.IllegalRequestException;
-import com.synergism.blog.util.StringUtil;
+import com.synergism.blog.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,7 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.synergism.blog.util.StringUtil.asString;
+import static com.synergism.blog.utils.StringUtil.asString;
 
 /**
  * 全局拦截器

@@ -1,17 +1,10 @@
 package com.synergism.blog;
 
-import com.synergism.blog.enums.RSAEnum;
-import com.synergism.blog.util.AESUtil;
-import com.synergism.blog.util.RSAUtil;
-import com.synergism.blog.util.Base64Util;
+import com.synergism.blog.utils.Base64Util;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Map;
-
-import static com.synergism.blog.util.StringUtil.asString;
 
 @SpringBootTest
 class BlogApplicationTests {

@@ -2,12 +2,11 @@ package com.synergism.blog.controller;
 
 import com.synergism.blog.entity.Login;
 import com.synergism.blog.service.UserService;
-import com.synergism.blog.serviceImpl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.synergism.blog.util.StringUtil.checkStringIsEmpty;
-import static com.synergism.blog.util.StringUtil.checkStringLength;
+import static com.synergism.blog.utils.StringUtil.checkStringIsEmpty;
+import static com.synergism.blog.utils.StringUtil.checkStringLength;
 
 
 /**

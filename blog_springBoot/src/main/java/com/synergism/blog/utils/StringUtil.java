@@ -1,4 +1,4 @@
-package com.synergism.blog.util;
+package com.synergism.blog.utils;
 
 /**
  * 字符串工具类

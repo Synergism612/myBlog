@@ -3,7 +3,7 @@ package com.synergism.blog.result;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.util.TimeUtil.now;
+import static com.synergism.blog.utils.TimeUtil.now;
 
 /**
  * 结果封装类

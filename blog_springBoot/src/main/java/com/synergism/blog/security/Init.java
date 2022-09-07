@@ -1,8 +1,6 @@
-package com.synergism.blog;
+package com.synergism.blog.security;
 
-import com.synergism.blog.util.RSAUtil;
-
-import java.security.NoSuchAlgorithmException;
+import com.synergism.blog.security.MyLocker.Utils.RSAUtil;
 
 public class Init {
     /**

@@ -1,4 +1,4 @@
-package com.synergism.blog.util;
+package com.synergism.blog.security.MyLocker.Utils;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 

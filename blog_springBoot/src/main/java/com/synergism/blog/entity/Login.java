@@ -3,7 +3,7 @@ package com.synergism.blog.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.util.StringUtil.checkStringIsUnsafe;
+import static com.synergism.blog.utils.StringUtil.checkStringIsUnsafe;
 /**
  * 用户登录实体类
  */

@@ -4,9 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.security.NoSuchAlgorithmException;
-
-import static com.synergism.blog.Init.init;
+import static com.synergism.blog.security.Init.init;
 
 @SpringBootApplication
 @MapperScan("com/synergism/blog/mapper")
