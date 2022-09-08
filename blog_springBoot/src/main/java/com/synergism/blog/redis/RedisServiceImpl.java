@@ -4,13 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class RedisServiceImpl implements RedisService {
 
-    private final RedisTemplate redisTemplate = new RedisTemplate();
+    @Autowired
+    private RedisTemplate redisTemplate;
     private final int timeout = 168; //过期时间，单位小时
 
     @Override
