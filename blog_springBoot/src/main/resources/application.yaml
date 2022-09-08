@@ -1,6 +1,6 @@
-# 数据库配置
+# spring配置
 spring:
-  # 配置数据源
+  # 配置mysql数据源
   datasource:
     # 连接引擎位置
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -10,6 +10,20 @@ spring:
     username: blog
     # 密码
     password: 123456
+  # 配置redis
+  redis:
+    # ip地址
+    host: localhost
+    # 端口
+    port: 6379
+    # 用户名
+    username: root
+    # 密码
+    password:
+    # 最大连接数
+    jedis:
+      pool:
+        max-active: 8
 
 # 服务配置
 server:
