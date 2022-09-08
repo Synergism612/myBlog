@@ -14,6 +14,18 @@ public class StringUtil {
     }
 
     /**
+     * @param strings 字符串数组
+     * @return 为空则真，反之则假
+     */
+    public static boolean checkStringsIfEmpty(String... strings) {
+        boolean result = true;
+        for (String str : strings) {
+            result = checkStringIfEmpty(str);
+        }
+        return result;
+    }
+
+    /**
      * 检查字符串是否为空
      *
      * @param str 字符串
@@ -28,14 +40,12 @@ public class StringUtil {
     /**
      * 检查字符串数组中每个字符串不能为空
      *
-     * @param strs 字符串数组
+     * @param strings 字符串数组
      * @param names  字符串对应的名称数组
      */
-    public static void checkStringIsEmpty(String[] strs, String[] names) {
-        for (int i = 0; i < strs.length; i++) {
-            if (strs[i] == null || (strs[i].length() == 0)) {
-                throw new IllegalArgumentException(names[i] + "不可为空");
-            }
+    public static void checkStringIsEmpty(String[] strings, String[] names) {
+        for (int i = 0; i < strings.length; i++) {
+            checkStringIsEmpty(strings[i],names[i]);
         }
     }
 
@@ -167,11 +177,16 @@ public class StringUtil {
         if (count > 1) throw new IllegalArgumentException("不合法");
     }
 
-    /**
-     * 转为字符串
-     * @param value 值
-     * @return 字符串
-     */
+    public static boolean checkStringContains(String str,String contain) {
+        if (checkStringIfEmpty(contain)) return true;
+        return str.contains(contain);
+    }
+
+        /**
+         * 转为字符串
+         * @param value 值
+         * @return 字符串
+         */
     public static <V> String asString(V value){
         return value.toString();
     }
