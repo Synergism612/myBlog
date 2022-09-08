@@ -2,6 +2,7 @@ package com.synergism.blog.interceptor;
 
 import com.synergism.blog.security.enums.KeyEnum;
 import com.synergism.blog.exception.custom.IllegalRequestException;
+import com.synergism.blog.security.utils.URLUtil;
 import com.synergism.blog.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -40,8 +41,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //检查头部中是否存在异世界钥匙
         if(StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
             //检查url是否指向获取公钥
-            String publicKeyPath = "/api/public/key";
-            if(url.contains(publicKeyPath)) return true;
+            if(URLUtil.checkURLIfToPublic(url)) return true;
             //若不存在且不是去获取公钥，就抛出异常
             throw new IllegalRequestException("拒绝访问");
         }
