@@ -38,50 +38,50 @@ public class RSAUtil {
      */
     public static final String KEY_ALGORITHM = "RSA";
 
-    
+
     /**
      * 签名算法
      */
     public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
 
-    
+
     /**
      * 获取公钥的key
      */
     private static final String PUBLIC_KEY = asString(RSAEnum.PUBLIC_KEY);
 
-    
+
     /**
      * 获取私钥的key
      */
     private static final String PRIVATE_KEY = asString(RSAEnum.PRIVATE_KEY);
 
-    
+
     /**
      * RSA最大加密明文大小
      */
     private static final int MAX_ENCRYPT_BLOCK = 117;
 
-    
+
     /**
      * RSA最大解密密文大小
      */
     private static final int MAX_DECRYPT_BLOCK = 128;
 
-    
+
     /**
      * RSA 位数 如果采用2048 上面最大加密和最大解密则须填写:  245 256
      */
     private static final int INITIALIZE_LENGTH = 1024;
 
-    
+
     /**
      * <p>
      * 生成密钥对(公钥和私钥)
      * </p>
      *
      * @return 密钥对
-     
+
      */
     public static Map<String, Object> genKeyPair(){
         try {
@@ -99,7 +99,7 @@ public class RSAUtil {
         }
     }
 
-    
+
     /**
      * <p>
      * 用私钥对信息生成数字签名
@@ -111,7 +111,7 @@ public class RSAUtil {
      *            私钥(BASE64编码)
      *
      * @return 签名
-     
+
      */
     public static String sign(byte[] data, String privateKey){
         try {
@@ -128,7 +128,7 @@ public class RSAUtil {
         }
     }
 
-    
+
     /**
      * <p>
      * 校验数字签名
@@ -142,7 +142,7 @@ public class RSAUtil {
      *            数字签名
      *
      * @return 签名是否通过校验
-     
+
      *
      */
     public static boolean verify(byte[] data, String publicKey, String sign){
@@ -160,7 +160,7 @@ public class RSAUtil {
         }
     }
 
-    
+
     /**
      * <P>
      * 私钥解密
@@ -171,7 +171,7 @@ public class RSAUtil {
      * @param privateKey
      *            私钥(BASE64编码)
      * @return 解密内容
-     
+
      */
     public static byte[] decryptByPrivateKey(byte[] encryptedData, String privateKey){
         try {
@@ -179,13 +179,13 @@ public class RSAUtil {
             PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
             KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
             Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
-            return cipherInitGetData(keyFactory,privateK,encryptedData);
+            return cipherInitGetDataDecrypt(keyFactory,privateK,encryptedData);
         } catch (Exception e) {
             throw new KeyFailureException("错误的解密");
         }
     }
 
-    
+
     /**
      * <p>
      * 公钥解密
@@ -196,7 +196,7 @@ public class RSAUtil {
      * @param publicKey
      *            公钥(BASE64编码)
      * @return 密文
-     
+
      */
     public static byte[] decryptByPublicKey(byte[] encryptedData, String publicKey){
         try {
@@ -204,13 +204,13 @@ public class RSAUtil {
             X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
             KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
             Key publicK = keyFactory.generatePublic(x509KeySpec);
-            return cipherInitGetData(keyFactory,publicK,encryptedData);
+            return cipherInitGetDataDecrypt(keyFactory,publicK,encryptedData);
         } catch (Exception e) {
             throw new KeyFailureException("错误的解密");
         }
     }
 
-    
+
     /**
      * <p>
      * 公钥加密
@@ -221,7 +221,7 @@ public class RSAUtil {
      * @param publicKey
      *            公钥(BASE64编码)
      * @return 密文
-     
+
      */
     public static byte[] encryptByPublicKey(byte[] data, String publicKey){
         try {
@@ -229,13 +229,13 @@ public class RSAUtil {
             X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
             KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
             Key publicK = keyFactory.generatePublic(x509KeySpec);
-            return cipherInitGetData(keyFactory,publicK,data);
+            return cipherInitGetDataEncrypt(keyFactory,publicK,data);
         } catch (Exception e) {
             throw new KeyFailureException("错误的加密");
         }
     }
 
-    
+
     /**
      * <p>
      * 私钥加密
@@ -246,7 +246,7 @@ public class RSAUtil {
      * @param privateKey
      *            私钥(BASE64编码)
      * @return 密文
-     
+
      */
     public static byte[] encryptByPrivateKey(byte[] data, String privateKey){
         try {
@@ -254,13 +254,13 @@ public class RSAUtil {
             PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
             KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
             Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
-            return cipherInitGetData(keyFactory,privateK,data);
+            return cipherInitGetDataEncrypt(keyFactory,privateK,data);
         } catch (Exception e) {
             throw new KeyFailureException("错误的加密");
         }
     }
 
-    
+
     /**
      * <p>
      * 获取私钥
@@ -275,7 +275,7 @@ public class RSAUtil {
         return Base64.encodeBase64String(key.getEncoded());
     }
 
-    
+
     /**
      * <p>
      * 获取公钥
@@ -332,9 +332,9 @@ public class RSAUtil {
         }
     }
 
-    private static byte[] cipherInitGetData(KeyFactory keyFactory, Key privateK, byte[] data) throws Exception {
+    private static byte[] cipherInitGetDataEncrypt(KeyFactory keyFactory, Key key, byte[] data) throws Exception {
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-        cipher.init(Cipher.ENCRYPT_MODE, privateK);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
         int inputLen = data.length;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         int offSet = 0;
@@ -354,6 +354,30 @@ public class RSAUtil {
         byte[] encryptedData = out.toByteArray();
         out.close();
         return encryptedData;
+    }
+
+    private static byte[] cipherInitGetDataDecrypt(KeyFactory keyFactory, Key key, byte[] encryptedData) throws Exception {
+        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        int inputLen = encryptedData.length;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int offSet = 0;
+        byte[] cache;
+        int i = 0;
+        // 对数据分段解密
+        while (inputLen - offSet > 0) {
+            if (inputLen - offSet > MAX_DECRYPT_BLOCK) {
+                cache = cipher.doFinal(encryptedData, offSet, MAX_DECRYPT_BLOCK);
+            } else {
+                cache = cipher.doFinal(encryptedData, offSet, inputLen - offSet);
+            }
+            out.write(cache, 0, cache.length);
+            i++;
+            offSet = i * MAX_DECRYPT_BLOCK;
+        }
+        byte[] decryptedData = out.toByteArray();
+        out.close();
+        return decryptedData;
     }
 }
 
