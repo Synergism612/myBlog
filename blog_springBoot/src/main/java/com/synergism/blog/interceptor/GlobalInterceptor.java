@@ -1,14 +1,12 @@
 package com.synergism.blog.interceptor;
 
-import com.synergism.blog.entity.Client;
-import com.synergism.blog.security.MyLocker.Enums.KeyEnum;
+import com.synergism.blog.security.enums.KeyEnum;
 import com.synergism.blog.exception.custom.IllegalRequestException;
 import com.synergism.blog.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +17,6 @@ import static com.synergism.blog.utils.StringUtil.asString;
  */
 @Component
 public class GlobalInterceptor implements HandlerInterceptor {
-    private static String PublicKeyPath = "/api/public/key";
     /**
      * 当某个 url 已经匹配到对应的 Controller 中的某个方法，且在这个方法执行之前 去执行。
      *
@@ -31,25 +28,20 @@ public class GlobalInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //获取客户端信息，ip地址和host名
-        Client client = Client.getInstance(request);
-        //获得cookies数据
-        Cookie[] cookies = request.getCookies();
         //获取url路径
         String url = request.getRequestURI();
-        //获取sessionID
-        String sessionID = request.getSession().getId();
         //获取钥匙
         String ANOTHER_WORLD_KEY = request.getHeader(asString(KeyEnum.ANOTHER_WORLD_KEY));
 
+        //跳过的请求
         if(request.getMethod().equals("OPTIONS"))return true;
-
         if(url.equals("/error")) return true;
 
         //检查头部中是否存在异世界钥匙
         if(StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
             //检查url是否指向获取公钥
-            if(url.contains(PublicKeyPath)) return true;
+            String publicKeyPath = "/api/public/key";
+            if(url.contains(publicKeyPath)) return true;
             //若不存在且不是去获取公钥，就抛出异常
             throw new IllegalRequestException("拒绝访问");
         }

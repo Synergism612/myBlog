@@ -1,6 +1,6 @@
 package com.synergism.blog.security;
 
-import com.synergism.blog.security.MyLocker.Utils.RSAUtil;
+import com.synergism.blog.security.utils.RSAUtil;
 
 public class Init {
     /**

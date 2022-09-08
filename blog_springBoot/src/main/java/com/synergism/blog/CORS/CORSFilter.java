@@ -1,6 +1,6 @@
 package com.synergism.blog.CORS;
 
-import com.synergism.blog.security.MyLocker.Enums.KeyEnum;
+import com.synergism.blog.security.enums.KeyEnum;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;

@@ -1,4 +1,4 @@
-package com.synergism.blog.security.MyLocker.Enums;
+package com.synergism.blog.security.enums;
 
 /**
  * 存放RSA密钥对的键名

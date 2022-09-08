@@ -1,5 +1,6 @@
-package com.synergism.blog.security.MyLocker.Utils;
+package com.synergism.blog.security.utils;
 
+import com.synergism.blog.exception.custom.KeyFailureException;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.crypto.Cipher;
@@ -8,8 +9,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.SecureRandom;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * AES对称加密工具类
@@ -68,21 +67,18 @@ public class AESUtil {
             byte[] result = cipher.doFinal(byteContent);// 加密
 
             return Base64.encodeBase64String(result);//通过Base64转码返回
-        } catch (Exception ex) {
-            Logger.getLogger(AESUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            throw new KeyFailureException("错误的加密");
         }
-
-        return null;
-
     }
 
 
     /**
      * AES 解密操作
      *
-     * @param content
-     * @param key
-     * @return
+     * @param content 密文
+     * @param key     密钥
+     * @return 解密后的内容
      */
     public static String decrypt(String content, String key) {
         if (content == null || "".equals(content)) {
@@ -102,11 +98,9 @@ public class AESUtil {
             byte[] result = cipher.doFinal(Base64.decodeBase64(content));
 
             return new String(result, CODE_TYPE);
-        } catch (Exception ex) {
-            Logger.getLogger(AESUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            throw new KeyFailureException("错误的解密");
         }
-
-        return null;
     }
 
 
@@ -129,11 +123,10 @@ public class AESUtil {
             SecretKey secretKey = kg.generateKey();
 
             return new SecretKeySpec(secretKey.getEncoded(), AES);// 转换为AES专用密钥
-        } catch (Exception ex) {
-            Logger.getLogger(AESUtil.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (Exception e) {
+            throw new KeyFailureException("错误的密钥");
 
-        return null;
+        }
     }
 
 }

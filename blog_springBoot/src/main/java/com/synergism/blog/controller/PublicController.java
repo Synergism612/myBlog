@@ -1,7 +1,7 @@
 package com.synergism.blog.controller;
 
 import com.synergism.blog.entity.Login;
-import com.synergism.blog.security.MyLocker.Enums.RSAEnum;
+import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.result.Result;
 import org.springframework.web.bind.annotation.*;
 

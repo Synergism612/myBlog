@@ -1,11 +1,13 @@
-package com.synergism.blog.security.MyLocker.Filter;
+package com.synergism.blog.security.myLocker.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.synergism.blog.security.MyLocker.Enums.KeyEnum;
-import com.synergism.blog.security.MyLocker.Enums.RSAEnum;
-import com.synergism.blog.security.MyLocker.Utils.AESUtil;
-import com.synergism.blog.security.MyLocker.Utils.RSAUtil;
+import com.synergism.blog.security.enums.KeyEnum;
+import com.synergism.blog.security.enums.RSAEnum;
+import com.synergism.blog.security.myLocker.wrapper.RequestWrapper;
+import com.synergism.blog.security.myLocker.wrapper.ResponseWrapper;
+import com.synergism.blog.security.utils.AESUtil;
+import com.synergism.blog.security.utils.RSAUtil;
 import com.synergism.blog.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
@@ -38,12 +40,17 @@ public class HttpFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        //获取HttpServletRequest请求
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        if (httpServletRequest.getRequestURL().toString().contains("/api/public/key")) {
+        //获得加密的密钥
+        String ANOTHER_WORLD_KEY = httpServletRequest.getHeader(StringUtil.asString(KeyEnum.ANOTHER_WORLD_KEY));
+        //判断不使用自定义类的情况
+        if (httpServletRequest.getRequestURL().toString().contains("/api/public/key") || //获取公钥请求
+                StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY)|| //公钥为空请求
+                ANOTHER_WORLD_KEY.equals(System.getProperty(asString(KeyEnum.ANOTHER_WORLD_KEY))) //公钥不匹配请求
+        ) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            //获得加密的密钥
-            String ANOTHER_WORLD_KEY = httpServletRequest.getHeader(StringUtil.asString(KeyEnum.ANOTHER_WORLD_KEY));
             //解密得到密钥
             String key = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
             //构建自定义请求与响应
@@ -65,7 +72,6 @@ public class HttpFilter implements Filter {
             ((HttpServletResponse) servletResponse).setStatus(200); //写入头部
             servletResponse.getOutputStream().write(result.getBytes()); //开启数据流
         }
-
     }
 
     @Override
