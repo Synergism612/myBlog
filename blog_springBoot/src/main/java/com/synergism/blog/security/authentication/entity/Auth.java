@@ -10,16 +10,26 @@ import lombok.Setter;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.io.Serializable;
+
 import static com.synergism.blog.utils.StringUtil.asString;
 
 @Getter
 @Setter
-public class Auth {
+public class Auth implements Serializable {
     private String sessionID;
     private String userKey;
     private String userName;
     private String password;
     private String[] power;
+
+    public Auth() {
+        this.sessionID = "";
+        this.userKey = "";
+        this.userName = "";
+        this.password = "";
+        this.power = new String[]{""};
+    }
 
     public Auth(String sessionID, String userKey, String userName, String password, String[] power) {
         if (StringUtil.checkStringsIfEmpty(sessionID, userKey)) throw new PermissionFailureException("存在空值");

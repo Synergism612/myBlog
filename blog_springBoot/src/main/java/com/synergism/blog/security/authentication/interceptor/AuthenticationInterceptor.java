@@ -3,6 +3,7 @@ package com.synergism.blog.security.authentication.interceptor;
 import com.synergism.blog.redis.RedisService;
 import com.synergism.blog.security.authentication.entity.Auth;
 import com.synergism.blog.security.utils.SnowflakeIdWorker;
+import com.synergism.blog.security.utils.URLUtil;
 import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,23 +39,26 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        //放行
+        if(URLUtil.checkURLIfToPublic(request.getRequestURI())) return true;
+        //跳过的请求
+        if(request.getMethod().equals("OPTIONS"))return true;
+        if(URLUtil.checkURLIfToError(request.getRequestURI())) return true;
         //获取AuthID
-        String AuthID = request.getHeader("AUTH_ID");
-        if (StringUtil.checkStringIfEmpty(AuthID)) { //若为空
+        String Auth_ID = request.getHeader("AUTH_ID");
+        if (StringUtil.checkStringIfEmpty(Auth_ID)) { //若为空
             //创建id
-            Long id = new SnowflakeIdWorker(0, 0).nextId();
+            String auth_id = asString(new SnowflakeIdWorker(0, 0).nextId());
             //创建基本权限
             Auth auth = Auth.getInstance(request);
             //写入redis
-            redis.setValue(asString(id), auth);
-            //放行
-            return true;
+            redis.setValue(auth_id, auth);
+            response.addHeader("Auth_ID",auth_id);
         }else { //若存在
             //从redis中获取对应权限
-            Auth auth = (Auth) redis.getValue(AuthID);
-
+            Auth auth = (Auth) redis.getValue(Auth_ID);
         }
-        return false;
+        return true;
     }
 
     /**
