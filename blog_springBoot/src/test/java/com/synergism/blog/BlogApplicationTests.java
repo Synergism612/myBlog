@@ -1,9 +1,11 @@
 package com.synergism.blog;
 
+import com.synergism.blog.redis.RedisService;
 import com.synergism.blog.utils.Base64Util;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -52,5 +54,12 @@ class BlogApplicationTests {
 		logger.info("你好");
 		logger.warn("警告");
 		logger.error("错误");
+	}
+	@Autowired
+	RedisService service;
+	@Test
+	void getRedisTest() {
+		Object o = service.getValue("409379755675090944");
+		System.out.println(o.toString());
 	}
 }
