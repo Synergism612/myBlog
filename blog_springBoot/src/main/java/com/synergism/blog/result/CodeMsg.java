@@ -17,6 +17,9 @@ public class CodeMsg {
     public static CodeMsg BIND_ERROR = new CodeMsg(500101, "参数校验异常：%s");
     public static CodeMsg REQUEST_ILLEGAL = new CodeMsg(500102, "请求非法：%s");
     public static CodeMsg ACCESS_LIMIT_REACHED = new CodeMsg(500103, "访问太频繁！");
+    public static CodeMsg KEY_FAILURE = new CodeMsg(500104, "密钥失效：%s");
+    public static CodeMsg PERMISSION_FAILURE = new CodeMsg(500105, "鉴权失败：%s");
+
 
     //登录模块 5002XX
     public static CodeMsg USER_NOT_LOGIN = new CodeMsg(500200, "用户未登录");

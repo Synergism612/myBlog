@@ -1,6 +1,9 @@
 package com.synergism.blog.exception;
 
 import com.synergism.blog.exception.custom.IllegalRequestException;
+import com.synergism.blog.exception.custom.KeyFailureException;
+import com.synergism.blog.exception.custom.PermissionFailureException;
+import com.synergism.blog.exception.custom.SnowFailException;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -33,5 +36,38 @@ public class GlobalException extends RuntimeException{
     @ResponseBody
     public Result<Object> IllegalArgumentException(IllegalRequestException e){
         return Result.error(CodeMsg.REQUEST_ILLEGAL.fillArgs(e.getMessage()));
+    }
+
+    /**
+     * 拦截KeyFailureException异常
+     * @param e 异常
+     * @return 结果
+     */
+    @ExceptionHandler(value = KeyFailureException.class)
+    @ResponseBody
+    public Result<Object> KeyFailureException(KeyFailureException e){
+        return Result.error(CodeMsg.REQUEST_ILLEGAL.fillArgs(e.getMessage()));
+    }
+
+    /**
+     * 拦截KeyFailureException异常
+     * @param e 异常
+     * @return 结果
+     */
+    @ExceptionHandler(value = PermissionFailureException.class)
+    @ResponseBody
+    public Result<Object> PermissionFailureException(PermissionFailureException e){
+        return Result.error(CodeMsg.PERMISSION_FAILURE.fillArgs(e.getMessage()));
+    }
+
+    /**
+     * 拦截KeyFailureException异常
+     * @param e 异常
+     * @return 结果
+     */
+    @ExceptionHandler(value = SnowFailException.class)
+    @ResponseBody
+    public Result<Object> SnowFailException(SnowFailException e){
+        return Result.error(CodeMsg.SERVER_ERROR);
     }
 }
