@@ -3,7 +3,6 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import Result from "@/entity/Result";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
-import CryptoJS from "crypto-js";
 import StringUtil from "@/utils/StringUtil";
 
 //请求根路径
@@ -21,7 +20,8 @@ class Axios {
     withCredentials: true,
     //自定义头部
     headers: {
-      ANOTHER_WORLD_KEY: " ",
+      ANOTHER_WORLD_KEY: "",
+      AUTH_ID: "",
       "Content-Type": "application/json; charset=utf-8",
       Accept: "application/json",
     },
@@ -46,12 +46,17 @@ class Axios {
         if (request.url == publicKeyURL) return request;
         // 多一步判断
         request.headers["ANOTHER_WORLD_KEY"] = store.state.ANOTHER_WORLD_KEY;
+        request.headers["AUTH_ID"] = store.state.AUTH_ID;
       }
       return request;
     });
 
     //响应拦截
     this.service.interceptors.response.use((response: AxiosResponse) => {
+      const auth_id = response.headers["auth_id"];
+      if (!StringUtil.checkStringIfEmpty(auth_id))
+        store.commit("SET_AUTH_ID", auth_id);
+      console.log("添加的鉴权" + response.headers.auth_id);
       if (StringUtil.checkStringIfEmpty(store.state.ANOTHER_WORLD_KEY)) {
         return Result.getResult(response);
       } else {
