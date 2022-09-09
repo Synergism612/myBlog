@@ -28,17 +28,19 @@ public class Auth implements Serializable {
         this.userKey = "";
         this.userName = "";
         this.password = "";
-        this.power = new String[]{""};
+        this.power = new String[]{"login", "register", "public","index"};
+
     }
 
     public Auth(String sessionID, String userKey, String userName, String password, String[] power) {
-        if (StringUtil.checkStringsIfEmpty(sessionID, userKey)) throw new PermissionFailureException("存在空值");
+        if (StringUtil.checkStringsIfEmpty(sessionID)) throw new PermissionFailureException("存在空值");
         this.sessionID = sessionID;
-        this.userKey = userKey;
-        if (StringUtil.checkStringsIfEmpty(userName, password)){
+        if (StringUtil.checkStringsIfEmpty(userKey, userName, password)) {
+            this.userKey = "";
             this.userName = "";
             this.password = "";
-        }else {
+        } else {
+            this.userKey = userKey;
             this.userName = userName;
             this.password = password;
         }
@@ -48,9 +50,13 @@ public class Auth implements Serializable {
     public static Auth getInstance(HttpServletRequest request) {
         String sessionID = request.getRequestedSessionId();
         String ANOTHER_WORLD_KEY = request.getHeader(asString(KeyEnum.ANOTHER_WORLD_KEY));
-        String userKey = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
+        String userKey = StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY) ? "" : RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
 
-        return new Auth(sessionID,userKey,"","", Power.NOT_LOG_IN.getPower());
+        return new Auth(sessionID, userKey, "", "", Power.NOT_LOG_IN.getPower());
+    }
+
+    public static Auth BASIC(String sessionID) {
+        return new Auth(sessionID, "", "", "", new String[]{"login", "register", "public","index"});
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.synergism.blog.interceptor;
 
 import com.synergism.blog.security.authentication.interceptor.AuthenticationInterceptor;
+import com.synergism.blog.security.authentication.interceptor.NewInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,16 +18,21 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
     //鉴权拦截器
     private AuthenticationInterceptor authenticationInterceptor;
 
+    private NewInterceptor newInterceptor;
+
     @Autowired
     InterceptorConfig(GlobalInterceptor globalInterceptor,
-                      AuthenticationInterceptor authenticationInterceptor){
-        this.globalInterceptor = globalInterceptor;
-        this.authenticationInterceptor = authenticationInterceptor;
+                      AuthenticationInterceptor authenticationInterceptor,
+                      NewInterceptor newInterceptor){
+//        this.globalInterceptor = globalInterceptor;
+//        this.authenticationInterceptor = authenticationInterceptor;
+        this.newInterceptor = newInterceptor;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(globalInterceptor);
-        registry.addInterceptor(authenticationInterceptor);
+//        registry.addInterceptor(globalInterceptor);
+//        registry.addInterceptor(authenticationInterceptor);
+        registry.addInterceptor(newInterceptor);
     }
 }

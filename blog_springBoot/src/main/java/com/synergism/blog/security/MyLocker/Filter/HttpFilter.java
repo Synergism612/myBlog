@@ -8,6 +8,7 @@ import com.synergism.blog.security.myLocker.wrapper.RequestWrapper;
 import com.synergism.blog.security.myLocker.wrapper.ResponseWrapper;
 import com.synergism.blog.security.utils.AESUtil;
 import com.synergism.blog.security.utils.RSAUtil;
+import com.synergism.blog.security.utils.URLUtil;
 import com.synergism.blog.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
@@ -45,9 +46,8 @@ public class HttpFilter implements Filter {
         //获得加密的密钥
         String ANOTHER_WORLD_KEY = httpServletRequest.getHeader(StringUtil.asString(KeyEnum.ANOTHER_WORLD_KEY));
         //判断不使用自定义类的情况
-        if (httpServletRequest.getRequestURL().toString().contains("/api/public/key") || //获取公钥请求
-                StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY)|| //公钥为空请求
-                ANOTHER_WORLD_KEY.equals(System.getProperty(asString(KeyEnum.ANOTHER_WORLD_KEY))) //公钥不匹配请求
+        if (URLUtil.checkURLIfToPublic(httpServletRequest.getRequestURL().toString()) || //获取公钥请求
+                StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY) //公钥为空请求
         ) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {

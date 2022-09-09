@@ -1,5 +1,7 @@
 package com.synergism.blog.security.utils;
 
+import com.synergism.blog.exception.custom.IllegalRequestException;
+
 public class URLUtil {
 
     private static final String publicKeyPath = "/api/public/key";
@@ -13,5 +15,15 @@ public class URLUtil {
 
     public static Boolean checkURLIfToError(String url){
         return url.equals(errorPath);
+    }
+
+    public static void checkURLIsPower(String url ,String[] powers){
+        Boolean ok = false;
+        for (String power : powers) {
+            if (power.equals(url)) ok = true;
+        }
+        if (!ok){
+            throw new IllegalRequestException("权限不足");
+        }
     }
 }
