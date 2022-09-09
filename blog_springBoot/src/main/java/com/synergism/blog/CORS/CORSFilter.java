@@ -19,9 +19,10 @@ public class CORSFilter implements Filter {
 
     /**
      * 为响应添加CORS
-     * @param servletRequest 请求
+     *
+     * @param servletRequest  请求
      * @param servletResponse 响应
-     * @param filterChain 过滤器
+     * @param filterChain     过滤器
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -32,7 +33,9 @@ public class CORSFilter implements Filter {
         //允许的请求方式，方式返回
         res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
         //允许的头部，自定义头部返回
-        res.addHeader("Access-Control-Allow-Headers", "content-type,Accept,"+ KeyEnum.ANOTHER_WORLD_KEY);
+        res.addHeader("Access-Control-Allow-Headers", "content-type,Accept," + KeyEnum.ANOTHER_WORLD_KEY + "," + KeyEnum.AUTH_ID);
+        //允许访问的头部
+        res.addHeader("Access-Control-Expose-Headers",""+KeyEnum.AUTH_ID);
         //如果是预请求，直接返回
         if (((HttpServletRequest) servletRequest).getMethod().equals("OPTIONS")) {
             servletResponse.getWriter().println("ok");
