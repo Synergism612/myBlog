@@ -46,11 +46,11 @@ public class GlobalException extends RuntimeException{
     @ExceptionHandler(value = KeyFailureException.class)
     @ResponseBody
     public Result<Object> KeyFailureException(KeyFailureException e){
-        return Result.error(CodeMsg.REQUEST_ILLEGAL.fillArgs(e.getMessage()));
+        return Result.error(CodeMsg.KEY_FAILURE.fillArgs(e.getMessage()));
     }
 
     /**
-     * 拦截KeyFailureException异常
+     * 拦截PermissionFailureException异常
      * @param e 异常
      * @return 结果
      */
@@ -61,7 +61,7 @@ public class GlobalException extends RuntimeException{
     }
 
     /**
-     * 拦截KeyFailureException异常
+     * 拦截SnowFailException异常
      * @param e 异常
      * @return 结果
      */
