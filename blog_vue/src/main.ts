@@ -9,6 +9,7 @@ import "./assets/less/all.less";
  * 引入ElementPlus
  */
 import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
 
 /**
  * 引入axios，配置$axios。
