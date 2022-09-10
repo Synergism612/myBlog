@@ -20,7 +20,7 @@ public class URLUtil {
     public static void checkURLIsPower(String url ,String[] powers){
         Boolean ok = false;
         for (String power : powers) {
-            if (power.equals(url)) ok = true;
+            if (url.contains(power)) ok = true;
         }
         if (!ok){
             throw new IllegalRequestException("权限不足");

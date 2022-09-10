@@ -19,7 +19,7 @@ public class Power {
      * 基本权限方法
      */
     public static Power NOT_LOG_IN = new Power(new String[]{
-            "/api/public/test",
+            "/api/public/key",
             "/index",
             "/login",
             "/register"

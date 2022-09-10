@@ -74,8 +74,8 @@ public class GlobalInterceptor implements HandlerInterceptor {
             if (!auth.getSessionID().equals(sessionID)){
                 auth.setSessionID(sessionID);
             }
-            redis.getAndSetValue(AUTH_ID,auth);
             URLUtil.checkURLIsPower(url, auth.getPower());
+            redis.getAndSetValue(AUTH_ID,auth);
             response.addHeader("AUTH_ID", AUTH_ID);
             return true;
         }
