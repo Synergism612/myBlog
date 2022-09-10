@@ -17,7 +17,7 @@ import ElementPlus from "element-plus";
 import axios from "@/axios/axios";
 import { api } from "./api/api";
 
-store.commit("DELECT_ALL_KEY");
+// store.commit("DELECT_ALL_KEY");
 
 const app = createApp(App);
 api.getPublicKey().then(() => {

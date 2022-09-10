@@ -8,7 +8,7 @@ import StringUtil from "@/utils/StringUtil";
 //请求根路径
 const baseURL = "http://localhost:8088";
 
-const publicKeyURL = "/api/public/key";
+// const publicKeyURL = "/api/public/key";
 class Axios {
   //axios配置
   config = {
