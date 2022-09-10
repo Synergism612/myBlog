@@ -1,6 +1,6 @@
-package com.synergism.blog.security.utils;
+package com.synergism.blog.global.security.utils;
 
-import com.synergism.blog.exception.custom.KeyFailureException;
+import com.synergism.blog.global.exception.custom.KeyFailureException;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.crypto.Cipher;

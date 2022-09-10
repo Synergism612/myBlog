@@ -1,7 +1,7 @@
-package com.synergism.blog.security.utils;
+package com.synergism.blog.global.security.utils;
 
-import com.synergism.blog.exception.custom.KeyFailureException;
-import com.synergism.blog.security.enums.RSAEnum;
+import com.synergism.blog.global.exception.custom.KeyFailureException;
+import com.synergism.blog.global.security.enums.RSAEnum;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.io.ByteArrayOutputStream;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 import javax.crypto.Cipher;
 
-import static com.synergism.blog.utils.StringUtil.asString;
+import static com.synergism.blog.global.utils.StringUtil.asString;
 
 /**
  * <p>

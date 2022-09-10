@@ -1,4 +1,4 @@
-package com.synergism.blog.security.enums;
+package com.synergism.blog.global.security.enums;
 
 /**
  * 用于存放一些头部的键名
