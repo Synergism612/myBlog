@@ -113,8 +113,7 @@
 <script lang="ts">
 import { api } from "@/api/api";
 import { store } from "@/store";
-import { defineComponent, onMounted } from "vue";
-import { reactive, toRefs } from "vue";
+import { defineComponent, onMounted, reactive, toRefs } from "vue";
 
 export default defineComponent({
   /**
@@ -136,7 +135,11 @@ export default defineComponent({
     // api.getTest();
 
     onMounted(() => {
-      console.log("输出" + store.state.ANOTHER_WORLD_KEY);
+      console.log("ANOTHER_WORLD_KEY---\n" + store.state.ANOTHER_WORLD_KEY);
+      console.log("AUTH_ID---\n" + store.state.AUTH_ID);
+      console.log("KEY---\n" + store.state.KEY);
+      console.log("PUBLIC_KEY---\n" + store.state.PUBLIC_KEY);
+
       api.getTest();
     });
 

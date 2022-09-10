@@ -25,12 +25,9 @@ export class api {
         ) {
           //更改公钥值
           store.commit("SET_PUBLIC_KEY", data);
-          console.log("公钥钥  " + data);
           //生成钥匙
           const key = AESUtil.getKey();
-          console.log("对称钥  " + key);
           store.commit("SET_KEY", key);
-          console.log("加密对称钥  " + RSAUtil.encryptedData(key, data));
           store.commit(
             "SET_ANOTHER_WORLD_KEY",
             //公钥加密密钥

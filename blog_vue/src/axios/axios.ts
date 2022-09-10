@@ -41,9 +41,7 @@ class Axios {
     this.service = axios.create(this.config);
     //请求拦截
     this.service.interceptors.request.use((request: AxiosRequestConfig) => {
-      console.log("请求拦截:" + request.url);
       if (request && request.headers) {
-        if (request.url == publicKeyURL) return request;
         // 多一步判断
         request.headers["ANOTHER_WORLD_KEY"] = store.state.ANOTHER_WORLD_KEY;
         request.headers["AUTH_ID"] = store.state.AUTH_ID;
@@ -56,19 +54,13 @@ class Axios {
       const auth_id = response.headers["auth_id"];
       if (!StringUtil.checkStringIfEmpty(auth_id))
         store.commit("SET_AUTH_ID", auth_id);
-      console.log("添加的鉴权" + response.headers.auth_id);
       if (StringUtil.checkStringIfEmpty(store.state.ANOTHER_WORLD_KEY)) {
         return Result.getResult(response);
       } else {
-        console.log("接收到的加密数据" + response.data);
-        console.log("密钥" + store.state.KEY);
-        console.log(
-          "解密后的json" + AESUtil.decrypt(response.data, store.state.KEY)
-        );
-
         const json = JSON.parse(
           AESUtil.decrypt(response.data, store.state.KEY)
         ).ANOTHER_WORLD_RESPONSE;
+        console.log(json);
         return new Result(json.code, json.msg, json.time, json.data);
       }
     });

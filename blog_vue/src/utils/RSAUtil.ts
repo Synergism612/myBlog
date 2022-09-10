@@ -20,7 +20,6 @@ export default class AESUtil {
     // publicKey =
     //   "-----BEGIN PUBLIC KEY-----" + publicKey + "-----END PUBLIC KEY-----";
 
-    console.log("密文" + word + "\n" + "公钥" + publicKey);
     //转编码
     // const key = CryptoJS.enc.Base64.parse(publicKey);
     // const srcs = CryptoJS.enc.Base64.parse(word);
@@ -30,7 +29,6 @@ export default class AESUtil {
     encryptor.setPublicKey(publicKey);
     // 加密数据
     const encode = encryptor.encrypt(word);
-    console.log("加密对称钥" + encode);
     return encode || "";
   }
 

@@ -63,7 +63,6 @@ export const store = createStore({
      * @param state state
      */
     DELECT_ALL_KEY: (state) => {
-      console.log("删除");
       state.KEY = "";
       state.AUTH_ID = "";
       state.ANOTHER_WORLD_KEY = "";
