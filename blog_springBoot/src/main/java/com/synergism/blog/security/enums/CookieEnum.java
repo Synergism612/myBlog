@@ -1,4 +1,4 @@
-package com.synergism.blog.global.security.enums;
+package com.synergism.blog.security.enums;
 
 /**
  * 用于存放一些cookie的键名

@@ -1,9 +1,9 @@
-package com.synergism.blog.global.result;
+package com.synergism.blog.result.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.global.utils.TimeUtil.now;
+import static com.synergism.blog.result.utils.TimeUtil.now;
 
 /**
  * 结果封装类

@@ -1,4 +1,4 @@
-package com.synergism.blog.global.security.myLocker.wrapper;
+package com.synergism.blog.security.wrapper;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;

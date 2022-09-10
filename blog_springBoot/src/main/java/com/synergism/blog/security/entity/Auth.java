@@ -1,10 +1,10 @@
-package com.synergism.blog.global.security.authentication.entity;
+package com.synergism.blog.security.entity;
 
-import com.synergism.blog.global.exception.custom.PermissionFailureException;
-import com.synergism.blog.global.security.enums.KeyEnum;
-import com.synergism.blog.global.security.enums.RSAEnum;
-import com.synergism.blog.global.security.utils.RSAUtil;
-import com.synergism.blog.global.utils.StringUtil;
+import com.synergism.blog.exception.custom.PermissionFailureException;
+import com.synergism.blog.security.enums.KeyEnum;
+import com.synergism.blog.security.enums.RSAEnum;
+import com.synergism.blog.security.utils.RSAUtil;
+import com.synergism.blog.security.utils.StringUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.io.Serializable;
 
-import static com.synergism.blog.global.utils.StringUtil.asString;
+import static com.synergism.blog.security.utils.StringUtil.asString;
 
 @Getter
 @Setter
+/**
+ * 鉴权类
+ */
 public class Auth implements Serializable {
     private String sessionID;
     private String userKey;
@@ -47,6 +50,11 @@ public class Auth implements Serializable {
         this.power = power;
     }
 
+    /**
+     * 从请求中获取信息
+     * @param request 请求
+     * @return 鉴权类
+     */
     public static Auth getInstance(HttpServletRequest request) {
         String sessionID = request.getRequestedSessionId();
         String ANOTHER_WORLD_KEY = request.getHeader(asString(KeyEnum.ANOTHER_WORLD_KEY));
@@ -56,7 +64,7 @@ public class Auth implements Serializable {
     }
 
     public static Auth BASIC(String sessionID) {
-        return new Auth(sessionID, "", "", "", new String[]{"login", "register", "public","index"});
+        return new Auth(sessionID, "", "", "", Power.NOT_LOG_IN.getPower());
     }
 
     @Override

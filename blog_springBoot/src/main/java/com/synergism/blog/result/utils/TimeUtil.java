@@ -1,4 +1,4 @@
-package com.synergism.blog.global.utils;
+package com.synergism.blog.result.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

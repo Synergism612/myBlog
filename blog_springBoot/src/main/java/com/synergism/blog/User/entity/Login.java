@@ -1,9 +1,9 @@
-package com.synergism.blog.global.entity;
+package com.synergism.blog.User.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.global.utils.StringUtil.checkStringIsUnsafe;
+import static com.synergism.blog.security.utils.StringUtil.checkStringIsUnsafe;
 /**
  * 用户登录实体类
  */

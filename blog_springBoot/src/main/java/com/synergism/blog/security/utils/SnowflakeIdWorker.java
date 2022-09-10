@@ -1,6 +1,6 @@
-package com.synergism.blog.global.security.utils;
+package com.synergism.blog.security.utils;
 
-import com.synergism.blog.global.exception.custom.SnowFailException;
+import com.synergism.blog.exception.custom.SnowFailException;
 
 public class SnowflakeIdWorker {
     // ==============================Fields==================

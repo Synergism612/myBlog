@@ -1,6 +1,6 @@
-package com.synergism.blog.global.security.myLocker.wrapper;
+package com.synergism.blog.security.wrapper;
 
-import com.synergism.blog.global.security.utils.AESUtil;
+import com.synergism.blog.security.utils.AESUtil;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;

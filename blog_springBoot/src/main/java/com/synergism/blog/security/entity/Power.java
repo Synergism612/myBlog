@@ -1,10 +1,13 @@
-package com.synergism.blog.global.security.authentication.entity;
+package com.synergism.blog.security.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+/**
+ * 权限类
+ */
 public class Power {
     private String[] power;
 
@@ -12,7 +15,11 @@ public class Power {
         this.power = power;
     }
 
+    /**
+     * 基本权限方法
+     */
     public static Power NOT_LOG_IN = new Power(new String[]{
+            "/api/public/test",
             "/index",
             "/login",
             "/register"

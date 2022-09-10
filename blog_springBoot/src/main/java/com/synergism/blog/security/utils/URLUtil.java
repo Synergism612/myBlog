@@ -1,6 +1,6 @@
-package com.synergism.blog.global.security.utils;
+package com.synergism.blog.security.utils;
 
-import com.synergism.blog.global.exception.custom.IllegalRequestException;
+import com.synergism.blog.exception.custom.IllegalRequestException;
 
 public class URLUtil {
 

@@ -1,6 +1,6 @@
-package com.synergism.blog.global;
+package com.synergism.blog;
 
-import com.synergism.blog.global.security.utils.RSAUtil;
+import com.synergism.blog.security.utils.RSAUtil;
 
 public class Init {
     /**

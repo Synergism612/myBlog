@@ -1,12 +1,12 @@
-package com.synergism.blog.controller;
+package com.synergism.blog.User.controller;
 
-import com.synergism.blog.entity.Login;
-import com.synergism.blog.service.UserService;
+import com.synergism.blog.User.entity.Login;
+import com.synergism.blog.User.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.synergism.blog.utils.StringUtil.checkStringIsEmpty;
-import static com.synergism.blog.utils.StringUtil.checkStringLength;
+import static com.synergism.blog.security.utils.StringUtil.checkStringIsEmpty;
+import static com.synergism.blog.security.utils.StringUtil.checkStringLength;
 
 
 /**
@@ -34,7 +34,6 @@ public class UserController {
         checkStringIsEmpty(login.getCounts(), login.getNames());
         //判长
         checkStringLength(login.getUsername(), 11,login.getUsernameName());
-
 
     }
 }

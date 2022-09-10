@@ -1,4 +1,4 @@
-package com.synergism.blog.security.authentication.entity;
+package com.synergism.blog.security.entity;
 
 import lombok.Getter;
 import lombok.Setter;

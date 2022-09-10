@@ -1,4 +1,4 @@
-package com.synergism.blog.global.exception.custom;
+package com.synergism.blog.exception.custom;
 
 public class PermissionFailureException extends RuntimeException{
     public PermissionFailureException() {

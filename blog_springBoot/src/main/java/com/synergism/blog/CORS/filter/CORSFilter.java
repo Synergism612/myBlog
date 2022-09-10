@@ -1,6 +1,6 @@
-package com.synergism.blog.global.CORS;
+package com.synergism.blog.CORS.filter;
 
-import com.synergism.blog.global.security.enums.KeyEnum;
+import com.synergism.blog.security.enums.KeyEnum;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;

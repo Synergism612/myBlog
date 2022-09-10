@@ -1,4 +1,4 @@
-package com.synergism.blog.global.utils;
+package com.synergism.blog.security.utils;
 
 /**
  * 字符串工具类

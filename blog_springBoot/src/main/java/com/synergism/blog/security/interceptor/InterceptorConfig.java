@@ -1,4 +1,4 @@
-package com.synergism.blog.global.security.authentication.interceptor;
+package com.synergism.blog.security.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

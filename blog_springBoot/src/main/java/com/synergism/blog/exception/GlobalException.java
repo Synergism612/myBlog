@@ -1,11 +1,11 @@
-package com.synergism.blog.global.exception;
+package com.synergism.blog.exception;
 
-import com.synergism.blog.global.exception.custom.IllegalRequestException;
-import com.synergism.blog.global.exception.custom.KeyFailureException;
-import com.synergism.blog.global.exception.custom.PermissionFailureException;
-import com.synergism.blog.global.exception.custom.SnowFailException;
-import com.synergism.blog.global.result.CodeMsg;
-import com.synergism.blog.global.result.Result;
+import com.synergism.blog.exception.custom.IllegalRequestException;
+import com.synergism.blog.exception.custom.KeyFailureException;
+import com.synergism.blog.exception.custom.PermissionFailureException;
+import com.synergism.blog.exception.custom.SnowFailException;
+import com.synergism.blog.result.entity.CodeMsg;
+import com.synergism.blog.result.entity.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

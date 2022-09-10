@@ -1,4 +1,4 @@
-package com.synergism.blog.global.exception.custom;
+package com.synergism.blog.exception.custom;
 
 /**
  * 自定义异常

@@ -1,6 +1,6 @@
-package com.synergism.blog.mapper;
+package com.synergism.blog.User.mapper;
 
-import com.synergism.blog.entity.User;
+import com.synergism.blog.User.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

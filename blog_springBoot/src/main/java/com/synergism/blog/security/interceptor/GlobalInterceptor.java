@@ -1,12 +1,12 @@
-package com.synergism.blog.global.security.authentication.interceptor;
+package com.synergism.blog.security.interceptor;
 
-import com.synergism.blog.global.redis.RedisService;
-import com.synergism.blog.global.security.authentication.entity.Auth;
-import com.synergism.blog.global.security.enums.KeyEnum;
-import com.synergism.blog.global.security.enums.RSAEnum;
-import com.synergism.blog.global.security.utils.RSAUtil;
-import com.synergism.blog.global.security.utils.SnowflakeIdWorker;
-import com.synergism.blog.global.security.utils.URLUtil;
+import com.synergism.blog.redis.service.RedisService;
+import com.synergism.blog.security.entity.Auth;
+import com.synergism.blog.security.enums.KeyEnum;
+import com.synergism.blog.security.enums.RSAEnum;
+import com.synergism.blog.security.utils.RSAUtil;
+import com.synergism.blog.security.utils.SnowflakeIdWorker;
+import com.synergism.blog.security.utils.URLUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -15,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.synergism.blog.global.utils.StringUtil.asString;
-import static com.synergism.blog.global.utils.StringUtil.checkStringIfEmpty;
+import static com.synergism.blog.security.utils.StringUtil.asString;
+import static com.synergism.blog.security.utils.StringUtil.checkStringIfEmpty;
 
 /**
  * 鉴权拦截器
@@ -51,7 +51,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
         if (URLUtil.checkURLIfToError(url) || method.equals("OPTIONS")) return true;
 
         if (checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
-            if (URLUtil.checkURLIfToPublic(url)) {
+            if (URLUtil.checkURLIfToPublic(url)&&checkStringIfEmpty(AUTH_ID)) {
                 //创建id
                 String auth_id = asString(new SnowflakeIdWorker(0, 0).nextId());
                 //创建基本权限
@@ -65,8 +65,15 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
         if (!checkStringIfEmpty(AUTH_ID)){
             Auth auth = (Auth) redis.getValue(AUTH_ID);
+            if (auth==null){
+                AUTH_ID = asString(new SnowflakeIdWorker(0, 0).nextId());
+                auth = Auth.getInstance(request);
+            }
             if (checkStringIfEmpty(auth.getUserKey()))
                 auth.setUserKey(RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY))));
+            if (!auth.getSessionID().equals(sessionID)){
+                auth.setSessionID(sessionID);
+            }
             redis.getAndSetValue(AUTH_ID,auth);
             URLUtil.checkURLIsPower(url, auth.getPower());
             response.addHeader("AUTH_ID", AUTH_ID);

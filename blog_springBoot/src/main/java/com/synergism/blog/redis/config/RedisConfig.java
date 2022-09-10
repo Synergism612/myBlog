@@ -1,4 +1,4 @@
-package com.synergism.blog.global.redis;
+package com.synergism.blog.redis.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

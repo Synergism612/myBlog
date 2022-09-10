@@ -1,7 +1,6 @@
 package com.synergism.blog;
 
-import com.synergism.blog.redis.RedisService;
-import com.synergism.blog.utils.Base64Util;
+import com.synergism.blog.redis.service.RedisService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,17 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BlogApplicationTests {
 	Logger logger = LoggerFactory.getLogger(BlogApplicationTests.class);
-
-	@Test
-	void base64CodeTest(){
-		//测试base64编码
-		String src = "synergism612731";
-		String encode = Base64Util.encode(src);
-		String decode = Base64Util.decode(encode);
-		System.out.println(src);
-		System.out.println(encode);
-		System.out.println(decode);
-	}
 
 	@Test
 	void RSACodeTest() throws Exception {

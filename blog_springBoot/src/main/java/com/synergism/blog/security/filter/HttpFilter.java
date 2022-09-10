@@ -1,15 +1,15 @@
-package com.synergism.blog.global.security.myLocker.filter;
+package com.synergism.blog.security.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.synergism.blog.global.security.enums.KeyEnum;
-import com.synergism.blog.global.security.enums.RSAEnum;
-import com.synergism.blog.global.security.myLocker.wrapper.RequestWrapper;
-import com.synergism.blog.global.security.myLocker.wrapper.ResponseWrapper;
-import com.synergism.blog.global.security.utils.AESUtil;
-import com.synergism.blog.global.security.utils.RSAUtil;
-import com.synergism.blog.global.security.utils.URLUtil;
-import com.synergism.blog.global.utils.StringUtil;
+import com.synergism.blog.security.enums.KeyEnum;
+import com.synergism.blog.security.enums.RSAEnum;
+import com.synergism.blog.security.wrapper.RequestWrapper;
+import com.synergism.blog.security.wrapper.ResponseWrapper;
+import com.synergism.blog.security.utils.AESUtil;
+import com.synergism.blog.security.utils.RSAUtil;
+import com.synergism.blog.security.utils.URLUtil;
+import com.synergism.blog.security.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.synergism.blog.global.utils.StringUtil.asString;
+import static com.synergism.blog.security.utils.StringUtil.asString;
 
 /**
  * http过滤器
@@ -46,7 +46,7 @@ public class HttpFilter implements Filter {
         //获得加密的密钥
         String ANOTHER_WORLD_KEY = httpServletRequest.getHeader(StringUtil.asString(KeyEnum.ANOTHER_WORLD_KEY));
         //判断不使用自定义类的情况
-        if (URLUtil.checkURLIfToPublic(httpServletRequest.getRequestURL().toString()) || //获取公钥请求
+        if (URLUtil.checkURLIfToPublic(httpServletRequest.getRequestURI()) || //获取公钥请求
                 StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY) //公钥为空请求
         ) {
             filterChain.doFilter(servletRequest, servletResponse);

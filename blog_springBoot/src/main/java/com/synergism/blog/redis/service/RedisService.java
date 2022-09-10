@@ -1,4 +1,4 @@
-package com.synergism.blog.global.redis;
+package com.synergism.blog.redis.service;
 
 import java.util.Map;
 
