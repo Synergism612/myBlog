@@ -1,13 +1,166 @@
-.background {
+#login_background {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: url(../../assets/img/backgroud/backgroud-login.png);
+  background: url(../../assets/img/backgroud/backgroud-login.png) no-repeat
+    center;
   z-index: -1;
 }
-.login {
-  position: relative;
+#login_container {
+  position: absolute;
   width: 100%;
-  height: 100px;
-  background-color: black;
+  height: 100%;
+}
+#login_from {
+  //定位
+  position: absolute;
+  width: 20em;
+  height: 20em;
+
+  //居中
+  margin: 30vh auto;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+
+  //圆角
+  border-radius: 1.2em;
+
+  //阴影
+  box-shadow: 0 2px 5px -1px rgba(9, 2, 4, 0.8);
+
+  //透明度
+  background-color: rgba(255, 255, 255, 0.5);
+
+  #title {
+    //定位
+    text-align: center;
+    margin: 0.5em 0 1em 0;
+    //字体风格
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #158fc5;
+  }
+
+  // 表单
+  #login_form {
+    padding: 0px 2em;
+    --el-component-size: 1.5em;
+    --el-font-size-base: 1.5em;
+
+    // 表单元素
+    .el-form-el-form-item,
+    .asterisk-left {
+      margin-bottom: 1.2 em;
+
+      // 输入框标题
+      .el-form-item__label {
+        margin-bottom: 0;
+        font-size: 1em;
+      }
+
+      // 元素居中
+      .el-form-item__content {
+        justify-content: center;
+        .el-input {
+          // 输入框
+          .el-input__wrapper {
+            padding: 0.1em 0;
+            background-color: rgba(255, 255, 255, 0);
+            border: none;
+            border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: none;
+            font-size: 0.8em;
+          }
+          // 输入框底部动画
+          .el-input__wrapper::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: rgba(15, 118, 162, 0.991);
+            transition: 1s;
+          }
+          // 输入框底部动画
+          .el-input__wrapper:hover::before {
+            width: 100%;
+          }
+
+          // 表单清空按钮
+          .el-input__suffix {
+            .el-input__suffix-inner {
+              .el-icon,
+              .el-input__icon,
+              .el-input__clear {
+                font-size: 1em;
+              }
+            }
+          }
+        }
+
+        // 提交按钮
+        .el-button--primary{
+          height: 2em;
+        }
+        .el-button,
+        .el-button--primary {
+          width: 70%;
+          padding: 0px 15px;
+          border-radius: 20px;
+          border: none;
+          transition: 0.3s;
+          --el-button-bg-color: rgb(21, 143, 197);
+          --el-button-hover-bg-color: #1174a0;
+
+          //按钮内容
+          span {
+            font-size: 1em;
+            font-weight: 650;
+          }
+        }
+      }
+    }
+
+    // 并排按钮
+    .button_float {
+      .el-form-item__content {
+        --font-size: 0.6em;
+
+        .el-button,
+        .el-button--text {
+          position: relative;
+          width: 45%;
+          padding: 0;
+          color: rgb(26, 37, 49);
+
+          span {
+            font-weight: 100;
+          }
+        }
+
+        .el-button--text::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: auto;
+          width: 60%;
+          height: 1px;
+          background-color: rgba(43, 61, 80, 0.5);
+          transition: 0.3s;
+        }
+
+        .el-button--text:hover::before {
+          background-color: rgba(15, 118, 162, 0.991);
+        }
+      }
+    }
+  }
 }
