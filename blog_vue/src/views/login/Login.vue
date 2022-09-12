@@ -1,7 +1,7 @@
 <template>
   <div id="login_background"></div>
   <div id="login_container">
-    <Head></Head>
+    <Menu></Menu>
     <div id="login_from">
       <p id="title">登录</p>
       <el-form
@@ -46,7 +46,7 @@ import { api } from "@/api/api";
 import StringUtil from "@/utils/StringUtil";
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import Message from "@/utils/MessageUtil";
-import Head from "../../components/Head/Head.vue";
+import Menu from "../../components/Menu/Menu.vue";
 
 export default defineComponent({
   /**
@@ -105,7 +105,7 @@ export default defineComponent({
     };
     return { ...toRefs(data), login, loginFormRef };
   },
-  components: { Head },
+  components: { Menu },
 });
 </script>
 <style lang="less">

@@ -22,41 +22,24 @@
 
 <script lang="ts">
 import { store } from "@/store";
-import { defineComponent, onMounted, reactive, toRefs } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
 
 export default defineComponent({
   /**
    * 使用组件时传入参数
    */
-  props: {
-    name: { type: String, required: true },
-  },
+  props: {},
   /**
    * 组件内setup，setup最早创建，所以没有this
    */
   setup() {
-    /**
-     * 参数定义
-     */
     const data = reactive({
       msg: "aa",
     });
-    // api.getTest();
-
-    onMounted(() => {
-      console.log("ANOTHER_WORLD_KEY---\n" + store.state.ANOTHER_WORLD_KEY);
-      console.log("AUTH_ID---\n" + store.state.AUTH_ID);
-      console.log("KEY---\n" + store.state.KEY);
-      console.log("PUBLIC_KEY---\n" + store.state.PUBLIC_KEY);
-    });
-
-    /**
-     * 返回组件内数据
-     */
     return { ...toRefs(data) };
   },
 });
 </script>
 <style lang="less">
-@import url(./Head.less);
+@import url(./Menu.less);
 </style>
