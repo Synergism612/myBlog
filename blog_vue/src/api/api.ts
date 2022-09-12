@@ -3,6 +3,7 @@ import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import RSAUtil from "@/utils/RSAUtil";
 import StringUtil from "@/utils/StringUtil";
+import { AxiosResponse } from "axios";
 
 export class api {
   public static getPublicKey(): Promise<void> {
@@ -58,5 +59,20 @@ export class api {
         return false;
       });
     return "";
+  }
+
+  public static login(
+    username: string,
+    password: string
+  ): Promise<AxiosResponse> {
+    //开启请求
+    return axios({
+      url: "/user/login",
+      method: "post",
+      data: {
+        username: username,
+        password: password,
+      },
+    });
   }
 }
