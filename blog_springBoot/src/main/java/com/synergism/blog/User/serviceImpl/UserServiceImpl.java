@@ -1,8 +1,8 @@
-package com.synergism.blog.User.serviceImpl;
+package com.synergism.blog.user.serviceImpl;
 
-import com.synergism.blog.User.entity.User;
-import com.synergism.blog.User.mapper.UserMapper;
-import com.synergism.blog.User.service.UserService;
+import com.synergism.blog.user.entity.User;
+import com.synergism.blog.user.mapper.UserMapper;
+import com.synergism.blog.user.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

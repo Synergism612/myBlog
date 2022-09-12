@@ -1,6 +1,6 @@
-package com.synergism.blog.User.service;
+package com.synergism.blog.user.service;
 
-import com.synergism.blog.User.entity.User;
+import com.synergism.blog.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

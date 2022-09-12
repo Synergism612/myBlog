@@ -1,12 +1,13 @@
-package com.synergism.blog.User.controller;
+package com.synergism.blog.user.controller;
 
-import com.synergism.blog.User.entity.Login;
-import com.synergism.blog.User.service.UserService;
+import com.synergism.blog.result.entity.Result;
+import com.synergism.blog.user.entity.Login;
+import com.synergism.blog.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.synergism.blog.security.utils.StringUtil.checkStringIsEmpty;
-import static com.synergism.blog.security.utils.StringUtil.checkStringLength;
+import static com.synergism.blog.utils.StringUtil.checkStringIsEmpty;
+import static com.synergism.blog.utils.StringUtil.checkStringLength;
 
 
 /**
@@ -29,11 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void login(Login login) {
-        //判空
-        checkStringIsEmpty(login.getCounts(), login.getNames());
-        //判长
-        checkStringLength(login.getUsername(), 11,login.getUsernameName());
-
+    public Result<String> login(@RequestBody Login login) {
+        return Result.success(login.toString());
     }
 }

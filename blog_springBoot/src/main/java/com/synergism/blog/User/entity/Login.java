@@ -1,9 +1,14 @@
-package com.synergism.blog.User.entity;
+package com.synergism.blog.user.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.security.utils.StringUtil.checkStringIsUnsafe;
+import static com.synergism.blog.user.untils.LoginUtil.checkPassword;
+import static com.synergism.blog.user.untils.LoginUtil.checkUsername;
+import static com.synergism.blog.utils.StringUtil.checkStringIsEmpty;
+import static com.synergism.blog.utils.StringUtil.checkStringIsUnsafe;
+import static com.synergism.blog.utils.TypeUtil.asArray;
+
 /**
  * 用户登录实体类
  */
@@ -19,9 +24,13 @@ public class Login {
     }
 
     Login(String username, String password) {
-        checkStringIsUnsafe(username); //检查合法性
-        setUsername(username);
-        setPassword(password);
+        //判空
+        checkStringIsEmpty(asArray(username,password),getNames());
+        //合法性检查
+        checkStringIsUnsafe(username,password);
+        //参数检查赋值
+        setUsername(checkUsername(username));
+        setPassword(checkPassword(password));
     }
 
     public String[] getCounts() {
