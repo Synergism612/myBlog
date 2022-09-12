@@ -18,11 +18,14 @@ import "element-plus/dist/index.css";
 import axios from "@/axios/axios";
 import { api } from "./api/api";
 
-// store.commit("DELECT_ALL_KEY");
-
 const app = createApp(App);
-api.getPublicKey().then(() => {
-  app.use(router).use(store).use(ElementPlus);
-  app.config.globalProperties.$axios = axios;
-  app.mount("#app");
-});
+api
+  .getPublicKey()
+  .then(() => {
+    app.use(router).use(store).use(ElementPlus);
+    app.config.globalProperties.$axios = axios;
+    app.mount("#app");
+  })
+  .catch(() => {
+    store.commit("DELECT_ALL_KEY");
+  });
