@@ -29,4 +29,34 @@ export default class StringUtil {
     });
     return result;
   }
+
+  /**
+   * 检查传入的字符串是否存在不安全字符
+   *
+   * @param str 字符串或者其它
+   */
+  public static checkStringIfUnsafe(str: string): boolean {
+    let count = 0;
+    for (let i = 0; i < str.length; i++) {
+      switch (str[i]) {
+        case " ":
+        case "'":
+        case '"':
+        case "\\":
+        case "/":
+        case "&":
+        case "|":
+        case "^":
+        case "#":
+        case "$":
+          return true;
+        case "@":
+        case "-":
+          count++;
+      }
+    }
+    if (count > 1) return true;
+
+    return false;
+  }
 }
