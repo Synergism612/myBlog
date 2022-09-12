@@ -16,7 +16,7 @@ import java.util.Map;
 
 import javax.crypto.Cipher;
 
-import static com.synergism.blog.security.utils.StringUtil.asString;
+import static com.synergism.blog.utils.StringUtil.asString;
 
 /**
  * <p>

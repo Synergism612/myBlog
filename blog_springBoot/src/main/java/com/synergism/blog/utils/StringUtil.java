@@ -1,4 +1,4 @@
-package com.synergism.blog.security.utils;
+package com.synergism.blog.utils;
 
 /**
  * 字符串工具类
@@ -153,28 +153,31 @@ public class StringUtil {
     /**
      * 检查传入的字符串是否存在不安全字符
      *
-     * @param str 字符串或者其它
+     * @param strings 字符串
      */
-    public static  void checkStringIsUnsafe(String str) {
-        int count = 0;
-        for (char c : (str).toCharArray()) {
-            switch (c) {
-                case ' ':
-                case '\'':
-                case '\"':
-                case '\\':
-                case '/':
-                case '&':
-                case '|':
-                case '^':
-                case '#':
-                case '$':
-                    throw new IllegalArgumentException("不合法");
-                case '@':
-                    count++;
+    public static  void checkStringIsUnsafe(String... strings) {
+        for (String str : strings) {
+            int count = 0;
+            for (char c : (str).toCharArray()) {
+                switch (c) {
+                    case ' ':
+                    case '\'':
+                    case '\"':
+                    case '\\':
+                    case '/':
+                    case '&':
+                    case '|':
+                    case '^':
+                    case '#':
+                    case '$':
+                        throw new IllegalArgumentException("不合法");
+                    case '@':
+                    case '-':
+                        count++;
+                }
             }
+            if (count > 1) throw new IllegalArgumentException("不合法");
         }
-        if (count > 1) throw new IllegalArgumentException("不合法");
     }
 
     public static boolean checkStringContains(String str,String contain) {

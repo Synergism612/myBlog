@@ -9,7 +9,7 @@ import com.synergism.blog.security.wrapper.ResponseWrapper;
 import com.synergism.blog.security.utils.AESUtil;
 import com.synergism.blog.security.utils.RSAUtil;
 import com.synergism.blog.security.utils.URLUtil;
-import com.synergism.blog.security.utils.StringUtil;
+import com.synergism.blog.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.synergism.blog.security.utils.StringUtil.asString;
+import static com.synergism.blog.utils.StringUtil.asString;
 
 /**
  * http过滤器

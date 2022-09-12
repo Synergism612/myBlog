@@ -1,11 +1,11 @@
 package com.synergism.blog.global.controller;
 
-import com.synergism.blog.User.entity.Login;
+import com.synergism.blog.user.entity.Login;
 import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.result.entity.Result;
 import org.springframework.web.bind.annotation.*;
 
-import static com.synergism.blog.security.utils.StringUtil.asString;
+import static com.synergism.blog.utils.StringUtil.asString;
 
 @RestController
 @RequestMapping("/api/public")

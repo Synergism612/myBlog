@@ -4,7 +4,7 @@ import com.synergism.blog.exception.custom.PermissionFailureException;
 import com.synergism.blog.security.enums.KeyEnum;
 import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.security.utils.RSAUtil;
-import com.synergism.blog.security.utils.StringUtil;
+import com.synergism.blog.utils.StringUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.io.Serializable;
 
-import static com.synergism.blog.security.utils.StringUtil.asString;
+import static com.synergism.blog.utils.StringUtil.asString;
 
 @Getter
 @Setter

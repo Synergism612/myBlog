@@ -15,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.synergism.blog.security.utils.StringUtil.asString;
-import static com.synergism.blog.security.utils.StringUtil.checkStringIfEmpty;
+import static com.synergism.blog.utils.StringUtil.asString;
+import static com.synergism.blog.utils.StringUtil.checkStringIfEmpty;
 
 /**
  * 鉴权拦截器
