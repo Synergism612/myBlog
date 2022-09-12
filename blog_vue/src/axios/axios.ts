@@ -4,6 +4,7 @@ import Result from "@/entity/Result";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import StringUtil from "@/utils/StringUtil";
+import Message from "@/utils/MessageUtil";
 
 //请求根路径
 const baseURL = "http://localhost:8088";
@@ -51,17 +52,24 @@ class Axios {
 
     //响应拦截
     this.service.interceptors.response.use((response: AxiosResponse) => {
+      //前端对应的安全策略
       const auth_id = response.headers["auth_id"];
       if (!StringUtil.checkStringIfEmpty(auth_id))
         store.commit("SET_AUTH_ID", auth_id);
       if (StringUtil.checkStringIfEmpty(store.state.ANOTHER_WORLD_KEY)) {
         return Result.getResult(response);
       } else {
+        //对响应的数据解密
         const json = JSON.parse(
           AESUtil.decrypt(response.data, store.state.KEY)
         ).ANOTHER_WORLD_RESPONSE;
         console.log(json);
-        return new Result(json.code, json.msg, json.time, json.data);
+        const result = new Result(json.code, json.msg, json.time, json.data);
+        //全局异常处理
+        if (result.code != 200) {
+          Message.errorMessage(result.msg);
+        }
+        return result;
       }
     });
   }
