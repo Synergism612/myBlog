@@ -24,7 +24,7 @@ import static com.synergism.blog.utils.StringUtil.checkStringIfEmpty;
 @Component
 public class GlobalInterceptor implements HandlerInterceptor {
 
-    private RedisService redis;
+    private final RedisService redis;
 
     @Autowired
     public GlobalInterceptor(RedisService redis) {
