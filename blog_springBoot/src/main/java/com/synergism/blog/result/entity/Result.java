@@ -3,7 +3,7 @@ package com.synergism.blog.result.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.result.utils.TimeUtil.now;
+import static com.synergism.blog.utils.TimeUtil.now;
 
 /**
  * 结果封装类
@@ -21,7 +21,7 @@ public class Result<T> {
         this.code = 500100;
         this.msg = "服务端异常";
         this.time = now();
-        this.data = (T) "";
+        this.data = null;
     }
 
     /**
@@ -29,7 +29,7 @@ public class Result<T> {
      * @return 结果
      */
     public static <T> Result<T> success(){
-        return new Result<T>(200);
+        return new Result<>(200);
     }
 
     /**
@@ -38,7 +38,7 @@ public class Result<T> {
      * @return 结果
      */
     public static <T> Result<T> success(T data){
-        return new Result<T>(200,data);
+        return new Result<>(200, data);
     }
 
     /**
@@ -47,7 +47,7 @@ public class Result<T> {
      * @return 结果
      */
     public static <T> Result<T> error(CodeMsg codeMsg) {
-        return new Result<T>(codeMsg.getCode(), codeMsg.getMsg());
+        return new Result<>(codeMsg.getCode(), codeMsg.getMsg());
     }
 
     /**
@@ -58,31 +58,31 @@ public class Result<T> {
      * @return 结果
      */
     public static <T> Result<T> result(int code,String msg,T data){
-        return new Result<T>(code,msg,data);
+        return new Result<>(code, msg, data);
     }
 
     private  Result(int code){
         this.code = code;
         this.msg = "成功";
         this.time = now();
-        this.data = (T) "";
+        this.data = null;
     }
     private Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
         this.time = now();
-        this.data = (T) "";
+        this.data = null;
     }
     private  Result(int code,T data){
         this.code = code;
         this.msg = "成功";
         this.time = now();
-        this.data = (T) data;
+        this.data = data;
     }
     private Result(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.time = now();
-        this.data = (T) data;
+        this.data = data;
     }
 }
