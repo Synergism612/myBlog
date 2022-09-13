@@ -4,6 +4,7 @@ import com.synergism.blog.exception.custom.PermissionFailureException;
 import com.synergism.blog.security.enums.KeyEnum;
 import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.security.utils.RSAUtil;
+import com.synergism.blog.user.entity.User;
 import com.synergism.blog.utils.StringUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,6 +64,22 @@ public class Auth implements Serializable {
         return new Auth(sessionID, userKey, "", "", Power.NOT_LOG_IN.getPower());
     }
 
+
+    /**
+     * 从用户类更新鉴权类
+     * @param user 用户类
+     */
+    public void updateFromUser(User user) {
+        setUserName(user.getName());
+        setPassword(user.getPassword());
+        setPower(user.getPower().split(","));
+    }
+
+    /**
+     * 生成基本权限
+     * @param sessionID sessionID
+     * @return 鉴权类
+     */
     public static Auth BASIC(String sessionID) {
         return new Auth(sessionID, "", "", "", Power.NOT_LOG_IN.getPower());
     }
