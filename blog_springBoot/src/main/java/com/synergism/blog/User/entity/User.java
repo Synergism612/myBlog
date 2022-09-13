@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
+
+import com.synergism.blog.utils.StringUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -21,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("user")
-@ApiModel(value = "User对象", description = "")
+@ApiModel(value = "User对象", description = "用户表")
 public class User {
 
     @TableId(value = "id", type = IdType.AUTO)
@@ -35,9 +37,9 @@ public class User {
     @TableField("name")
     private String name;
 
-    @ApiModelProperty("手机号")
-    @TableField("phone")
-    private String phone;
+    @ApiModelProperty("邮箱")
+    @TableField("email")
+    private String email;
 
     @ApiModelProperty("密码")
     @TableField("password")
@@ -51,10 +53,6 @@ public class User {
     @TableField("sex")
     private Integer sex;
 
-    @ApiModelProperty("邮箱")
-    @TableField("email")
-    private String email;
-
     @ApiModelProperty("个人简介")
     @TableField("intro")
     private String intro;
@@ -63,5 +61,8 @@ public class User {
     @TableField("status")
     private Integer status;
 
+    @ApiModelProperty("权限")
+    @TableField("power")
+    private String power;
 
 }
