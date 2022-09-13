@@ -53,6 +53,7 @@ export default defineComponent({
    * 组件内setup，setup最早创建，所以没有this
    */
   setup() {
+    // 账号校验
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const checkUsername = (rule: any, value: string, callback: any) => {
       if (StringUtil.checkStringIfEmpty(value)) {
@@ -65,6 +66,7 @@ export default defineComponent({
         return callback(new Error("不合法"));
       }
     };
+    // 密码校验
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const checkPassword = (rule: any, value: string, callback: any) => {
       if (StringUtil.checkStringIfEmpty(value)) {
@@ -77,11 +79,14 @@ export default defineComponent({
         return callback(new Error("不合法"));
       }
     };
+
+    // 数据仓
     const data = reactive({
       LoginFrom: {
         username: "",
         password: "",
       },
+      // 校验规则设置
       rules: {
         username: [{ validator: checkUsername }],
         password: [{ validator: checkPassword }],
@@ -89,7 +94,11 @@ export default defineComponent({
       //去除红色星号
       hideRequiredAsterisk: false,
     });
+
+    // 获得dom对象
     const loginFormRef = ref();
+
+    // 登录函数
     const login = () => {
       loginFormRef.value.validate((valid: boolean) => {
         if (!valid) {
@@ -103,8 +112,12 @@ export default defineComponent({
         }
       });
     };
+
+    // 返回页面所需
     return { ...toRefs(data), login, loginFormRef };
   },
+
+  // 组件导入
   components: { Menu },
 });
 </script>
