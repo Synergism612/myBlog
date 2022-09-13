@@ -1,21 +1,21 @@
 <template>
-  <div id="head_container">
-    <el-menu mode="horizontal">
-      <el-menu-item index="1">Processing Center</el-menu-item>
-      <el-sub-menu index="2">
-        <template #title>Workspace</template>
+  <div id="menu_container">
+    <el-menu mode="horizontal" :ellipsis="ellipsis" router>
+      <el-menu-item id="menu_logo" index="/blog/index">Synergism</el-menu-item>
+      <el-menu-item index="2">网站首页</el-menu-item>
+      <el-menu-item index="3">文章专栏</el-menu-item>
+      <el-menu-item index="4">归档</el-menu-item>
+      <el-menu-item index="3">资源分享</el-menu-item>
+      <el-menu-item index="3">点点滴滴</el-menu-item>
+      <el-menu-item index="3">关于本站</el-menu-item>
+      <el-menu-item index="3" v-if="!isLogin">登录</el-menu-item>
+      <el-menu-item index="3" v-if="!isLogin">注册</el-menu-item>
+      <el-sub-menu v-if="isLogin">
+        <template #title>用户名</template>
         <el-menu-item index="2-1">item one</el-menu-item>
         <el-menu-item index="2-2">item two</el-menu-item>
         <el-menu-item index="2-3">item three</el-menu-item>
-        <el-sub-menu index="2-4">
-          <template #title>item four</template>
-          <el-menu-item index="2-4-1">item one</el-menu-item>
-          <el-menu-item index="2-4-2">item two</el-menu-item>
-          <el-menu-item index="2-4-3">item three</el-menu-item>
-        </el-sub-menu>
       </el-sub-menu>
-      <el-menu-item index="3" disabled>Info</el-menu-item>
-      <el-menu-item index="4">Orders</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -26,15 +26,12 @@ import { defineComponent, reactive, toRefs } from "vue";
 
 export default defineComponent({
   /**
-   * 使用组件时传入参数
-   */
-  props: {},
-  /**
    * 组件内setup，setup最早创建，所以没有this
    */
   setup() {
     const data = reactive({
-      msg: "aa",
+      isLogin: false,
+      ellipsis: false,
     });
     return { ...toRefs(data) };
   },
