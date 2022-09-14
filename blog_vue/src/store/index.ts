@@ -65,9 +65,11 @@ export const store = createStore({
     DELECT_ALL_KEY: (state) => {
       state.KEY = "";
       state.AUTH_ID = "";
+      state.PUBLIC_KEY = "";
       state.ANOTHER_WORLD_KEY = "";
       StoreUtil.save("KEY", "");
       StoreUtil.save("AUTH_ID", "");
+      StoreUtil.save("PUBLIC_KEY", "");
       StoreUtil.save("ANOTHER_WORLD_KEY", "");
     },
   },
