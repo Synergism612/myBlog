@@ -19,13 +19,8 @@ import axios from "@/axios/axios";
 import { api } from "./api/api";
 
 const app = createApp(App);
-api
-  .getPublicKey()
-  .then(() => {
-    app.use(router).use(store).use(ElementPlus);
-    app.config.globalProperties.$axios = axios;
-    app.mount("#app");
-  })
-  .catch(() => {
-    store.commit("DELECT_ALL_KEY");
-  });
+api.getPublicKey().then(() => {
+  app.use(router).use(store).use(ElementPlus);
+  app.config.globalProperties.$axios = axios;
+  app.mount("#app");
+});

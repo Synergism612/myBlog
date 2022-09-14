@@ -52,25 +52,34 @@ class Axios {
 
     //响应拦截
     this.service.interceptors.response.use((response: AxiosResponse) => {
+      let result;
       //前端对应的安全策略
       const auth_id = response.headers["auth_id"];
       if (!StringUtil.checkStringIfEmpty(auth_id))
         store.commit("SET_AUTH_ID", auth_id);
       if (StringUtil.checkStringIfEmpty(store.state.ANOTHER_WORLD_KEY)) {
-        return Result.getResult(response);
+        result = Result.getResult(response);
       } else {
-        //对响应的数据解密
-        const json = JSON.parse(
-          AESUtil.decrypt(response.data, store.state.KEY)
-        ).ANOTHER_WORLD_RESPONSE;
-        console.log(json);
-        const result = new Result(json.code, json.msg, json.time, json.data);
-        //全局异常处理
-        if (result.code != 200) {
-          Message.errorMessage(result.msg);
+        try {
+          //对响应的数据解密
+          const json = JSON.parse(
+            AESUtil.decrypt(response.data, store.state.KEY)
+          ).ANOTHER_WORLD_RESPONSE;
+          console.log(json);
+          result = new Result(json.code, json.msg, json.time, json.data);
+          //全局异常处理
+        } catch {
+          result = Result.getResult(response);
         }
-        return result;
       }
+      if (result.code != 200) {
+        if (result.code == 500104) {
+          store.commit("DELECT_ALL_KEY");
+        }
+
+        Message.errorMessage(result.msg);
+      }
+      return result;
     });
   }
 }
