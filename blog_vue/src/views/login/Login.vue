@@ -6,7 +6,7 @@
       <p id="title">登录</p>
       <el-form
         id="login_form"
-        :ref="loginFormRef"
+        ref="loginFormRef"
         label-position="top"
         label-width="0px"
         :model="LoginFrom"
@@ -65,6 +65,8 @@ export default defineComponent({
       if (StringUtil.checkStringIfUnsafe(value)) {
         return callback(new Error("不合法"));
       }
+
+      return callback();
     };
     // 密码校验
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,6 +80,8 @@ export default defineComponent({
       if (StringUtil.checkStringIfUnsafe(value)) {
         return callback(new Error("不合法"));
       }
+
+      return callback();
     };
 
     // 数据仓
@@ -100,17 +104,18 @@ export default defineComponent({
 
     // 登录函数
     const login = () => {
-      loginFormRef.value.validate((valid: boolean) => {
-        if (!valid) {
-          Message.errorMessage("校验未通过");
-        } else {
+      loginFormRef.value
+        .validate()
+        .then(() => {
           api
             .login(data.LoginFrom.username, data.LoginFrom.password)
             .then((data) => {
               console.log(data);
             });
-        }
-      });
+        })
+        .catch(() => {
+          Message.errorMessage("校验未通过");
+        });
     };
 
     // 返回页面所需
