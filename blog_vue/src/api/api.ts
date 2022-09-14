@@ -67,7 +67,7 @@ export class api {
   ): Promise<AxiosResponse> {
     //开启请求
     return axios({
-      url: "/user/login",
+      url: "/blog/user/login",
       method: "post",
       data: {
         username: username,
