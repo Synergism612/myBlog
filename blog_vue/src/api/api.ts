@@ -16,25 +16,26 @@ export class api {
       },
     })
       .then(({ data }) => {
-        //判断store中是否存在钥匙,若不存在,初始化钥匙
-        if (
-          StringUtil.checkStringsIfEmpty([
-            store.state.ANOTHER_WORLD_KEY,
-            store.state.PUBLIC_KEY,
-            store.state.KEY,
-          ])
-        ) {
-          //更改公钥值
-          store.commit("SET_PUBLIC_KEY", data);
-          //生成钥匙
-          const key = AESUtil.getKey();
-          store.commit("SET_KEY", key);
-          store.commit(
-            "SET_ANOTHER_WORLD_KEY",
-            //公钥加密密钥
-            RSAUtil.encryptedData(key, data)
-          );
+        //更改公钥值
+        store.commit("SET_PUBLIC_KEY", data);
+        //生成钥匙或者直接获取本地钥匙
+        let key;
+        if (StringUtil.checkStringIfEmpty(store.state.KEY)) {
+          key = AESUtil.getKey();
+        } else {
+          key = store.state.KEY;
         }
+        store.commit("SET_KEY", key);
+        store.commit(
+          "SET_ANOTHER_WORLD_KEY",
+          //公钥加密密钥
+          RSAUtil.encryptedData(key, data)
+        );
+        console.log("ANOTHER_WORLD_KEY--" + store.state.ANOTHER_WORLD_KEY);
+        console.log("PUBLIC_KEY--" + store.state.PUBLIC_KEY);
+        console.log("KEY--" + store.state.KEY);
+        console.log("AUTH_ID--" + store.state.AUTH_ID);
+        // }
       })
       .catch((err) => {
         console.log("err:\n" + err);

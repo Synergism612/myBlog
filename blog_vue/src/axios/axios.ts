@@ -42,6 +42,7 @@ class Axios {
     this.service = axios.create(this.config);
     //请求拦截
     this.service.interceptors.request.use((request: AxiosRequestConfig) => {
+      console.log("请求拦截" + request.url);
       if (request && request.headers) {
         // 多一步判断
         request.headers["ANOTHER_WORLD_KEY"] = store.state.ANOTHER_WORLD_KEY;
@@ -52,6 +53,7 @@ class Axios {
 
     //响应拦截
     this.service.interceptors.response.use((response: AxiosResponse) => {
+      console.log("响应拦截" + JSON.stringify(response.data));
       let result;
       //前端对应的安全策略
       const auth_id = response.headers["auth_id"];
