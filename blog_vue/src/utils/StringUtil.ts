@@ -23,11 +23,11 @@ export default class StringUtil {
    * @return 为空则真，反之则假
    */
   public static checkStringsIfEmpty(strs: string[]): boolean {
-    let result = false;
+    let result = 0;
     strs.forEach((str) => {
-      result = this.checkStringIfEmpty(str);
+      result = result + (this.checkStringIfEmpty(str) ? 1 : 0);
     });
-    return result;
+    return result != 0 ? true : false;
   }
 
   /**
