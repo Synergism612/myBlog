@@ -19,6 +19,7 @@ public class CodeMsg {
     public static CodeMsg ACCESS_LIMIT_REACHED = new CodeMsg(500103, "访问太频繁！");
     public static CodeMsg KEY_FAILURE = new CodeMsg(500104, "密钥失效：%s");
     public static CodeMsg PERMISSION_FAILURE = new CodeMsg(500105, "鉴权失败：%s");
+    public static CodeMsg MAIL_ERROR = new CodeMsg(500106, "邮箱异常：%s");
 
 
     //登录模块 5002XX

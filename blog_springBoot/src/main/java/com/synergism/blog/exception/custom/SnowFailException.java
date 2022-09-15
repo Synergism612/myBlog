@@ -1,5 +1,9 @@
 package com.synergism.blog.exception.custom;
 
+/**
+ * 自定义异常
+ * 雪花算法异常
+ */
 public class SnowFailException extends RuntimeException{
     public SnowFailException() {
         super();

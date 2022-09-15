@@ -1,9 +1,6 @@
 package com.synergism.blog.exception;
 
-import com.synergism.blog.exception.custom.IllegalRequestException;
-import com.synergism.blog.exception.custom.KeyFailureException;
-import com.synergism.blog.exception.custom.PermissionFailureException;
-import com.synergism.blog.exception.custom.SnowFailException;
+import com.synergism.blog.exception.custom.*;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -69,5 +66,16 @@ public class GlobalException extends RuntimeException{
     @ResponseBody
     public Result<Object> SnowFailException(SnowFailException e){
         return Result.error(CodeMsg.SERVER_ERROR);
+    }
+
+    /**
+     * 拦截MailErrorException异常
+     * @param e 异常
+     * @return 结果
+     */
+    @ExceptionHandler(value = MailErrorException.class)
+    @ResponseBody
+    public Result<Object> MailErrorException(MailErrorException e){
+        return Result.error(CodeMsg.MAIL_ERROR.fillArgs(e.getMessage()));
     }
 }
