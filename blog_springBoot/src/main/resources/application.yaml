@@ -16,6 +16,12 @@ spring:
     host: smtp.163.com
     username: synergism2022@163.com
     password: FXDKZJSNILSAHUVX
+  # 配置模板
+  freemarker:
+    cache: false # 缓存配置 开发阶段应该配置为false 因为经常会改
+    suffix: .html # 模版后缀名 默认为ftl
+    charset: UTF-8 # 文件编码
+    template-loader-path: classpath:/templates/  # 存放模板的文件夹，以resource文件夹为相对路径
 
   # 配置redis
 #  redis:
