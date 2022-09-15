@@ -10,6 +10,13 @@ spring:
     username: blog
     # 密码
     password: 123456
+
+  # 配置邮箱
+  mail:
+    host: smtp.163.com
+    username: synergism2022@163.com
+    password: FXDKZJSNILSAHUVX
+
   # 配置redis
 #  redis:
 #    # ip地址
