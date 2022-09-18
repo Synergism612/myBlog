@@ -4,7 +4,7 @@ import com.synergism.blog.exception.custom.PermissionFailureException;
 import com.synergism.blog.security.enums.KeyEnum;
 import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.security.utils.RSAUtil;
-import com.synergism.blog.user.entity.User;
+import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.utils.StringUtil;
 import lombok.Getter;
 import lombok.Setter;

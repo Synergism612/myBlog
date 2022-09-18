@@ -1,4 +1,4 @@
-package com.synergism.blog.user.controller;
+package com.synergism.blog.blog.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.synergism.blog.redis.service.RedisService;
@@ -8,10 +8,10 @@ import com.synergism.blog.security.entity.Auth;
 import com.synergism.blog.security.enums.KeyEnum;
 import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.security.utils.RSAUtil;
-import com.synergism.blog.user.entity.Login;
-import com.synergism.blog.user.entity.User;
-import com.synergism.blog.user.entity.UserInformation;
-import com.synergism.blog.user.service.UserService;
+import com.synergism.blog.blog.user.entity.Login;
+import com.synergism.blog.blog.user.entity.User;
+import com.synergism.blog.blog.user.entity.UserInformation;
+import com.synergism.blog.blog.user.service.UserService;
 import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

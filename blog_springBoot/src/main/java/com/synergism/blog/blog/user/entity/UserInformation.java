@@ -1,4 +1,4 @@
-package com.synergism.blog.user.entity;
+package com.synergism.blog.blog.user.entity;
 
 import lombok.Getter;
 import lombok.Setter;

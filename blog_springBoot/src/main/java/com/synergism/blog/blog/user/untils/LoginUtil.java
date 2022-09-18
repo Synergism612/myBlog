@@ -1,4 +1,4 @@
-package com.synergism.blog.user.untils;
+package com.synergism.blog.blog.user.untils;
 
 public class LoginUtil {
     public static String checkUsername(String username){

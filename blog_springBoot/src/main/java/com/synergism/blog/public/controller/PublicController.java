@@ -1,6 +1,6 @@
 package com.synergism.blog.global.controller;
 
-import com.synergism.blog.user.entity.Login;
+import com.synergism.blog.blog.user.entity.Login;
 import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.result.entity.Result;
 import org.springframework.web.bind.annotation.*;
