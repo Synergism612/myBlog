@@ -1,6 +1,6 @@
 package com.synergism.blog;
 
-import com.synergism.blog.email.entity.MailService;
+import com.synergism.blog.email.service.MailService;
 import com.synergism.blog.redis.service.RedisService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +62,7 @@ class BlogApplicationTests {
         System.out.println(o.toString());
     }
 
-    @Autowired
+    @Resource
     JavaMailSenderImpl mailSender;
 
     @Test
@@ -82,7 +83,7 @@ class BlogApplicationTests {
         String emailTemplate = "registerTemplate";
         String to = "1273059247@qq.com";
 
-        Map<String, Object> dataMap = new HashMap<>();
+        Map<String, String> dataMap = new HashMap<>();
         dataMap.put("email", to);
         dataMap.put("code", "5555");
         dataMap.put("createTime","20221212");

@@ -17,4 +17,7 @@ public interface RedisService {
     Object getMapValue(String key);
     // 获取元素
     Object getValue(String key);
+
+    //邮箱验证码接口
+    void setEmail(String email,Map<String,String> code);
 }

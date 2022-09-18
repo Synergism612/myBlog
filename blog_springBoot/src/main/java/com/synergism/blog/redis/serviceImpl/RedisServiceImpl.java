@@ -29,13 +29,13 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public void setValue(String key, String value) {
         redisTemplate.opsForValue().set(key, value);
-        redisTemplate.expire(key, timeout, TimeUnit.HOURS); // 这里指的是1小时后失效
+        redisTemplate.expire(key, timeout, TimeUnit.HOURS); // 这里指的是一周后失效
     }
 
     @Override
     public void setValue(String key, Object value) {
         redisTemplate.opsForValue().set(key, value);
-        redisTemplate.expire(key, timeout, TimeUnit.HOURS); // 这里指的是1小时后失效
+        redisTemplate.expire(key, timeout, TimeUnit.HOURS); // 这里指的是一周后失效
     }
 
     @Override
@@ -54,5 +54,11 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Object getMapValue(String key) {
         return redisTemplate.opsForValue().get(key);
+    }
+
+    @Override
+    public void setEmail(String email, Map<String, String> code) {
+        redisTemplate.opsForValue().set(email, code);
+        redisTemplate.expire(email, 5, TimeUnit.MINUTES); // 这里指的是5分钟后失效
     }
 }

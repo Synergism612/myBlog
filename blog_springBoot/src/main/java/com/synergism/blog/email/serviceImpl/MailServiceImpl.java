@@ -1,7 +1,10 @@
-package com.synergism.blog.email.entity;
+package com.synergism.blog.email.serviceImpl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.synergism.blog.email.service.MailService;
 import com.synergism.blog.exception.custom.MailErrorException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.synergism.blog.blog.user.entity.User;
+import com.synergism.blog.blog.user.mapper.UserMapper;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,8 +19,8 @@ import javax.mail.internet.MimeMessage;
 import java.util.Map;
 
 @Service
-public class MailService {
-    private String sender = "synergism2022@163.com";
+public class MailServiceImpl extends ServiceImpl<UserMapper, User> implements MailService {
+    private final String sender = "synergism2022@163.com";
     @Resource
     private JavaMailSender javaMailSender;
     @Resource
@@ -74,10 +77,10 @@ public class MailService {
      * @param dataMap       数据
      * @throws MessagingException 邮件错误
      */
-    public void sendTemplateMail(String to, String subject, String emailTemplate, Map<String, Object> dataMap) throws MessagingException {
+    public void sendTemplateMail(String to, String subject, String emailTemplate, Map<String, String> dataMap) throws MessagingException {
         try {
             Context context = new Context();
-            for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+            for (Map.Entry<String, String> entry : dataMap.entrySet()) {
                 context.setVariable(entry.getKey(), entry.getValue());
             }
             String templateContent = templateEngine.process(emailTemplate, context);
