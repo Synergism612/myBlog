@@ -58,24 +58,32 @@ public class GlobalInterceptor implements HandlerInterceptor {
                 Auth auth = Auth.BASIC(sessionID);
                 //写入redis
                 redis.setValue(auth_id, auth);
+                //写入响应头部
                 response.addHeader("AUTH_ID", auth_id);
                 return true;
             }
         }
 
         if (!checkStringIfEmpty(AUTH_ID)){
+            //获取权限
             Auth auth = (Auth) redis.getValue(AUTH_ID);
             if (auth==null){
+                //为null则重新分配一个新的权限
                 AUTH_ID = asString(new SnowflakeIdWorker(0, 0).nextId());
                 auth = Auth.getInstance(request);
             }
             if (checkStringIfEmpty(auth.getUserKey()))
+                //用户密钥为空则写入用户密钥
                 auth.setUserKey(RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY))));
             if (!auth.getSessionID().equals(sessionID)){
+                //处理sessionID不同的情况，使用最新的sessionID
                 auth.setSessionID(sessionID);
             }
+            //鉴权
             URLUtil.checkURLIsPower(url, auth.getPower());
+            //更新redis对应数据
             redis.getAndSetValue(AUTH_ID,auth);
+            //更新写入响应头部
             response.addHeader("AUTH_ID", AUTH_ID);
             return true;
         }

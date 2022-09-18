@@ -18,9 +18,12 @@ public class URLUtil {
     }
 
     public static void checkURLIsPower(String url ,String[] powers){
-        Boolean ok = false;
+        boolean ok = false;
         for (String power : powers) {
-            if (url.contains(power)) ok = true;
+            if (url.equals(power)) {
+                ok = true;
+                break;
+            }
         }
         if (!ok){
             throw new IllegalRequestException("权限不足");
