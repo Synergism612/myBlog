@@ -6,6 +6,10 @@ import StringUtil from "@/utils/StringUtil";
 import { AxiosResponse } from "axios";
 
 export class api {
+  /**
+   * 获取公钥
+   * @returns 返回Promise
+   */
   public static getPublicKey(): Promise<void> {
     //开启请求
     return axios({
@@ -42,8 +46,11 @@ export class api {
       });
   }
 
+  /**
+   * 测试函数
+   * @returns 空
+   */
   public static getTest(): string {
-    //开启请求
     axios({
       url: "/api/public/test",
       method: "post",
@@ -62,17 +69,37 @@ export class api {
     return "";
   }
 
+  /**
+   * 登录
+   * @param username 用户名
+   * @param password 密码
+   * @returns Promise
+   */
   public static login(
     username: string,
     password: string
   ): Promise<AxiosResponse> {
-    //开启请求
     return axios({
       url: "/blog/user/login",
       method: "post",
       data: {
         username: username,
         password: password,
+      },
+    });
+  }
+
+  /**
+   * 获取邮箱验证码
+   * @param mail 邮箱
+   * @returns Promise
+   */
+  public static getSecurityCode(mail: string): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/mail/code",
+      method: "post",
+      data: {
+        mail: mail,
       },
     });
   }
