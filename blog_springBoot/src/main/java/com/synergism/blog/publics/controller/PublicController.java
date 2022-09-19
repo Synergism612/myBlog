@@ -1,6 +1,7 @@
-package com.synergism.blog.global.controller;
+package com.synergism.blog.publics.controller;
 
 import com.synergism.blog.blog.user.entity.Login;
+import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.result.entity.Result;
 import org.springframework.web.bind.annotation.*;
@@ -28,5 +29,15 @@ public class PublicController {
     @PostMapping("/test")
     public Result<String> test(@RequestBody Login login) {
         return Result.success(login.toString());
+    }
+
+    /**
+     * 错误接口
+     * @param object 任意
+     * @return 错误
+     */
+    @PostMapping("/error")
+    public Result<String> error() {
+        return Result.error(CodeMsg.KEY_FAILURE.fillArgs("或许你可以刷新一下？"));
     }
 }
