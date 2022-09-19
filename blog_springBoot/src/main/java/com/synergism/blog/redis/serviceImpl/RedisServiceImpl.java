@@ -1,5 +1,6 @@
 package com.synergism.blog.redis.serviceImpl;
 
+import com.synergism.blog.email.entity.CodeMail;
 import com.synergism.blog.redis.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -57,8 +58,8 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void setEmail(String email, Map<String, String> code) {
-        redisTemplate.opsForValue().set(email, code);
+    public void setEmail(String email, CodeMail codeMail) {
+        redisTemplate.opsForValue().set(email, codeMail);
         redisTemplate.expire(email, 5, TimeUnit.MINUTES); // 这里指的是5分钟后失效
     }
 }

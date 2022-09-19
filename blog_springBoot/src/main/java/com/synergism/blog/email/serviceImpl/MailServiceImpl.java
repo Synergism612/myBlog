@@ -5,6 +5,7 @@ import com.synergism.blog.email.service.MailService;
 import com.synergism.blog.exception.custom.MailErrorException;
 import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.blog.user.mapper.UserMapper;
+import com.synergism.blog.redis.service.RedisService;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

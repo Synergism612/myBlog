@@ -1,5 +1,7 @@
 package com.synergism.blog.redis.service;
 
+import com.synergism.blog.email.entity.CodeMail;
+
 import java.util.Map;
 
 public interface RedisService {
@@ -19,5 +21,5 @@ public interface RedisService {
     Object getValue(String key);
 
     //邮箱验证码接口
-    void setEmail(String email,Map<String,String> code);
+    void setEmail(String email, CodeMail codeMail);
 }
