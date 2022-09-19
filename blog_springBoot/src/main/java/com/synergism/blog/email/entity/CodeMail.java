@@ -17,8 +17,19 @@ public class CodeMail {
     
     private String time;
 
+    /**
+     * 从map中读取
+     * @param map map
+     * @return CodeMail
+     */
     public static CodeMail getInstance(Map<String,String> map){
         return new CodeMail(map.get("mail"),map.get("code"),map.get("createTime"));
+    }
+
+    public CodeMail() {
+        this.mail = "";
+        this.code = "";
+        this.time = "";
     }
 
     public CodeMail(String mail, String code,String time) {
@@ -27,6 +38,10 @@ public class CodeMail {
         this.time = time;
     }
 
+    /**
+     * 转换为map
+     * @return map
+     */
     public Map<String, String> toMap(){
         Map<String, String> result = new HashMap<>();
         result.put("mail",mail);
