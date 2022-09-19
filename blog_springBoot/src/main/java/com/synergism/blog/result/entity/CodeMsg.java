@@ -26,7 +26,7 @@ public class CodeMsg {
     public static CodeMsg USER_NOT_LOGIN = new CodeMsg(500200, "用户未登录");
     public static CodeMsg TOKEN_INVALID = new CodeMsg(500201, "token无效");
     public static CodeMsg USERNAME_ERROR = new CodeMsg(500202, "账号或密码错误");
-    public static CodeMsg PASSWORD_ERROR = new CodeMsg(500203, "账号或密码错误");
+    public static CodeMsg REGISTER_ERROR = new CodeMsg(500203, "注册错误：%s");
 
     /**
      * 填充静态封装的msg参数
