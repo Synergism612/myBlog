@@ -103,4 +103,20 @@ export class api {
       },
     });
   }
+
+  public static register(
+    username: string,
+    password: string,
+    code: string
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/blog/user/register",
+      method: "post",
+      data: {
+        username: username,
+        password: password,
+        code: code,
+      },
+    });
+  }
 }

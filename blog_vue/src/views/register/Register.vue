@@ -40,7 +40,6 @@
         <el-form-item label="验证码" prop="code" id="security_code">
           <el-input
             v-model="RegisterFrom.code"
-            type="password"
             placeholder="请输入验证码"
             clearable
           />
@@ -135,7 +134,18 @@ export default defineComponent({
     };
 
     const register = () => {
-      console.log("你好");
+      registerFormRef.value
+        .validate()
+        .then(() => {
+          api.register(
+            data.RegisterFrom.username,
+            data.RegisterFrom.password_first,
+            data.RegisterFrom.code
+          );
+        })
+        .catch(() => {
+          Message.errorMessage("校验未通过");
+        });
     };
 
     const registerFormRef = ref();
