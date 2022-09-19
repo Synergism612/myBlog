@@ -13,4 +13,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
+    /**
+     * 是否存在
+     * @param username 账号
+     * @return 存在返回真，不存在返回否
+     */
+    boolean ifExist(String username);
+
 }

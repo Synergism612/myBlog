@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * 用户信息实体类
+ */
 @Getter
 @Setter
 public class UserInformation{
@@ -32,7 +35,7 @@ public class UserInformation{
         return new UserInformation(
                 user.getIcon(),
                 user.getName(),
-                user.getEmail(),
+                user.getUsername(),
                 user.getBirthday(),
                 user.getSex(),
                 user.getIntro()

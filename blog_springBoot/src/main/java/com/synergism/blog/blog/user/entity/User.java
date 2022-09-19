@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 
+import com.synergism.blog.security.entity.Power;
+import com.synergism.blog.utils.TypeUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -36,9 +38,9 @@ public class User {
     @TableField("name")
     private String name;
 
-    @ApiModelProperty("邮箱")
-    @TableField("email")
-    private String email;
+    @ApiModelProperty("账号")
+    @TableField("username")
+    private String username;
 
     @ApiModelProperty("密码")
     @TableField("password")
@@ -64,4 +66,34 @@ public class User {
     @TableField("power")
     private String power;
 
+    public User(Long id, String icon, String name, String username, String password, Date birthday, Integer sex, String intro, Integer status, String power) {
+        this.id = id;
+        this.icon = icon;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.birthday = birthday;
+        this.sex = sex;
+        this.intro = intro;
+        this.status = status;
+        this.power = power;
+    }
+
+    public User(Long id, String icon, String name, String username, String password, Date birthday, Integer sex, String intro, Integer status,
+                String[] power) {
+        this.id = id;
+        this.icon = icon;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.birthday = birthday;
+        this.sex = sex;
+        this.intro = intro;
+        this.status = status;
+        this.power = TypeUtil.arrayToString(power);
+    }
+
+    public static User getInstance(Register register){
+        return new User(null,"", register.getUsername(), register.getUsername(), register.getPassword(), null,0,null,1,Power.NOT_LOG_IN.getPower());
+    }
 }

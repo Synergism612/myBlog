@@ -72,7 +72,7 @@ public class Auth implements Serializable {
     public void updateFromUser(User user) {
         setUserName(user.getName());
         setPassword(user.getPassword());
-        setPower(user.getPower().split(","));
+        setPower(user.getPower().split("·"));
     }
 
     /**
