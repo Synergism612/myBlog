@@ -48,7 +48,7 @@ public class EmailController {
                 CodeMail codeMail = CodeMail.getInstance(dataMap);
                 if ((int) (new Date().getTime() - TimeUtil.toDate(codeMail.getTime()).getTime()) / 6000 > 1) {
                     //记录的时间距离现在不到一分钟，返回请求过快
-                    return Result.error(CodeMsg.ACCESS_LIMIT_REACHED);
+                    return Result.error(CodeMsg.MAIL_ERROR.fillArgs("频繁操作"));
                 }
             } else dataMap = new HashMap<>();
 
