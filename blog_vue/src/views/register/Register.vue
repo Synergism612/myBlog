@@ -44,11 +44,9 @@
             placeholder="请输入验证码"
             clearable
           />
-          <el-checkbox-button
-            label="获得验证码"
-            name="type"
-            @click="getSecurityCode()"
-          />
+          <el-button type="string" @click="getSecurityCode()"
+            >获取验证码</el-button
+          >
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="register()">注册</el-button>
@@ -100,7 +98,7 @@ export default defineComponent({
       if (StringUtil.checkStringIfEmpty(value)) {
         return callback(new Error("不能为空"));
       }
-      if (StringUtil.checkStringIfEmpty(data.RegisterFrom.password_first)){
+      if (StringUtil.checkStringIfEmpty(data.RegisterFrom.password_first)) {
         return callback(new Error("请输入密码"));
       }
       if (value.indexOf(data.RegisterFrom.password_first) == -1) {
