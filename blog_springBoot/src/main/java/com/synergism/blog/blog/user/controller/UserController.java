@@ -1,6 +1,8 @@
 package com.synergism.blog.blog.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.synergism.blog.blog.user.entity.Register;
+import com.synergism.blog.email.entity.CodeMail;
 import com.synergism.blog.redis.service.RedisService;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
@@ -68,5 +70,22 @@ public class UserController {
         }
         //返回失败
         return Result.error(CodeMsg.USERNAME_ERROR);
+    }
+
+    @PostMapping("/register")
+    public Result<String> register(@RequestBody Register register) {
+        //获取对应的验证码
+        String code = ((CodeMail) redis.getValue(register.getUsername())).getCode();
+        //验证码判断
+        if (!code.equals(register.getCode())) {
+            return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("验证码错误"));
+        }
+        //账号是否已存在判断
+        if (service.ifExist(register.getUsername())) {
+            return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
+        }
+
+        service.save(User.getInstance(register));
+        return Result.success();
     }
 }
