@@ -4,6 +4,7 @@ import com.synergism.blog.utils.TimeUtil;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -24,5 +25,13 @@ public class CodeMail {
         this.mail = mail;
         this.code = code;
         this.time = time;
+    }
+
+    public Map<String, String> toMap(){
+        Map<String, String> result = new HashMap<>();
+        result.put("mail",mail);
+        result.put("code",code);
+        result.put("time",time);
+        return result;
     }
 }

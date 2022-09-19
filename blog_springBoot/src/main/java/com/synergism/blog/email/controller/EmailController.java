@@ -8,6 +8,7 @@ import com.synergism.blog.redis.service.RedisService;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.utils.TimeUtil;
+import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,30 +35,32 @@ public class EmailController {
         this.redis = redis;
     }
 
-    //关闭强转类型编译提示
-    @SuppressWarnings("unchecked")
     @PostMapping("/code")
     public Result<String> getMailCode(@RequestBody Map<String, String> mailMap) throws MessagingException, ParseException {
         try {
+            //获得对应邮箱
             String mail = mailMap.get("mail");
-            Object object = redis.getValue(mail);
-            Map<String, String> dataMap;
-            //若redis中存在则判断时长，不存在则创建新map
-            if (object != null) {
-                dataMap = (Map<String, String>) object;
-                CodeMail codeMail = CodeMail.getInstance(dataMap);
+            //在redis查找
+            CodeMail codeMail = (CodeMail) redis.getValue(mail);
+            //判空
+            if (TypeUtil.ifNull(codeMail)) {
+                //为空则给与邮箱
+                codeMail.setMail(mail);
+            } else {
+                //不为空则判断时长
                 if ((int) (new Date().getTime() - TimeUtil.toDate(codeMail.getTime()).getTime()) / 6000 > 1) {
-                    //记录的时间距离现在不到一分钟，返回请求过快
+                    //记录的时间距离现在不到一分钟，返回频繁操作
                     return Result.error(CodeMsg.MAIL_ERROR.fillArgs("频繁操作"));
                 }
-            } else dataMap = new HashMap<>();
-
+            }
+            //不管空不空，都会更新数据进去
             String code = CodeUtil.code();
-            dataMap.put("email", mail);
-            dataMap.put("code", code);
-            dataMap.put("createTime", TimeUtil.now());
-            service.sendTemplateMail(mail, "验证码", "registerTemplate", dataMap);
-            redis.getAndSetValue(mail, dataMap);
+            codeMail.setCode(code);
+            codeMail.setTime(TimeUtil.now());
+            //调用发邮件
+            service.sendTemplateMail(mail, "验证码", "registerTemplate", codeMail.toMap());
+            //更新redis中的数据
+            redis.getAndSetValue(mail, codeMail);
             return Result.success();
         } catch (
                 MailException e) {
