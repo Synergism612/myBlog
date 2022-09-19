@@ -1,6 +1,7 @@
 package com.synergism.blog.utils;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
 public class TypeUtil {
 
@@ -50,11 +51,14 @@ public class TypeUtil {
      * @param objects 对象
      * @return 空为真，否为假
      */
+    @SafeVarargs
     public static <O> boolean ifNull(O... objects) {
         boolean flag = false; //定义返回结果，默认为true
         for (O object : objects) {
-            if (object == null)
+            if (object == null) {
                 flag = true;
+                break;
+            }
             Class<?> clazz = object.getClass(); // 得到类对象
             Field[] fields = clazz.getDeclaredFields(); // 得到所有属性
             for (Field field : fields) {
@@ -72,5 +76,19 @@ public class TypeUtil {
             }
         }
         return flag;
+    }
+
+    /**
+     * 将字符串数组转为字符串 用逗号隔开
+     * @param array
+     * @return
+     */
+    public static String arrayToString(String[] array){
+        String result = "";
+
+        for (String s : array) {
+            result+=s+"·";
+        }
+        return result.substring(0,result.length()-1);
     }
 }
