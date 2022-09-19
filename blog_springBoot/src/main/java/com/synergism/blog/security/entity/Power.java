@@ -18,7 +18,9 @@ public class Power {
     /**
      * 基本权限方法
      */
-    public static Power NOT_LOG_IN = new Power("/api/public/key",
+    public static Power NOT_LOG_IN = new Power(
+            "/api/public/key",
+            "/api/public/error",
             "/api/mail/code",
             "/index",
             "/blog/user/login",
