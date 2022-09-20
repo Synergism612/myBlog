@@ -75,10 +75,6 @@ class Axios {
         }
       }
       if (result.code != 200) {
-        if (result.code == 500104) {
-          store.commit("DELECT_ALL_KEY");
-        }
-
         Message.errorMessage(result.msg);
       }
       return result;
