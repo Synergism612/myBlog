@@ -53,11 +53,6 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public Object getMapValue(String key) {
-        return redisTemplate.opsForValue().get(key);
-    }
-
-    @Override
     public void setEmail(String email, CodeMail codeMail) {
         redisTemplate.opsForValue().set(email, codeMail);
         redisTemplate.expire(email, 5, TimeUnit.MINUTES); // 这里指的是5分钟后失效

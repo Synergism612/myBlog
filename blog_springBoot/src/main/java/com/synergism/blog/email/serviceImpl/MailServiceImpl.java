@@ -5,7 +5,6 @@ import com.synergism.blog.email.service.MailService;
 import com.synergism.blog.exception.custom.MailErrorException;
 import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.blog.user.mapper.UserMapper;
-import com.synergism.blog.redis.service.RedisService;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -27,12 +26,6 @@ public class MailServiceImpl extends ServiceImpl<UserMapper, User> implements Ma
     @Resource
     private TemplateEngine templateEngine;
 
-    /**
-     * 发送文本邮件
-     * @param to 发送对象
-     * @param subject 主题
-     * @param content 内容
-     * */
     public void sendSimpleMail(String to, String subject, String content) {
         try {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -47,13 +40,6 @@ public class MailServiceImpl extends ServiceImpl<UserMapper, User> implements Ma
         }
     }
 
-    /**
-     * 发送HTML邮件
-     * @param to 发送对象
-     * @param subject 主题
-     * @param content 内容
-     * @throws MessagingException 邮箱错误
-     */
     public void sendHtmlMail(String to, String subject, String content) throws MessagingException {
         try {
             MimeMessage mimeMailMessage = javaMailSender.createMimeMessage();
@@ -69,15 +55,6 @@ public class MailServiceImpl extends ServiceImpl<UserMapper, User> implements Ma
         }
     }
 
-    /**
-     * 发送模板邮件
-     *
-     * @param to            发送对象
-     * @param subject       主题
-     * @param emailTemplate 模板
-     * @param dataMap       数据
-     * @throws MessagingException 邮件错误
-     */
     public void sendTemplateMail(String to, String subject, String emailTemplate, Map<String, String> dataMap) throws MessagingException {
         try {
             Context context = new Context();

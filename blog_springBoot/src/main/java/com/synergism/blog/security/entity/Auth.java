@@ -15,30 +15,48 @@ import java.io.Serializable;
 
 import static com.synergism.blog.utils.StringUtil.asString;
 
-@Getter
-@Setter
 /**
  * 鉴权类
  */
+@Getter
+@Setter
 public class Auth implements Serializable {
+    //sessionID
     private String sessionID;
+    //用户密钥
     private String userKey;
+    //账号
     private String userName;
+    //密码
     private String password;
+    //权限
     private String[] power;
 
+    /**
+     * 空参构造函数
+     */
     public Auth() {
         this.sessionID = "";
         this.userKey = "";
         this.userName = "";
         this.password = "";
-        this.power = new String[]{"login", "register", "public","index"};
+        this.power = Power.NOT_LOG_IN.getPower();
 
     }
 
+    /**
+     *
+     * @param sessionID sessionID
+     * @param userKey 用户密钥
+     * @param userName 账号
+     * @param password 密码
+     * @param power 权限
+     */
     public Auth(String sessionID, String userKey, String userName, String password, String[] power) {
+        //判空
         if (StringUtil.checkStringsIfEmpty(sessionID)) throw new PermissionFailureException("存在空值");
         this.sessionID = sessionID;
+        //若没有登录，给空
         if (StringUtil.checkStringsIfEmpty(userKey, userName, password)) {
             this.userKey = "";
             this.userName = "";

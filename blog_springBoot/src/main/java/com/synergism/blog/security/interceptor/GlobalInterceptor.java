@@ -38,20 +38,26 @@ public class GlobalInterceptor implements HandlerInterceptor {
      * @param response 响应
      * @param handler  执行的函数
      * @return 返回 true 则放行，返回 false 则不会向后执行。
-     * @throws Exception 抛出异常
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String url = request.getRequestURI();
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        //获取uri
+        String uri = request.getRequestURI();
+        //获取请求类型
         String method = request.getMethod();
+        //获取sessionID
         String sessionID = request.getSession().getId();
+        //获取密钥
         String ANOTHER_WORLD_KEY = request.getHeader(asString(KeyEnum.ANOTHER_WORLD_KEY));
+        //获取权限ID
         String AUTH_ID = request.getHeader(asString(KeyEnum.AUTH_ID));
 
-        if (URLUtil.checkURLIfToError(url) || method.equals("OPTIONS")) return true;
+        //检查是否需要跳过
+        if (URLUtil.checkURLIfToError(uri) || method.equals("OPTIONS")) return true;
 
+        //检查密钥是否为空
         if (checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
-            if (URLUtil.checkURLIfToPublic(url)&&checkStringIfEmpty(AUTH_ID)) {
+            if (URLUtil.checkURLIfToPublic(uri) && checkStringIfEmpty(AUTH_ID)) {
                 //创建id
                 String auth_id = asString(new SnowflakeIdWorker(0, 0).nextId());
                 //创建基本权限
@@ -64,10 +70,11 @@ public class GlobalInterceptor implements HandlerInterceptor {
             }
         }
 
-        if (!checkStringIfEmpty(AUTH_ID)){
+        //检查权限ID是否为空
+        if (!checkStringIfEmpty(AUTH_ID)) {
             //获取权限
             Auth auth = (Auth) redis.getValue(AUTH_ID);
-            if (auth==null){
+            if (auth == null) {
                 //为null则重新分配一个新的权限
                 AUTH_ID = asString(new SnowflakeIdWorker(0, 0).nextId());
                 auth = Auth.getInstance(request);
@@ -75,14 +82,14 @@ public class GlobalInterceptor implements HandlerInterceptor {
             if (checkStringIfEmpty(auth.getUserKey()))
                 //用户密钥为空则写入用户密钥
                 auth.setUserKey(RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY))));
-            if (!auth.getSessionID().equals(sessionID)){
+            if (!auth.getSessionID().equals(sessionID)) {
                 //处理sessionID不同的情况，使用最新的sessionID
                 auth.setSessionID(sessionID);
             }
             //鉴权
-            URLUtil.checkURLIsPower(url, auth.getPower());
+            URLUtil.checkURLIsPower(uri, auth.getPower());
             //更新redis对应数据
-            redis.getAndSetValue(AUTH_ID,auth);
+            redis.getAndSetValue(AUTH_ID, auth);
             //更新写入响应头部
             response.addHeader("AUTH_ID", AUTH_ID);
             return true;
@@ -98,10 +105,9 @@ public class GlobalInterceptor implements HandlerInterceptor {
      * @param response     响应
      * @param handler      执行的函数
      * @param modelAndView 视图
-     * @throws Exception 抛出异常
      */
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
 
     }
 
@@ -113,10 +119,9 @@ public class GlobalInterceptor implements HandlerInterceptor {
      * @param response 响应
      * @param handler  执行的函数
      * @param ex       错误
-     * @throws Exception 抛出异常
      */
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 
     }
 }

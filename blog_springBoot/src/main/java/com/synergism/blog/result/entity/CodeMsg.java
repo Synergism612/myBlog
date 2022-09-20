@@ -30,8 +30,8 @@ public class CodeMsg {
 
     /**
      * 填充静态封装的msg参数
-     * @param args
-     * @return
+     * @param args 填充内容
+     * @return 新的msg
      */
     public CodeMsg fillArgs(Object... args) {
         int code = this.code;

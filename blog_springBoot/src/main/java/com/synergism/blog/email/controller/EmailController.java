@@ -31,6 +31,14 @@ public class EmailController {
 
     UserService userService;
 
+    /**
+     * 构造函数
+     * 自动注入服务类
+     *
+     * @param mailService 邮箱服务
+     * @param redis       redis服务
+     * @param userService 用户服务
+     */
     @Autowired
     EmailController(MailService mailService, RedisService redis, UserService userService) {
         this.service = mailService;
@@ -38,11 +46,20 @@ public class EmailController {
         this.userService = userService;
     }
 
+    /**
+     * 邮箱验证码接口
+     *
+     * @param mailMap 包含邮箱的集合
+     * @return 结果[null]
+     * @throws MessagingException 邮箱发送失败异常
+     * @throws ParseException     时间格式转换异常
+     */
     @PostMapping("/code")
     public Result<String> getMailCode(@RequestBody Map<String, String> mailMap) throws MessagingException, ParseException {
         try {
             //获得对应邮箱
             String mail = mailMap.get("mail");
+            //判断是否已存在
             if (userService.ifExist(mail)) {
                 return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
             }
@@ -54,8 +71,8 @@ public class EmailController {
                 codeMail = new CodeMail();
                 codeMail.setMail(mail);
             } else {
-                //不为空则判断时长
-                if ((int) (new Date().getTime() - TimeUtil.toDate(codeMail.getTime()).getTime()) / 6000 <= 1) {
+                //不为空则判断时长,没超过60秒则抛出异常
+                if (!TimeUtil.ifTimeOut(TimeUtil.toDate(codeMail.getTime()),new Date(),60)) {
                     //记录的时间距离现在不到一分钟，返回频繁操作
                     return Result.error(CodeMsg.MAIL_ERROR.fillArgs("频繁操作"));
                 }
@@ -69,9 +86,10 @@ public class EmailController {
             //更新redis中的数据
             redis.setEmail(mail, codeMail);
             return Result.success();
-        } catch (
-                MailException e) {
+        } catch (MailException e) {
             throw new MailErrorException("发送失败");
+        } catch (ParseException e){
+            throw new MailErrorException("时间转换失败");
         }
     }
 }

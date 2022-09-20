@@ -12,10 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 @Getter
 @Setter
 public class Client {
+    //ip
     private String IP;
+    //host
     private String HOST;
+    //是否为转发
     private boolean AGENCY;
 
+    /**
+     * 构造函数
+     * @param IP ip
+     * @param HOST host
+     * @param AGENCY 是否为转发
+     */
     private Client(String IP, String HOST, boolean AGENCY) {
         this.IP = IP;
         this.HOST = HOST;
@@ -29,7 +38,7 @@ public class Client {
      */
     public static Client getInstance(HttpServletRequest request) {
         String IP = request.getHeader("x - forwarded - for");
-        Boolean AGENCY = true;
+        boolean AGENCY = true;
         if (IP == null || IP.length() == 0 ||"unknown".equalsIgnoreCase(IP)){
             IP = request.getHeader("Proxy - Client - IP");
         }

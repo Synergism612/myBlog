@@ -76,12 +76,8 @@ public class RSAUtil {
 
 
     /**
-     * <p>
-     * 生成密钥对(公钥和私钥)
-     * </p>
-     *
+     * 生成密钥对
      * @return 密钥对
-
      */
     public static Map<String, Object> genKeyPair(){
         try {
@@ -90,7 +86,7 @@ public class RSAUtil {
             KeyPair keyPair = keyPairGen.generateKeyPair();
             RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
             RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-            Map<String, Object> keyMap = new HashMap(2);
+            Map<String, Object> keyMap = new HashMap<>(2);
             keyMap.put(PUBLIC_KEY, publicKey);
             keyMap.put(PRIVATE_KEY, privateKey);
             return keyMap;
@@ -101,17 +97,10 @@ public class RSAUtil {
 
 
     /**
-     * <p>
      * 用私钥对信息生成数字签名
-     * </p>
-     *
-     * @param data
-     *            已加密数据
-     * @param privateKey
-     *            私钥(BASE64编码)
-     *
+     * @param data 已加密数据
+     * @param privateKey 私钥(BASE64编码)
      * @return 签名
-
      */
     public static String sign(byte[] data, String privateKey){
         try {
@@ -130,20 +119,11 @@ public class RSAUtil {
 
 
     /**
-     * <p>
      * 校验数字签名
-     * </p>
-     *
-     * @param data
-     *            已加密数据
-     * @param publicKey
-     *            公钥(BASE64编码)
-     * @param sign
-     *            数字签名
-     *
+     * @param data 已加密数据
+     * @param publicKey 公钥(BASE64编码)
+     * @param sign 数字签名
      * @return 签名是否通过校验
-
-     *
      */
     public static boolean verify(byte[] data, String publicKey, String sign){
         try {
@@ -162,16 +142,10 @@ public class RSAUtil {
 
 
     /**
-     * <P>
      * 私钥解密
-     * </p>
-     *
-     * @param encryptedData
-     *            已加密数据
-     * @param privateKey
-     *            私钥(BASE64编码)
+     * @param encryptedData 已加密数据
+     * @param privateKey 私钥(BASE64编码)
      * @return 解密内容
-
      */
     public static byte[] decryptByPrivateKey(byte[] encryptedData, String privateKey){
         try {
@@ -187,16 +161,10 @@ public class RSAUtil {
 
 
     /**
-     * <p>
      * 公钥解密
-     * </p>
-     *
-     * @param encryptedData
-     *            内容
-     * @param publicKey
-     *            公钥(BASE64编码)
+     * @param encryptedData 内容
+     * @param publicKey 公钥(BASE64编码)
      * @return 密文
-
      */
     public static byte[] decryptByPublicKey(byte[] encryptedData, String publicKey){
         try {
@@ -212,16 +180,10 @@ public class RSAUtil {
 
 
     /**
-     * <p>
      * 公钥加密
-     * </p>
-     *
-     * @param data
-     *            源数据
-     * @param publicKey
-     *            公钥(BASE64编码)
+     * @param data 源数据
+     * @param publicKey 公钥(BASE64编码)
      * @return 密文
-
      */
     public static byte[] encryptByPublicKey(byte[] data, String publicKey){
         try {
@@ -237,16 +199,10 @@ public class RSAUtil {
 
 
     /**
-     * <p>
      * 私钥加密
-     * </p>
-     *
-     * @param data
-     *            源数据
-     * @param privateKey
-     *            私钥(BASE64编码)
+     * @param data 源数据
+     * @param privateKey 私钥(BASE64编码)
      * @return 密文
-
      */
     public static byte[] encryptByPrivateKey(byte[] data, String privateKey){
         try {
@@ -262,12 +218,8 @@ public class RSAUtil {
 
 
     /**
-     * <p>
      * 获取私钥
-     * </p>
-     *
-     * @param keyMap
-     *            密钥对
+     * @param keyMap 密钥对
      * @return 私钥
      */
     public static String getPrivateKey(Map<String, Object> keyMap) {
@@ -277,12 +229,8 @@ public class RSAUtil {
 
 
     /**
-     * <p>
      * 获取公钥
-     * </p>
-     *
-     * @param keyMap
-     *            密钥对
+     * @param keyMap 密钥对
      * @return 公钥
      */
     public static String getPublicKey(Map<String, Object> keyMap) {
@@ -317,8 +265,8 @@ public class RSAUtil {
     }
 
     /**
-     //     * 用于生成密钥对并存储到系统属性中
-     //     */
+     * 用于生成密钥对并存储到系统属性中
+     */
     public static void creatKeyPair(){
         try {
             Map<String, Object> genKeyPair = genKeyPair();

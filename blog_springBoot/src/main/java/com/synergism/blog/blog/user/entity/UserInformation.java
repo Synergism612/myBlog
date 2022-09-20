@@ -11,26 +11,54 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserInformation{
+    //头像
     private String icon;
+    //昵称
     private String name;
-    private String email;
+    //账号
+    private String username;
+    //生日
     private Date birthday;
+    //性别代码
     private Integer sex;
+    //个人简介
     private String intro;
 
+    /**
+     * 空参构造函数
+     */
     public UserInformation(){
-
+        this.icon = "";
+        this.name = "";
+        this.username = "";
+        this.birthday = new Date();
+        this.sex = 0;
+        this.intro = "";
     }
 
-    public UserInformation(String icon, String name, String email, Date birthday, Integer sex, String intro) {
+    /**
+     * 构造函数
+     * @param icon 头像
+     * @param name 昵称
+     * @param username 账号
+     * @param birthday 生日
+     * @param sex 性别代码
+     * @param intro 个人简介
+     */
+    public UserInformation(String icon, String name, String username, Date birthday, Integer sex, String intro) {
         this.icon = icon;
         this.name = name;
-        this.email = email;
+        this.username = username;
         this.birthday = birthday;
         this.sex = sex;
         this.intro = intro;
     }
 
+    /**
+     * 从用户中获得用户信息
+     * @param user 用户
+     * @return 用户信息
+     */
     public static UserInformation getInstance(User user){
         return new UserInformation(
                 user.getIcon(),

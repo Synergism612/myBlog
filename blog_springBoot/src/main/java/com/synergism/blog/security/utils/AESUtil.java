@@ -105,13 +105,13 @@ public class AESUtil {
 
 
     /**
-     * 生成加密秘钥
-     *
-     * @return
+     * 生成密钥
+     * @param key 生成密钥的值
+     * @return 密钥
      */
     private static SecretKeySpec getSecretKey(final String key) {
         //返回生成指定算法密钥生成器的 KeyGenerator 对象
-        KeyGenerator kg = null;
+        KeyGenerator kg;
 
         try {
             kg = KeyGenerator.getInstance(AES);

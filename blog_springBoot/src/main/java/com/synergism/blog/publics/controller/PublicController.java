@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.synergism.blog.utils.StringUtil.asString;
 
+/**
+ * 共有接口控制器
+ */
 @RestController
 @RequestMapping("/api/public")
 public class PublicController {

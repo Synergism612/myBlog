@@ -15,8 +15,9 @@ public class GlobalException extends RuntimeException{
 
     /**
      * 拦截IllegalArgumentException异常
+     * 参数校验异常
      * @param e 异常
-     * @return 结果
+     * @return 结果[null]
      */
     @ExceptionHandler(value =IllegalArgumentException.class)
     @ResponseBody
@@ -26,8 +27,9 @@ public class GlobalException extends RuntimeException{
 
     /**
      * 拦截IllegalRequestException异常
+     * 请求非法异常
      * @param e 异常
-     * @return 结果
+     * @return 结果[null]
      */
     @ExceptionHandler(value = IllegalRequestException.class)
     @ResponseBody
@@ -37,8 +39,9 @@ public class GlobalException extends RuntimeException{
 
     /**
      * 拦截KeyFailureException异常
+     * 密钥失效异常
      * @param e 异常
-     * @return 结果
+     * @return 结果[null]
      */
     @ExceptionHandler(value = KeyFailureException.class)
     @ResponseBody
@@ -48,8 +51,9 @@ public class GlobalException extends RuntimeException{
 
     /**
      * 拦截PermissionFailureException异常
+     * 鉴权失败异常
      * @param e 异常
-     * @return 结果
+     * @return 结果[null]
      */
     @ExceptionHandler(value = PermissionFailureException.class)
     @ResponseBody
@@ -59,8 +63,9 @@ public class GlobalException extends RuntimeException{
 
     /**
      * 拦截SnowFailException异常
+     * 雪花算法异常
      * @param e 异常
-     * @return 结果
+     * @return 结果[null]
      */
     @ExceptionHandler(value = SnowFailException.class)
     @ResponseBody
@@ -70,8 +75,9 @@ public class GlobalException extends RuntimeException{
 
     /**
      * 拦截MailErrorException异常
+     * 邮箱发送失败异常
      * @param e 异常
-     * @return 结果
+     * @return 结果[null]
      */
     @ExceptionHandler(value = MailErrorException.class)
     @ResponseBody

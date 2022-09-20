@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static com.synergism.blog.utils.StringUtil.asString;
 
@@ -28,7 +27,7 @@ import static com.synergism.blog.utils.StringUtil.asString;
 @Component
 public class HttpFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -37,19 +36,20 @@ public class HttpFilter implements Filter {
      * filterChain.doFilter(servletRequest,servletResponse);
      * 替换请求为自定义请求
      *
-     * @param servletRequest  请求
+     * @param servletRequest 请求
      * @param servletResponse 响应
-     * @param filterChain     过滤器
+     * @param filterChain 过滤器
      */
     @SneakyThrows
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
         //获取HttpServletRequest请求
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         //获得加密的密钥
         String ANOTHER_WORLD_KEY = httpServletRequest.getHeader(StringUtil.asString(KeyEnum.ANOTHER_WORLD_KEY));
         //判断不使用自定义类的情况
         try {
+            //判断是否需要直接通过或者重定向
             if (URLUtil.checkURLIfToPublic(httpServletRequest.getRequestURI()) || //获取公钥请求
                     StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY) //公钥为空请求
             ) {

@@ -14,15 +14,14 @@ import java.io.IOException;
 @Component
 public class CORSFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig){
     }
 
     /**
      * 为响应添加CORS
-     *
-     * @param servletRequest  请求
+     * @param servletRequest 请求
      * @param servletResponse 响应
-     * @param filterChain     过滤器
+     * @param filterChain 过滤器
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -47,6 +46,5 @@ public class CORSFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }

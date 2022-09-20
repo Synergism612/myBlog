@@ -17,6 +17,9 @@ public class Result<T> {
     private String time; //响应时间戳
     private T data; //结果数据
 
+    /**
+     * 无参构造函数
+     */
     public Result() {
         this.code = 500100;
         this.msg = "服务端异常";

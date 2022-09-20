@@ -39,14 +39,28 @@ public class UserController {
     private final UserService service;
     private final RedisService redis;
 
+    //私钥
     private final String private_key = System.getProperty(asString(RSAEnum.PRIVATE_KEY));
 
+    /**
+     * 构造函数
+     * 自动注入服务类
+     * @param service 用户服务类
+     * @param redis redis服务类
+     */
     @Autowired
     UserController(UserService service, RedisService redis) {
         this.service = service;
         this.redis = redis;
     }
 
+    /**
+     * 登录接口
+     * @param login 登录信息
+     * @param request 请求
+     * @param response 响应
+     * @return 结果[用户信息]
+     */
     @PostMapping("/login")
     public Result<UserInformation> login(@RequestBody Login login, HttpServletRequest request, HttpServletResponse response) {
         //获得对应用户
@@ -72,6 +86,11 @@ public class UserController {
         return Result.error(CodeMsg.USERNAME_ERROR);
     }
 
+    /**
+     * 注册接口
+     * @param register 注册信息
+     * @return 结果[null]
+     */
     @PostMapping("/register")
     public Result<String> register(@RequestBody Register register) {
         //获取对应的验证码
@@ -84,8 +103,9 @@ public class UserController {
         if (service.ifExist(register.getUsername())) {
             return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
         }
-
+        //保存到数据库
         service.save(User.getInstance(register));
+        //返回成功
         return Result.success();
     }
 }

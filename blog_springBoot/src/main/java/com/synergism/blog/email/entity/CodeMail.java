@@ -1,20 +1,23 @@
 package com.synergism.blog.email.entity;
 
-import com.synergism.blog.utils.TimeUtil;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 邮箱验证码实体类
+ */
 @Getter
 @Setter
 public class CodeMail {
-    
+
+    //目标邮箱
     private String mail;
-    
+    //验证码
     private String code;
-    
+    //时间
     private String time;
 
     /**

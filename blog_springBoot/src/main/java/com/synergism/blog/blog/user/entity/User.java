@@ -14,12 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * <p>
- * 
- * </p>
- *
- * @author Synergism
- * @since 2022-08-25 04:30:53
+ * 数据库用户实体类
  */
 @Getter
 @Setter
@@ -66,7 +61,20 @@ public class User {
     @TableField("power")
     private String power;
 
-    public User(Long id, String icon, String name, String username, String password, Date birthday, Integer sex, String intro, Integer status, String power) {
+    /**
+     * 构造函数
+     * @param id id
+     * @param icon 头像
+     * @param name 昵称
+     * @param username 账号
+     * @param password 密码
+     * @param birthday 生日
+     * @param sex 性别代码
+     * @param intro 个人简介
+     * @param status 状态码
+     * @param power 权限信息(字符串)
+     */
+    User(Long id, String icon, String name, String username, String password, Date birthday, Integer sex, String intro, Integer status, String power) {
         this.id = id;
         this.icon = icon;
         this.name = name;
@@ -79,7 +87,20 @@ public class User {
         this.power = power;
     }
 
-    public User(Long id, String icon, String name, String username, String password, Date birthday, Integer sex, String intro, Integer status,
+    /**
+     * 构造函数
+     * @param id id
+     * @param icon 头像
+     * @param name 昵称
+     * @param username 账号
+     * @param password 密码
+     * @param birthday 生日
+     * @param sex 性别代码
+     * @param intro 个人简介
+     * @param status 状态码
+     * @param power 权限信息(字符串数组)
+     */
+    User(Long id, String icon, String name, String username, String password, Date birthday, Integer sex, String intro, Integer status,
                 String[] power) {
         this.id = id;
         this.icon = icon;
@@ -93,6 +114,11 @@ public class User {
         this.power = TypeUtil.arrayToString(power);
     }
 
+    /**
+     * 注册后生成一个基本的用户
+     * @param register 注册信息
+     * @return 用户
+     */
     public static User getInstance(Register register){
         return new User(null,"", register.getUsername(), register.getUsername(), register.getPassword(), null,0,null,1,Power.NOT_LOG_IN.getPower());
     }
