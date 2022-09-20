@@ -43,8 +43,11 @@
             placeholder="请输入验证码"
             clearable
           />
-          <el-button type="string" @click="getSecurityCode()"
-            >获取验证码</el-button
+          <el-button
+            type="string"
+            @click="getSecurityCode()"
+            :disabled="codeButton.disabled"
+            >{{ codeButton.text }}</el-button
           >
         </el-form-item>
         <el-form-item>
@@ -120,13 +123,41 @@ export default defineComponent({
         password_agen: [{ validator: checkPassword_agen }],
       },
       hideRequiredAsterisk: false,
+      codeButton: {
+        disabled: false,
+        text: "获取验证码",
+        duration: 60,
+      },
     });
 
+    /**
+     * 用以获取验证码
+     */
     const getSecurityCode = () => {
+      //对表单进行校验
       registerFormRef.value
         .validate()
         .then(() => {
-          api.getSecurityCode(data.RegisterFrom.username);
+          // 注册请求
+          api.getSecurityCode(data.RegisterFrom.username).then((response) => {
+            console.log(response.data);
+            if (response.data.code == 200) {
+              //定时器，倒计时效果
+              const timer = window.setInterval(() => {
+                if (data.codeButton.duration < 1) {
+                  data.codeButton.disabled = false;
+                  data.codeButton.text = "获取验证码";
+                  data.codeButton.duration = 60;
+                  //清理定时器
+                  clearInterval(timer);
+                } else {
+                  data.codeButton.disabled = true;
+                  data.codeButton.text = "" + data.codeButton.duration;
+                  data.codeButton.duration -= 1;
+                }
+              }, 1000);
+            }
+          });
         })
         .catch(() => {
           Message.errorMessage("校验未通过");
