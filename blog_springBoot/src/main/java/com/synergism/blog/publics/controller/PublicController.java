@@ -33,10 +33,9 @@ public class PublicController {
 
     /**
      * 错误接口
-     * @param object 任意
      * @return 错误
      */
-    @PostMapping("/error")
+    @GetMapping("/key/error")
     public Result<String> error() {
         return Result.error(CodeMsg.KEY_FAILURE.fillArgs("或许你可以刷新一下？"));
     }

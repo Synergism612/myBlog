@@ -2,6 +2,7 @@ package com.synergism.blog.security.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.synergism.blog.exception.custom.KeyFailureException;
 import com.synergism.blog.security.enums.KeyEnum;
 import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.security.wrapper.RequestWrapper;
@@ -10,6 +11,7 @@ import com.synergism.blog.security.utils.AESUtil;
 import com.synergism.blog.security.utils.RSAUtil;
 import com.synergism.blog.security.utils.URLUtil;
 import com.synergism.blog.utils.StringUtil;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -39,6 +41,7 @@ public class HttpFilter implements Filter {
      * @param servletResponse 响应
      * @param filterChain     过滤器
      */
+    @SneakyThrows
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         //获取HttpServletRequest请求
@@ -46,31 +49,39 @@ public class HttpFilter implements Filter {
         //获得加密的密钥
         String ANOTHER_WORLD_KEY = httpServletRequest.getHeader(StringUtil.asString(KeyEnum.ANOTHER_WORLD_KEY));
         //判断不使用自定义类的情况
-        if (URLUtil.checkURLIfToPublic(httpServletRequest.getRequestURI()) || //获取公钥请求
-                StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY) //公钥为空请求
-        ) {
-            filterChain.doFilter(servletRequest, servletResponse);
-        } else {
-            //解密得到密钥
-            String key = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
-            //构建自定义请求与响应
-            RequestWrapper requestWrapper = new RequestWrapper(httpServletRequest, key);
-            ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) servletResponse);
-            //传递到下一步
-            filterChain.doFilter(requestWrapper, responseWrapper);
-            //请求加密在自定义请求RequestWrapper中
+        try {
+            if (URLUtil.checkURLIfToPublic(httpServletRequest.getRequestURI()) || //获取公钥请求
+                    StringUtil.checkStringIfEmpty(ANOTHER_WORLD_KEY) //公钥为空请求
+            ) {
+                if (URLUtil.checkURLIfToPublic(httpServletRequest.getRequestURI()))
+                    filterChain.doFilter(servletRequest, servletResponse);
+                else
+                    throw new KeyFailureException("重定向");
+            } else {
+                //解密得到密钥
+                String key = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
+                //构建自定义请求与响应
+                RequestWrapper requestWrapper = new RequestWrapper(httpServletRequest, key);
+                ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) servletResponse);
+                //传递到下一步
+                filterChain.doFilter(requestWrapper, responseWrapper);
+                //请求加密在自定义请求RequestWrapper中
 
-            //响应加密
-            JSONObject resultJson = new JSONObject(); //创建json对象
-            Object data = JSON.parseObject(responseWrapper.getTextContent()); //读取结果字符串
-            resultJson.put(asString(KeyEnum.ANOTHER_WORLD_RESPONSE), data); //写入json
-            String result = AESUtil.encrypt(resultJson.toJSONString(), key); //转字符串并加密
+                //响应加密
+                JSONObject resultJson = new JSONObject(); //创建json对象
+                Object data = JSON.parseObject(responseWrapper.getTextContent()); //读取结果字符串
+                resultJson.put(asString(KeyEnum.ANOTHER_WORLD_RESPONSE), data); //写入json
+                String result = AESUtil.encrypt(resultJson.toJSONString(), key); //转字符串并加密
 
-            //json数据流返回响应
-            servletResponse.setContentLength(result.length()); //写入头部
-            servletResponse.setContentType("application/json;charset=utf-8"); //写入头部
-            ((HttpServletResponse) servletResponse).setStatus(200); //写入头部
-            servletResponse.getOutputStream().write(result.getBytes()); //开启数据流
+                //json数据流返回响应
+                servletResponse.setContentLength(result.length()); //写入头部
+                servletResponse.setContentType("application/json;charset=utf-8"); //写入头部
+                ((HttpServletResponse) servletResponse).setStatus(200); //写入头部
+                servletResponse.getOutputStream().write(result.getBytes()); //开启数据流
+            }
+        } catch (KeyFailureException e) {
+            //出现密钥解密失败问题时重定向到错误接口
+            ((HttpServletResponse) servletResponse).sendRedirect("/api/public/key/error");
         }
     }
 

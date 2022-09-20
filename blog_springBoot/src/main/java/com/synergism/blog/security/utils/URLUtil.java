@@ -4,17 +4,31 @@ import com.synergism.blog.exception.custom.IllegalRequestException;
 
 public class URLUtil {
 
-    private static final String publicKeyPath = "/api/public/key";
-    private static final String errorPath = "/error";
+    private static final String[] publicPath = {"/api/public/key","/api/public/key/error"};
+    private static final String[] errorPath = {"/error","/api/public/key/error"};
 
 
 
-    public static Boolean checkURLIfToPublic(String url){
-        return url.equals(publicKeyPath);
+    public static boolean checkURLIfToPublic(String url){
+        boolean result = false;
+        for (String s : publicPath) {
+            if (url.equals(s)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
-    public static Boolean checkURLIfToError(String url){
-        return url.equals(errorPath);
+    public static boolean checkURLIfToError(String url){
+        boolean result = false;
+        for (String s : errorPath) {
+            if (url.equals(s)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     public static void checkURLIsPower(String url ,String[] powers){
