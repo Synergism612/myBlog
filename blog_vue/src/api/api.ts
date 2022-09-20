@@ -1,4 +1,5 @@
 import axios from "@/axios/axios";
+import Result from "@/entity/Result";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import RSAUtil from "@/utils/RSAUtil";
@@ -19,7 +20,8 @@ export class api {
         id: "152",
       },
     })
-      .then(({ data }) => {
+      .then((response) => {
+        const data = response.data.data;
         //更改公钥值
         store.commit("SET_PUBLIC_KEY", data);
         //生成钥匙或者直接获取本地钥匙
@@ -78,7 +80,7 @@ export class api {
   public static login(
     username: string,
     password: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse<Result>> {
     return axios({
       url: "/blog/user/login",
       method: "post",
@@ -94,7 +96,7 @@ export class api {
    * @param mail 邮箱
    * @returns Promise
    */
-  public static getSecurityCode(mail: string): Promise<AxiosResponse> {
+  public static getSecurityCode(mail: string): Promise<AxiosResponse<Result>> {
     return axios({
       url: "/api/mail/code",
       method: "post",
@@ -108,7 +110,7 @@ export class api {
     username: string,
     password: string,
     code: string
-  ): Promise<AxiosResponse> {
+  ): Promise<AxiosResponse<Result>> {
     return axios({
       url: "/blog/user/register",
       method: "post",
