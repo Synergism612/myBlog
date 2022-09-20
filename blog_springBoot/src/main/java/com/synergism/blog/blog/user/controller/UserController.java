@@ -50,7 +50,7 @@ public class UserController {
     @PostMapping("/login")
     public Result<UserInformation> login(@RequestBody Login login, HttpServletRequest request, HttpServletResponse response) {
         //获得对应用户
-        User user = service.getOne(new QueryWrapper<User>().eq("email", login.getUsername()));
+        User user = service.getOne(new QueryWrapper<User>().eq("username", login.getUsername()));
         //对象判空
         TypeUtil.isNull(user);
         //密码比对
