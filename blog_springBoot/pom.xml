@@ -64,35 +64,40 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!--junit依赖-->
+        <!--junit依赖：单元测试-->
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--commons-io流，用于解析输出数据流outputStream-->
+        <!--commons-io流：用于解析输出数据流outputStream-->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.8.0</version>
         </dependency>
-        <!--json依赖类-->
+        <!--json依赖类：阿里巴巴json依赖支持-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.41</version>
         </dependency>
-        <!--引入对redis的支持-->
+        <!--spring boot redis依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <!--邮箱服务依赖-->
+        <!--redis客户依赖：用于链接redis-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+        <!--spring boot mail依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-        <!--thymeleaf依赖-->
+        <!--thymeleaf模板依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>

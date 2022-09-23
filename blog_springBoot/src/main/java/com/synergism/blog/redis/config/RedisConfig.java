@@ -3,25 +3,31 @@ package com.synergism.blog.redis.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import javax.annotation.Resource;
 
 /**
  * redis配置类
  */
 @Configuration
 public class RedisConfig {
+
+    @Bean
+    public JedisConnectionFactory jedisConnectionFactory(){
+        return new JedisConnectionFactory();
+    }
+
     /**
      * redisTemplate 序列化使用的jdk Serializable, 存储二进制字节码, 所以自定义序列化类
      * @param redisConnectionFactory redis工厂
      * @return redis实例
      */
-    @Resource
+    @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
