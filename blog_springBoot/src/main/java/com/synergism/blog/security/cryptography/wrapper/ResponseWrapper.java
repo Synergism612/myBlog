@@ -1,4 +1,4 @@
-package com.synergism.blog.security.wrapper;
+package com.synergism.blog.security.cryptography.wrapper;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class ResponseWrapper extends HttpServletResponseWrapper {
-    private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    private PrintWriter printWriter = new PrintWriter(outputStream);
+    private final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    private final PrintWriter printWriter = new PrintWriter(outputStream);
 
 
 
@@ -19,12 +19,12 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     }
 
     @Override
-    public PrintWriter getWriter() throws IOException {
+    public PrintWriter getWriter() {
         return printWriter;
     }
 
     @Override
-    public ServletOutputStream getOutputStream() throws IOException {
+    public ServletOutputStream getOutputStream() {
         return new ServletOutputStream() {
             @Override
             public boolean isReady() {
@@ -37,7 +37,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
             }
 
             @Override
-            public void write(int b) throws IOException {
+            public void write(int b) {
                 outputStream.write(b);
             }
         };
@@ -53,11 +53,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
             e.printStackTrace();
         }
     }
-
-    public ByteArrayOutputStream getByteArrayOutputStream(){
-        return outputStream;
-    }
-
 
     public String getTextContent() {
         flush();
