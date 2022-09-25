@@ -99,8 +99,8 @@ export class api {
   public static getSecurityCode(mail: string): Promise<AxiosResponse<Result>> {
     return axios({
       url: "/api/mail/code",
-      method: "post",
-      data: {
+      method: "get",
+      params: {
         mail: mail,
       },
     });
