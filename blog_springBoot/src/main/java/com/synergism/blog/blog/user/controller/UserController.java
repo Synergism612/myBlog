@@ -6,10 +6,10 @@ import com.synergism.blog.email.entity.CodeMail;
 import com.synergism.blog.redis.service.RedisService;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
+import com.synergism.blog.security.authentication.notes.AuthenticationLogin;
 import com.synergism.blog.security.entity.Auth;
 import com.synergism.blog.security.enums.KeyEnum;
 import com.synergism.blog.security.enums.RSAEnum;
-import com.synergism.blog.security.utils.RSAUtil;
 import com.synergism.blog.blog.user.entity.Login;
 import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.blog.user.entity.UserInformation;
@@ -61,6 +61,7 @@ public class UserController {
      * @param response 响应
      * @return 结果[用户信息]
      */
+    @AuthenticationLogin //安全框架登录注解
     @PostMapping("/login")
     public Result<UserInformation> login(@RequestBody Login login, HttpServletRequest request, HttpServletResponse response) {
         //获得对应用户
@@ -68,8 +69,7 @@ public class UserController {
         //对象判空
         TypeUtil.isNull(user);
         //密码比对
-        if (RSAUtil.decryptDataOnJava(user.getPassword(), private_key)
-                .equals(login.getPassword())) {
+        if (user.getPassword().equals(login.getPassword())){
             //更新redis中的记录
             String AUTH_ID = request.getHeader(asString(KeyEnum.AUTH_ID));
             Auth auth = (Auth) redis.getValue(AUTH_ID);
