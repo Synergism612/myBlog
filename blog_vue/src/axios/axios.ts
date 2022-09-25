@@ -26,13 +26,6 @@ class Axios {
       "Content-Type": "application/json; charset=utf-8",
       Accept: "application/json",
     },
-    // `transformRequest` 允许在向服务器发送前，修改请求数据
-    transformRequest: [
-      (data: string) => {
-        // 对 data 进行加密
-        return AESUtil.encrypt(JSON.stringify(data), store.state.KEY);
-      },
-    ],
   };
 
   // 创建axios对象
@@ -48,6 +41,19 @@ class Axios {
         request.headers["ANOTHER_WORLD_KEY"] = store.state.ANOTHER_WORLD_KEY;
         request.headers["AUTH_ID"] = store.state.AUTH_ID;
       }
+      // 对 data 进行加密
+      request.data = AESUtil.encrypt(
+        JSON.stringify(request.data),
+        store.state.KEY
+      );
+
+      // 对 params 进行加密
+      request.params = {
+        params: AESUtil.encrypt(
+          JSON.stringify(request.params),
+          store.state.KEY
+        ),
+      };
       return request;
     });
 
