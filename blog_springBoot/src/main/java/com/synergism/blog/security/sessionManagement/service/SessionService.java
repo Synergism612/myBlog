@@ -5,6 +5,7 @@ import com.synergism.blog.redis.service.RedisService;
 import com.synergism.blog.security.keyManagement.enums.KeyEnum;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.security.entity.Power;
+import com.synergism.blog.security.keyManagement.service.KeyManagementService;
 import com.synergism.blog.security.sessionManagement.entity.Session;
 import com.synergism.blog.security.utils.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class SessionService {
         //获取构造参数
         String AUTH_ID = asString(new SnowflakeIdWorker(0, 0).nextId());
         String sessionID = request.getRequestedSessionId();
-        String ANOTHER_WORLD_KEY = request.getHeader(asString(KeyEnum.ANOTHER_WORLD_KEY));
+        String ANOTHER_WORLD_KEY = request.getHeader(KeyManagementService.ANOTHER_WORLD_KEY());
         String userKey = "" ;
         if(!checkStringIfEmpty(ANOTHER_WORLD_KEY))
             cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY);
@@ -82,7 +83,7 @@ public class SessionService {
      * @param response 响应
      */
     public void updateSession(HttpServletRequest request,User user,HttpServletResponse response){
-        String AUTH_ID = request.getHeader(asString(KeyEnum.AUTH_ID));
+        String AUTH_ID = request.getHeader(KeyManagementService.AUTH_ID());
         Session session = this.getSession(AUTH_ID);
         //更新数据
         session.setUserName(user.getName());

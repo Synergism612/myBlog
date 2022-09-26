@@ -1,12 +1,12 @@
 package com.synergism.blog.security.interceptor;
 
 import com.synergism.blog.redis.service.RedisService;
-import com.synergism.blog.security.entity.Auth;
-import com.synergism.blog.security.enums.KeyEnum;
-import com.synergism.blog.security.enums.RSAEnum;
-import com.synergism.blog.security.utils.RSAUtil;
-import com.synergism.blog.security.utils.SnowflakeIdWorker;
+import com.synergism.blog.security.cryptography.service.CryptographyService;
+import com.synergism.blog.security.keyManagement.service.KeyManagementService;
+import com.synergism.blog.security.sessionManagement.entity.Session;
+import com.synergism.blog.security.sessionManagement.service.SessionService;
 import com.synergism.blog.security.utils.URLUtil;
+import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -25,10 +25,14 @@ import static com.synergism.blog.utils.StringUtil.checkStringIfEmpty;
 public class GlobalInterceptor implements HandlerInterceptor {
 
     private final RedisService redis;
+    private final SessionService sessionService;
+    private final CryptographyService cryptographyService;
 
     @Autowired
-    public GlobalInterceptor(RedisService redis) {
+    public GlobalInterceptor(RedisService redis, SessionService sessionService, CryptographyService cryptographyService) {
         this.redis = redis;
+        this.sessionService = sessionService;
+        this.cryptographyService = cryptographyService;
     }
 
     /**
@@ -48,9 +52,9 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //获取sessionID
         String sessionID = request.getSession().getId();
         //获取密钥
-        String ANOTHER_WORLD_KEY = request.getHeader(asString(KeyEnum.ANOTHER_WORLD_KEY));
+        String ANOTHER_WORLD_KEY = request.getHeader(KeyManagementService.ANOTHER_WORLD_KEY());
         //获取权限ID
-        String AUTH_ID = request.getHeader(asString(KeyEnum.AUTH_ID));
+        String AUTH_ID = request.getHeader(KeyManagementService.AUTH_ID());
 
         //检查是否需要跳过
         if (URLUtil.checkURLIfToError(uri) || method.equals("OPTIONS")) return true;
@@ -58,14 +62,8 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //检查密钥是否为空
         if (checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
             if (URLUtil.checkURLIfToPublic(uri) && checkStringIfEmpty(AUTH_ID)) {
-                //创建id
-                String auth_id = asString(new SnowflakeIdWorker(0, 0).nextId());
-                //创建基本权限
-                Auth auth = Auth.BASIC(sessionID);
-                //写入redis
-                redis.setValue(auth_id, auth);
-                //写入响应头部
-                response.addHeader("AUTH_ID", auth_id);
+                //分配新的会话
+                sessionService.newSession(sessionID, response);
                 return true;
             }
         }
@@ -73,23 +71,22 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //检查权限ID是否为空
         if (!checkStringIfEmpty(AUTH_ID)) {
             //获取权限
-            Auth auth = (Auth) redis.getValue(AUTH_ID);
-            if (auth == null) {
-                //为null则重新分配一个新的权限
-                AUTH_ID = asString(new SnowflakeIdWorker(0, 0).nextId());
-                auth = Auth.getInstance(request);
+            Session session = sessionService.getSession(AUTH_ID);
+            if (TypeUtil.ifNull(session)) {
+                //为null则重新分配一个新的会话
+                sessionService.newSession(request, response);
             }
-            if (checkStringIfEmpty(auth.getUserKey()))
+            if (checkStringIfEmpty(session.getUserKey()))
                 //用户密钥为空则写入用户密钥
-                auth.setUserKey(RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY))));
-            if (!auth.getSessionID().equals(sessionID)) {
+            session.setUserKey(cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY));
+            if (!session.getSessionID().equals(sessionID)) {
                 //处理sessionID不同的情况，使用最新的sessionID
-                auth.setSessionID(sessionID);
+                session.setSessionID(sessionID);
             }
             //鉴权
-            URLUtil.checkURLIsPower(uri, auth.getPower());
+            URLUtil.checkURLIsPower(uri, session.getPower());
             //更新redis对应数据
-            redis.getAndSetValue(AUTH_ID, auth);
+            redis.getAndSetValue(AUTH_ID, session);
             //更新写入响应头部
             response.addHeader("AUTH_ID", AUTH_ID);
             return true;

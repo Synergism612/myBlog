@@ -3,15 +3,15 @@ package com.synergism.blog.security.cryptography.filter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.synergism.blog.exception.custom.KeyFailureException;
-import com.synergism.blog.security.enums.KeyEnum;
-import com.synergism.blog.security.enums.RSAEnum;
+import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.security.cryptography.wrapper.RequestWrapper;
 import com.synergism.blog.security.cryptography.wrapper.ResponseWrapper;
-import com.synergism.blog.security.utils.AESUtil;
-import com.synergism.blog.security.utils.RSAUtil;
+import com.synergism.blog.security.cryptography.utils.AESUtil;
+import com.synergism.blog.security.keyManagement.service.KeyManagementService;
 import com.synergism.blog.security.utils.URLUtil;
 import com.synergism.blog.utils.StringUtil;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -26,9 +26,18 @@ import static com.synergism.blog.utils.StringUtil.asString;
  */
 @Component
 public class HttpFilter implements Filter {
+
+    private final CryptographyService cryptographyService;
+    private final KeyManagementService keyManagementService;
+
+    @Autowired
+    HttpFilter(CryptographyService cryptographyService,KeyManagementService keyManagementService){
+        this.cryptographyService = cryptographyService;
+        this.keyManagementService = keyManagementService;
+    }
+
     @Override
     public void init(FilterConfig filterConfig) {
-
     }
 
     /**
@@ -46,7 +55,7 @@ public class HttpFilter implements Filter {
         //获取HttpServletRequest请求
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         //获得加密的密钥
-        String ANOTHER_WORLD_KEY = httpServletRequest.getHeader(StringUtil.asString(KeyEnum.ANOTHER_WORLD_KEY));
+        String ANOTHER_WORLD_KEY = keyManagementService.getAnotherWorldKey(httpServletRequest);
         //判断不使用自定义类的情况
         try {
             //判断是否需要直接通过或者重定向
@@ -59,9 +68,9 @@ public class HttpFilter implements Filter {
                     throw new KeyFailureException("重定向");
             } else {
                 //解密得到密钥
-                String key = RSAUtil.decryptDataOnJava(ANOTHER_WORLD_KEY, System.getProperty(asString(RSAEnum.PRIVATE_KEY)));
+                String key = cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY);
                 //构建自定义请求与响应
-                RequestWrapper requestWrapper = new RequestWrapper(httpServletRequest, key);
+                RequestWrapper requestWrapper = new RequestWrapper(httpServletRequest, key ,cryptographyService);
                 ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) servletResponse);
                 //传递到下一步
                 filterChain.doFilter(requestWrapper, responseWrapper);
@@ -70,7 +79,7 @@ public class HttpFilter implements Filter {
                 //响应加密
                 JSONObject resultJson = new JSONObject(); //创建json对象
                 Object data = JSON.parseObject(responseWrapper.getTextContent()); //读取结果字符串
-                resultJson.put(asString(KeyEnum.ANOTHER_WORLD_RESPONSE), data); //写入json
+                resultJson.put(KeyManagementService.ANOTHER_WORLD_RESPONSE(), data); //写入json
                 String result = AESUtil.encrypt(resultJson.toJSONString(), key); //转字符串并加密
 
                 //json数据流返回响应

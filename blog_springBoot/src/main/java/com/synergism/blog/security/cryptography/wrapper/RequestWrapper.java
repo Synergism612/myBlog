@@ -6,7 +6,8 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.synergism.blog.security.utils.AESUtil;
+import com.synergism.blog.security.cryptography.service.CryptographyService;
+import com.synergism.blog.security.cryptography.utils.AESUtil;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -25,6 +26,8 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     // 暂存参数体数据
     private final Map<String, Object> params;
 
+
+
     /**
      * 从原请求中获取数据
      *
@@ -32,7 +35,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
      * @param key     密钥
      */
     @SuppressWarnings("unchecked") //忽略json转map警告提示
-    public RequestWrapper(HttpServletRequest request, String key) {
+    public RequestWrapper(HttpServletRequest request, String key , CryptographyService cryptographyService) {
         //super HttpServletRequestWrapper 构造方法构造请求
         super(request);
         //定义后续使用变量
@@ -75,10 +78,15 @@ public class RequestWrapper extends HttpServletRequestWrapper {
                 }
             }
         }
-        //解密操作，赋值请求体
-        this.body = AESUtil.decrypt(stringBuilder.toString(), key);
-        //解密获取参数体
-        this.params = (Map<String, Object>) JSONObject.parseObject(AESUtil.decrypt(request.getParameter("params"), key),Map.class);
+        //解密请求体
+        this.body = cryptographyService.AESDecrypt(stringBuilder.toString(), key);
+
+        //获取参数体
+        String paramsBody = request.getParameter("params");
+        //解密
+        String paramsJSON = cryptographyService.AESDecrypt(paramsBody, key);
+        //转为Map
+        this.params = (Map<String, Object>) JSONObject.parseObject(paramsJSON,Map.class);
     }
 
     /**
