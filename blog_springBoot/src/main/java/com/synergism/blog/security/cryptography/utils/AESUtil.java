@@ -1,4 +1,4 @@
-package com.synergism.blog.security.utils;
+package com.synergism.blog.security.cryptography.utils;
 
 import com.synergism.blog.exception.custom.KeyFailureException;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -106,6 +106,7 @@ public class AESUtil {
 
     /**
      * 生成密钥
+     *
      * @param key 生成密钥的值
      * @return 密钥
      */

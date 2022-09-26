@@ -1,7 +1,7 @@
-package com.synergism.blog.security.utils;
+package com.synergism.blog.security.cryptography.utils;
 
 import com.synergism.blog.exception.custom.KeyFailureException;
-import com.synergism.blog.security.enums.RSAEnum;
+import com.synergism.blog.security.cryptography.enums.RSAEnum;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import java.io.ByteArrayOutputStream;
