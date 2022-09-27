@@ -6,22 +6,15 @@ import com.synergism.blog.email.entity.CodeMail;
 import com.synergism.blog.redis.service.RedisService;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
-import com.synergism.blog.security.authentication.notes.AuthenticationLogin;
-import com.synergism.blog.security.entity.Auth;
-import com.synergism.blog.security.enums.KeyEnum;
-import com.synergism.blog.security.enums.RSAEnum;
 import com.synergism.blog.blog.user.entity.Login;
 import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.blog.user.entity.UserInformation;
 import com.synergism.blog.blog.user.service.UserService;
+import com.synergism.blog.security.cryptography.note.CryptographyPasswordNote;
+import com.synergism.blog.security.sessionManagement.note.SessionManagementLoginNote;
 import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import static com.synergism.blog.utils.StringUtil.*;
 
 
 /**
@@ -33,14 +26,11 @@ import static com.synergism.blog.utils.StringUtil.*;
  * @since 2022-08-25 04:30:53
  */
 @RestController
-@RequestMapping("blog/user")
+@RequestMapping("api/blog/user")
 public class UserController {
 
     private final UserService service;
     private final RedisService redis;
-
-    //私钥
-    private final String private_key = System.getProperty(asString(RSAEnum.PRIVATE_KEY));
 
     /**
      * 构造函数
@@ -57,28 +47,18 @@ public class UserController {
     /**
      * 登录接口
      * @param login 登录信息
-     * @param request 请求
-     * @param response 响应
      * @return 结果[用户信息]
      */
-    @AuthenticationLogin //安全框架登录注解
     @PostMapping("/login")
-    public Result<UserInformation> login(@RequestBody Login login, HttpServletRequest request, HttpServletResponse response) {
+    @SessionManagementLoginNote //安全框架登录绑定会话注解
+    @CryptographyPasswordNote //安全框架密码加密注解
+    public Result<UserInformation> login(@RequestBody Login login) {
         //获得对应用户
         User user = service.getOne(new QueryWrapper<User>().eq("username", login.getUsername()));
         //对象判空
         TypeUtil.isNull(user);
         //密码比对
         if (user.getPassword().equals(login.getPassword())){
-            //更新redis中的记录
-            String AUTH_ID = request.getHeader(asString(KeyEnum.AUTH_ID));
-            Auth auth = (Auth) redis.getValue(AUTH_ID);
-            auth.updateFromUser(user);
-            redis.getAndSetValue(AUTH_ID, auth);
-
-            //更新响应头中的id
-            response.setHeader(asString(KeyEnum.AUTH_ID), AUTH_ID);
-
             //返回成功
             return Result.success(UserInformation.getInstance(user));
         }
@@ -92,6 +72,7 @@ public class UserController {
      * @return 结果[null]
      */
     @PostMapping("/register")
+    @CryptographyPasswordNote //安全框架密码加密注解
     public Result<String> register(@RequestBody Register register) {
         //获取对应的验证码
         String code = ((CodeMail) redis.getValue(register.getUsername())).getCode();
