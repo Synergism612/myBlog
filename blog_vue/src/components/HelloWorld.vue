@@ -136,7 +136,7 @@ export default defineComponent({
 
     onMounted(() => {
       console.log("ANOTHER_WORLD_KEY---\n" + store.state.ANOTHER_WORLD_KEY);
-      console.log("AUTH_ID---\n" + store.state.AUTH_ID);
+      console.log("EVIL_EYE---\n" + store.state.EVIL_EYE);
       console.log("KEY---\n" + store.state.KEY);
       console.log("PUBLIC_KEY---\n" + store.state.PUBLIC_KEY);
 

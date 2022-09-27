@@ -22,7 +22,7 @@ class Axios {
     //自定义头部
     headers: {
       ANOTHER_WORLD_KEY: "",
-      AUTH_ID: "",
+      EVIL_EYE: "",
       "Content-Type": "application/json; charset=utf-8",
       Accept: "application/json",
     },
@@ -39,7 +39,7 @@ class Axios {
       if (request && request.headers) {
         // 多一步判断
         request.headers["ANOTHER_WORLD_KEY"] = store.state.ANOTHER_WORLD_KEY;
-        request.headers["AUTH_ID"] = store.state.AUTH_ID;
+        request.headers["EVIL_EYE"] = store.state.EVIL_EYE;
       }
       // 对 data 进行加密
       request.data = AESUtil.encrypt(
@@ -62,9 +62,9 @@ class Axios {
       console.log("响应拦截" + JSON.stringify(response.data));
       let result;
       //前端对应的安全策略
-      const auth_id = response.headers["auth_id"];
-      if (!StringUtil.checkStringIfEmpty(auth_id))
-        store.commit("SET_AUTH_ID", auth_id);
+      const EVIL_EYE = response.headers["EVIL_EYE"];
+      if (!StringUtil.checkStringIfEmpty(EVIL_EYE))
+        store.commit("SET_EVIL_EYE", EVIL_EYE);
       if (StringUtil.checkStringIfEmpty(store.state.ANOTHER_WORLD_KEY)) {
         result = Result.getResult(response);
       } else {

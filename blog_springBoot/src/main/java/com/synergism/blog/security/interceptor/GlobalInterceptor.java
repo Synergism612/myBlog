@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.synergism.blog.utils.StringUtil.asString;
 import static com.synergism.blog.utils.StringUtil.checkStringIfEmpty;
 
 /**
@@ -54,14 +53,14 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //获取密钥
         String ANOTHER_WORLD_KEY = request.getHeader(KeyManagementService.ANOTHER_WORLD_KEY());
         //获取权限ID
-        String AUTH_ID = request.getHeader(KeyManagementService.AUTH_ID());
+        String EVIL_EYE = request.getHeader(KeyManagementService.EVIL_EYE());
 
         //检查是否需要跳过
         if (URLUtil.checkURLIfToError(uri) || method.equals("OPTIONS")) return true;
 
         //检查密钥是否为空
         if (checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
-            if (URLUtil.checkURLIfToPublic(uri) && checkStringIfEmpty(AUTH_ID)) {
+            if (URLUtil.checkURLIfToPublic(uri) && checkStringIfEmpty(EVIL_EYE)) {
                 //分配新的会话
                 sessionService.newSession(sessionID, response);
                 return true;
@@ -69,26 +68,24 @@ public class GlobalInterceptor implements HandlerInterceptor {
         }
 
         //检查权限ID是否为空
-        if (!checkStringIfEmpty(AUTH_ID)) {
+        if (!checkStringIfEmpty(EVIL_EYE)) {
             //获取权限
-            Session session = sessionService.getSession(AUTH_ID);
+            Session session = sessionService.getSession(EVIL_EYE);
             if (TypeUtil.ifNull(session)) {
                 //为null则重新分配一个新的会话
-                sessionService.newSession(request, response);
+                session = sessionService.newSession(request, response);
             }
             if (checkStringIfEmpty(session.getUserKey()))
                 //用户密钥为空则写入用户密钥
-            session.setUserKey(cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY));
+                session.setUserKey(cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY));
             if (!session.getSessionID().equals(sessionID)) {
                 //处理sessionID不同的情况，使用最新的sessionID
                 session.setSessionID(sessionID);
             }
             //鉴权
             URLUtil.checkURLIsPower(uri, session.getPower());
-            //更新redis对应数据
-            redis.getAndSetValue(AUTH_ID, session);
-            //更新写入响应头部
-            response.addHeader("AUTH_ID", AUTH_ID);
+            //更新最新的会话信息
+            sessionService.updateSession(EVIL_EYE,session,response);
             return true;
         }
         return false;

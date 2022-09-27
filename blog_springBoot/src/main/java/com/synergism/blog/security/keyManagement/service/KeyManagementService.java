@@ -26,8 +26,8 @@ public class KeyManagementService {
         return Key.ANOTHER_WORLD_KEY();
     }
 
-    public static String AUTH_ID() {
-        return Key.AUTH_ID();
+    public static String EVIL_EYE() {
+        return Key.EVIL_EYE();
     }
 
     public static String ANOTHER_WORLD_RESPONSE() {

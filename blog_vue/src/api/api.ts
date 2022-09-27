@@ -40,7 +40,7 @@ export class api {
         console.log("ANOTHER_WORLD_KEY--" + store.state.ANOTHER_WORLD_KEY);
         console.log("PUBLIC_KEY--" + store.state.PUBLIC_KEY);
         console.log("KEY--" + store.state.KEY);
-        console.log("AUTH_ID--" + store.state.AUTH_ID);
+        console.log("EVIL_EYE--" + store.state.EVIL_EYE);
         // }
       })
       .catch((err) => {

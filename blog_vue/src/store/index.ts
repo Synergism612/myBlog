@@ -11,7 +11,7 @@ export const store = createStore({
     ANOTHER_WORLD_KEY: StoreUtil.fetch("ANOTHER_WORLD_KEY") || "",
     PUBLIC_KEY: StoreUtil.fetch("PUBLIC_KEY") || "",
     KEY: StoreUtil.fetch("KEY") || "",
-    AUTH_ID: StoreUtil.fetch("AUTH_ID") || "",
+    EVIL_EYE: StoreUtil.fetch("EVIL_EYE") || "",
   },
   //同步函数
   mutations: {
@@ -49,14 +49,14 @@ export const store = createStore({
     },
 
     /**
-     * 为state.AUTH_ID赋值并存储
+     * 为state.EVIL_EYE赋值并存储
      * @param state state
      * @param KEY 密钥
      */
-    SET_AUTH_ID: (state, AUTH_ID: string) => {
+    SET_EVIL_EYE: (state, EVIL_EYE: string) => {
       // KEY = Base64Util.encode(KEY);
-      state.AUTH_ID = AUTH_ID;
-      StoreUtil.save("AUTH_ID", AUTH_ID);
+      state.EVIL_EYE = EVIL_EYE;
+      StoreUtil.save("EVIL_EYE", EVIL_EYE);
     },
     /**
      * 删除state中的对称钥和加密对称钥
@@ -64,11 +64,11 @@ export const store = createStore({
      */
     DELECT_ALL_KEY: (state) => {
       state.KEY = "";
-      state.AUTH_ID = "";
+      state.EVIL_EYE = "";
       state.PUBLIC_KEY = "";
       state.ANOTHER_WORLD_KEY = "";
       StoreUtil.save("KEY", "");
-      StoreUtil.save("AUTH_ID", "");
+      StoreUtil.save("EVIL_EYE", "");
       StoreUtil.save("PUBLIC_KEY", "");
       StoreUtil.save("ANOTHER_WORLD_KEY", "");
     },
