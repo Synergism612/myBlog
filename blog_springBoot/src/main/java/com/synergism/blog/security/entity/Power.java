@@ -23,6 +23,6 @@ public class Power {
             "/api/public/error",
             "/api/mail/code",
             "/index",
-            "/blog/user/login",
-            "/blog/user/register");
+            "/api/blog/user/login",
+            "/api/blog/user/register");
 }
