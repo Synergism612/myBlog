@@ -7,7 +7,7 @@ import java.util.Map;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
-import com.synergism.blog.security.cryptography.utils.AESUtil;
+import com.synergism.blog.utils.StringUtil;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -27,7 +27,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     private final Map<String, Object> params;
 
 
-
     /**
      * 从原请求中获取数据
      *
@@ -35,7 +34,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
      * @param key     密钥
      */
     @SuppressWarnings("unchecked") //忽略json转map警告提示
-    public RequestWrapper(HttpServletRequest request, String key , CryptographyService cryptographyService) {
+    public RequestWrapper(HttpServletRequest request, String key, CryptographyService cryptographyService) {
         //super HttpServletRequestWrapper 构造方法构造请求
         super(request);
         //定义后续使用变量
@@ -85,8 +84,11 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         String paramsBody = request.getParameter("params");
         //解密
         String paramsJSON = cryptographyService.AESDecrypt(paramsBody, key);
-        //转为Map
-        this.params = (Map<String, Object>) JSONObject.parseObject(paramsJSON,Map.class);
+        if (StringUtil.checkStringIfEmpty(paramsJSON))
+            this.params = null;
+        else
+            //转为Map
+            this.params = (Map<String, Object>) JSONObject.parseObject(paramsJSON, Map.class);
     }
 
     /**
@@ -155,10 +157,10 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         String[] results;
         Object o = params.get(name);
 
-        if (o instanceof String){
+        if (o instanceof String) {
             return (String) o;
         }
-        if (o instanceof JSONArray){
+        if (o instanceof JSONArray) {
             results = (String[]) ((JSONArray) o).toArray();
             return results[0];
         }
@@ -171,13 +173,13 @@ public class RequestWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public String[] getParameterValues(String name) {
-        String[] results  = new String[1];
+        String[] results = new String[1];
         Object o = params.get(name);
 
-        if (o instanceof String){
-           results[0] = (String) o;
+        if (o instanceof String) {
+            results[0] = (String) o;
         }
-        if (o instanceof JSONArray){
+        if (o instanceof JSONArray) {
             results = (String[]) ((JSONArray) o).toArray();
         }
         return results;
@@ -185,13 +187,13 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public Map<String, String[]> getParameterMap() {
-        Map<String,String[]> results = new HashMap<>();
-        params.forEach((key,object)->{
-            if (object instanceof String){
-                results.put(key,new String[]{(String) object});
+        Map<String, String[]> results = new HashMap<>();
+        params.forEach((key, object) -> {
+            if (object instanceof String) {
+                results.put(key, new String[]{(String) object});
             }
-            if (object instanceof JSONArray){
-                results.put(key,(String[]) ((JSONArray) object).toArray());
+            if (object instanceof JSONArray) {
+                results.put(key, (String[]) ((JSONArray) object).toArray());
             }
         });
         return results;
