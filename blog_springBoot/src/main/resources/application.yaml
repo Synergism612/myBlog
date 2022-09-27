@@ -5,9 +5,9 @@ spring:
     # 连接引擎位置
     driver-class-name: com.mysql.cj.jdbc.Driver
     # url
-    url: jdbc:mysql://localhost:3306/blog_new?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     # 用户名
-    username: blog
+    username: root
     # 密码
     password: 123456
 
