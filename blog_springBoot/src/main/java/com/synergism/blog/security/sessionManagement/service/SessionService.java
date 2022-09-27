@@ -40,7 +40,7 @@ public class SessionService {
         //写入redis
         redis.setValue(EVIL_EYE, session);
         //写入响应头部
-        response.addHeader("EVIL_EYE", EVIL_EYE);
+        response.setHeader("EVIL_EYE", EVIL_EYE);
 
         return session;
     }
@@ -64,7 +64,7 @@ public class SessionService {
         //写入redis
         redis.setValue(EVIL_EYE, session);
         //写入响应头部
-        response.addHeader("EVIL_EYE", EVIL_EYE);
+        response.setHeader("EVIL_EYE", EVIL_EYE);
 
         return  session;
     }
@@ -102,6 +102,6 @@ public class SessionService {
     public void updateSession(String EVIL_EYE ,Session session,HttpServletResponse response){
         redis.getAndSetValue(EVIL_EYE, session);
         //写入响应头部
-        response.addHeader("EVIL_EYE", EVIL_EYE);
+        response.setHeader("EVIL_EYE", EVIL_EYE);
     }
 }
