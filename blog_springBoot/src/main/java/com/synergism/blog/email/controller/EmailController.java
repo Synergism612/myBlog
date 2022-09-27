@@ -12,10 +12,7 @@ import com.synergism.blog.utils.TimeUtil;
 import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.text.ParseException;
@@ -49,16 +46,16 @@ public class EmailController {
     /**
      * 邮箱验证码接口
      *
-     * @param mailMap 包含邮箱的集合
+     * @param mail 邮箱
      * @return 结果[null]
      * @throws MessagingException 邮箱发送失败异常
      * @throws ParseException     时间格式转换异常
      */
-    @PostMapping("/code")
-    public Result<String> getMailCode(@RequestBody Map<String, String> mailMap) throws MessagingException, ParseException {
+    @GetMapping("/code")
+    public Result<String> getMailCode(@RequestParam  String mail) throws MessagingException, ParseException {
         try {
             //获得对应邮箱
-            String mail = mailMap.get("mail");
+//            String mail = mailMap.get("mail");
             //判断是否已存在
             if (userService.ifExist(mail)) {
                 return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
