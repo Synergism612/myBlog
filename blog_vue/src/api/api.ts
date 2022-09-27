@@ -82,7 +82,7 @@ export class api {
     password: string
   ): Promise<AxiosResponse<Result>> {
     return axios({
-      url: "/blog/user/login",
+      url: "/api/blog/user/login",
       method: "post",
       data: {
         username: username,
@@ -112,7 +112,7 @@ export class api {
     code: string
   ): Promise<AxiosResponse<Result>> {
     return axios({
-      url: "/blog/user/register",
+      url: "/api/blog/user/register",
       method: "post",
       data: {
         username: username,
