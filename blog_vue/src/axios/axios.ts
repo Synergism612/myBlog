@@ -62,7 +62,8 @@ class Axios {
       console.log("响应拦截" + JSON.stringify(response.data));
       let result;
       //前端对应的安全策略
-      const EVIL_EYE = response.headers["EVIL_EYE"];
+      const EVIL_EYE = response.headers["evil_eye"];
+      console.log("响应拦截邪王--"+EVIL_EYE );
       if (!StringUtil.checkStringIfEmpty(EVIL_EYE))
         store.commit("SET_EVIL_EYE", EVIL_EYE);
       if (StringUtil.checkStringIfEmpty(store.state.ANOTHER_WORLD_KEY)) {
