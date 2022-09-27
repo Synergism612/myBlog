@@ -1,5 +1,6 @@
 package com.synergism.blog.security.interceptor;
 
+import com.synergism.blog.exception.custom.KeyFailureException;
 import com.synergism.blog.redis.service.RedisService;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.security.keyManagement.service.KeyManagementService;
@@ -58,12 +59,17 @@ public class GlobalInterceptor implements HandlerInterceptor {
         //检查是否需要跳过
         if (URLUtil.checkURLIfToError(uri) || method.equals("OPTIONS")) return true;
 
+
         //检查密钥是否为空
         if (checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
             if (URLUtil.checkURLIfToPublic(uri) && checkStringIfEmpty(EVIL_EYE)) {
                 //分配新的会话
                 sessionService.newSession(sessionID, response);
                 return true;
+            }
+        } else {
+            if (!cryptographyService.filterVerify(ANOTHER_WORLD_KEY)) {
+                throw new KeyFailureException("或许你可以刷新一下？");
             }
         }
 
@@ -85,7 +91,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
             //鉴权
             URLUtil.checkURLIsPower(uri, session.getPower());
             //更新最新的会话信息
-            sessionService.updateSession(EVIL_EYE,session,response);
+            sessionService.updateSession(EVIL_EYE, session, response);
             return true;
         }
         return false;
