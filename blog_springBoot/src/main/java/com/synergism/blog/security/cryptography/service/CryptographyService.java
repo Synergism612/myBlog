@@ -1,8 +1,10 @@
 package com.synergism.blog.security.cryptography.service;
 
+import com.synergism.blog.exception.custom.KeyFailureException;
 import com.synergism.blog.security.cryptography.enums.RSAEnum;
 import com.synergism.blog.security.cryptography.utils.AESUtil;
 import com.synergism.blog.security.cryptography.utils.RSAUtil;
+import com.synergism.blog.utils.StringUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -31,6 +33,21 @@ public class CryptographyService {
         System.setProperty(PUBLIC_KEY_NAME, this.RSAPublicKey);
         System.setProperty(PRIVATE_KEY_NAME, this.RSAPrivateKey);
         return new String[]{this.RSAPublicKey, this.RSAPrivateKey};
+    }
+
+    /**
+     * 密钥验证
+     * @param ANOTHER_WORLD_KEY 密钥
+     * @return 有效为真，无效为假
+     */
+    public boolean filterVerify(String ANOTHER_WORLD_KEY){
+        try {
+            StringUtil.checkStringIsEmpty(ANOTHER_WORLD_KEY,"异世界钥匙");
+            this.RSADecrypt(ANOTHER_WORLD_KEY);
+            return true;
+        }catch (KeyFailureException e){
+            return false;
+        }
     }
 
     /**
