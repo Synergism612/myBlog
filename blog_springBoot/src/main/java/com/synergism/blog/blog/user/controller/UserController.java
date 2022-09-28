@@ -2,8 +2,7 @@ package com.synergism.blog.blog.user.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.synergism.blog.blog.user.entity.Register;
-import com.synergism.blog.email.entity.CodeMail;
-import com.synergism.blog.redis.service.RedisService;
+import com.synergism.blog.email.note.EmailVerifyCodeNote;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.blog.user.entity.Login;
@@ -30,18 +29,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService service;
-    private final RedisService redis;
 
     /**
      * 构造函数
      * 自动注入服务类
      * @param service 用户服务类
-     * @param redis redis服务类
      */
     @Autowired
-    UserController(UserService service, RedisService redis) {
+    UserController(UserService service) {
         this.service = service;
-        this.redis = redis;
     }
 
     /**
@@ -73,13 +69,8 @@ public class UserController {
      */
     @PostMapping("/register")
     @CryptographyPasswordNote //安全框架密码加密注解
+    @EmailVerifyCodeNote //邮箱验证码校验注解
     public Result<String> register(@RequestBody Register register) {
-        //获取对应的验证码
-        String code = ((CodeMail) redis.getValue(register.getUsername())).getCode();
-        //验证码判断
-        if (!code.equals(register.getCode())) {
-            return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("验证码错误"));
-        }
         //账号是否已存在判断
         if (service.ifExist(register.getUsername())) {
             return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
