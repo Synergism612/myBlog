@@ -116,6 +116,7 @@ export default defineComponent({
         password_first: "",
         password_agen: "",
         code: "",
+        key: "",
       },
       rules: {
         username: [{ validator: checkUsername }],
@@ -134,30 +135,33 @@ export default defineComponent({
      * 用以获取验证码
      */
     const getSecurityCode = () => {
+      //定时器，倒计时效果
+      const timer = window.setInterval(() => {
+        if (data.codeButton.duration < 1) {
+          data.codeButton.disabled = false;
+          data.codeButton.text = "获取验证码";
+          data.codeButton.duration = 60;
+          //清理定时器
+          clearInterval(timer);
+        } else {
+          data.codeButton.disabled = true;
+          data.codeButton.text = "" + data.codeButton.duration;
+          data.codeButton.duration -= 1;
+        }
+      }, 1000);
       //对表单进行校验
       registerFormRef.value
         .validate()
         .then(() => {
           // 注册请求
-          api.getSecurityCode(data.RegisterFrom.username).then((response) => {
-            console.log(response.data);
-            if (response.data.code == 200) {
-              //定时器，倒计时效果
-              const timer = window.setInterval(() => {
-                if (data.codeButton.duration < 1) {
-                  data.codeButton.disabled = false;
-                  data.codeButton.text = "获取验证码";
-                  data.codeButton.duration = 60;
-                  //清理定时器
-                  clearInterval(timer);
-                } else {
-                  data.codeButton.disabled = true;
-                  data.codeButton.text = "" + data.codeButton.duration;
-                  data.codeButton.duration -= 1;
-                }
-              }, 1000);
-            }
-          });
+          api
+            .getSecurityCode(data.RegisterFrom.username, data.RegisterFrom.key)
+            .then((response) => {
+              console.log(response.data);
+              if (response.data.code == 200) {
+                data.RegisterFrom.key = response.data.data;
+              }
+            });
         })
         .catch(() => {
           Message.errorMessage("校验未通过");
@@ -171,7 +175,8 @@ export default defineComponent({
           api.register(
             data.RegisterFrom.username,
             data.RegisterFrom.password_first,
-            data.RegisterFrom.code
+            data.RegisterFrom.code,
+            data.RegisterFrom.key
           );
         })
         .catch(() => {
