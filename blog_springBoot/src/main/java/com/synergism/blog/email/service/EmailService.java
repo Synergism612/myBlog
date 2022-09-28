@@ -2,11 +2,35 @@ package com.synergism.blog.email.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.blog.user.entity.User;
+import com.synergism.blog.email.entity.CodeMail;
 
 import javax.mail.MessagingException;
 import java.util.Map;
 
 public interface EmailService extends IService<User> {
+
+    /**
+     * 获取验证码邮件内容
+     * @param mail 邮箱(账号)
+     * @return 验证码邮件内容
+     */
+    CodeMail getCodeMail(String mail);
+
+    /**
+     * 验证验证码
+     * @param mail 邮箱(账号)
+     * @param code 传入的验证码
+     * @return 正确为真，错误为假
+     */
+    boolean verifyCode(String mail,String code);
+
+    /**
+     * 发送验证码邮件
+     * @param to 发送对象
+     * @param codeMail 验证码邮件内容
+     * @throws MessagingException 发送失败
+     */
+    void sendCodeMail(String to, CodeMail codeMail) throws MessagingException;
 
     /**
      * 发送文本邮件

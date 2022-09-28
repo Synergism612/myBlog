@@ -5,7 +5,6 @@ import com.synergism.blog.email.entity.CodeMail;
 import com.synergism.blog.email.service.EmailService;
 import com.synergism.blog.email.utils.CodeUtil;
 import com.synergism.blog.exception.custom.MailErrorException;
-import com.synergism.blog.redis.service.RedisService;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.utils.TimeUtil;
@@ -23,8 +22,6 @@ import java.util.Date;
 public class EmailController {
 
     EmailService service;
-    RedisService redis;
-
     UserService userService;
 
     /**
@@ -32,13 +29,11 @@ public class EmailController {
      * 自动注入服务类
      *
      * @param emailService 邮箱服务
-     * @param redis       redis服务
      * @param userService 用户服务
      */
     @Autowired
-    EmailController(EmailService emailService, RedisService redis, UserService userService) {
+    EmailController(EmailService emailService,UserService userService) {
         this.service = emailService;
-        this.redis = redis;
         this.userService = userService;
     }
 
@@ -52,14 +47,12 @@ public class EmailController {
     @GetMapping("/code")
     public Result<String> getMailCode(@RequestParam  String mail) throws MessagingException {
         try {
-            //获得对应邮箱
-//            String mail = mailMap.get("mail");
-            //判断是否已存在
+            //判断用户是否已存在
             if (userService.ifExist(mail)) {
                 return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
             }
-            //在redis查找
-            CodeMail codeMail = (CodeMail) redis.getValue(mail);
+            //得到验证码邮件信息
+            CodeMail codeMail = service.getCodeMail(mail);
             //判空
             if (TypeUtil.ifNull(codeMail)) {
                 //为空则创建并给与邮箱
@@ -77,9 +70,7 @@ public class EmailController {
             codeMail.setCode(code);
             codeMail.setTime(TimeUtil.now());
             //调用发邮件
-            service.sendTemplateMail(mail, "验证码", "registerTemplate", codeMail.toMap());
-            //更新redis中的数据
-            redis.setEmail(mail, codeMail);
+            service.sendCodeMail(mail,codeMail);
             return Result.success();
         } catch (MailException e) {
             throw new MailErrorException("发送失败");

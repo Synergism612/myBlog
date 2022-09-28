@@ -74,20 +74,4 @@ class BlogApplicationTests {
         message.setFrom("synergism2022@163.com");
         mailSender.send(message);
     }
-
-    @Autowired
-    EmailService emailService;
-
-    @Test
-    void contextLoads2() throws MessagingException {
-        String emailTemplate = "registerTemplate";
-        String to = "1273059247@qq.com";
-
-        Map<String, String> dataMap = new HashMap<>();
-        dataMap.put("email", to);
-        dataMap.put("code", "5555");
-        dataMap.put("createTime","20221212");
-        emailService.sendTemplateMail(to, "欢迎注册", emailTemplate, dataMap);
-
-    }
 }
