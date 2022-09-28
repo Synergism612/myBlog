@@ -6,7 +6,7 @@ import com.synergism.blog.blog.user.entity.User;
 import javax.mail.MessagingException;
 import java.util.Map;
 
-public interface MailService extends IService<User> {
+public interface EmailService extends IService<User> {
 
     /**
      * 发送文本邮件

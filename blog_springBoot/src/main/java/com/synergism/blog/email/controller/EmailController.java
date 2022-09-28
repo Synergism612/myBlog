@@ -2,7 +2,7 @@ package com.synergism.blog.email.controller;
 
 import com.synergism.blog.blog.user.service.UserService;
 import com.synergism.blog.email.entity.CodeMail;
-import com.synergism.blog.email.service.MailService;
+import com.synergism.blog.email.service.EmailService;
 import com.synergism.blog.email.utils.CodeUtil;
 import com.synergism.blog.exception.custom.MailErrorException;
 import com.synergism.blog.redis.service.RedisService;
@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/mail")
 public class EmailController {
 
-    MailService service;
+    EmailService service;
     RedisService redis;
 
     UserService userService;
@@ -32,13 +31,13 @@ public class EmailController {
      * 构造函数
      * 自动注入服务类
      *
-     * @param mailService 邮箱服务
+     * @param emailService 邮箱服务
      * @param redis       redis服务
      * @param userService 用户服务
      */
     @Autowired
-    EmailController(MailService mailService, RedisService redis, UserService userService) {
-        this.service = mailService;
+    EmailController(EmailService emailService, RedisService redis, UserService userService) {
+        this.service = emailService;
         this.redis = redis;
         this.userService = userService;
     }
@@ -49,10 +48,9 @@ public class EmailController {
      * @param mail 邮箱
      * @return 结果[null]
      * @throws MessagingException 邮箱发送失败异常
-     * @throws ParseException     时间格式转换异常
      */
     @GetMapping("/code")
-    public Result<String> getMailCode(@RequestParam  String mail) throws MessagingException, ParseException {
+    public Result<String> getMailCode(@RequestParam  String mail) throws MessagingException {
         try {
             //获得对应邮箱
 //            String mail = mailMap.get("mail");

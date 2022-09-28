@@ -1,7 +1,7 @@
 package com.synergism.blog.email.serviceImpl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.synergism.blog.email.service.MailService;
+import com.synergism.blog.email.service.EmailService;
 import com.synergism.blog.exception.custom.MailErrorException;
 import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.blog.user.mapper.UserMapper;
@@ -19,7 +19,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Map;
 
 @Service
-public class MailServiceImpl extends ServiceImpl<UserMapper, User> implements MailService {
+public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements EmailService {
     private final String sender = "synergism2022@163.com";
     @Resource
     private JavaMailSender javaMailSender;

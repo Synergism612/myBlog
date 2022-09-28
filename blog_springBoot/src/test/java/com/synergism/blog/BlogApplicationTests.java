@@ -1,6 +1,6 @@
 package com.synergism.blog;
 
-import com.synergism.blog.email.service.MailService;
+import com.synergism.blog.email.service.EmailService;
 import com.synergism.blog.redis.service.RedisService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -76,7 +76,7 @@ class BlogApplicationTests {
     }
 
     @Autowired
-    MailService mailService;
+    EmailService emailService;
 
     @Test
     void contextLoads2() throws MessagingException {
@@ -87,7 +87,7 @@ class BlogApplicationTests {
         dataMap.put("email", to);
         dataMap.put("code", "5555");
         dataMap.put("createTime","20221212");
-        mailService.sendTemplateMail(to, "欢迎注册", emailTemplate, dataMap);
+        emailService.sendTemplateMail(to, "欢迎注册", emailTemplate, dataMap);
 
     }
 }
