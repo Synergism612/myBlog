@@ -6,6 +6,7 @@ import com.synergism.blog.security.sessionManagement.service.SessionService;
 import com.synergism.blog.utils.TypeUtil;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -26,6 +27,9 @@ public class SessionManagementLoginAspect {
         this.sessionService = sessionService;
     }
 
+    @Pointcut(value = "@annotation(com.synergism.blog.security.sessionManagement.note.SessionManagementLoginNote)")
+    public void SessionManagementLogin(){}
+
     /**
      * 登录后绑定到会话
      * 时机为方法结束后
@@ -33,7 +37,7 @@ public class SessionManagementLoginAspect {
      * 获取方法返回值为result
      * @param result 方法的结果
      */
-    @AfterReturning(value = "@annotation(com.synergism.blog.security.sessionManagement.note.SessionManagementLoginNote)",
+    @AfterReturning(value = "SessionManagementLogin()",
             returning = "result")
     public void afterReturning(Result<UserInformation> result){
         if (result.getCode()==200){

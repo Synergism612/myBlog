@@ -4,6 +4,7 @@ import com.synergism.blog.security.cryptography.service.CryptographyService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,10 @@ public class CryptographyPasswordAspect {
         this.cryptographyService = cryptographyService;
     }
 
-    @Around(value = "@annotation(com.synergism.blog.security.cryptography.note.CryptographyPasswordNote)")
+    @Pointcut(value = "@annotation(com.synergism.blog.security.cryptography.note.CryptographyPasswordNote)")
+    public void CryptographyPassword(){}
+
+    @Around(value = "CryptographyPassword()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         Object[] args = point.getArgs();
         for (Object arg : args) {
