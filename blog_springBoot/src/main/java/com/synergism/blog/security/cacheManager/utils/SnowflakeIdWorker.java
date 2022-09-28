@@ -1,4 +1,4 @@
-package com.synergism.blog.security.utils;
+package com.synergism.blog.security.cacheManager.utils;
 
 import com.synergism.blog.exception.custom.SnowFailException;
 
