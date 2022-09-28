@@ -5,6 +5,7 @@ import AESUtil from "@/utils/AESUtil";
 import RSAUtil from "@/utils/RSAUtil";
 import StringUtil from "@/utils/StringUtil";
 import { AxiosResponse } from "axios";
+import { keysOf } from "element-plus/es/utils";
 
 export class api {
   /**
@@ -96,12 +97,16 @@ export class api {
    * @param mail 邮箱
    * @returns Promise
    */
-  public static getSecurityCode(mail: string): Promise<AxiosResponse<Result>> {
+  public static getSecurityCode(
+    mail: string,
+    key: string
+  ): Promise<AxiosResponse<Result>> {
     return axios({
-      url: "/api/mail/code",
+      url: "/api/mail/register/code",
       method: "get",
       params: {
         mail: mail,
+        key: key,
       },
     });
   }
@@ -109,7 +114,8 @@ export class api {
   public static register(
     username: string,
     password: string,
-    code: string
+    code: string,
+    key: string
   ): Promise<AxiosResponse<Result>> {
     return axios({
       url: "/api/blog/user/register",
@@ -118,6 +124,7 @@ export class api {
         username: username,
         password: password,
         code: code,
+        key: key,
       },
     });
   }
