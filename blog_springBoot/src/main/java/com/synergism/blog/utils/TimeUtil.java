@@ -50,4 +50,40 @@ public class TimeUtil {
     public static boolean ifTimeOut(Date start,Date end,int second){
         return timeDifference(start, end)>second;
     }
+
+    /**
+     * 分钟转秒
+     * @param minutes 分钟数
+     * @return 秒数
+     */
+    public static long Minutes(long minutes){
+        return minutes*60;
+    }
+
+    /**
+     * 小时转秒
+     * @param hours 小时数
+     * @return 秒数
+     */
+    public static long Hours(long hours){
+        return Minutes(hours*60);
+    }
+
+    /**
+     * 天数转秒
+     * @param days 天数
+     * @return 秒数
+     */
+    public static long Days(long days){
+        return Hours(days*24);
+    }
+
+    /**
+     * 周数转秒
+     * @param weeks 周数
+     * @return 秒数
+     */
+    public static long Weeks(long weeks){
+        return Days(weeks*7);
+    }
 }
