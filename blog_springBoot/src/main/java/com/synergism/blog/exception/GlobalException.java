@@ -84,4 +84,16 @@ public class GlobalException extends RuntimeException{
     public Result<Object> MailErrorException(MailErrorException e){
         return Result.error(CodeMsg.MAIL_ERROR.fillArgs(e.getMessage()));
     }
+
+    /**
+     * 拦截IllegalityCodeMailException异常
+     * 验证码非法异常
+     * @param e 异常
+     * @return 结果[null]
+     */
+    @ExceptionHandler(value = IllegalityCodeMailException.class)
+    @ResponseBody
+    public Result<Object> IllegalityCodeMailException(IllegalityCodeMailException e){
+        return Result.error(CodeMsg.REGISTER_ERROR.fillArgs(e.getMessage()));
+    }
 }
