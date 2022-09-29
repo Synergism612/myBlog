@@ -1,5 +1,6 @@
 package com.synergism.blog;
 
+import com.synergism.blog.security.authentication.service.AuthenticationService;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -14,15 +15,22 @@ public class Init implements ApplicationRunner {
 
     private static CryptographyService cryptographyService;
 
+    private static AuthenticationService authenticationService;
+
     @Autowired
-    Init(CryptographyService cryptographyService) {
+    Init(CryptographyService cryptographyService, AuthenticationService authenticationService) {
         Init.cryptographyService = cryptographyService;
+        Init.authenticationService = authenticationService;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        String[] keyArray = cryptographyService.initRSAKey();
-        System.out.println("公钥---\n" + keyArray[0]);
-        System.out.println("私钥---\n" + keyArray[1]);
+        cryptographyService.init();
+        authenticationService.init();
     }
+
+//    @Scheduled(cron = "0 0 * * */7")
+//    public void update (){
+//
+//    }
 }
