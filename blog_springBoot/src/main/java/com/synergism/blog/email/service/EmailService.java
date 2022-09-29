@@ -3,34 +3,52 @@ package com.synergism.blog.email.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.email.entity.CodeMail;
+import com.synergism.blog.result.entity.Result;
 
 import javax.mail.MessagingException;
+import java.text.ParseException;
 import java.util.Map;
 
 public interface EmailService extends IService<User> {
 
+    String getRegisterMailCode(String mail, String key);
+
+    String getMailCode(String mail, String key);
+
+    boolean checkCodeTime(CodeMail codeMail) throws ParseException;
+
+    /**
+     * 校验密钥有效性
+     * 若为无效则返回null
+     * @param key 密钥
+     * @return 验证码邮件信息
+     */
+    CodeMail checkKeyValidity(String key);
+
     /**
      * 获取验证码邮件内容
-     * @param mail 邮箱(账号)
+     * @param key 缓存中对应的key
      * @return 验证码邮件内容
      */
-    CodeMail getCodeMail(String mail);
+    CodeMail getCodeMail(String key);
 
     /**
      * 验证验证码
+     * @param key 缓存中对应的key
      * @param mail 邮箱(账号)
      * @param code 传入的验证码
      * @return 正确为真，错误为假
      */
-    boolean verifyCode(String mail,String code);
+    boolean verifyCode(String key,String mail,String code);
 
     /**
      * 发送验证码邮件
      * @param to 发送对象
      * @param codeMail 验证码邮件内容
      * @throws MessagingException 发送失败
+     * @return 返回缓存对应key
      */
-    void sendCodeMail(String to, CodeMail codeMail) throws MessagingException;
+    String sendCodeMail(String to, CodeMail codeMail) throws MessagingException;
 
     /**
      * 发送文本邮件

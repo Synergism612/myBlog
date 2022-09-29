@@ -17,6 +17,8 @@ public class Register {
     private String password;
     //验证码
     private String code;
+    //缓存验证码key
+    private String key;
 
     /**
      * 空参构造函数
@@ -25,6 +27,7 @@ public class Register {
         this.username = "";
         this.password = "";
         this.code = "";
+        this.key = "";
     }
 
     /**
@@ -33,13 +36,14 @@ public class Register {
      * @param password 密码
      * @param code 验证码
      */
-    Register(String username, String password, String code) {
+    Register(String username, String password, String code,String key) {
         //判空
-        StringUtil.checkStringIsUnsafe(username,password,code);
+        StringUtil.checkStringIsUnsafe(username,password,code,key);
         //合法性检查
         StringUtil.checkStringIsUnsafe(username,password);
         this.username = username;
         this.password = password;
         this.code = code;
+        this.key = key;
     }
 }

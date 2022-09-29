@@ -7,7 +7,10 @@ import com.synergism.blog.email.service.EmailService;
 import com.synergism.blog.exception.custom.MailErrorException;
 import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.blog.user.mapper.UserMapper;
-import com.synergism.blog.redis.service.RedisService;
+import com.synergism.blog.exception.custom.RegisterFailException;
+import com.synergism.blog.security.cacheManager.service.cacheRedisService;
+import com.synergism.blog.utils.StringUtil;
+import com.synergism.blog.utils.TimeUtil;
 import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -21,6 +24,7 @@ import org.thymeleaf.context.Context;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -33,33 +37,80 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
     @Resource
     private TemplateEngine templateEngine;
 
-    private final RedisService redisService;
+    private final cacheRedisService cacheRedisService;
     private final UserService userService;
 
     @Autowired
-    EmailServiceImpl(RedisService redisService,UserService userService){
-        this.redisService = redisService;
+    EmailServiceImpl(cacheRedisService cacheRedisService, UserService userService) {
+        this.cacheRedisService = cacheRedisService;
         this.userService = userService;
     }
 
     @Override
-    public CodeMail getCodeMail(String mail) {
-        return (CodeMail)redisService.getValue(mail);
+    public String getRegisterMailCode(String mail, String key) {
+        if (userService.ifExist(mail)){
+            return this.getMailCode(mail,key);
+        }else
+        throw new RegisterFailException("账号已存在");
     }
 
     @Override
-    public boolean verifyCode(String mail, String code) {
-        CodeMail codeMail =(CodeMail)redisService.getValue(mail);
+    public String getMailCode(String mail, String key) {
+
+        //校验密钥并取出数据
+        CodeMail codeMail = this.checkKeyValidity(key);
+
+        //若取出的数据为空或者已经过了一分钟，重新创建对象
+        if (TypeUtil.ifNull(codeMail) || this.checkCodeTime(codeMail))
+            codeMail = new CodeMail(mail);
+
+        //若取出的数据与传入的账号不匹配，抛出异常
+        if (!codeMail.getMail().equals(mail)) {
+            throw new MailErrorException("用户名与密钥不匹配");
+        }
+
+        return this.sendCodeMail(mail, codeMail);
+    }
+
+    @Override
+    public boolean checkCodeTime(CodeMail codeMail) {
+        return TimeUtil.ifTimeOut(TimeUtil.toDate(codeMail.getTime()), new Date(), 60);
+
+    }
+
+    @Override
+    public CodeMail checkKeyValidity(String key) {
+        if (StringUtil.checkStringIfEmpty(key))
+            return null;
+        CodeMail result = this.getCodeMail(key);
+        if (TypeUtil.ifNull(result))
+            return null;
+        return result;
+    }
+
+
+    @Override
+    public CodeMail getCodeMail(String key) {
+        return (CodeMail) cacheRedisService.get(key);
+    }
+
+    @Override
+    public boolean verifyCode(String key, String mail, String code) {
+        CodeMail codeMail = this.getCodeMail(key);
         if (TypeUtil.ifNull(codeMail))
             return false;
-        return codeMail.getCode().equals(code);
+        return codeMail.getCode().equals(code) && codeMail.getMail().equals(mail);
     }
 
     @Override
-    public void sendCodeMail(String to, CodeMail codeMail) throws MessagingException {
-        this.sendTemplateMail(to, "验证码",  "registerTemplate", codeMail.toMap());
-        //更新redis
-        redisService.setEmail(to,codeMail);
+    public String sendCodeMail(String to, CodeMail codeMail) {
+        try {
+            this.sendTemplateMail(to, "验证码", "registerTemplate", codeMail.toMap());
+            return cacheRedisService.put(codeMail, TimeUtil.Minutes(1));
+        }
+       catch (MessagingException e){
+           throw new MailErrorException("发送失败");
+       }
     }
 
     public void sendSimpleMail(String to, String subject, String content) {
@@ -91,7 +142,7 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
         }
     }
 
-    public void sendTemplateMail(String to, String subject, String emailTemplate, Map<String,String> dataMap) throws MessagingException {
+    public void sendTemplateMail(String to, String subject, String emailTemplate, Map<String, String> dataMap) throws MessagingException {
         try {
             Context context = new Context();
             for (Map.Entry<String, String> entry : dataMap.entrySet()) {
@@ -99,7 +150,7 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
             }
             String templateContent = templateEngine.process(emailTemplate, context);
             //调用发送方法
-            sendHtmlMail(to,subject,templateContent);
+            sendHtmlMail(to, subject, templateContent);
         } catch (MailException e) {
             throw new MailErrorException("发送失败");
         }
