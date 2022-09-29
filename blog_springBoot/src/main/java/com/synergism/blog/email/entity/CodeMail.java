@@ -1,5 +1,7 @@
 package com.synergism.blog.email.entity;
 
+import com.synergism.blog.email.utils.CodeUtil;
+import com.synergism.blog.utils.TimeUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,13 +31,14 @@ public class CodeMail {
         return new CodeMail(map.get("mail"),map.get("code"),map.get("createTime"));
     }
 
-    public CodeMail() {
-        this.mail = "";
-        this.code = "";
-        this.time = "";
+
+    public CodeMail(String mail) {
+        this.mail = mail;
+        this.code = CodeUtil.code();
+        this.time = TimeUtil.now();
     }
 
-    public CodeMail(String mail, String code,String time) {
+    public CodeMail(String mail, String code, String time) {
         this.mail = mail;
         this.code = code;
         this.time = time;
