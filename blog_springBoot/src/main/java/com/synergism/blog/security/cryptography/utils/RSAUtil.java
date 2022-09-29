@@ -264,22 +264,6 @@ public class RSAUtil {
         return temp;
     }
 
-    /**
-     * 用于生成密钥对并存储到系统属性中
-     */
-    public static void creatKeyPair(){
-        try {
-            Map<String, Object> genKeyPair = genKeyPair();
-            System.out.println("公钥:" + getPublicKey(genKeyPair));
-            System.out.println("私钥:" + getPrivateKey(genKeyPair));
-
-            System.setProperty(PUBLIC_KEY, getPublicKey(genKeyPair));
-            System.setProperty(PRIVATE_KEY, getPrivateKey(genKeyPair));
-        } catch (Exception e) {
-            throw new KeyFailureException("错误的密钥");
-        }
-    }
-
     private static byte[] cipherInitGetDataEncrypt(KeyFactory keyFactory, Key key, byte[] data) throws Exception {
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, key);

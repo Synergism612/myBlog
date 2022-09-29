@@ -1,5 +1,7 @@
 package com.synergism.blog.utils;
 
+import com.synergism.blog.exception.custom.TimeFailureException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,10 +25,13 @@ public class TimeUtil {
      * 字符串时间转Date类型
      * @param time 字符串时间
      * @return Date类型时间
-     * @throws ParseException 转换异常
      */
-    public static Date toDate(String time) throws ParseException {
-        return new SimpleDateFormat(format).parse(time);
+    public static Date toDate(String time) {
+        try {
+            return new SimpleDateFormat(format).parse(time);
+        }catch (ParseException e){
+            throw new TimeFailureException("时间转换错误");
+        }
     }
 
     /**
