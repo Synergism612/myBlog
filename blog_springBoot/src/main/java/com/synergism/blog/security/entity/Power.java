@@ -21,7 +21,7 @@ public class Power {
     public static Power NOT_LOG_IN = new Power(
             "/api/public/key",
             "/api/public/error",
-            "/api/mail/code",
+            "/api/mail/register/code",
             "/index",
             "/api/blog/user/login",
             "/api/blog/user/register");
