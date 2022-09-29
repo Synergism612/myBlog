@@ -1,7 +1,7 @@
 package com.synergism.blog.security.interceptor;
 
 import com.synergism.blog.exception.custom.KeyFailureException;
-import com.synergism.blog.redis.service.RedisService;
+import com.synergism.blog.security.cacheManager.service.cacheRedisService;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.security.keyManagement.service.KeyManagementService;
 import com.synergism.blog.security.sessionManagement.entity.Session;
@@ -24,13 +24,11 @@ import static com.synergism.blog.utils.StringUtil.checkStringIfEmpty;
 @Component
 public class GlobalInterceptor implements HandlerInterceptor {
 
-    private final RedisService redis;
     private final SessionService sessionService;
     private final CryptographyService cryptographyService;
 
     @Autowired
-    public GlobalInterceptor(RedisService redis, SessionService sessionService, CryptographyService cryptographyService) {
-        this.redis = redis;
+    public GlobalInterceptor(SessionService sessionService, CryptographyService cryptographyService) {
         this.sessionService = sessionService;
         this.cryptographyService = cryptographyService;
     }
