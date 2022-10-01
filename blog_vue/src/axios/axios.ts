@@ -66,8 +66,10 @@ class Axios {
       //前端对应的安全策略
       const EVIL_EYE = response.headers["evil_eye"];
       console.log("响应拦截邪王--" + EVIL_EYE);
+      //判空，写入邪王真眼
       if (!StringUtil.checkStringIfEmpty(EVIL_EYE))
         store.commit("SET_EVIL_EYE", EVIL_EYE);
+      //检查异世界钥是否为空
       if (StringUtil.checkStringIfEmpty(store.state.ANOTHER_WORLD_KEY)) {
         result = Result.getResult(response);
       } else {
