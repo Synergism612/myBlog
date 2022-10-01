@@ -87,8 +87,9 @@ class Axios {
       }
       if (result.code != 200) {
         Message.errorMessage(result.msg);
+        return null;
       }
-      response.data = result;
+      response.data = result.data;
       return response;
     });
   }

@@ -43,6 +43,7 @@
 
 <script lang="ts">
 import { api } from "@/api/api";
+import { store } from "@/store";
 import StringUtil from "@/utils/StringUtil";
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import Message from "@/utils/MessageUtil";
@@ -109,8 +110,9 @@ export default defineComponent({
         .then(() => {
           api
             .login(data.LoginFrom.username, data.LoginFrom.password)
-            .then((data) => {
+            .then(({ data }) => {
               console.log(data);
+              store.commit("SET_USER_NAME", "");
             });
         })
         .catch(() => {

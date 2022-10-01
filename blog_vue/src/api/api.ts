@@ -11,41 +11,36 @@ export class api {
    * 获取公钥
    * @returns 返回Promise
    */
-  public static getPublicKey(): Promise<void> {
+  public static async getPublicKey(): Promise<void> {
     //开启请求
-    return axios({
-      url: "/api/public/key",
-      method: "get",
-      data: {
-        id: "152",
-      },
-    })
-      .then((response) => {
-        const data = response.data.data;
-        //更改公钥值
-        store.commit("SET_PUBLIC_KEY", data);
-        //生成钥匙或者直接获取本地钥匙
-        let key;
-        if (StringUtil.checkStringIfEmpty(store.state.KEY)) {
-          key = AESUtil.getKey();
-        } else {
-          key = store.state.KEY;
-        }
-        store.commit("SET_KEY", key);
-        store.commit(
-          "SET_ANOTHER_WORLD_KEY",
-          //公钥加密密钥
-          RSAUtil.encryptedData(key, data)
-        );
-        console.log("ANOTHER_WORLD_KEY--" + store.state.ANOTHER_WORLD_KEY);
-        console.log("PUBLIC_KEY--" + store.state.PUBLIC_KEY);
-        console.log("KEY--" + store.state.KEY);
-        console.log("EVIL_EYE--" + store.state.EVIL_EYE);
-        // }
-      })
-      .catch((err) => {
-        console.log("err:\n" + err);
+    try {
+      const { data } = await axios({
+        url: "/api/public/key",
+        method: "get",
       });
+      //更改公钥值
+      store.commit("SET_PUBLIC_KEY", data);
+      //生成钥匙或者直接获取本地钥匙
+      let key;
+      if (StringUtil.checkStringIfEmpty(store.state.KEY)) {
+        key = AESUtil.getKey();
+      } else {
+        key = store.state.KEY;
+      }
+      store.commit("SET_KEY", key);
+      store.commit(
+        "SET_ANOTHER_WORLD_KEY",
+        //公钥加密密钥
+        RSAUtil.encryptedData(key, data)
+      );
+      console.log("ANOTHER_WORLD_KEY--" + store.state.ANOTHER_WORLD_KEY);
+      console.log("PUBLIC_KEY--" + store.state.PUBLIC_KEY);
+      console.log("KEY--" + store.state.KEY);
+      console.log("EVIL_EYE--" + store.state.EVIL_EYE);
+    } catch (err) {
+      store.commit("DELECT_ALL_KEY");
+      console.log("err:\n" + err);
+    }
   }
 
   /**
@@ -80,7 +75,7 @@ export class api {
   public static login(
     username: string,
     password: string
-  ): Promise<AxiosResponse<Result>> {
+  ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/user/login",
       method: "post",
@@ -99,7 +94,7 @@ export class api {
   public static getSecurityCode(
     mail: string,
     key: string
-  ): Promise<AxiosResponse<Result>> {
+  ): Promise<AxiosResponse> {
     return axios({
       url: "/api/mail/register/code",
       method: "get",
@@ -115,7 +110,7 @@ export class api {
     password: string,
     code: string,
     key: string
-  ): Promise<AxiosResponse<Result>> {
+  ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/user/register",
       method: "post",

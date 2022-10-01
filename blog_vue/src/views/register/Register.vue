@@ -158,9 +158,7 @@ export default defineComponent({
             .getSecurityCode(data.RegisterFrom.username, data.RegisterFrom.key)
             .then((response) => {
               console.log(response.data);
-              if (response.data.code == 200) {
-                data.RegisterFrom.key = response.data.data;
-              }
+              data.RegisterFrom.key = response.data;
             });
         })
         .catch(() => {
