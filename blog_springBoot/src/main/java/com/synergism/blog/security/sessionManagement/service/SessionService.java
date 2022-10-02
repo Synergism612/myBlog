@@ -39,10 +39,10 @@ public interface SessionService {
      * 从用户信息更新会话数据
      *
      * @param request         请求
-     * @param userInformation 用户
+     * @param loginID  用户信息缓存对应主键
      * @param response        响应
      */
-    void updateSession(HttpServletRequest request, UserInformation userInformation, HttpServletResponse response);
+    void updateSession(HttpServletRequest request, String loginID, HttpServletResponse response);
 
     /**
      * 更新会话数据

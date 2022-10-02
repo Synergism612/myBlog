@@ -1,7 +1,6 @@
 package com.synergism.blog.security.sessionManagement.serviceImpl;
 
-import com.synergism.blog.blog.user.entity.UserInformation;
-import com.synergism.blog.security.cacheManager.service.cacheRedisService;
+import com.synergism.blog.security.cacheManager.service.CacheRedisService;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.security.entity.Power;
 import com.synergism.blog.security.keyManagement.service.KeyManagementService;
@@ -20,11 +19,11 @@ import static com.synergism.blog.utils.TimeUtil.Weeks;
 @Service
 public class SessionServiceImpl implements SessionService {
 
-    private final cacheRedisService cacheRedisService;
+    private final CacheRedisService cacheRedisService;
     private final CryptographyService cryptographyService;
 
     @Autowired
-    SessionServiceImpl(cacheRedisService cacheRedisService, CryptographyService cryptographyService) {
+    SessionServiceImpl(CacheRedisService cacheRedisService, CryptographyService cryptographyService) {
         this.cacheRedisService = cacheRedisService;
         this.cryptographyService = cryptographyService;
     }
@@ -86,15 +85,15 @@ public class SessionServiceImpl implements SessionService {
     /**
      * 从用户信息更新会话数据
      *
-     * @param request         请求
-     * @param userInformation 用户
-     * @param response        响应
+     * @param request  请求
+     * @param loginID  用户信息缓存对应主键
+     * @param response 响应
      */
-    public void updateSession(HttpServletRequest request, UserInformation userInformation, HttpServletResponse response) {
+    public void updateSession(HttpServletRequest request, String loginID, HttpServletResponse response) {
         String EVIL_EYE = request.getHeader(KeyManagementService.EVIL_EYE());
         Session session = this.getSession(EVIL_EYE);
         //更新数据
-        session.setUserName(userInformation.getName());
+        session.setLoginID(loginID);
         this.updateSession(EVIL_EYE, session, response);
     }
 

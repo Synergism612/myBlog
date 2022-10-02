@@ -1,7 +1,6 @@
 package com.synergism.blog.security.sessionManagement.entity;
 
 import com.synergism.blog.exception.custom.PermissionFailureException;
-import com.synergism.blog.security.entity.Power;
 import com.synergism.blog.utils.StringUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,8 +17,8 @@ public class Session implements Serializable {
     private String sessionID;
     //用户密钥
     private String userKey;
-    //账号
-    private String userName;
+    //登录用户对应主键id
+    private String loginID;
     //权限
     private String[] power;
 
@@ -33,20 +32,20 @@ public class Session implements Serializable {
      * 构造函数
      * @param sessionID sessionID
      * @param userKey 用户密钥
-     * @param userName 账号
+     * @param loginID 账号
      * @param power 权限
      */
-    public Session(String sessionID, String userKey, String userName, String[] power) {
+    public Session(String sessionID, String userKey, String loginID, String[] power) {
         //判空
         if (StringUtil.checkStringsIfEmpty(sessionID)) throw new PermissionFailureException("存在空值");
         this.sessionID = sessionID;
         //若没有登录，给空字符串
-        if (StringUtil.checkStringsIfEmpty(userKey, userName)) {
+        if (StringUtil.checkStringsIfEmpty(userKey, loginID)) {
             this.userKey = "";
-            this.userName = "";
+            this.loginID = "";
         } else {
             this.userKey = userKey;
-            this.userName = userName;
+            this.loginID = loginID;
         }
         this.power = power;
     }
@@ -60,7 +59,7 @@ public class Session implements Serializable {
         return "User{" +
                 "sessionID='" + sessionID + '\'' +
                 ", userKey='" + userKey + '\'' +
-                ", userName='" + userName + '\'' +
+                ", loginID='" + loginID + '\'' +
                 '}';
     }
 }

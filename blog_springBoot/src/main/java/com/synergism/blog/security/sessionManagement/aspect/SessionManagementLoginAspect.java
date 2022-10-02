@@ -2,9 +2,12 @@ package com.synergism.blog.security.sessionManagement.aspect;
 
 import com.synergism.blog.blog.user.entity.UserInformation;
 import com.synergism.blog.result.entity.Result;
+import com.synergism.blog.security.cacheManager.service.CacheRedisService;
 import com.synergism.blog.security.sessionManagement.service.SessionService;
+import com.synergism.blog.utils.TimeUtil;
 import com.synergism.blog.utils.TypeUtil;
-import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,27 +23,38 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class SessionManagementLoginAspect {
 
-    SessionService sessionService;
+    final SessionService sessionService;
+    final CacheRedisService cacheRedisService;
 
     @Autowired
-    SessionManagementLoginAspect(SessionService sessionService){
+    SessionManagementLoginAspect(SessionService sessionService, CacheRedisService cacheRedisService) {
         this.sessionService = sessionService;
+        this.cacheRedisService = cacheRedisService;
     }
 
     @Pointcut(value = "@annotation(com.synergism.blog.security.sessionManagement.note.SessionManagementLoginNote)")
-    public void SessionManagementLogin(){}
+    public void SessionManagementLogin() {
+    }
 
     /**
      * 登录后绑定到会话
      * 时机为方法结束后
      * 条件是存在SessionManagementLoginNote注解
-     * 获取方法返回值为result
-     * @param result 方法的结果
+     *
+     * @param point 切面数据
      */
-    @AfterReturning(value = "SessionManagementLogin()",
-            returning = "result")
-    public void afterReturning(Result<UserInformation> result){
-        if (result.getCode()==200){
+    @Around(value = "SessionManagementLogin()")
+    public Object around(ProceedingJoinPoint point) throws Throwable {
+        Object object = point.proceed();
+        String loginID = "";
+        UserInformation userInformation = null;
+        Result<?> result = null;
+        if (object instanceof Result<?>) {
+            result = (Result<?>) object;
+        }
+        TypeUtil.isNull(result);
+        assert result != null;
+        if (result.getCode() == 200) {
             RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
             ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
             TypeUtil.isNull(servletRequestAttributes);
@@ -49,7 +63,11 @@ public class SessionManagementLoginAspect {
             HttpServletResponse response = servletRequestAttributes.getResponse();
             TypeUtil.isNull(response);
             assert response != null;
-            sessionService.updateSession(request,result.getData(),response);
+
+            userInformation = (UserInformation) result.getData();
+            loginID = cacheRedisService.put(userInformation, TimeUtil.Weeks(1));
+            sessionService.updateSession(request, loginID, response);
         }
+        return Result.success(new Object[]{loginID,userInformation});
     }
 }
