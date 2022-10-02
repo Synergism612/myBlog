@@ -8,7 +8,7 @@ import com.synergism.blog.exception.custom.MailErrorException;
 import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.blog.user.mapper.UserMapper;
 import com.synergism.blog.exception.custom.RegisterFailException;
-import com.synergism.blog.security.cacheManager.service.cacheRedisService;
+import com.synergism.blog.security.cacheManager.service.CacheRedisService;
 import com.synergism.blog.utils.StringUtil;
 import com.synergism.blog.utils.TimeUtil;
 import com.synergism.blog.utils.TypeUtil;
@@ -37,11 +37,11 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
     @Resource
     private TemplateEngine templateEngine;
 
-    private final cacheRedisService cacheRedisService;
+    private final CacheRedisService cacheRedisService;
     private final UserService userService;
 
     @Autowired
-    EmailServiceImpl(cacheRedisService cacheRedisService, UserService userService) {
+    EmailServiceImpl(CacheRedisService cacheRedisService, UserService userService) {
         this.cacheRedisService = cacheRedisService;
         this.userService = userService;
     }

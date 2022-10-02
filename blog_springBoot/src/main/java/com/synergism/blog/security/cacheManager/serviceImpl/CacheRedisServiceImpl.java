@@ -1,6 +1,6 @@
 package com.synergism.blog.security.cacheManager.serviceImpl;
 
-import com.synergism.blog.security.cacheManager.service.cacheRedisService;
+import com.synergism.blog.security.cacheManager.service.CacheRedisService;
 import com.synergism.blog.security.cacheManager.utils.SnowflakeIdWorker;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import static com.synergism.blog.utils.StringUtil.asString;
 
 @Service
-public class CacheRedisServiceImpl implements cacheRedisService {
+public class CacheRedisServiceImpl implements CacheRedisService {
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;

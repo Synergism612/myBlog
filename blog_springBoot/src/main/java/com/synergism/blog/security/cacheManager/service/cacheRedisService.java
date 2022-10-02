@@ -1,7 +1,7 @@
 package com.synergism.blog.security.cacheManager.service;
 
 
-public interface cacheRedisService {
+public interface CacheRedisService {
 
    /**
     * 获取对应数据

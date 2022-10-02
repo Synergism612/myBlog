@@ -1,7 +1,6 @@
 package com.synergism.blog.security.interceptor;
 
 import com.synergism.blog.exception.custom.KeyFailureException;
-import com.synergism.blog.security.cacheManager.service.cacheRedisService;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.security.keyManagement.service.KeyManagementService;
 import com.synergism.blog.security.sessionManagement.entity.Session;
