@@ -45,9 +45,11 @@ public class CryptographyPasswordAspect {
                         field.setAccessible(true);
                         String value = (String) field.get(arg);
                         field.set(arg, cryptographyService.MySQLEncrypt(value));
+                        break;
                     }
                 }
             }
+
             return point.proceed(args);
         } catch (Throwable e) {
             throw  new KeyFailureException("加密切面错误");
