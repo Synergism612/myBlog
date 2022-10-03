@@ -61,6 +61,8 @@ public class HttpFilter implements Filter {
 
         switch (this.situationAnalysis(ANOTHER_WORLD_KEY, uri)) {
             case 0: //没有密钥，不前往公共接口
+            case 3: //有密钥，不前往公共接口 -- 密钥不合法
+                ((HttpServletResponse) servletResponse).sendRedirect("/api/public/key/error");
                 break;
             case 1: //没有密钥，前往公共接口
             case 4: //有密钥，前往公共接口 -- 密钥合法
@@ -70,10 +72,6 @@ public class HttpFilter implements Filter {
             case 2: //有密钥，不前往公共接口 -- 密钥合法
                 this.filterCore(ANOTHER_WORLD_KEY, httpServletRequest, servletResponse, filterChain);
                 break;
-            case 3: //有密钥，不前往公共接口 -- 密钥不合法
-                ((HttpServletResponse) servletResponse).sendRedirect("/api/public/key/error");
-                break;
-
         }
     }
 
