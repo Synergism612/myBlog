@@ -8,7 +8,7 @@ import { AxiosResponse } from "axios";
 
 export class api {
   /**
-   * 获取公钥
+   * 获取公钥接口
    * @returns 返回Promise
    */
   public static async getPublicKey(): Promise<void> {
@@ -67,7 +67,7 @@ export class api {
   }
 
   /**
-   * 登录
+   * 登录接口
    * @param username 用户名
    * @param password 密码
    * @returns Promise
@@ -87,7 +87,7 @@ export class api {
   }
 
   /**
-   * 获取邮箱验证码
+   * 获取邮箱验证码接口
    * @param mail 邮箱
    * @returns Promise
    */
@@ -105,6 +105,14 @@ export class api {
     });
   }
 
+  /**
+   * 注册接口
+   * @param username 账号
+   * @param password 密码
+   * @param code 验证码
+   * @param key 验证码密钥
+   * @returns Promise
+   */
   public static register(
     username: string,
     password: string,
@@ -119,6 +127,22 @@ export class api {
         password: password,
         code: code,
         key: key,
+      },
+    });
+  }
+
+  public static logout(
+    loginID: string,
+    name:string,
+    username: string
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/user/logout",
+      method: "post",
+      data: {
+        loginID: loginID,
+        name: name,
+        username: username,
       },
     });
   }
