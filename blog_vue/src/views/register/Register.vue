@@ -100,17 +100,17 @@ export default defineComponent({
       if (StringUtil.checkStringIfEmpty(value)) {
         return callback(new Error("不能为空"));
       }
-      if (StringUtil.checkStringIfEmpty(data.RegisterFrom.password_first)) {
+      if (StringUtil.checkStringIfEmpty(viewData.RegisterFrom.password_first)) {
         return callback(new Error("请输入密码"));
       }
-      if (value.indexOf(data.RegisterFrom.password_first) == -1) {
+      if (value.indexOf(viewData.RegisterFrom.password_first) == -1) {
         return callback(new Error("两次输入不一致"));
       }
 
       return callback();
     };
 
-    const data = reactive({
+    const viewData = reactive({
       RegisterFrom: {
         username: "",
         password_first: "",
@@ -134,19 +134,19 @@ export default defineComponent({
     /**
      * 用以获取验证码
      */
-    const getSecurityCode = () => {
+    const getSecurityCode = (): void => {
       //定时器，倒计时效果
       const timer = window.setInterval(() => {
-        if (data.codeButton.duration < 1) {
-          data.codeButton.disabled = false;
-          data.codeButton.text = "获取验证码";
-          data.codeButton.duration = 60;
+        if (viewData.codeButton.duration < 1) {
+          viewData.codeButton.disabled = false;
+          viewData.codeButton.text = "获取验证码";
+          viewData.codeButton.duration = 60;
           //清理定时器
           clearInterval(timer);
         } else {
-          data.codeButton.disabled = true;
-          data.codeButton.text = "" + data.codeButton.duration;
-          data.codeButton.duration -= 1;
+          viewData.codeButton.disabled = true;
+          viewData.codeButton.text = "" + viewData.codeButton.duration;
+          viewData.codeButton.duration -= 1;
         }
       }, 1000);
       //对表单进行校验
@@ -155,10 +155,13 @@ export default defineComponent({
         .then(() => {
           // 注册请求
           api
-            .getSecurityCode(data.RegisterFrom.username, data.RegisterFrom.key)
-            .then((response) => {
-              console.log(response.data);
-              data.RegisterFrom.key = response.data;
+            .getSecurityCode(
+              viewData.RegisterFrom.username,
+              viewData.RegisterFrom.key
+            )
+            .then(({ data }) => {
+              console.log(data);
+              viewData.RegisterFrom.key = data;
             });
         })
         .catch(() => {
@@ -166,15 +169,15 @@ export default defineComponent({
         });
     };
 
-    const register = () => {
+    const register = (): void => {
       registerFormRef.value
         .validate()
         .then(() => {
           api.register(
-            data.RegisterFrom.username,
-            data.RegisterFrom.password_first,
-            data.RegisterFrom.code,
-            data.RegisterFrom.key
+            viewData.RegisterFrom.username,
+            viewData.RegisterFrom.password_first,
+            viewData.RegisterFrom.code,
+            viewData.RegisterFrom.key
           );
         })
         .catch(() => {
@@ -184,7 +187,7 @@ export default defineComponent({
 
     const registerFormRef = ref();
 
-    return { ...toRefs(data), register, registerFormRef, getSecurityCode };
+    return { ...toRefs(viewData), register, registerFormRef, getSecurityCode };
   },
   components: { Menu },
 });
