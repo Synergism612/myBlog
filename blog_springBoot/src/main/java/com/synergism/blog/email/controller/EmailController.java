@@ -32,13 +32,13 @@ public class EmailController {
     /**
      * 邮箱验证码接口
      * 返回缓存对应密钥
+     *
      * @param mail 邮箱
      * @return 结果[String] 密钥
      */
     @GetMapping("/register/code")
     public Result<String> getRegisterMailCode(@RequestParam String mail, @RequestParam String key) {
-        StringUtil.checkStringIsEmpty(mail,"邮箱");
-
-        return Result.success(service.getMailCode(mail,key));
+        StringUtil.checkStringIsEmpty(mail, "邮箱");
+        return service.getRegisterMailCode(mail, key);
     }
 }

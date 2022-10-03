@@ -2,6 +2,8 @@ package com.synergism.blog.email.aspect;
 
 import com.synergism.blog.email.service.EmailService;
 import com.synergism.blog.exception.custom.RegisterFailException;
+import com.synergism.blog.result.entity.CodeMsg;
+import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.utils.StringUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -59,15 +61,15 @@ public class EmailCodeVerifyAspect {
                 }
             }
             if (StringUtil.checkStringsIfEmpty(username, code))
-                throw new RegisterFailException("用户名与验证码不能为空");
+                return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("用户名与验证码不能为空"));
 
             //校验验证码
             if (emailService.verifyCode(key, username, code))
                 return point.proceed();
 
-            throw new RegisterFailException("验证码错误");
+            return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("验证码错误"));
         } catch (Throwable e) {
-            throw new RegisterFailException("验证码校验异常");
+            return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("验证码校验异常"));
         }
     }
 }

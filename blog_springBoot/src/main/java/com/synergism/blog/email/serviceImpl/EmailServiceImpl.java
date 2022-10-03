@@ -8,6 +8,8 @@ import com.synergism.blog.exception.custom.MailErrorException;
 import com.synergism.blog.blog.user.entity.User;
 import com.synergism.blog.blog.user.mapper.UserMapper;
 import com.synergism.blog.exception.custom.RegisterFailException;
+import com.synergism.blog.result.entity.CodeMsg;
+import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.security.cacheManager.service.CacheRedisService;
 import com.synergism.blog.utils.StringUtil;
 import com.synergism.blog.utils.TimeUtil;
@@ -47,11 +49,11 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
     }
 
     @Override
-    public String getRegisterMailCode(String mail, String key) {
-        if (userService.ifExist(mail)){
-            return this.getMailCode(mail,key);
-        }else
-        throw new RegisterFailException("账号已存在");
+    public Result<String> getRegisterMailCode(String mail, String key) {
+        if (userService.ifExist(mail)) {
+            return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
+        } else
+            return Result.success(getMailCode(mail, key));
     }
 
     @Override
@@ -107,10 +109,9 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
         try {
             this.sendTemplateMail(to, "验证码", "registerTemplate", codeMail.toMap());
             return cacheRedisService.put(codeMail, TimeUtil.Minutes(1));
+        } catch (MessagingException e) {
+            throw new MailErrorException("发送失败");
         }
-       catch (MessagingException e){
-           throw new MailErrorException("发送失败");
-       }
     }
 
     public void sendSimpleMail(String to, String subject, String content) {

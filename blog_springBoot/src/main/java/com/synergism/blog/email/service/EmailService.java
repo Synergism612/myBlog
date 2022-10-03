@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface EmailService extends IService<User> {
 
-    String getRegisterMailCode(String mail, String key);
+    Result<String> getRegisterMailCode(String mail, String key);
 
     String getMailCode(String mail, String key);
 
