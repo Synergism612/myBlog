@@ -12,28 +12,22 @@ import java.util.Date;
 @Setter
 public class UserInformation{
     //头像
-    private String icon;
+    private String icon = "";
     //昵称
-    private String name;
+    private String name = "";
     //账号
-    private String username;
+    private String username = "";
     //生日
-    private Date birthday;
+    private Date birthday = new Date();
     //性别代码
-    private Integer sex;
+    private Integer sex = 0;
     //个人简介
-    private String intro;
+    private String intro = "";
 
     /**
      * 空参构造函数
      */
     public UserInformation(){
-        this.icon = "";
-        this.name = "";
-        this.username = "";
-        this.birthday = new Date();
-        this.sex = 0;
-        this.intro = "";
     }
 
     /**

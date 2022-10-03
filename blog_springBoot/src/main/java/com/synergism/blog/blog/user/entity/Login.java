@@ -17,12 +17,8 @@ import static com.synergism.blog.utils.TypeUtil.asArray;
 public class Login {
     //账号
     private String username = "";
-    //字段名
-    private String usernameName = "账号";
     //密码
     private String password = "";
-    //字段名
-    private String passwordName = "密码";
 
     /**
      * 空参构造函数
@@ -37,29 +33,11 @@ public class Login {
      */
     Login(String username, String password) {
         //判空
-        checkStringIsEmpty(asArray(username,password),getNames());
+        checkStringIsEmpty(asArray(username,password),asArray("账号","密码"));
         //合法性检查
         checkStringIsUnsafe(username,password);
         //参数检查赋值
         setUsername(checkUsername(username));
         setPassword(checkPassword(password));
-    }
-
-    /**
-     * 获取字段对应值
-     * 账号值、密码值
-     * @return 值数组
-     */
-    public String[] getCounts() {
-        return new String[]{username, password};
-    }
-
-    /**
-     * 获取字段名字
-     * ”账号“、”密码“
-     * @return 名字数组
-     */
-    public String[] getNames() {
-        return new String[]{usernameName, passwordName};
     }
 }
