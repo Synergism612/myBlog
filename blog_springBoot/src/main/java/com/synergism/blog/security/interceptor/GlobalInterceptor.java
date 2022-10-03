@@ -86,7 +86,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
                 session.setSessionID(sessionID);
             }
             //鉴权
-            URLUtil.checkURLIsPower(uri, session.getPower());
+//            URLUtil.checkURLIsPower(uri, session.getPower());
             //更新最新的会话信息
             sessionService.updateSession(EVIL_EYE, session, response);
             return true;
