@@ -8,32 +8,75 @@
       <el-menu-item index="3">资源分享</el-menu-item>
       <el-menu-item index="3">点点滴滴</el-menu-item>
       <el-menu-item index="3">关于本站</el-menu-item>
-      <el-menu-item index="/blog/login" v-if="!isLogin">登录</el-menu-item>
-      <el-menu-item index="3" v-if="!isLogin">注册</el-menu-item>
-      <el-sub-menu v-if="isLogin">
-        <template #title>用户名</template>
-        <el-menu-item index="2-1">item one</el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
-        <el-menu-item index="2-3">item three</el-menu-item>
+      <el-menu-item index="/blog/login" v-if="!ifLogin">登录</el-menu-item>
+      <el-menu-item index="3" v-if="!ifLogin">注册</el-menu-item>
+      <el-sub-menu v-if="ifLogin">
+        <template #title>{{ userInfo.name }}</template>
+        <el-menu-item index="/user">基本资料</el-menu-item>
+        <el-menu-item index @click="logout()">退出登录</el-menu-item>
       </el-sub-menu>
     </el-menu>
   </div>
 </template>
 
 <script lang="ts">
+import { api } from "@/api/api";
 import { store } from "@/store";
-import { defineComponent, reactive, toRefs } from "vue";
+import Message from "@/utils/MessageUtil";
+import StringUtil from "@/utils/StringUtil";
+import { computed, defineComponent, reactive, toRefs, watch } from "vue";
 
 export default defineComponent({
   /**
    * 组件内setup，setup最早创建，所以没有this
    */
   setup() {
-    const data = reactive({
-      isLogin: false,
+    const viewData = reactive({
+      ifLogin: false,
       ellipsis: false,
+      userInfo: {
+        name: "",
+        icon: "",
+      },
     });
-    return { ...toRefs(data) };
+
+    const logout = (): void => {
+      console.log("执行");
+      api
+        .logout(
+          store.state.loginID,
+          store.getters.getUser.name,
+          store.getters.getUser.username
+        )
+        .then(({ data }) => {
+          console.log("变了吗-1-\n" + store.state.loginID);
+          console.log("logout--\n" + data);
+          store.commit("DELECT_USER_INFO");
+          store.commit("DELECT_LOGIN_ID");
+          Message.successMessage("您已登出");
+          console.log("变了吗-2-\n" + store.state.loginID);
+        })
+    };
+
+    const getLoginID = computed((): string => store.state.loginID);
+
+    watch(
+      getLoginID,
+      (value, oldValue) => {
+        if (!StringUtil.checkStringIfEmpty(value)) {
+          viewData.userInfo.name = store.getters.getUser.name;
+          viewData.userInfo.icon = store.getters.getUser.icons;
+          viewData.ifLogin = true;
+        } else {
+          viewData.ifLogin = false;
+        }
+        console.log("新数据" + value);
+        console.log("旧数据" + oldValue);
+      },
+      { immediate: true }
+    );
+
+    return { ...toRefs(viewData), logout, getLoginID };
   },
 });
 </script>
