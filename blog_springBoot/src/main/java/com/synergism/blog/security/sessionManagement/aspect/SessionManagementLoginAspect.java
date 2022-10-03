@@ -1,6 +1,7 @@
 package com.synergism.blog.security.sessionManagement.aspect;
 
 import com.synergism.blog.blog.user.entity.UserInformation;
+import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.security.cacheManager.service.CacheRedisService;
 import com.synergism.blog.security.sessionManagement.service.SessionService;
@@ -45,6 +46,20 @@ public class SessionManagementLoginAspect {
      */
     @Around(value = "SessionManagementLogin()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
+
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
+        TypeUtil.isNull(servletRequestAttributes);
+        assert servletRequestAttributes != null;
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+        HttpServletResponse response = servletRequestAttributes.getResponse();
+        TypeUtil.isNull(response);
+        assert response != null;
+
+        if (sessionService.checkSessionExistLoginID(request)){
+            return Result.error(CodeMsg.USER_IS_LOGIN);
+        }
+
         Object object = point.proceed();
         String loginID = "";
         UserInformation userInformation = null;
@@ -55,15 +70,6 @@ public class SessionManagementLoginAspect {
         TypeUtil.isNull(result);
         assert result != null;
         if (result.getCode() == 200) {
-            RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-            ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
-            TypeUtil.isNull(servletRequestAttributes);
-            assert servletRequestAttributes != null;
-            HttpServletRequest request = servletRequestAttributes.getRequest();
-            HttpServletResponse response = servletRequestAttributes.getResponse();
-            TypeUtil.isNull(response);
-            assert response != null;
-
             userInformation = (UserInformation) result.getData();
             loginID = cacheRedisService.put(userInformation, TimeUtil.Weeks(1));
             sessionService.updateSession(request, loginID, response);

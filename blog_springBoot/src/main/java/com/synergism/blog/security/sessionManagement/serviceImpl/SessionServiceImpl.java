@@ -6,6 +6,7 @@ import com.synergism.blog.security.entity.Power;
 import com.synergism.blog.security.keyManagement.service.KeyManagementService;
 import com.synergism.blog.security.sessionManagement.entity.Session;
 import com.synergism.blog.security.sessionManagement.service.SessionService;
+import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,6 +73,16 @@ public class SessionServiceImpl implements SessionService {
     }
 
     /**
+     * 从请求中获取缓存密钥
+     * @param request 请求
+     * @return EVIL_EYE
+     */
+    @Override
+    public String getEVIL_EYE(HttpServletRequest request) {
+        return request.getHeader(KeyManagementService.EVIL_EYE());
+    }
+
+    /**
      * 根据EVIL_EYE从redis中获取会话
      *
      * @param EVIL_EYE 主键
@@ -83,6 +94,16 @@ public class SessionServiceImpl implements SessionService {
     }
 
     /**
+     * 根据请求从redis中获取会话
+     *
+     * @param request 请求
+     * @return 会话
+     */
+    public Session getSession(HttpServletRequest request) {
+        return this.getSession(this.getEVIL_EYE(request));
+    }
+
+    /**
      * 从用户信息更新会话数据
      *
      * @param request  请求
@@ -90,7 +111,7 @@ public class SessionServiceImpl implements SessionService {
      * @param response 响应
      */
     public void updateSession(HttpServletRequest request, String loginID, HttpServletResponse response) {
-        String EVIL_EYE = request.getHeader(KeyManagementService.EVIL_EYE());
+        String EVIL_EYE = this.getEVIL_EYE(request);
         Session session = this.getSession(EVIL_EYE);
         //更新数据
         session.setLoginID(loginID);
@@ -108,5 +129,24 @@ public class SessionServiceImpl implements SessionService {
         cacheRedisService.update(EVIL_EYE, session, Weeks(1));
         //写入响应头部
         response.setHeader("EVIL_EYE", EVIL_EYE);
+    }
+
+    @Override
+    public boolean checkSessionExistLoginID(HttpServletRequest request) {
+        Session session = this.getSession(request);
+        return !StringUtil.checkStringIfEmpty(session.getLoginID());
+    }
+
+    @Override
+    public boolean removeLoginIDElement(HttpServletRequest request,String loginID,HttpServletResponse response) {
+        String EVIL_EYE = this.getEVIL_EYE(request);
+        Session session = this.getSession(EVIL_EYE);
+        if (loginID.equals(session.getLoginID())){
+            cacheRedisService.remove(session.getLoginID());
+            session.setLoginID("");
+            this.updateSession(EVIL_EYE,session,response);
+            return true;
+        }else
+            return false;
     }
 }
