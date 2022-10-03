@@ -10,8 +10,28 @@ export default class Message {
     >,
     message: string
   ): void {
+    let title = "";
+
+    switch (type) {
+      case "success":
+        title = "成功哩";
+        break;
+      case "warning":
+        title = "Warning! Warning!";
+        break;
+      case "info":
+        title = "嗯哼, 通知";
+        break;
+      case "error":
+        title = "咚咚咚! 心肺停止";
+        break;
+      default:
+        title = "这里这里";
+        break;
+    }
+
     ElNotification({
-      title: "出错啦!",
+      title: title,
       dangerouslyUseHTMLString: true,
       message: "<string>" + message + "</string>",
       type: type,
