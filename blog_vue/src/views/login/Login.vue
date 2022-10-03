@@ -48,12 +48,15 @@ import StringUtil from "@/utils/StringUtil";
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import Message from "@/utils/MessageUtil";
 import Menu from "../../components/Menu/Menu.vue";
+import { useRouter } from "vue-router";
+import UserInfo from "@/entity/UserInfo";
 
 export default defineComponent({
   /**
    * 组件内setup，setup最早创建，所以没有this
    */
   setup() {
+    const router = useRouter();
     // 账号校验
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const checkUsername = (rule: any, value: string, callback: any) => {
@@ -86,7 +89,7 @@ export default defineComponent({
     };
 
     // 数据仓
-    const data = reactive({
+    const viewData = reactive({
       LoginFrom: {
         username: "",
         password: "",
@@ -104,24 +107,32 @@ export default defineComponent({
     const loginFormRef = ref();
 
     // 登录函数
-    const login = () => {
-      loginFormRef.value
-        .validate()
-        .then(() => {
-          api
-            .login(data.LoginFrom.username, data.LoginFrom.password)
-            .then(({ data }) => {
-              console.log(data);
-              store.commit("SET_USER_NAME", "");
-            });
-        })
-        .catch(() => {
-          Message.errorMessage("校验未通过");
-        });
+    const login = (): void => {
+      if (StringUtil.checkStringIfEmpty(store.state.loginID)) {
+        loginFormRef.value
+          .validate()
+          .then(() => {
+            api
+              .login(viewData.LoginFrom.username, viewData.LoginFrom.password)
+              .then(({ data }) => {
+                var loginID = data[0] as string;
+                var userInfo = UserInfo.getUserInfo(data[1]);
+                store.commit("SET_LOGIN_ID", loginID);
+                store.commit("SET_USER_INFO", userInfo);
+                router.push({ name: "Home" });
+                Message.successMessage("欢迎回来" + userInfo.name);
+              });
+          })
+          .catch(() => {
+            Message.errorMessage("校验未通过");
+          });
+      } else {
+        Message.warningMessage("您已登录");
+      }
     };
 
     // 返回页面所需
-    return { ...toRefs(data), login, loginFormRef };
+    return { ...toRefs(viewData), login, loginFormRef };
   },
 
   // 组件导入
