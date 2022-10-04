@@ -30,8 +30,8 @@
           />
         </el-form-item>
         <el-form-item class="button_float">
-          <el-button type="text" @click="forget">忘记密码</el-button>
-          <el-button type="text" @click="register">注册账号</el-button>
+          <el-button type="text">忘记密码</el-button>
+          <el-button type="text" @click="goRegister()">注册账号</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login()">登录</el-button>
@@ -47,7 +47,7 @@ import { store } from "@/store";
 import StringUtil from "@/utils/StringUtil";
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import Message from "@/utils/MessageUtil";
-import Menu from "../../components/Menu/Menu.vue";
+import Menu from "@/components/menu/Menu.vue";
 import { useRouter } from "vue-router";
 import UserInfo from "@/entity/UserInfo";
 
@@ -131,8 +131,12 @@ export default defineComponent({
       }
     };
 
+    const goRegister = (): void => {
+      router.push({ name: "Register" });
+    };
+
     // 返回页面所需
-    return { ...toRefs(viewData), login, loginFormRef };
+    return { ...toRefs(viewData), login, loginFormRef, goRegister };
   },
 
   // 组件导入
