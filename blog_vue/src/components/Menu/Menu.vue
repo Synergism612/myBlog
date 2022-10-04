@@ -9,7 +9,7 @@
       <el-menu-item index="3">点点滴滴</el-menu-item>
       <el-menu-item index="3">关于本站</el-menu-item>
       <el-menu-item index="/blog/login" v-if="!ifLogin">登录</el-menu-item>
-      <el-menu-item index="3" v-if="!ifLogin">注册</el-menu-item>
+      <el-menu-item index="/blog/register" v-if="!ifLogin">注册</el-menu-item>
       <el-sub-menu v-if="ifLogin">
         <template #title>{{ userInfo.name }}</template>
         <el-menu-item index="/user">基本资料</el-menu-item>
@@ -49,12 +49,10 @@ export default defineComponent({
           store.getters.getUser.username
         )
         .then(({ data }) => {
-          console.log("变了吗-1-\n" + store.state.loginID);
           console.log("logout--\n" + data);
           store.commit("DELECT_USER_INFO");
           store.commit("DELECT_LOGIN_ID");
           Message.successMessage("您已登出");
-          console.log("变了吗-2-\n" + store.state.loginID);
         })
     };
 
