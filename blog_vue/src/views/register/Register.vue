@@ -60,7 +60,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Menu from "@/components/Menu/Menu.vue";
+import Menu from "@/components/menu/Menu.vue";
 import StringUtil from "@/utils/StringUtil";
 import Message from "@/utils/MessageUtil";
 import { api } from "@/api/api";
