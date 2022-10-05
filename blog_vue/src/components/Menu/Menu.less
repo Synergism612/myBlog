@@ -1,11 +1,12 @@
 #menu_container {
-  position: relative;
+  position: fixed;
   display: flex;
   height: 5vh;
   width: 100%;
   margin: auto;
   --el-menu-bg-color: #545c64;
   --el-menu-text-color: #fff;
+  z-index: 99;
 
   // 菜单
   .el-menu,
@@ -36,6 +37,15 @@
       }
     }
   }
+}
+
+//遮罩
+#menu_shade {
+  position: relative;
+  display: flex;
+  height: 5vh;
+  width: 100%;
+  margin: auto;
 }
 
 // 下拉菜单

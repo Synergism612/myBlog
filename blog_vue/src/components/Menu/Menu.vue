@@ -17,6 +17,7 @@
       </el-sub-menu>
     </el-menu>
   </div>
+  <div id="menu_shade"></div>
 </template>
 
 <script lang="ts">
