@@ -4,6 +4,7 @@ import router from "@/router";
 import { store } from "@/store";
 
 import "./assets/less/all.less";
+import "./assets/less/frame.less";
 
 /**
  * 引入ElementPlus
@@ -18,9 +19,14 @@ import "element-plus/dist/index.css";
 import axios from "@/axios/axios";
 import { api } from "./api/api";
 
+/**
+ * 引入动态粒子效果
+ */
+import Particles from "particles.vue3";
+
 const app = createApp(App);
 api.getPublicKey().then(() => {
-  app.use(router).use(store).use(ElementPlus);
+  app.use(router).use(store).use(ElementPlus).use(Particles);
   app.config.globalProperties.$axios = axios;
   app.mount("#app");
 });
