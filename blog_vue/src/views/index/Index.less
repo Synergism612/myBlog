@@ -1,18 +1,31 @@
-#index_background {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: url(../../assets/img/backgroud/backgroud-index-1.png);
-  z-index: -1;
-}
-#index_container {
-  position: absolute;
-  width: 100%;
-  height: 300%;
+.box {
 
-  #index_notice{
-    width: 100%;
-    height: 15vh;
-    background-color: springgreen;
+  .container{
+    background: url(../../assets/img/backgroud/backgroud-index.png);
+    
+  }
+
+  //公告栏
+  .notice {
+    //展示
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin-top: 1vh;
+
+    p{
+      margin-right: 1em;
+    }
+  }
+
+  .body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
   }
 }
