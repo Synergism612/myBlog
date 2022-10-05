@@ -1,16 +1,22 @@
 #screen_container {
-  position: absolute;
+  position: fixed;
   display: flex;
-  height: 80vh;
+  height: 95vh;
   width: 100%;
-  z-index: -1;
-  background: url(../../assets/img/backgroud/backgroud-index-2.jpg) bottom no-repeat scroll;
+  background: url(../../assets/img/backgroud/backgroud-screen.jpg) bottom
+    no-repeat scroll;
   background-size: cover;
+  z-index: -1;
+
+  #tsparticles {
+    canvas {
+      background-color: rgba(183, 64, 64, 0);
+    }
+  }
 }
-#screen_shade{
+#screen_shade {
   position: relative;
   display: flex;
-  height: 80vh;
+  height: 88vh;
   width: 100%;
 }
-
