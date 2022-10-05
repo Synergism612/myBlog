@@ -2,7 +2,7 @@
   <div id="login_background"></div>
   <div id="login_container">
     <Menu></Menu>
-    <div id="login_from">
+    <div id="login_from" class="frame">
       <p id="title">登录</p>
       <el-form
         id="login_form"

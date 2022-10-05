@@ -2,7 +2,7 @@
   <div id="register_background"></div>
   <div id="register_container">
     <Menu></Menu>
-    <div id="register_from">
+    <div id="register_from" class="frame">
       <p id="title">注册</p>
       <el-form
         id="register_form"
