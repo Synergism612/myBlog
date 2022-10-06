@@ -1,31 +1,116 @@
 .box {
-
-  .container{
+  .container {
     background: url(../../assets/img/backgroud/backgroud-index.png);
-    
-  }
 
-  //公告栏
-  .notice {
-    //展示
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: center;
+    //公告栏
+    .notice {
+      //展示
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
 
-    margin-top: 1vh;
+      margin-top: 1vh;
 
-    p{
-      margin-right: 1em;
+      p {
+        margin-right: 1em;
+      }
+    }
+
+    //文章列表
+    .articles {
+      .article {
+        height: 20vh;
+        margin: 0.5em 0;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+    }
+
+    //分页栏
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .el-input__wrapper {
+        background-color: rgba(0, 0, 0, 0);
+      }
+      button {
+        background-color: rgba(0, 0, 0, 0);
+      }
+      ul {
+        li {
+          background-color: rgba(0, 0, 0, 0);
+        }
+      }
+    }
+
+    //用户
+    .user {
+      height: 20vh;
+      margin-bottom: 0.5em;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-content: space-around;
+      justify-content: space-around;
+      align-items: flex-start;
+    }
+
+    //日历
+    .calender {
+      margin: 0.5em 0;
+      padding-top: 1em;
+      padding-bottom: 1em;
+
+      #calender-body {
+        border-radius: 0.5em;
+        background-color: rgba(225, 199, 55, 0);
+        --el-calendar-selected-bg-color: rgba(74, 74, 74, 0.3);
+
+        .el-button {
+          --el-button-bg-color: rgba(0, 0, 0, 0);
+          --el-button-hover-bg-color: rgba(0, 0, 0, 0);
+          --el-button-hover-border-color: rgb(63, 196, 194);
+          --el-button-hover-text-color: rgb(63, 196, 194);
+        }
+
+        .el-calendar-day {
+          --el-calendar-cell-width: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+        }
+      }
+    }
+
+    //评论区
+    .comments {
+      //评论
+      .comment {
+        height: 5vh;
+        margin: 0.5em 0;
+        flex-direction: row;
+        justify-content: space-around;
+        align-content: space-around;
+      }
     }
   }
+}
 
-  .body{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: flex-start;
+body {
+
+  //分页栏下属页数大小栏
+  .el-popper.is-light {
+    background-color: rgba(0, 0, 0, 0);
+
+    .hover{
+      background-color: rgba(185, 185, 185, 0.563);
+    }
+  }
+  .el-popper.is-light::before {
+    background-color: rgba(0, 0, 0, 0);
   }
 }
