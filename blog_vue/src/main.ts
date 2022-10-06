@@ -10,6 +10,7 @@ import "./assets/less/frame.less";
  * 引入ElementPlus
  */
 import ElementPlus from "element-plus";
+import zhCn from "element-plus/es/locale/lang/zh-cn";
 import "element-plus/dist/index.css";
 
 /**
@@ -26,7 +27,13 @@ import Particles from "particles.vue3";
 
 const app = createApp(App);
 api.getPublicKey().then(() => {
-  app.use(router).use(store).use(ElementPlus).use(Particles);
+  app
+    .use(router)
+    .use(store)
+    .use(ElementPlus, {
+      locale: zhCn,
+    })
+    .use(Particles);
   app.config.globalProperties.$axios = axios;
   app.mount("#app");
 });
