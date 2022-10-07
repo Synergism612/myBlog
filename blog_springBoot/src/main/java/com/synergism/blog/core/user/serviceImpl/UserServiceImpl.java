@@ -1,12 +1,12 @@
-package com.synergism.blog.blog.user.serviceImpl;
+package com.synergism.blog.core.user.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.synergism.blog.blog.user.entity.Login;
-import com.synergism.blog.blog.user.entity.Register;
-import com.synergism.blog.blog.user.entity.User;
-import com.synergism.blog.blog.user.entity.UserInformation;
-import com.synergism.blog.blog.user.mapper.UserMapper;
-import com.synergism.blog.blog.user.service.UserService;
+import com.synergism.blog.core.user.entity.Login;
+import com.synergism.blog.core.user.entity.Register;
+import com.synergism.blog.core.user.entity.User;
+import com.synergism.blog.core.user.entity.UserInformation;
+import com.synergism.blog.core.user.mapper.UserMapper;
+import com.synergism.blog.core.user.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;

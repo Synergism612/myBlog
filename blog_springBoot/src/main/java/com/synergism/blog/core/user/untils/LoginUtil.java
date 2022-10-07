@@ -1,4 +1,4 @@
-package com.synergism.blog.blog.user.untils;
+package com.synergism.blog.core.user.untils;
 
 /**
  * 登录工具类

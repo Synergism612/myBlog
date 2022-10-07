@@ -30,7 +30,7 @@ public class Generator {
                 //3、包配置
                 .packageConfig(builder -> {
                     builder.parent("com.synergism.blog") // 设置父包名
-                            .moduleName(null)   //设置模块包名
+                            .moduleName("")   //设置模块包名
                             .entity("entity")   //pojo 实体类包名
                             .service("service") //Service 包名
                             .serviceImpl("serviceImpl") // ***ServiceImpl 包名

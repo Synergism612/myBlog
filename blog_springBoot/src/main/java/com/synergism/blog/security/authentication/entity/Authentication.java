@@ -1,6 +1,6 @@
 package com.synergism.blog.security.authentication.entity;
 
-import com.synergism.blog.blog.role.entity.Role;
+import com.synergism.blog.core.role.entity.Role;
 import lombok.Getter;
 import lombok.Setter;
 

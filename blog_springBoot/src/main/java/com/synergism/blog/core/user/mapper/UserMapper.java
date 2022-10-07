@@ -1,7 +1,7 @@
-package com.synergism.blog.blog.role.mapper;
+package com.synergism.blog.core.user.mapper;
 
+import com.synergism.blog.core.user.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.synergism.blog.blog.role.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-08-25 04:30:53
  */
 @Mapper
-public interface RoleMapper extends BaseMapper<Role> {
+public interface UserMapper extends BaseMapper<User> {
 
 }

@@ -1,10 +1,10 @@
-package com.synergism.blog.blog.user.entity;
+package com.synergism.blog.core.user.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.blog.user.untils.LoginUtil.checkPassword;
-import static com.synergism.blog.blog.user.untils.LoginUtil.checkUsername;
+import static com.synergism.blog.core.user.untils.LoginUtil.checkPassword;
+import static com.synergism.blog.core.user.untils.LoginUtil.checkUsername;
 import static com.synergism.blog.utils.StringUtil.checkStringIsEmpty;
 import static com.synergism.blog.utils.StringUtil.checkStringIsUnsafe;
 import static com.synergism.blog.utils.TypeUtil.asArray;

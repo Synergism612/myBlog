@@ -1,6 +1,6 @@
 package com.synergism.blog.security.authentication.serviceImpl;
 
-import com.synergism.blog.blog.role.service.RoleService;
+import com.synergism.blog.core.role.service.RoleService;
 
 import com.synergism.blog.security.authentication.entity.Authentication;
 import com.synergism.blog.security.authentication.service.AuthenticationService;

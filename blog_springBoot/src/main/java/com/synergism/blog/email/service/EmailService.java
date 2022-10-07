@@ -1,7 +1,7 @@
 package com.synergism.blog.email.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.synergism.blog.blog.user.entity.User;
+import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.email.entity.CodeMail;
 import com.synergism.blog.result.entity.Result;
 

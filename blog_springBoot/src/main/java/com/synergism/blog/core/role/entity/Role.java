@@ -1,4 +1,4 @@
-package com.synergism.blog.blog.role.entity;
+package com.synergism.blog.core.role.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

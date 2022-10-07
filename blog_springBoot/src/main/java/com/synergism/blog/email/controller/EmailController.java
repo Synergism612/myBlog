@@ -1,13 +1,11 @@
 package com.synergism.blog.email.controller;
 
-import com.synergism.blog.blog.user.service.UserService;
+import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.email.service.EmailService;
 import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.mail.MessagingException;
 
 @RestController
 @RequestMapping("/api/mail")

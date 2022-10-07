@@ -1,10 +1,10 @@
-package com.synergism.blog.blog.user.service;
+package com.synergism.blog.core.user.service;
 
-import com.synergism.blog.blog.user.entity.Login;
-import com.synergism.blog.blog.user.entity.Register;
-import com.synergism.blog.blog.user.entity.User;
+import com.synergism.blog.core.user.entity.Login;
+import com.synergism.blog.core.user.entity.Register;
+import com.synergism.blog.core.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.synergism.blog.blog.user.entity.UserInformation;
+import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.result.entity.Result;
 
 /**

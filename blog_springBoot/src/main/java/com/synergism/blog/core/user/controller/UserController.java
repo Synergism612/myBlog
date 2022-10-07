@@ -1,16 +1,12 @@
-package com.synergism.blog.blog.user.controller;
+package com.synergism.blog.core.user.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.synergism.blog.blog.user.entity.*;
+import com.synergism.blog.core.user.entity.*;
 import com.synergism.blog.email.note.EmailCodeVerifyNote;
-import com.synergism.blog.exception.custom.RegisterFailException;
-import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
-import com.synergism.blog.blog.user.service.UserService;
+import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.security.authentication.note.AuthenticationLogoutNote;
 import com.synergism.blog.security.cryptography.note.CryptographyPasswordNote;
 import com.synergism.blog.security.sessionManagement.note.SessionManagementLoginNote;
-import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
