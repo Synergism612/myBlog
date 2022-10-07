@@ -1,0 +1,57 @@
+package com.synergism.blog.core.article.entity;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.util.Date;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * <p>
+ * 文章表
+ * </p>
+ *
+ * @author Synergism
+ * @since 2022-10-07 10:07:37
+ */
+@Getter
+@Setter
+@TableName("article")
+@ApiModel(value = "Article对象", description = "文章表")
+public class Article {
+
+    @ApiModelProperty("主键")
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
+    @ApiModelProperty("标题")
+    @TableField("title")
+    private String title;
+
+    @ApiModelProperty("正文")
+    @TableField("body")
+    private String body;
+
+    @ApiModelProperty("浏览量")
+    @TableField("views")
+    private String views;
+
+    @ApiModelProperty("点赞数")
+    @TableField("like_count")
+    private String likeCount;
+
+    @ApiModelProperty("创建时间")
+    @TableField("creation_time")
+    private Date creationTime;
+
+    @ApiModelProperty("修改时间")
+    @TableField(value = "modify_time", fill = FieldFill.INSERT_UPDATE)
+    private Date modifyTime;
+
+
+}

@@ -29,8 +29,8 @@ public class Generator {
                 })
                 //3、包配置
                 .packageConfig(builder -> {
-                    builder.parent("com.synergism.blog") // 设置父包名
-                            .moduleName("")   //设置模块包名
+                    builder.parent("com.synergism.blog.core") // 设置父包名
+                            .moduleName("article")   //设置模块包名
                             .entity("entity")   //pojo 实体类包名
                             .service("service") //Service 包名
                             .serviceImpl("serviceImpl") // ***ServiceImpl 包名
@@ -42,7 +42,7 @@ public class Generator {
                 })
                 //4、策略配置
                 .strategyConfig(builder -> {
-                    builder.addInclude("user") // 设置需要生成的数据表名
+                    builder.addInclude("article") // 设置需要生成的数据表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
 
                             //4.1、Mapper策略配置
