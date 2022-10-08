@@ -131,9 +131,16 @@ export class api {
     });
   }
 
+  /**
+   * 登出接口
+   * @param loginID 登录信息ID
+   * @param name 昵称
+   * @param username 账号
+   * @returns Promise
+   */
   public static logout(
     loginID: string,
-    name:string,
+    name: string,
     username: string
   ): Promise<AxiosResponse> {
     return axios({
@@ -143,6 +150,26 @@ export class api {
         loginID: loginID,
         name: name,
         username: username,
+      },
+    });
+  }
+
+  /**
+   * 文章分页接口
+   * @param currentPage 第几页
+   * @param pageSize 一页几条
+   * @returns Promise
+   */
+  public static pagination(
+    currentPage: number,
+    pageSize: number
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/article/pagination",
+      method: "get",
+      params: {
+        currentPage: currentPage,
+        pageSize: pageSize,
       },
     });
   }
