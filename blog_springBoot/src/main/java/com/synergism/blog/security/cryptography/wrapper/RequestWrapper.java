@@ -156,7 +156,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     public String getParameter(String name) {
         String[] results;
         Object o = params.get(name);
-
+        if (o instanceof Integer) {
+            return String.valueOf((int) o);
+        }
         if (o instanceof String) {
             return (String) o;
         }
@@ -175,7 +177,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     public String[] getParameterValues(String name) {
         String[] results = new String[1];
         Object o = params.get(name);
-
+        if (o instanceof Integer) {
+            results[0] = String.valueOf((int) o);
+        }
         if (o instanceof String) {
             results[0] = (String) o;
         }
@@ -189,6 +193,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     public Map<String, String[]> getParameterMap() {
         Map<String, String[]> results = new HashMap<>();
         params.forEach((key, object) -> {
+            if (object instanceof Integer) {
+                results.put(key, new String[]{String.valueOf((int) object)});
+            }
             if (object instanceof String) {
                 results.put(key, new String[]{(String) object});
             }
