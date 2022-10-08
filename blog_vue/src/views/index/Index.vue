@@ -27,24 +27,20 @@
                   </div>
 
                   <div class="articles">
-                    <el-row class="article frame">
+                    <el-row
+                      v-for="article in pagination.articleList"
+                      class="article frame"
+                      :key="article.id"
+                    >
                       <el-row>
-                        <el-col :span="24" class="title"> 标题</el-col>
+                        <el-col :span="24" class="title">
+                          {{ article.title }}</el-col
+                        >
                       </el-row>
                       <el-row>
-                        <el-col :span="24" class="preview"> 预览</el-col>
-                      </el-row>
-                      <el-row>
-                        <el-col :span="24" class="footer"> 底部</el-col>
-                      </el-row>
-                    </el-row>
-
-                    <el-row class="article frame">
-                      <el-row>
-                        <el-col :span="24" class="title"> 标题</el-col>
-                      </el-row>
-                      <el-row>
-                        <el-col :span="24" class="preview"> 预览</el-col>
+                        <el-col :span="24" class="preview">
+                          {{ article.body }}</el-col
+                        >
                       </el-row>
                       <el-row>
                         <el-col :span="24" class="footer"> 底部</el-col>
@@ -56,7 +52,10 @@
                     <el-pagination
                       :page-sizes="[10, 50, 100, 200]"
                       layout="total,sizes, prev, pager, next, jumper"
-                      :total="400"
+                      :total="pagination.total"
+                      :current-page="currentPage"
+                      @update:page-size="handleSizeChange"
+                      @update:current-page="handleCurrentChange"
                     />
                   </div>
                 </el-col>
@@ -104,15 +103,50 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, reactive, toRefs, watch } from "vue";
 import Menu from "@/components/menu/Menu.vue";
 import Screen from "@/components/screen/Screen.vue";
+import { api } from "@/api/api";
+import Pagination from "./entity/Pagination";
 export default defineComponent({
   setup() {
     const viewData = reactive({
       calender: new Date(),
+      pagination: new Pagination(),
+      currentPage: 1,
+      pageSize: 10,
     });
-    return { ...toRefs(viewData) };
+
+    const handleSizeChange = (pageSize: number) => {
+      viewData.pageSize = pageSize;
+    };
+
+    const handleCurrentChange = (currentPage: number) => {
+      viewData.currentPage = currentPage;
+    };
+
+    const updatePagination = () => {
+      console.log("viewData--\n" + JSON.stringify(viewData));
+      api
+        .pagination(viewData.currentPage, viewData.pageSize)
+        .then(({ data }) => {
+          viewData.pagination = Pagination.getPagination(data);
+          console.log(viewData.pagination);
+        });
+    };
+
+    updatePagination();
+
+    watch(
+      () => [viewData.currentPage, viewData.pageSize],
+      (newVal, oldVal) => {
+        console.log({ newVal, oldVal });
+        console.log("viewData--\n" + JSON.stringify(viewData));
+        updatePagination();
+      }
+    );
+
+    return { ...toRefs(viewData), handleSizeChange, handleCurrentChange };
   },
   components: { Menu, Screen },
 });
