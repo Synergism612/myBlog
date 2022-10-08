@@ -61,7 +61,7 @@ public class EmailCodeVerifyAspect {
                 }
             }
             if (StringUtil.checkStringsIfEmpty(username, code))
-                return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("用户名与验证码不能为空"));
+                return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号或验证码不能为空"));
 
             //校验验证码
             if (emailService.verifyCode(key, username, code))

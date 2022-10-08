@@ -6,6 +6,8 @@ package com.synergism.blog.utils;
 public class StringUtil {
 
     /**
+     * 检查字符串是否为空
+     *
      * @param str 字符串
      * @return 为空则真，反之则假
      */
@@ -14,15 +16,18 @@ public class StringUtil {
     }
 
     /**
+     * 检查字符串数组是否有字符串为空
+     *
      * @param strings 字符串数组
-     * @return 为空则真，反之则假
+     * @return 存在则真，不存在则假
      */
     public static boolean checkStringsIfEmpty(String... strings) {
-        boolean result = true;
         for (String str : strings) {
-            result = checkStringIfEmpty(str);
+            if (checkStringIfEmpty(str)){
+                return true;
+            }
         }
-        return result;
+        return false;
     }
 
     /**
