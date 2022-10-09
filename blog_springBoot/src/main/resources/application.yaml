@@ -42,3 +42,6 @@ spring:
 server:
   # 端口号
   port: 8088
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*
