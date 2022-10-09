@@ -31,6 +31,10 @@ public class Article {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @ApiModelProperty("头像")
+    @TableField("icon")
+    private String icon;
+
     @ApiModelProperty("标题")
     @TableField("title")
     private String title;

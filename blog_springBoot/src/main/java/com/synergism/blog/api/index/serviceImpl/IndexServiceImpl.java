@@ -12,6 +12,7 @@ import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.core.user_article.entity.UserArticle;
 import com.synergism.blog.core.user_article.service.UserArticleService;
 import com.synergism.blog.result.entity.Result;
+import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,17 +39,29 @@ public class IndexServiceImpl implements IndexService {
         //查询公有的文章
         List<UserArticle> userArticleList = userArticleService.list(new QueryWrapper<UserArticle>().eq("if_private", "0"));
 
-        List<Article> articleList = articleService.listByIds(userArticleList.stream().map(UserArticle::getArticleId).collect(Collectors.toList()));
+        List<Article> articleList = articleService
+                .listByIds(userArticleList.stream()
+                        .map(UserArticle::getArticleId)
+                        .collect(Collectors.toList()));
 
-        List<String> userNameList = userService.listByIds(userArticleList.stream().map(UserArticle::getUserId).collect(Collectors.toList())).stream().map(User::getName).collect(Collectors.toList());
+        List<String> userNameList = userService
+                .listByIds(userArticleList.stream()
+                        .map(UserArticle::getUserId)
+                        .collect(Collectors.toList()))
+                .stream()
+                .map(User::getName)
+                .collect(Collectors.toList());
+
+        //娶不到对象
+        TypeUtil.isNull(articleList,userNameList);
 
         //获取对应数据
         List<ArticleInformation> articleInformationList = new ArrayList<>();
         for (int i = 0; i < userArticleList.size(); i++) {
-            articleInformationList.add(new ArticleInformation(articleList.get(i),userNameList.get(i),userArticleList.get(i).getIfPrivate()));
+            articleInformationList.add(new ArticleInformation(articleList.get(i), userNameList.get(i), userArticleList.get(i).getIfPrivate()));
         }
 
         //封装结果
-        return Result.success(new Pagination(articleInformationList,currentPage,pageSize,articleService.count()));
+        return Result.success(new Pagination(articleInformationList, currentPage, pageSize, articleInformationList.size()));
     }
 }
