@@ -7,22 +7,12 @@ import com.synergism.blog.api.user.entity.UserInformation;
 import com.synergism.blog.api.email.note.EmailCodeVerifyNote;
 import com.synergism.blog.api.user.service.UserApiService;
 import com.synergism.blog.result.entity.Result;
-import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.security.authentication.note.AuthenticationLogoutNote;
 import com.synergism.blog.security.cryptography.note.CryptographyPasswordNote;
 import com.synergism.blog.security.sessionManagement.note.SessionManagementLoginNote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-/**
- * <p>
- * 前端控制器
- * </p>
- *
- * @author Synergism
- * @since 2022-08-25 04:30:53
- */
 @RestController
 @RequestMapping("api/blog/user")
 public class UserApiController {
