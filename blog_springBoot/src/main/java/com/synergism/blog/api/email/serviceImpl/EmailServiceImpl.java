@@ -1,9 +1,9 @@
-package com.synergism.blog.email.serviceImpl;
+package com.synergism.blog.api.email.serviceImpl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.synergism.blog.core.user.service.UserService;
-import com.synergism.blog.email.entity.CodeMail;
-import com.synergism.blog.email.service.EmailService;
+import com.synergism.blog.api.email.entity.CodeMail;
+import com.synergism.blog.api.email.service.EmailService;
 import com.synergism.blog.exception.custom.MailErrorException;
 import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.mapper.UserMapper;

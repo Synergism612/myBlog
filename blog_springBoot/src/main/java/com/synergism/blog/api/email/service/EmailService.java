@@ -1,8 +1,8 @@
-package com.synergism.blog.email.service;
+package com.synergism.blog.api.email.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.user.entity.User;
-import com.synergism.blog.email.entity.CodeMail;
+import com.synergism.blog.api.email.entity.CodeMail;
 import com.synergism.blog.result.entity.Result;
 
 import javax.mail.MessagingException;

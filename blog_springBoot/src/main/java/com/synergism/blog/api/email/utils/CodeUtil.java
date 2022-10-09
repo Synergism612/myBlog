@@ -1,4 +1,4 @@
-package com.synergism.blog.email.utils;
+package com.synergism.blog.api.email.utils;
 
 import java.util.Random;
 

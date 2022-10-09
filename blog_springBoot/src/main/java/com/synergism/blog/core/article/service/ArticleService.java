@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.article.entity.Pagination;
 import com.synergism.blog.result.entity.Result;
 
-import java.util.List;
 
 /**
  * <p>

@@ -1,7 +1,6 @@
-package com.synergism.blog.email.aspect;
+package com.synergism.blog.api.email.aspect;
 
-import com.synergism.blog.email.service.EmailService;
-import com.synergism.blog.exception.custom.RegisterFailException;
+import com.synergism.blog.api.email.service.EmailService;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.utils.StringUtil;
@@ -25,7 +24,7 @@ public class EmailCodeVerifyAspect {
         this.emailService = emailService;
     }
 
-    @Pointcut("@annotation(com.synergism.blog.email.note.EmailCodeVerifyNote)")
+    @Pointcut("@annotation(com.synergism.blog.api.email.note.EmailCodeVerifyNote)")
     public void EmailVerifyCode() {
     }
 

@@ -1,7 +1,7 @@
-package com.synergism.blog.email.controller;
+package com.synergism.blog.api.email.controller;
 
 import com.synergism.blog.core.user.service.UserService;
-import com.synergism.blog.email.service.EmailService;
+import com.synergism.blog.api.email.service.EmailService;
 import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;

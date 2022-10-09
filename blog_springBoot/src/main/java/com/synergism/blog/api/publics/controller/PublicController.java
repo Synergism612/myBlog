@@ -1,7 +1,7 @@
-package com.synergism.blog.publics.controller;
+package com.synergism.blog.api.publics.controller;
 
-import com.synergism.blog.core.user.entity.Login;
-import com.synergism.blog.publics.service.PublicService;
+import com.synergism.blog.api.user.entity.Login;
+import com.synergism.blog.api.publics.service.PublicService;
 import com.synergism.blog.result.entity.CodeMsg;
 import com.synergism.blog.result.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class PublicController {
      */
     @GetMapping("/key")
     public Result<String> getKey() {
-        return Result.success(service.getPublicKey());
+        return service.getPublicKey();
     }
 
     /**

@@ -1,6 +1,7 @@
-package com.synergism.blog.publics.serviceImpl;
+package com.synergism.blog.api.publics.serviceImpl;
 
-import com.synergism.blog.publics.service.PublicService;
+import com.synergism.blog.api.publics.service.PublicService;
+import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class PublicServiceImpl implements PublicService {
     }
 
     @Override
-    public String getPublicKey() {
-        return cryptographyService.getRSAPublicKey();
+    public Result<String> getPublicKey() {
+        return Result.success(cryptographyService.getRSAPublicKey());
     }
 }

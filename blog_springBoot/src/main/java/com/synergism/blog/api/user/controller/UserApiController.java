@@ -1,7 +1,11 @@
-package com.synergism.blog.core.user.controller;
+package com.synergism.blog.api.user.controller;
 
-import com.synergism.blog.core.user.entity.*;
-import com.synergism.blog.email.note.EmailCodeVerifyNote;
+import com.synergism.blog.api.user.entity.Login;
+import com.synergism.blog.api.user.entity.Logout;
+import com.synergism.blog.api.user.entity.Register;
+import com.synergism.blog.api.user.entity.UserInformation;
+import com.synergism.blog.api.email.note.EmailCodeVerifyNote;
+import com.synergism.blog.api.user.service.UserApiService;
 import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.security.authentication.note.AuthenticationLogoutNote;
@@ -21,9 +25,9 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("api/blog/user")
-public class UserController {
+public class UserApiController {
 
-    private final UserService service;
+    private final UserApiService service;
 
     /**
      * 构造函数
@@ -32,7 +36,7 @@ public class UserController {
      * @param service 用户服务类
      */
     @Autowired
-    UserController(UserService service) {
+    UserApiController(UserApiService service) {
         this.service = service;
     }
 
@@ -59,11 +63,12 @@ public class UserController {
     @CryptographyPasswordNote //安全框架密码加密注解
     @EmailCodeVerifyNote //邮箱验证码校验注解
     public Result<String> register(@RequestBody Register register) {
-       return service.register(register);
+        return service.register(register);
     }
 
     /**
      * 登出接口
+     *
      * @param logout 登出信息
      * @return 结果[String]
      */

@@ -1,5 +1,6 @@
-package com.synergism.blog.core.user.entity;
+package com.synergism.blog.api.user.entity;
 
+import com.synergism.blog.core.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
