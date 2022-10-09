@@ -160,12 +160,12 @@ export class api {
    * @param pageSize 一页几条
    * @returns Promise
    */
-  public static pagination(
+  public static indexArticle(
     currentPage: number,
     pageSize: number
   ): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/article/pagination",
+      url: "/api/blog/index/article",
       method: "get",
       params: {
         currentPage: currentPage,

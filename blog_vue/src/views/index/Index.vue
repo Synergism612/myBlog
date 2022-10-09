@@ -28,23 +28,28 @@
 
                   <div class="articles">
                     <el-row
-                      v-for="article in pagination.articleList"
+                      v-for="article in pagination.articleInformationList"
                       class="article frame"
                       :key="article.id"
                     >
-                      <el-row>
-                        <el-col :span="24" class="title">
-                          {{ article.title }}</el-col
-                        >
-                      </el-row>
-                      <el-row>
-                        <el-col :span="24" class="preview">
-                          {{ article.body }}</el-col
-                        >
-                      </el-row>
-                      <el-row>
-                        <el-col :span="24" class="footer"> 底部</el-col>
-                      </el-row>
+                      <el-col :span="4">
+                        <p>{{ article.icon }}</p>
+                      </el-col>
+                      <el-col :span="20">
+                        <el-row>
+                          <el-col :span="24" class="title">
+                            {{ article.title }}</el-col
+                          >
+                        </el-row>
+                        <el-row>
+                          <el-col :span="24" class="preview">
+                            {{ article.body }}</el-col
+                          >
+                        </el-row>
+                        <el-row>
+                          <el-col :span="24" class="footer"> 底部</el-col>
+                        </el-row>
+                      </el-col>
                     </el-row>
                   </div>
 
@@ -128,7 +133,7 @@ export default defineComponent({
     const updatePagination = () => {
       console.log("viewData--\n" + JSON.stringify(viewData));
       api
-        .pagination(viewData.currentPage, viewData.pageSize)
+        .indexArticle(viewData.currentPage, viewData.pageSize)
         .then(({ data }) => {
           viewData.pagination = Pagination.getPagination(data);
           console.log(viewData.pagination);
