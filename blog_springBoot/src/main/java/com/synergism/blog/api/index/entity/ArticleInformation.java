@@ -27,6 +27,8 @@ public class ArticleInformation {
     private String views;
     //文章点赞量
     private String likeCount;
+    //文章评论数
+    private long commentCount;
     //创建时间
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creationTime;
@@ -34,9 +36,10 @@ public class ArticleInformation {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
-    public ArticleInformation(Article article,String userName,int ifPrivate){
+    public ArticleInformation(Article article,String userName,int ifPrivate,long commentCount){
         this.userName = userName;
         this.ifPrivate = ifPrivate;
+        this.commentCount = commentCount;
         this.id = article.getId();
         this.icon = article.getIcon();
         this.title = article.getTitle();

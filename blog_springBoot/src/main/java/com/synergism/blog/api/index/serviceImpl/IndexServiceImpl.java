@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.synergism.blog.api.index.entity.ArticleInformation;
 import com.synergism.blog.api.index.entity.Pagination;
 import com.synergism.blog.api.index.service.IndexService;
-import com.synergism.blog.api.user.service.UserApiService;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.service.ArticleService;
+import com.synergism.blog.core.article_comment.entity.ArticleComment;
+import com.synergism.blog.core.article_comment.service.ArticleCommentService;
 import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.core.user_article.entity.UserArticle;
@@ -26,12 +27,14 @@ public class IndexServiceImpl implements IndexService {
     private final UserService userService;
     private final UserArticleService userArticleService;
     private final ArticleService articleService;
+    private final ArticleCommentService articleCommentService;
 
     @Autowired
-    public IndexServiceImpl(UserService userService, UserArticleService userArticleService, ArticleService articleService) {
+    public IndexServiceImpl(UserService userService, UserArticleService userArticleService, ArticleService articleService, ArticleCommentService articleCommentService) {
         this.userService = userService;
         this.userArticleService = userArticleService;
         this.articleService = articleService;
+        this.articleCommentService = articleCommentService;
     }
 
     @Override
@@ -52,13 +55,19 @@ public class IndexServiceImpl implements IndexService {
                 .map(User::getName)
                 .collect(Collectors.toList());
 
+        List<Long> commentCountList = userArticleList.stream()
+                .map(U -> articleCommentService
+                        .count(new QueryWrapper<ArticleComment>()
+                                .eq("article_id", U.getArticleId())))
+                .collect(Collectors.toList());
+
         //娶不到对象
-        TypeUtil.isNull(articleList,userNameList);
+        TypeUtil.isNull(articleList, userNameList);
 
         //获取对应数据
         List<ArticleInformation> articleInformationList = new ArrayList<>();
         for (int i = 0; i < userArticleList.size(); i++) {
-            articleInformationList.add(new ArticleInformation(articleList.get(i), userNameList.get(i), userArticleList.get(i).getIfPrivate()));
+            articleInformationList.add(new ArticleInformation(articleList.get(i), userNameList.get(i), userArticleList.get(i).getIfPrivate(), commentCountList.get(i)));
         }
 
         //封装结果

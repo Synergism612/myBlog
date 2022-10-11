@@ -1,6 +1,6 @@
-package com.synergism.blog.core.comment_user.mapper;
+package com.synergism.blog.core.user_comment.mapper;
 
-import com.synergism.blog.core.comment_user.entity.CommentUser;
+import com.synergism.blog.core.user_comment.entity.UserComment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,9 +10,9 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author Synergism
- * @since 2022-10-10 09:54:21
+ * @since 2022-10-11 05:47:20
  */
 @Mapper
-public interface CommentUserMapper extends BaseMapper<CommentUser> {
+public interface UserCommentMapper extends BaseMapper<UserComment> {
 
 }
