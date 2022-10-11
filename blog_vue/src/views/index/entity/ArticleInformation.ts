@@ -15,6 +15,8 @@ export default class ArticleInformation {
 
   likeCount!: string;
 
+  commentCount!:number;
+
   creationTime!: Date;
 
   modifyTime!: Date;

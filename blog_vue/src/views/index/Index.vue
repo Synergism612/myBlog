@@ -33,21 +33,63 @@
                       :key="article.id"
                     >
                       <el-col :span="4">
-                        <p>{{ article.icon }}</p>
+                        <span>{{ article.icon }}</span>
                       </el-col>
                       <el-col :span="20">
-                        <el-row>
-                          <el-col :span="24" class="title">
-                            {{ article.title }}</el-col
-                          >
+                        <el-row class="title">
+                          <el-col :span="24"> {{ article.title }}</el-col>
                         </el-row>
-                        <el-row>
-                          <el-col :span="24" class="preview">
-                            {{ article.body }}</el-col
-                          >
+                        <el-row class="body">
+                          <el-col :span="24">
+                            <p>{{ article.body }}</p>
+                          </el-col>
                         </el-row>
-                        <el-row>
-                          <el-col :span="24" class="footer"> 底部</el-col>
+                        <el-row class="footer" :gutter="20">
+                          <el-col :span="8" class="icon">
+                            <avatar
+                              theme="outline"
+                              size="21"
+                              fill="#000000"
+                              :strokeWidth="2"
+                            />
+                            <span>{{ article.userName }}</span>
+                          </el-col>
+                          <el-col :span="3" class="icon">
+                            <good_two
+                              theme="outline"
+                              size="21"
+                              fill="#000000"
+                              :strokeWidth="2"
+                            />
+                            <span> {{ article.likeCount }} </span>
+                          </el-col>
+                          <el-col :span="3" class="icon">
+                            <preview_open
+                              theme="outline"
+                              size="21"
+                              fill="#000000"
+                              :strokeWidth="2"
+                            />
+                            <span> {{ article.views }} </span>
+                          </el-col>
+                          <el-col :span="2" class="icon">
+                            <comments
+                              theme="outline"
+                              size="21"
+                              fill="#000000"
+                              :strokeWidth="2"
+                            />
+                            <span> {{ article.commentCount }} </span>
+                          </el-col>
+                          <el-col :span="8" class="icon">
+                            <update_rotation
+                              theme="outline"
+                              size="21"
+                              fill="#000000"
+                              :strokeWidth="2"
+                            />
+                            <span> {{ article.modifyTime }} </span>
+                          </el-col>
                         </el-row>
                       </el-col>
                     </el-row>
@@ -113,6 +155,14 @@ import Menu from "@/components/menu/Menu.vue";
 import Screen from "@/components/screen/Screen.vue";
 import { api } from "@/api/api";
 import Pagination from "./entity/Pagination";
+import {
+  Avatar as avatar,
+  GoodTwo as good_two,
+  PreviewOpen as preview_open,
+  Comments as comments,
+  UpdateRotation as update_rotation,
+} from "@icon-park/vue-next";
+
 export default defineComponent({
   setup() {
     const viewData = reactive({
@@ -153,7 +203,15 @@ export default defineComponent({
 
     return { ...toRefs(viewData), handleSizeChange, handleCurrentChange };
   },
-  components: { Menu, Screen },
+  components: {
+    Menu,
+    Screen,
+    avatar,
+    good_two,
+    preview_open,
+    comments,
+    update_rotation,
+  },
 });
 </script>
 <style lang="less">

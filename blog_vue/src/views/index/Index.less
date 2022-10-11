@@ -24,6 +24,22 @@
         margin: 0.5em 0;
         flex-direction: initial;
         justify-content: space-around;
+
+        .body {
+          p {
+            height: 65px;
+            overflow: hidden;
+            word-wrap: break-word;
+            text-align: justify;
+            text-indent: 2em;
+          }
+        }
+
+        .footer {
+          .icon {
+            display: flex;
+          }
+        }
       }
     }
 
@@ -100,12 +116,11 @@
 }
 
 body {
-
   //分页栏下属页数大小栏
   .el-popper.is-light {
     background-color: rgba(0, 0, 0, 0);
 
-    .hover{
+    .hover {
       background-color: rgba(185, 185, 185, 0.563);
     }
   }
