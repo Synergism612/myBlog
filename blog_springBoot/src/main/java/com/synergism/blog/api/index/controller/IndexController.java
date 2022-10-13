@@ -1,10 +1,10 @@
 package com.synergism.blog.api.index.controller;
 
 
-import com.synergism.blog.api.index.entity.ArticleInformation;
-import com.synergism.blog.api.index.entity.Pagination;
+import com.synergism.blog.api.articles.entity.Pagination;
+import com.synergism.blog.api.comments.entity.Comments;
 import com.synergism.blog.api.index.service.IndexService;
-import com.synergism.blog.core.article.service.ArticleService;
+import com.synergism.blog.api.user.entity.UserInformation;
 import com.synergism.blog.result.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,23 +12,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/blog/index")
 public class IndexController {
 
     private final IndexService service;
-    private final ArticleService articleService;
 
     @Autowired
-    public IndexController(IndexService service, ArticleService articleService) {
+    public IndexController(IndexService service) {
         this.service = service;
-        this.articleService = articleService;
     }
 
 
     @GetMapping("/article")
     public Result<Pagination> article(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize) {
+        return service.getArticles(currentPage,pageSize);
+    }
 
-        return service.article(currentPage,pageSize);
+    @GetMapping("/userInfo")
+    public Result<UserInformation> userInfo() {
+        return service.getUserInfo();
+    }
+
+    @GetMapping("/comments")
+    public Result<List<Comments>> comments() {
+        return service.getComments();
     }
 }
