@@ -27,8 +27,8 @@ public class ArticleClassify {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @TableField("class_id")
-    private Long classId;
+    @TableField("classify_id")
+    private Long classifyId;
 
     @TableField("article_id")
     private Long articleId;

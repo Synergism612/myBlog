@@ -1,10 +1,17 @@
 package com.synergism.blog.core.article_classify.serviceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.synergism.blog.core.article_classify.entity.ArticleClassify;
 import com.synergism.blog.core.article_classify.mapper.ArticleClassifyMapper;
 import com.synergism.blog.core.article_classify.service.ArticleClassifyService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.synergism.blog.core.classify.entity.Classify;
+import com.synergism.blog.core.classify.service.ClassifyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -17,4 +24,41 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArticleClassifyServiceImpl extends ServiceImpl<ArticleClassifyMapper, ArticleClassify> implements ArticleClassifyService {
 
+    private final ClassifyService classifyService;
+
+    @Autowired
+    public ArticleClassifyServiceImpl(ClassifyService classifyService) {
+        this.classifyService = classifyService;
+    }
+
+    @Override
+    public List<List<Classify>> getClassifyListByArticleIDList(List<Long> articleIDList) {
+        //查询对照表
+        List<ArticleClassify> articleClassifyList = this.list(new QueryWrapper<ArticleClassify>().in("article_id", articleIDList));
+
+        //查询分类表
+        List<Classify> classifyList = classifyService.listByIds(articleClassifyList.stream()
+                .map(ArticleClassify::getClassifyId)
+                .distinct()
+                .collect(Collectors.toList()));
+
+        //获取对应分类
+        return articleIDList.stream()
+                .map(articleID -> {
+                    List<Long> classifyIDList = articleClassifyList.stream().map(articleClassify -> {
+                        if (articleClassify.getArticleId().equals(articleID))
+                            return articleClassify.getClassifyId();
+                        return null;
+                    }).collect(Collectors.toList());
+
+                    return classifyIDList.stream().map(classifyID -> {
+                        for (Classify classify : classifyList) {
+                            if (classify.getId().equals(classifyID))
+                                return classify;
+                        }
+                        return null;
+                    }).collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
+    }
 }

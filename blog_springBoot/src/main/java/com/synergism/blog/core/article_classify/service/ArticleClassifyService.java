@@ -2,6 +2,9 @@ package com.synergism.blog.core.article_classify.service;
 
 import com.synergism.blog.core.article_classify.entity.ArticleClassify;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.synergism.blog.core.classify.entity.Classify;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ArticleClassifyService extends IService<ArticleClassify> {
 
+    List<List<Classify>> getClassifyListByArticleIDList(List<Long> articleIDList);
 }
