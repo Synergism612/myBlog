@@ -2,7 +2,6 @@ package com.synergism.blog.core.article.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.synergism.blog.core.article.entity.Article;
-import com.synergism.blog.api.index.entity.Pagination;
 import com.synergism.blog.core.article.mapper.ArticleMapper;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
