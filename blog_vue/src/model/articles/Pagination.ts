@@ -13,12 +13,4 @@ export default class Pagination {
     this.articleInformationList = articleInformationList || [];
     this.total = total || 0;
   }
-
-  /**
-   * getPagination
-   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-  public static getPagination(data: any): Pagination {
-    return new Pagination(data.articleInformationList, data.total);
-  }
 }
