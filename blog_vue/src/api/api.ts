@@ -1,5 +1,5 @@
 import axios from "@/axios/axios";
-import Result from "@/entity/Result";
+import Result from "@/model/user/Result";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import RSAUtil from "@/utils/RSAUtil";
@@ -155,12 +155,12 @@ export class api {
   }
 
   /**
-   * 文章分页接口
+   * 首页文章分页接口
    * @param currentPage 第几页
    * @param pageSize 一页几条
    * @returns Promise
    */
-  public static indexArticle(
+  public static getIndexArticle(
     currentPage: number,
     pageSize: number
   ): Promise<AxiosResponse> {
@@ -171,6 +171,28 @@ export class api {
         currentPage: currentPage,
         pageSize: pageSize,
       },
+    });
+  }
+
+  /**
+   * 首页用户信息接口
+   * @returns 用户信息
+   */
+  public static getIndexUserInfo(): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/index/userInfo",
+      method: "get",
+    });
+  }
+
+  /**
+   * 首页评论信息接口
+   * @returns Array[评论信息]
+   */
+  public static getIndexComments(): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/index/comments",
+      method: "get",
     });
   }
 }
