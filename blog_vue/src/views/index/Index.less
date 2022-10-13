@@ -24,22 +24,62 @@
         margin: 0.5em 0;
         flex-direction: initial;
         justify-content: space-around;
+        transition: 1s;
+        cursor: pointer;
 
-        .body {
-          p {
-            height: 65px;
-            overflow: hidden;
-            word-wrap: break-word;
-            text-align: justify;
-            text-indent: 2em;
+        .left {
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center 0;
+          border-radius: 0.2em;
+          cursor: pointer;
+        }
+
+        .right {
+          padding-left: 0.5em;
+
+          .title {
+            font-size: 1.5em;
+          }
+
+          .synopsis {
+            margin: 0.5em 0;
+            span {
+              max-height: 65px;
+              overflow: hidden;
+              word-wrap: break-word;
+            }
+          }
+
+          .label {
+            .el-col {
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+            }
+            .classifys {
+              margin: 0 0.5em;
+            }
+            .tags {
+              margin: 0 0.5em;
+            }
+          }
+
+          .footer {
+            .icon {
+              display: flex;
+            }
           }
         }
 
-        .footer {
-          .icon {
-            display: flex;
-          }
+        span:hover {
+          border-bottom: 0.5px solid black;
         }
+      }
+      .article:hover {
+        transform: scale(1.5);
+        background: url(../../assets/img/backgroud/backgroud-index.png);
+        z-index: 9;
       }
     }
 
@@ -58,20 +98,36 @@
       ul {
         li {
           background-color: rgba(0, 0, 0, 0);
+          --el-pagination-hover-color: #3fc4c2;
         }
       }
     }
 
     //用户
     .user {
-      height: 20vh;
       margin-bottom: 0.5em;
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
       align-content: space-around;
       justify-content: space-around;
-      align-items: flex-start;
+
+      .icon {
+        width: 15em;
+        height: 15em;
+        margin: 0.5em auto;
+        border-radius: 100%;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      .name {
+        display: flex;
+      }
+      .intro {
+        display: flex;
+        margin-bottom: 0.5em;
+      }
     }
 
     //日历
@@ -97,6 +153,12 @@
           display: flex;
           align-items: center;
           justify-content: space-around;
+        }
+        .el-calendar-day:hover {
+          color: #ffffff;
+        }
+        .is-today {
+          color: #ffffff;
         }
       }
     }

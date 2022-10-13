@@ -29,19 +29,58 @@
                   <div class="articles">
                     <el-row
                       v-for="article in pagination.articleInformationList"
-                      class="article frame"
                       :key="article.id"
+                      class="article frame"
                     >
-                      <el-col :span="4">
-                        <span>{{ article.icon }}</span>
+                      <el-col
+                        :span="4"
+                        class="left"
+                        :style="{
+                          backgroundImage: 'url(' + article.icon + ')',
+                        }"
+                      >
                       </el-col>
-                      <el-col :span="20">
+                      <el-col :span="20" class="right">
                         <el-row class="title">
-                          <el-col :span="24"> {{ article.title }}</el-col>
-                        </el-row>
-                        <el-row class="body">
                           <el-col :span="24">
-                            <p>{{ article.body }}</p>
+                            <span>{{ article.title }}</span>
+                          </el-col>
+                        </el-row>
+                        <el-row class="synopsis">
+                          <el-col :span="24">
+                            <span>{{ article.synopsis }}</span>
+                          </el-col>
+                        </el-row>
+                        <el-row class="label">
+                          <el-col :span="24">
+                            <document_folder
+                              theme="outline"
+                              size="21"
+                              fill="#000000"
+                              :strokeWidth="2"
+                            />
+                            <div
+                              v-for="classify in article.classifyList"
+                              :key="classify.id"
+                              class="classifys"
+                            >
+                              <span>{{ classify.name }}</span>
+                            </div>
+                          </el-col>
+                          <el-col :span="24">
+                            <tag_one
+                              theme="outline"
+                              size="21"
+                              fill="#000000"
+                              :strokeWidth="2"
+                            />
+                            <div
+                              v-for="tag in article.tagList"
+                              :key="tag.id"
+                              class="tags"
+                            >
+                              <span>{{ tag.name }}</span>
+                            </div>
                           </el-col>
                         </el-row>
                         <el-row class="footer" :gutter="20">
@@ -108,21 +147,35 @@
                 </el-col>
                 <el-col :xs="0" :sm="8" :md="8" :span="8">
                   <div class="user frame">
-                    <el-row>
-                      <el-col :span="24">
-                        <p>用户头像</p>
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="24">
-                        <p>用户信息</p>
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="24">
-                        <p>用户链接</p>
-                      </el-col>
-                    </el-row>
+                    <el-col :span="24">
+                      <div
+                        class="icon"
+                        :style="{
+                          backgroundImage: 'url(' + userInfo.icon + ')',
+                        }"
+                      ></div>
+                    </el-col>
+                    <el-col :span="24">
+                      <div class="name">
+                        <me
+                          theme="outline"
+                          size="21"
+                          fill="#000000"
+                          :strokeWidth="2"
+                        />{{ userInfo.name }}
+                      </div>
+                    </el-col>
+                    <el-col :span="24">
+                      <div class="intro">
+                        <loading
+                          theme="outline"
+                          size="21"
+                          fill="#000000"
+                          :strokeWidth="2"
+                        />
+                        {{ userInfo.intro }}
+                      </div>
+                    </el-col>
                   </div>
 
                   <div class="calender frame">
@@ -151,23 +204,33 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs, watch } from "vue";
+import { store } from "@/store";
 import Menu from "@/components/menu/Menu.vue";
 import Screen from "@/components/screen/Screen.vue";
 import { api } from "@/api/api";
-import Pagination from "./entity/Pagination";
+import Pagination from "@/model/articles/Pagination";
 import {
   Avatar as avatar,
   GoodTwo as good_two,
   PreviewOpen as preview_open,
   Comments as comments,
   UpdateRotation as update_rotation,
+  DocumentFolder as document_folder,
+  TagOne as tag_one,
+  Me as me,
+  Loading as loading,
 } from "@icon-park/vue-next";
+import UserInfo from "@/model/user/UserInfo";
+import StringUtil from "@/utils/StringUtil";
+import CommentList from "@/model/comments/CommentList";
 
 export default defineComponent({
   setup() {
     const viewData = reactive({
       calender: new Date(),
       pagination: new Pagination(),
+      userInfo: new UserInfo(),
+      CommentList: new CommentList(),
       currentPage: 1,
       pageSize: 10,
     });
@@ -180,24 +243,41 @@ export default defineComponent({
       viewData.currentPage = currentPage;
     };
 
-    const updatePagination = () => {
-      console.log("viewData--\n" + JSON.stringify(viewData));
+    const pagination = () => {
       api
-        .indexArticle(viewData.currentPage, viewData.pageSize)
+        .getIndexArticle(viewData.currentPage, viewData.pageSize)
         .then(({ data }) => {
-          viewData.pagination = Pagination.getPagination(data);
+          viewData.pagination = data;
           console.log(viewData.pagination);
         });
     };
 
-    updatePagination();
+    const userInformation = () => {
+      viewData.userInfo = store.getters.getUser;
+      if (StringUtil.checkStringIfEmpty(viewData.userInfo.username)) {
+        api.getIndexUserInfo().then(({ data }) => {
+          viewData.userInfo = data;
+          console.log(viewData.userInfo);
+        });
+      }
+    };
+
+    const comments = () => {
+      api.getIndexComments().then(({ data }) => {
+        viewData.CommentList = CommentList.getCommentList(data);
+        console.log(viewData.CommentList);
+      });
+    };
+
+    pagination();
+    userInformation();
+    comments();
 
     watch(
       () => [viewData.currentPage, viewData.pageSize],
       (newVal, oldVal) => {
         console.log({ newVal, oldVal });
-        console.log("viewData--\n" + JSON.stringify(viewData));
-        updatePagination();
+        pagination();
       }
     );
 
@@ -211,6 +291,10 @@ export default defineComponent({
     preview_open,
     comments,
     update_rotation,
+    document_folder,
+    tag_one,
+    me,
+    loading,
   },
 });
 </script>
