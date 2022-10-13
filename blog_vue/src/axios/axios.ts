@@ -1,6 +1,6 @@
 import { apiEnum } from "@/enum/apiEnum";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import Result from "@/entity/Result";
+import Result from "@/model/user/Result";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import StringUtil from "@/utils/StringUtil";
@@ -61,7 +61,6 @@ class Axios {
 
     //响应拦截
     this.service.interceptors.response.use((response: AxiosResponse) => {
-      console.log("响应拦截" + JSON.stringify(response.data));
       let result;
       //前端对应的安全策略
       const EVIL_EYE = response.headers["evil_eye"];
