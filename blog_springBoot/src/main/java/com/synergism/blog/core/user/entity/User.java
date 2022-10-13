@@ -1,12 +1,12 @@
 package com.synergism.blog.core.user.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.synergism.blog.api.user.entity.Register;
+import com.synergism.blog.utils.TimeUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -52,18 +52,31 @@ public class User {
     @TableField("intro")
     private String intro;
 
+    @ApiModelProperty("创建时间")
+    @TableField("creation_time")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date creationTime;
+
+    @ApiModelProperty("修改时间")
+    @TableField(value = "modify_time", fill = FieldFill.INSERT_UPDATE)
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date modifyTime;
+
     /**
      * 构造函数
-     * @param id id
-     * @param icon 头像
-     * @param name 昵称
-     * @param username 账号
-     * @param password 密码
-     * @param birthday 生日
-     * @param sex 性别代码
-     * @param intro 个人简介
+     *
+     * @param id           id
+     * @param icon         头像
+     * @param name         昵称
+     * @param username     账号
+     * @param password     密码
+     * @param birthday     生日
+     * @param sex          性别代码
+     * @param intro        个人简介
+     * @param creationTime 创建时间
+     * @param modifyTime   修改时间
      */
-    User(Long id, String icon, String name, String username, String password, Date birthday, Integer sex, String intro) {
+    public User(Long id, String icon, String name, String username, String password, Date birthday, Integer sex, String intro, Date creationTime, Date modifyTime) {
         this.id = id;
         this.icon = icon;
         this.name = name;
@@ -72,14 +85,18 @@ public class User {
         this.birthday = birthday;
         this.sex = sex;
         this.intro = intro;
+        this.creationTime = creationTime;
+        this.modifyTime = modifyTime;
     }
 
     /**
      * 注册后生成一个基本的用户
+     *
      * @param register 注册信息
      * @return 用户
      */
-    public static User getInstance(Register register){
-        return new User(null,"", register.getUsername(), register.getUsername(), register.getPassword(), null,0,null);
+    public static User getInstance(Register register) {
+        Date now = new Date();
+        return new User(null, "", register.getUsername(), register.getUsername(), register.getPassword(), null, 0, null, now, now);
     }
 }

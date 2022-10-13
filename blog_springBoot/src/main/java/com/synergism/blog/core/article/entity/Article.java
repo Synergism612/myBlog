@@ -43,6 +43,10 @@ public class Article {
     @TableField("body")
     private String body;
 
+    @ApiModelProperty("摘要")
+    @TableField("synopsis")
+    private String synopsis;
+
     @ApiModelProperty("浏览量")
     @TableField("views")
     private String views;
