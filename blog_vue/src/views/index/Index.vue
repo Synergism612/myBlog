@@ -183,15 +183,44 @@
                   </div>
 
                   <div class="comments frame">
-                    <el-row class="comment">
-                      <el-col :span="4">头像</el-col>
-                      <el-col :span="20">评论内容</el-col>
-                    </el-row>
-
-                    <el-row class="comment">
-                      <el-col :span="4">头像</el-col>
-                      <el-col :span="20">评论内容</el-col>
-                    </el-row>
+                    <el-col
+                      :span="24"
+                      v-for="comment in commentList.comments"
+                      :key="comment.id"
+                      class="comment"
+                    >
+                      <el-col :span="4">
+                        <div
+                          class="icon"
+                          :style="{
+                            backgroundImage:
+                              'url(' + comment.userInformation.icon + ')',
+                          }"
+                        ></div>
+                      </el-col>
+                      <el-col :span="20">
+                        <el-col :span="24" class="name">
+                          {{ comment.userInformation.name }}
+                        </el-col>
+                        <el-col :span="24" class="body">
+                          {{ comment.body }}
+                        </el-col>
+                        <el-col
+                          :span="24"
+                          class="father"
+                          :v-if="comment.father.id == -1"
+                        >
+                          {{ comment.father.body || "" }}
+                        </el-col>
+                        <el-col
+                          :span="24"
+                          class="son"
+                          :v-if="comment.father.id == -1"
+                        >
+                          {{ comment.father.body || "" }}
+                        </el-col>
+                      </el-col>
+                    </el-col>
                   </div>
                 </el-col>
               </el-row>
@@ -230,7 +259,7 @@ export default defineComponent({
       calender: new Date(),
       pagination: new Pagination(),
       userInfo: new UserInfo(),
-      CommentList: new CommentList(),
+      commentList: new CommentList(),
       currentPage: 1,
       pageSize: 10,
     });
@@ -264,8 +293,8 @@ export default defineComponent({
 
     const comments = () => {
       api.getIndexComments().then(({ data }) => {
-        viewData.CommentList = CommentList.getCommentList(data);
-        console.log(viewData.CommentList);
+        viewData.commentList = CommentList.getCommentList(data);
+        console.log(viewData.commentList);
       });
     };
 

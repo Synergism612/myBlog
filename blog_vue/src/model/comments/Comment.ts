@@ -1,3 +1,5 @@
+import UserInfo from "../user/UserInfo";
+
 export default class Comment {
   id!: number;
 
@@ -5,7 +7,11 @@ export default class Comment {
 
   likeCount!: string;
 
+  fatherID!: number;
+
   father!: Comment;
+
+  userInformation!: UserInfo;
 
   creationTime!: Date;
 
