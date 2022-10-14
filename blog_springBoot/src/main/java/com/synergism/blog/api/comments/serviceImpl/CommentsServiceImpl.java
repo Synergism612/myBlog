@@ -3,12 +3,18 @@ package com.synergism.blog.api.comments.serviceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.synergism.blog.api.comments.entity.Comments;
 import com.synergism.blog.api.comments.service.CommentsService;
+import com.synergism.blog.api.user.entity.UserInformation;
 import com.synergism.blog.core.comment.entity.Comment;
 import com.synergism.blog.core.comment.service.CommentService;
+import com.synergism.blog.core.user.entity.User;
+import com.synergism.blog.core.user.service.UserService;
+import com.synergism.blog.core.user_comment.entity.UserComment;
+import com.synergism.blog.core.user_comment.service.UserCommentService;
 import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,28 +22,77 @@ import java.util.stream.Collectors;
 public class CommentsServiceImpl implements CommentsService {
 
     private final CommentService commentService;
+    private final UserCommentService userCommentService;
+    private final UserService userService;
 
     @Autowired
-    public CommentsServiceImpl(CommentService commentService) {
+    public CommentsServiceImpl(CommentService commentService, UserCommentService userCommentService, UserService userService) {
         this.commentService = commentService;
+        this.userCommentService = userCommentService;
+        this.userService = userService;
+    }
+
+    @Override
+    public List<Comments> getAllComments() {
+        //获得所有评论
+        List<Comment> commentList = commentService.list();
+        //对照表
+        List<UserComment> userCommentList = userCommentService.list(new QueryWrapper<UserComment>()
+                .in("comment_id",commentList
+                        .stream()
+                        .map(Comment::getId)
+                        .collect(Collectors.toList())));
+        //获得对应的用户id
+        List<Long> userIDList = userCommentList.stream()
+                .map(UserComment::getUserId)
+                .distinct()
+                .collect(Collectors.toList());
+        //获取对应用户
+        List<User> userList = userService.listByIds(userIDList);
+
+        //分配用户
+        List<Comments> commentsList = userCommentList.stream().map(userComment -> {
+            User user = null;
+            for (User u : userList) {
+               if( u.getId().equals(userComment.getUserId()))
+                   user = u;
+            }
+            Comment comment = null;
+            for (Comment c : commentList) {
+                if (c.getId().equals(userComment.getCommentId()))
+                    comment = c;
+            }
+            if (TypeUtil.ifNull(comment,user)){
+                return null;
+            }
+            assert comment != null;
+            assert user != null;
+            return new Comments(comment, UserInformation.getInstance(user));
+        }).collect(Collectors.toList());
+
+        //分配父评论
+        commentsList.forEach(comments -> {
+            if (comments.getFatherID()!=null){
+                for (Comments c : commentsList) {
+                    if (c.getId().equals(comments.getFatherID())){
+                        comments.setFather(c);
+                    }
+                }
+            }else{
+                comments.setFather(new Comments());
+            }
+        });
+        return commentsList;
     }
 
     @Override
     public List<Comments> getIndexComments() {
-        //获得所有评论
-        List<Comment> commentList = commentService.list();
-
-        //获得点赞数最多的五条评论
-        List<Comment> commentTopList = commentService.list(new QueryWrapper<Comment>().orderByDesc("like_count").last("limit 5"));
-        //整理父级评论
-        return commentTopList.stream().map(top -> {
-            if (!TypeUtil.ifNull(top.getFatherId())){
-                for (Comment father : commentList) {
-                    if (father.getId().equals(top.getFatherId()))
-                        return new Comments(top,father);
-                }
-            }
-            return  new Comments(top);
-        }).collect(Collectors.toList());
+        List<Comments> result = this.getAllComments()
+                .stream()
+                .sorted(Comparator.comparing(Comments::getLikeCount).reversed())
+                .collect(Collectors.toList());
+        if (result.size()>5)
+            return result.subList(0,5);
+        return result;
     }
 }
