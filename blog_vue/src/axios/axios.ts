@@ -76,7 +76,7 @@ class Axios {
           //对响应的数据解密
           const json = JSON.parse(
             AESUtil.decrypt(response.data, store.state.KEY)
-          ).ANOTHER_WORLD_RESPONSE;
+          );
           console.log(json);
           result = new Result(json.code, json.msg, json.time, json.data);
           //全局异常处理
