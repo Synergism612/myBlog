@@ -1,15 +1,18 @@
 import UserInfo from "../user/UserInfo";
+import Family from "./CommentsFamily";
 
-export default class Comment {
+export default class Comments {
   id!: number;
 
   body!: string;
 
   likeCount!: string;
 
-  fatherID!: number;
+  parentId!: number;
 
-  father!: Comment;
+  parent!: Family;
+
+  children!: Array<Family>;
 
   userInformation!: UserInfo;
 

@@ -3,8 +3,9 @@
     background: url(../../assets/img/backgroud/backgroud-index.png);
 
     //公告栏
-    .notice {
+    .inform {
       //展示
+      padding: 1em;
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
@@ -45,9 +46,15 @@
           .synopsis {
             margin: 0.5em 0;
             span {
+              display: block;
               max-height: 65px;
               overflow: hidden;
               word-wrap: break-word;
+              text-align: justify;
+              text-indent: 2em;
+            }
+            span:hover{
+              border: none !important;
             }
           }
 
@@ -166,27 +173,46 @@
     //评论区
     .comments {
       margin: 0.5em 0;
+      padding: 0.5em 0;
+      .title {
+        text-align: center;
+      }
+
       //评论
       .comment {
-        height: 5vh;
         margin: 0.5em;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-content: space-around;
 
-        .icon{
-          height: 3em;
-          width: 3em;
-          margin: auto;
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          border-radius: 100%;
+        .left {
+          display: flex;
+          .icon {
+            height: 3em;
+            width: 3em;
+            margin: 0 auto;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 100%;
+          }
         }
 
-        .father{
-          color: rgba(0, 0, 0, 0.5);
+        .right {
+          .info {
+            display: flex;
+            .likeCount {
+              display: flex;
+            }
+            .children {
+              display: flex;
+            }
+          }
+
+          .parent {
+            color: rgba(0, 0, 0, 0.5);
+          }
         }
       }
     }

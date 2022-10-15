@@ -8,9 +8,8 @@
       <el-container>
         <el-header>
           <el-row justify="center">
-            <el-col :sm="24" :md="16" class="notice frame">
-              <p>公告栏</p>
-              <p>公告内容</p>
+            <el-col :sm="24" :md="16" class="inform frame">
+              通知栏 通知内容
             </el-col>
           </el-row>
         </el-header>
@@ -22,11 +21,11 @@
                 <el-col :xs="24" :sm="16" :md="16" :span="16">
                   <div class="header frame">
                     <el-row>
-                      <el-col :span="24"> <p>头部</p></el-col>
+                      <el-col :span="24"> 头部</el-col>
                     </el-row>
                   </div>
 
-                  <div class="articles">
+                  <el-row class="articles">
                     <el-row
                       v-for="article in pagination.articleInformationList"
                       :key="article.id"
@@ -64,7 +63,14 @@
                               :key="classify.id"
                               class="classifys"
                             >
-                              <span>{{ classify.name }}</span>
+                              <el-tooltip
+                                class="box-item"
+                                effect="dark"
+                                :content="classify.annotation"
+                                placement="right"
+                              >
+                                <span>{{ classify.name }}</span>
+                              </el-tooltip>
                             </div>
                           </el-col>
                           <el-col :span="24">
@@ -79,7 +85,14 @@
                               :key="tag.id"
                               class="tags"
                             >
-                              <span>{{ tag.name }}</span>
+                              <el-tooltip
+                                class="box-item"
+                                effect="dark"
+                                :content="tag.annotation"
+                                placement="right"
+                              >
+                                <span>{{ tag.name }}</span>
+                              </el-tooltip>
                             </div>
                           </el-col>
                         </el-row>
@@ -132,9 +145,9 @@
                         </el-row>
                       </el-col>
                     </el-row>
-                  </div>
+                  </el-row>
 
-                  <div class="pagination">
+                  <el-row class="pagination">
                     <el-pagination
                       :page-sizes="[10, 50, 100, 200]"
                       layout="total,sizes, prev, pager, next, jumper"
@@ -143,10 +156,10 @@
                       @update:page-size="handleSizeChange"
                       @update:current-page="handleCurrentChange"
                     />
-                  </div>
+                  </el-row>
                 </el-col>
                 <el-col :xs="0" :sm="8" :md="8" :span="8">
-                  <div class="user frame">
+                  <el-row class="user frame">
                     <el-col :span="24">
                       <div
                         class="icon"
@@ -176,20 +189,21 @@
                         {{ userInfo.intro }}
                       </div>
                     </el-col>
-                  </div>
+                  </el-row>
 
-                  <div class="calender frame">
+                  <el-row class="calender frame">
                     <el-calendar id="calender-body" v-model="calender" />
-                  </div>
+                  </el-row>
 
-                  <div class="comments frame">
+                  <el-row class="comments frame">
+                    <el-col :span="24" class="title"> 最热评论 </el-col>
                     <el-col
                       :span="24"
                       v-for="comment in commentList.comments"
                       :key="comment.id"
                       class="comment"
                     >
-                      <el-col :span="4">
+                      <el-col :span="4" class="left">
                         <div
                           class="icon"
                           :style="{
@@ -198,30 +212,43 @@
                           }"
                         ></div>
                       </el-col>
-                      <el-col :span="20">
+                      <el-col :span="20" class="right">
                         <el-col :span="24" class="name">
                           {{ comment.userInformation.name }}
                         </el-col>
                         <el-col :span="24" class="body">
                           {{ comment.body }}
                         </el-col>
-                        <el-col
-                          :span="24"
-                          class="father"
-                          :v-if="comment.father.id == -1"
-                        >
-                          {{ comment.father.body || "" }}
+                        <el-col :span="24" class="info">
+                          <el-col :span="4" class="likeCount">
+                            <good_two
+                              theme="outline"
+                              size="21"
+                              fill="#000000"
+                              :strokeWidth="2"
+                            />
+                            {{ comment.likeCount }}
+                          </el-col>
+                          <el-col :span="4" class="children">
+                            <comments
+                              theme="outline"
+                              size="21"
+                              fill="#000000"
+                              :strokeWidth="2"
+                            />
+                            {{ comment.children.length }}
+                          </el-col>
                         </el-col>
                         <el-col
                           :span="24"
-                          class="son"
-                          :v-if="comment.father.id == -1"
+                          class="parent"
+                          v-if="comment.parent != null"
                         >
-                          {{ comment.father.body || "" }}
+                          回复:{{ comment.parent.body }}
                         </el-col>
                       </el-col>
                     </el-col>
-                  </div>
+                  </el-row>
                 </el-col>
               </el-row>
             </el-col>

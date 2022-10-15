@@ -1,13 +1,13 @@
-import Comment from "./comment";
+import Comments from "./Comments";
 
 export default class CommentList {
-  comments!: Array<Comment>;
+  comments!: Array<Comments>;
 
-  constructor(comments?: Array<Comment>) {
+  constructor(comments?: Array<Comments>) {
     this.comments = comments || [];
   }
 
-  public static getCommentList(data: Array<Comment>): CommentList {
+  public static getCommentList(data: Array<Comments>): CommentList {
     return new CommentList(data);
   }
 }
