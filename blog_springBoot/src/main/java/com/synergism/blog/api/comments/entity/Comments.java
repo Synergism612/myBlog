@@ -6,7 +6,9 @@ import com.synergism.blog.core.comment.entity.Comment;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,9 +19,11 @@ public class Comments {
 
     private String likeCount;
 
-    private Long fatherID;
+    private Long parentID;
 
-    private Comments father;
+    private CommentsFamily parent;
+
+    private List<CommentsFamily> children = new ArrayList<>();
 
     private UserInformation userInformation;
 
@@ -32,22 +36,15 @@ public class Comments {
     public Comments(Comment comment,UserInformation userInformation) {
         this.id = comment.getId();
         this.body = comment.getBody();
-        this.fatherID = comment.getFatherId();
-        this.father = null;
+        this.parentID = comment.getParentId();
+        this.parent = null;
         this.likeCount = comment.getLikeCount();
         this.userInformation = userInformation;
         this.creationTime = comment.getCreationTime();
         this.modifyTime = comment.getModifyTime();
     }
 
-    public Comments() {
-        this.id = -1L;
-        this.body = "";
-        this.likeCount = "";
-        this.fatherID = -1L;
-        this.father = null;
-        this.userInformation = null;
-        this.creationTime = null;
-        this.modifyTime = null;
+    public void putSon(CommentsFamily son){
+        this.children.add(son);
     }
 }

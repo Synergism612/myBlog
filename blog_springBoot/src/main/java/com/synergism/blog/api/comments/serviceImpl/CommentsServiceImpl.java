@@ -2,6 +2,7 @@ package com.synergism.blog.api.comments.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.synergism.blog.api.comments.entity.Comments;
+import com.synergism.blog.api.comments.entity.CommentsFamily;
 import com.synergism.blog.api.comments.service.CommentsService;
 import com.synergism.blog.api.user.entity.UserInformation;
 import com.synergism.blog.core.comment.entity.Comment;
@@ -72,14 +73,13 @@ public class CommentsServiceImpl implements CommentsService {
 
         //分配父评论
         commentsList.forEach(comments -> {
-            if (comments.getFatherID()!=null){
+            if (comments.getParentID()!=null){
                 for (Comments c : commentsList) {
-                    if (c.getId().equals(comments.getFatherID())){
-                        comments.setFather(c);
+                    if (c.getId().equals(comments.getParentID())){
+                        comments.setParent(new CommentsFamily(c));
+                        c.putSon(new CommentsFamily(comments));
                     }
                 }
-            }else{
-                comments.setFather(new Comments());
             }
         });
         return commentsList;

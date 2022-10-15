@@ -40,8 +40,8 @@ public class Comment {
     private String likeCount;
 
     @ApiModelProperty("父评论主键")
-    @TableField("father_id")
-    private Long fatherId;
+    @TableField("parent_id")
+    private Long parentId;
 
     @ApiModelProperty("创建时间")
     @TableField("creation_time")
