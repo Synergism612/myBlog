@@ -1,7 +1,7 @@
 package com.synergism.blog.security.cryptography.filter;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.security.cryptography.wrapper.RequestWrapper;
 import com.synergism.blog.security.cryptography.wrapper.ResponseWrapper;
@@ -119,11 +119,10 @@ public class HttpFilter implements Filter {
         filterChain.doFilter(requestWrapper, responseWrapper);
         //请求加密在自定义请求RequestWrapper中
 
-        //响应加密
-        JSONObject resultJson = new JSONObject(); //创建json对象
-        Object data = JSON.parseObject(responseWrapper.getTextContent()); //读取结果字符串
-        resultJson.put(KeyManagementService.ANOTHER_WORLD_RESPONSE(), data); //写入json
-        String result = AESUtil.encrypt(resultJson.toJSONString(), key); //转字符串并加密
+        ObjectMapper objectMapper = new ObjectMapper();
+        Result<?> resultClass = objectMapper.readValue(responseWrapper.getTextContent(), Result.class);
+        String json = objectMapper.writeValueAsString(resultClass);
+        String result = AESUtil.encrypt(json, key); //转字符串并加密
 
         //json数据流返回响应
         servletResponse.setContentLength(result.length()); //写入头部

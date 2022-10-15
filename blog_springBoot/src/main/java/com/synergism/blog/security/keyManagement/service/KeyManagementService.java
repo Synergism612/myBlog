@@ -30,14 +30,6 @@ public interface KeyManagementService {
     }
 
     /**
-     * 获取异世界回应名
-     * @return "ANOTHER_WORLD_RESPONSE"
-     */
-    static String ANOTHER_WORLD_RESPONSE() {
-        return Key.ANOTHER_WORLD_RESPONSE();
-    }
-
-    /**
      * 将全部钥匙名组成字符串
      * @return "ANOTHER_WORLD_KEY,EVIL_EYE,ANOTHER_WORLD_RESPONSE"
      */

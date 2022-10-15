@@ -4,8 +4,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.utils.StringUtil;
 
@@ -26,6 +26,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     // 暂存参数体数据
     private final Map<String, Object> params;
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
+
 
     /**
      * 从原请求中获取数据
@@ -33,8 +36,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
      * @param request 原请求
      * @param key     密钥
      */
-    @SuppressWarnings("unchecked") //忽略json转map警告提示
-    public RequestWrapper(HttpServletRequest request, String key, CryptographyService cryptographyService) {
+    public RequestWrapper(HttpServletRequest request, String key, CryptographyService cryptographyService) throws JsonProcessingException {
         //super HttpServletRequestWrapper 构造方法构造请求
         super(request);
         //定义后续使用变量
@@ -88,7 +90,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             this.params = null;
         else
             //转为Map
-            this.params = (Map<String, Object>) JSONObject.parseObject(paramsJSON, Map.class);
+            this.params = (Map<String, Object>) objectMapper.readValue(paramsJSON, Map.class);
     }
 
     /**
@@ -154,17 +156,12 @@ public class RequestWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public String getParameter(String name) {
-        String[] results;
         Object o = params.get(name);
         if (o instanceof Integer) {
             return String.valueOf((int) o);
         }
         if (o instanceof String) {
             return (String) o;
-        }
-        if (o instanceof JSONArray) {
-            results = (String[]) ((JSONArray) o).toArray();
-            return results[0];
         }
         return null;
     }
@@ -183,9 +180,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         if (o instanceof String) {
             results[0] = (String) o;
         }
-        if (o instanceof JSONArray) {
-            results = (String[]) ((JSONArray) o).toArray();
-        }
         return results;
     }
 
@@ -198,9 +192,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             }
             if (object instanceof String) {
                 results.put(key, new String[]{(String) object});
-            }
-            if (object instanceof JSONArray) {
-                results.put(key, (String[]) ((JSONArray) object).toArray());
             }
         });
         return results;

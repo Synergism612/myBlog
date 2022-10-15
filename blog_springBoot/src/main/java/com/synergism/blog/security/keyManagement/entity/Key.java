@@ -6,7 +6,6 @@ package com.synergism.blog.security.keyManagement.entity;
 public class Key {
     private static final String ANOTHER_WORLD_KEY = "ANOTHER_WORLD_KEY";
     private static final String EVIL_EYE = "EVIL_EYE";
-    private static final String ANOTHER_WORLD_RESPONSE = "ANOTHER_WORLD_RESPONSE";
 
 
     public static String ANOTHER_WORLD_KEY() {
@@ -17,9 +16,6 @@ public class Key {
         return EVIL_EYE;
     }
 
-    public static String ANOTHER_WORLD_RESPONSE() {
-        return ANOTHER_WORLD_RESPONSE;
-    }
 
     /**
      * 将全部钥匙名组成字符串
@@ -27,7 +23,6 @@ public class Key {
      */
     public static String AllToString() {
         return ANOTHER_WORLD_KEY + "," +
-                EVIL_EYE + "," +
-                ANOTHER_WORLD_RESPONSE;
+                EVIL_EYE ;
     }
 }
