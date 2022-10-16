@@ -2,6 +2,7 @@ package com.synergism.blog.api.index.controller;
 
 
 import com.synergism.blog.api.articles.entity.Pagination;
+import com.synergism.blog.api.articles.enumeration.OrderBy;
 import com.synergism.blog.api.comments.entity.Comments;
 import com.synergism.blog.api.index.service.IndexService;
 import com.synergism.blog.api.user.entity.UserInformation;
@@ -28,8 +29,9 @@ public class IndexController {
 
 
     @GetMapping("/article")
-    public Result<Pagination> article(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize) {
-        return service.getArticles(currentPage,pageSize);
+    public Result<Pagination> article(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize,String orderBy) {
+
+        return service.getArticles(currentPage,pageSize, OrderBy.valueOf(orderBy));
     }
 
     @GetMapping("/userInfo")

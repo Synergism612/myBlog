@@ -1,6 +1,7 @@
 package com.synergism.blog.api.index.serviceImpl;
 
 import com.synergism.blog.api.articles.entity.Pagination;
+import com.synergism.blog.api.articles.enumeration.OrderBy;
 import com.synergism.blog.api.articles.service.ArticlesService;
 import com.synergism.blog.api.comments.entity.Comments;
 import com.synergism.blog.api.comments.service.CommentsService;
@@ -28,8 +29,8 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public Result<Pagination> getArticles(int currentPage, int pageSize) {
-        return Result.success(articlesService.getIndexArticleInformation(currentPage, pageSize));
+    public Result<Pagination> getArticles(int currentPage, int pageSize, OrderBy orderBy) {
+        return Result.success(articlesService.getPagination(currentPage, pageSize, orderBy));
     }
 
     @Override
