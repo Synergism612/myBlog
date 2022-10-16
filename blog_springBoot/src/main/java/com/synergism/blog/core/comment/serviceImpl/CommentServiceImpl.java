@@ -40,7 +40,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<CommentInformation> getAllComments() {
+    public List<CommentInformation> getAllComment() {
         //获得所有评论
         List<Comment> commentList = this.list();
         //对照表

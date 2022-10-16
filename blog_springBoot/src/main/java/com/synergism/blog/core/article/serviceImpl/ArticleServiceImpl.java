@@ -1,16 +1,15 @@
 package com.synergism.blog.core.article.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.article.mapper.ArticleMapper;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.synergism.blog.core.article_classify.service.ArticleClassifyService;
-import com.synergism.blog.core.article_comment.entity.ArticleComment;
 import com.synergism.blog.core.article_comment.service.ArticleCommentService;
 import com.synergism.blog.core.article_tag.service.ArticleTagService;
 import com.synergism.blog.core.classify.entity.Classify;
+import com.synergism.blog.core.comment.entity.CommentInformation;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.service.UserService;
@@ -73,12 +72,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .map(User::getName)
                 .collect(Collectors.toList());
 
-        //查询评论数列表
-        List<Long> commentCountList = articleIDList.stream()
-                .map(articleID -> articleCommentService
-                        .count(new LambdaQueryWrapper<ArticleComment>()
-                                .eq(ArticleComment::getArticleId, articleID)))
-                .collect(Collectors.toList());
+        //查询评论列表
+        List<List<CommentInformation>> commentInformationList = articleCommentService
+                .getCommentInformationListByArticleIDList(articleIDList);
+
+        //评论数列表
+        List<Integer> commentCountList = commentInformationList.stream().map(List::size).collect(Collectors.toList());
 
         //查询文章分类
         List<List<Classify>> classifyList = articleClassifyService
@@ -99,6 +98,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                             userNameList.get(i),
                             userArticleList.get(i).getIfPrivate(),
                             commentCountList.get(i),
+                            commentInformationList.get(i),
                             classifyList.get(i),
                             tagList.get(i)));
         }
