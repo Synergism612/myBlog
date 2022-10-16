@@ -1,6 +1,6 @@
 package com.synergism.blog.core.article.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.mapper.ArticleMapper;
 import com.synergism.blog.core.article.service.ArticleService;
@@ -20,13 +20,4 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
-    @Override
-    public List<Article> pagination(int currentPage, int pageSize) {
-        //从第几条数据开始
-        int firstIndex = (currentPage-1) * pageSize;
-        //到第几条数据结束
-        int lastIndex = currentPage * pageSize;
-        //查询得到
-        return this.list(new QueryWrapper<Article>().last("limit "+firstIndex+","+lastIndex));
-    }
 }

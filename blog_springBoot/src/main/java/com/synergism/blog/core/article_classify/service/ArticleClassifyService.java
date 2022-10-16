@@ -16,5 +16,10 @@ import java.util.List;
  */
 public interface ArticleClassifyService extends IService<ArticleClassify> {
 
+    /**
+     * 通过文章ID列表获得分类列表
+     * @param articleIDList 文章ID列表
+     * @return 对应的分类列表
+     */
     List<List<Classify>> getClassifyListByArticleIDList(List<Long> articleIDList);
 }

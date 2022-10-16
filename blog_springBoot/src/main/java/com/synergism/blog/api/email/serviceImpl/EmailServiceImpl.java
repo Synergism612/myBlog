@@ -76,7 +76,6 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
     @Override
     public boolean checkCodeTime(CodeMail codeMail) {
         return TimeUtil.ifTimeOut(TimeUtil.toDate(codeMail.getTime()), new Date(), 60);
-
     }
 
     @Override

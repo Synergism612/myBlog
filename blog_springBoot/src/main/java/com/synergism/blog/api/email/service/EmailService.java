@@ -11,11 +11,28 @@ import java.util.Map;
 
 public interface EmailService extends IService<User> {
 
+    /**
+     * 注册时使用的验证码接口
+     * @param mail 邮箱(账号)
+     * @param key 密钥
+     * @return 结果[密钥]
+     */
     Result<String> getRegisterMailCode(String mail, String key);
 
+    /**
+     * 获取一个新的邮箱验证码信息
+     * @param mail 邮箱(账号)
+     * @param key 密钥
+     * @return 密钥
+     */
     String getMailCode(String mail, String key);
 
-    boolean checkCodeTime(CodeMail codeMail) throws ParseException;
+    /**
+     * 检查是否超时一分钟
+     * @param codeMail 邮箱验证码信息
+     * @return 超时为真，反之为假
+     */
+    boolean checkCodeTime(CodeMail codeMail);
 
     /**
      * 校验密钥有效性

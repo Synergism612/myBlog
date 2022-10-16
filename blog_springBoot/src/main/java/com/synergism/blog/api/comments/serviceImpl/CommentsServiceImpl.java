@@ -1,6 +1,6 @@
 package com.synergism.blog.api.comments.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.api.comments.entity.Comments;
 import com.synergism.blog.api.comments.entity.CommentsFamily;
 import com.synergism.blog.api.comments.service.CommentsService;
@@ -38,8 +38,8 @@ public class CommentsServiceImpl implements CommentsService {
         //获得所有评论
         List<Comment> commentList = commentService.list();
         //对照表
-        List<UserComment> userCommentList = userCommentService.list(new QueryWrapper<UserComment>()
-                .in("comment_id",commentList
+        List<UserComment> userCommentList = userCommentService.list(new LambdaQueryWrapper<UserComment>()
+                .in(UserComment::getCommentId,commentList
                         .stream()
                         .map(Comment::getId)
                         .collect(Collectors.toList())));

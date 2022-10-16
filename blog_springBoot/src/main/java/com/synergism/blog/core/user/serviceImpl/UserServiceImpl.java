@@ -1,6 +1,6 @@
 package com.synergism.blog.core.user.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.mapper.UserMapper;
 import com.synergism.blog.core.user.service.UserService;
@@ -20,6 +20,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public boolean ifExist(String username) {
-        return this.getOne(new QueryWrapper<User>().eq("username", username)) != null;
+        return this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username)) != null;
     }
 }

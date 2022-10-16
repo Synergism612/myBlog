@@ -15,5 +15,10 @@ import java.util.List;
  * @since 2022-10-11 05:58:21
  */
 public interface ArticleTagService extends IService<ArticleTag> {
+    /**
+     * 通过文章ID列表获取标签列表
+     * @param articleIDList 文章ID列表
+     * @return 标签列表
+     */
     List<List<Tag>> getTagListByArticleIDList(List<Long> articleIDList);
 }

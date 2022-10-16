@@ -1,6 +1,6 @@
 package com.synergism.blog.core.article_classify.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.article_classify.entity.ArticleClassify;
 import com.synergism.blog.core.article_classify.mapper.ArticleClassifyMapper;
 import com.synergism.blog.core.article_classify.service.ArticleClassifyService;
@@ -34,7 +34,7 @@ public class ArticleClassifyServiceImpl extends ServiceImpl<ArticleClassifyMappe
     @Override
     public List<List<Classify>> getClassifyListByArticleIDList(List<Long> articleIDList) {
         //查询对照表
-        List<ArticleClassify> articleClassifyList = this.list(new QueryWrapper<ArticleClassify>().in("article_id", articleIDList));
+        List<ArticleClassify> articleClassifyList = this.list(new LambdaQueryWrapper<ArticleClassify>().in(ArticleClassify::getArticleId, articleIDList));
 
         //查询分类表
         List<Classify> classifyList = classifyService.listByIds(articleClassifyList.stream()

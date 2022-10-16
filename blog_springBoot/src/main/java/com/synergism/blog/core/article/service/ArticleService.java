@@ -16,11 +16,4 @@ import java.util.List;
  */
 public interface ArticleService extends IService<Article> {
 
-    /**
-     * 获取文章信息列表
-     * @param currentPage 当前页数
-     * @param pageSize 当前页内容数
-     * @return 结果[List<Article>]
-     */
-    List<Article> pagination(int currentPage, int pageSize);
 }

@@ -1,8 +1,9 @@
 package com.synergism.blog.api.articles.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.api.articles.entity.ArticleInformation;
 import com.synergism.blog.api.articles.entity.Pagination;
+import com.synergism.blog.api.articles.enumeration.OrderBy;
 import com.synergism.blog.api.articles.service.ArticlesService;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.service.ArticleService;
@@ -11,18 +12,17 @@ import com.synergism.blog.core.article_comment.entity.ArticleComment;
 import com.synergism.blog.core.article_comment.service.ArticleCommentService;
 import com.synergism.blog.core.article_tag.service.ArticleTagService;
 import com.synergism.blog.core.classify.entity.Classify;
-import com.synergism.blog.core.classify.service.ClassifyService;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.core.user_article.entity.UserArticle;
 import com.synergism.blog.core.user_article.service.UserArticleService;
-import com.synergism.blog.result.entity.Result;
 import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +37,7 @@ public class ArticlesServiceImpl implements ArticlesService {
     private final ArticleTagService articleTagService;
 
     @Autowired
-    public ArticlesServiceImpl(UserService userService, UserArticleService userArticleService, ArticleService articleService, ArticleCommentService articleCommentService, ArticleClassifyService articleClassifyService, ClassifyService classifyService, ArticleTagService articleTagService) {
+    public ArticlesServiceImpl(UserService userService, UserArticleService userArticleService, ArticleService articleService, ArticleCommentService articleCommentService, ArticleClassifyService articleClassifyService, ArticleTagService articleTagService) {
         this.userService = userService;
         this.userArticleService = userArticleService;
         this.articleService = articleService;
@@ -47,10 +47,9 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
-    public Pagination getIndexArticleInformation(int currentPage, int pageSize) {
+    public List<ArticleInformation> getAllArticleInformation() {
         //查询用户文章对照表
-        List<UserArticle> userArticleList = userArticleService
-                .list(new QueryWrapper<UserArticle>().eq("if_private", "0"));
+        List<UserArticle> userArticleList = userArticleService.list();
         //文章id列表
         List<Long> articleIDList = userArticleList.stream()
                 .map(UserArticle::getArticleId).collect(Collectors.toList());
@@ -72,8 +71,8 @@ public class ArticlesServiceImpl implements ArticlesService {
         //查询评论数列表
         List<Long> commentCountList = articleIDList.stream()
                 .map(articleID -> articleCommentService
-                        .count(new QueryWrapper<ArticleComment>()
-                                .eq("article_id", articleID)))
+                        .count(new LambdaQueryWrapper<ArticleComment>()
+                                .eq(ArticleComment::getArticleId, articleID)))
                 .collect(Collectors.toList());
 
         //查询文章分类
@@ -85,7 +84,7 @@ public class ArticlesServiceImpl implements ArticlesService {
                 .getTagListByArticleIDList(articleIDList);
 
         //娶不到对象判空
-        TypeUtil.isNull(articleList, userNameList);
+        TypeUtil.isNull(articleList, userNameList, classifyList, tagList);
 
         //封装所需数据
         List<ArticleInformation> articleInformationList = new ArrayList<>();
@@ -100,7 +99,47 @@ public class ArticlesServiceImpl implements ArticlesService {
         }
 
         //结果封装
-        return new Pagination(articleInformationList, currentPage, pageSize, articleInformationList.size());
+        return articleInformationList;
+    }
 
+    @Override
+    public Pagination getPagination(int currentPage, int pageSize, OrderBy orderBy) {
+        List<ArticleInformation> articleInformationList = this.getAllArticleInformation();
+        //获取公开文章
+        articleInformationList = articleInformationList.stream().filter(articleInformation -> articleInformation.getIfPrivate() == 0).collect(Collectors.toList());
+        //获取排序结果
+        List<ArticleInformation> result;
+        switch (orderBy) {
+            case creationTime: {
+                result = articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getCreationTime).reversed()).collect(Collectors.toList());
+                break;
+            }
+            case modifyTime: {
+                result = articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getModifyTime).reversed()).collect(Collectors.toList());
+                break;
+            }
+            case commentCount: {
+                result = articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getCommentCount).reversed()).collect(Collectors.toList());
+                break;
+            }
+            case views: {
+                result = articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getViews).reversed()).collect(Collectors.toList());
+                break;
+            }
+            case like_count: {
+                result = articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getLikeCount).reversed()).collect(Collectors.toList());
+                break;
+            }
+            default:
+                throw new IllegalArgumentException("排序错误");
+        }
+        //分页
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = currentPage * pageSize;
+        int total = result.size();
+        if (endIndex>total) endIndex = total;
+        result = result.subList(startIndex, endIndex);
+        //封装结果
+        return new Pagination(result, currentPage, pageSize, total);
     }
 }

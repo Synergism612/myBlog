@@ -1,11 +1,10 @@
 package com.synergism.blog.core.article_tag.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.article_tag.entity.ArticleTag;
 import com.synergism.blog.core.article_tag.mapper.ArticleTagMapper;
 import com.synergism.blog.core.article_tag.service.ArticleTagService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class ArticleTagServiceImpl extends ServiceImpl<ArticleTagMapper, Article
     @Override
     public List<List<Tag>> getTagListByArticleIDList(List<Long> articleIDList) {
         //查询对照表
-        List<ArticleTag> articleTagList = this.list(new QueryWrapper<ArticleTag>().in("article_id", articleIDList));
+        List<ArticleTag> articleTagList = this.list(new LambdaQueryWrapper<ArticleTag>().in(ArticleTag::getArticleId, articleIDList));
         //查询标签表
         List<Tag> tagList = tagService.listByIds(articleTagList.stream()
                 .map(ArticleTag::getTagId)

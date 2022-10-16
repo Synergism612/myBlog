@@ -1,6 +1,6 @@
 package com.synergism.blog.api.user.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.api.user.entity.Login;
 import com.synergism.blog.api.user.entity.Register;
 import com.synergism.blog.api.user.entity.UserInformation;
@@ -26,7 +26,7 @@ public class UserApiServiceImpl implements UserApiService {
     @Override
     public Result<UserInformation> login(Login login) {
         //获得对应用户
-        User user = userService.getOne(new QueryWrapper<User>().eq("username", login.getUsername()));
+        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, login.getUsername()));
         //对象判空
         TypeUtil.isNull(user);
         //密码比对
