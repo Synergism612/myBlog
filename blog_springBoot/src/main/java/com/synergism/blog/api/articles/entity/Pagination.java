@@ -1,5 +1,6 @@
 package com.synergism.blog.api.articles.entity;
 
+import com.synergism.blog.core.article.entity.ArticleInformation;
 import lombok.Getter;
 import lombok.Setter;
 

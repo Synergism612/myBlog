@@ -6,7 +6,6 @@ import com.synergism.blog.api.email.entity.CodeMail;
 import com.synergism.blog.result.entity.Result;
 
 import javax.mail.MessagingException;
-import java.text.ParseException;
 import java.util.Map;
 
 public interface EmailService extends IService<User> {

@@ -1,8 +1,7 @@
-package com.synergism.blog.api.comments.entity;
+package com.synergism.blog.core.comment.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.synergism.blog.api.user.entity.UserInformation;
-import com.synergism.blog.core.comment.entity.Comment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Comments {
+public class CommentInformation {
     private Long id;
 
     private String body;
@@ -33,7 +32,7 @@ public class Comments {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
-    public Comments(Comment comment,UserInformation userInformation) {
+    public CommentInformation(Comment comment, UserInformation userInformation) {
         this.id = comment.getId();
         this.body = comment.getBody();
         this.parentID = comment.getParentId();

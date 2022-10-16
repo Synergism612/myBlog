@@ -3,7 +3,7 @@ package com.synergism.blog.api.index.controller;
 
 import com.synergism.blog.api.articles.entity.Pagination;
 import com.synergism.blog.api.articles.enumeration.OrderBy;
-import com.synergism.blog.api.comments.entity.Comments;
+import com.synergism.blog.core.comment.entity.CommentInformation;
 import com.synergism.blog.api.index.service.IndexService;
 import com.synergism.blog.api.user.entity.UserInformation;
 import com.synergism.blog.result.entity.Result;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -40,7 +39,7 @@ public class IndexController {
     }
 
     @GetMapping("/comments")
-    public Result<List<Comments>> comments() {
+    public Result<List<CommentInformation>> comments() {
         return service.getComments();
     }
 }

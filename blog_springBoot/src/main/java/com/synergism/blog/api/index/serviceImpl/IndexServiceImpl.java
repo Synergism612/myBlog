@@ -3,7 +3,7 @@ package com.synergism.blog.api.index.serviceImpl;
 import com.synergism.blog.api.articles.entity.Pagination;
 import com.synergism.blog.api.articles.enumeration.OrderBy;
 import com.synergism.blog.api.articles.service.ArticlesService;
-import com.synergism.blog.api.comments.entity.Comments;
+import com.synergism.blog.core.comment.entity.CommentInformation;
 import com.synergism.blog.api.comments.service.CommentsService;
 import com.synergism.blog.api.index.service.IndexService;
 import com.synergism.blog.api.user.entity.UserInformation;
@@ -30,7 +30,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public Result<Pagination> getArticles(int currentPage, int pageSize, OrderBy orderBy) {
-        return Result.success(articlesService.getPagination(currentPage, pageSize, orderBy));
+        return articlesService.getPagination(currentPage, pageSize, orderBy);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public Result<List<Comments>> getComments() {
-        return Result.success(commentsService.getIndexComments());
+    public Result<List<CommentInformation>> getComments() {
+        return commentsService.getIndexComments();
     }
 }

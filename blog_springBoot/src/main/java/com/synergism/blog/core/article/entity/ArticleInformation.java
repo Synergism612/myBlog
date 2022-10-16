@@ -1,4 +1,4 @@
-package com.synergism.blog.api.articles.entity;
+package com.synergism.blog.core.article.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;

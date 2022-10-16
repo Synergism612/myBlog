@@ -2,7 +2,7 @@ package com.synergism.blog.api.index.service;
 
 import com.synergism.blog.api.articles.entity.Pagination;
 import com.synergism.blog.api.articles.enumeration.OrderBy;
-import com.synergism.blog.api.comments.entity.Comments;
+import com.synergism.blog.core.comment.entity.CommentInformation;
 import com.synergism.blog.api.user.entity.UserInformation;
 import com.synergism.blog.result.entity.Result;
 
@@ -28,5 +28,5 @@ public interface IndexService {
      * 首页最热评论信息
      * @return 结果[评论列表]
      */
-    Result<List<Comments>> getComments();
+    Result<List<CommentInformation>> getComments();
 }
