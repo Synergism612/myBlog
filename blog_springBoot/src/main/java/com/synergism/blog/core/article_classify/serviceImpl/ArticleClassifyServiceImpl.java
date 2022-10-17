@@ -45,11 +45,11 @@ public class ArticleClassifyServiceImpl extends ServiceImpl<ArticleClassifyMappe
         //获取对应分类
         return articleIDList.stream()
                 .map(articleID -> {
-                    List<Long> classifyIDList = articleClassifyList.stream().map(articleClassify -> {
-                        if (articleClassify.getArticleId().equals(articleID))
-                            return articleClassify.getClassifyId();
-                        return null;
-                    }).collect(Collectors.toList());
+                    List<Long> classifyIDList = articleClassifyList.stream()
+                            .filter(articleClassify -> articleClassify
+                                            .getArticleId()
+                                            .equals(articleID))
+                            .map(ArticleClassify::getClassifyId).collect(Collectors.toList());
 
                     return classifyIDList.stream().map(classifyID -> {
                         for (Classify classify : classifyList) {

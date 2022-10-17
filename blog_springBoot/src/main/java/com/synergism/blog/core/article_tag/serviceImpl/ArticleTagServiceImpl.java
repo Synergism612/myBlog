@@ -44,11 +44,10 @@ public class ArticleTagServiceImpl extends ServiceImpl<ArticleTagMapper, Article
         return articleIDList.stream()
                 .map(articleID -> {
                     List<Long> tagIDList = articleTagList.stream()
-                            .map(articleTag -> {
-                                if (articleTag.getArticleId().equals(articleID))
-                                    return articleTag.getTagId();
-                                return null;
-                            }).collect(Collectors.toList());
+                            .filter(articleTag -> articleTag
+                                    .getArticleId()
+                                    .equals(articleID))
+                            .map(ArticleTag::getTagId).collect(Collectors.toList());
 
                     return tagIDList.stream()
                             .map(tagID -> {

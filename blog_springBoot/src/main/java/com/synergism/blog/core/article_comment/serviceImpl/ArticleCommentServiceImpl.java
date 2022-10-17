@@ -41,11 +41,12 @@ public class ArticleCommentServiceImpl extends ServiceImpl<ArticleCommentMapper,
         //获取对应分类
         return articleIDList.stream()
                 .map(articleID -> {
-                    List<Long> commentIDList = articleCommentList.stream().map(articleComment -> {
-                        if (articleComment.getArticleId().equals(articleID))
-                            return articleComment.getCommentId();
-                        return null;
-                    }).collect(Collectors.toList());
+                    List<Long> commentIDList = articleCommentList
+                            .stream()
+                            .filter(articleComment -> articleComment
+                                    .getArticleId()
+                                    .equals(articleID))
+                            .map(ArticleComment::getCommentId).collect(Collectors.toList());
 
                     return commentIDList.stream().map(commentID -> {
                         for (CommentInformation commentInformation : commentInformationList) {
