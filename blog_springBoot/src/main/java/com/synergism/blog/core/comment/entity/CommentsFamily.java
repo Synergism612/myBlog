@@ -1,7 +1,7 @@
 package com.synergism.blog.core.comment.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.synergism.blog.api.user.entity.UserInformation;
+import com.synergism.blog.api.userAPI.entity.UserInformation;
 import lombok.Getter;
 import lombok.Setter;
 

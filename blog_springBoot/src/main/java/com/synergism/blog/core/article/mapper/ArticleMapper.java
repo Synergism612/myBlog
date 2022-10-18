@@ -2,7 +2,10 @@ package com.synergism.blog.core.article.mapper;
 
 import com.synergism.blog.core.article.entity.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.synergism.blog.core.article.entity.ArticleInformation;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
+
+    List<ArticleInformation> getAllArticleList();
 
 }

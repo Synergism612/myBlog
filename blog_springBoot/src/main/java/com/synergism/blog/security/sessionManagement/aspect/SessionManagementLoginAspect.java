@@ -1,8 +1,8 @@
 package com.synergism.blog.security.sessionManagement.aspect;
 
-import com.synergism.blog.api.user.entity.UserInformation;
-import com.synergism.blog.result.entity.CodeMsg;
-import com.synergism.blog.result.entity.Result;
+import com.synergism.blog.api.userAPI.entity.UserInformation;
+import com.synergism.blog.result.CodeMsg;
+import com.synergism.blog.result.Result;
 import com.synergism.blog.security.cacheManager.service.CacheRedisService;
 import com.synergism.blog.security.sessionManagement.service.SessionService;
 import com.synergism.blog.utils.TimeUtil;

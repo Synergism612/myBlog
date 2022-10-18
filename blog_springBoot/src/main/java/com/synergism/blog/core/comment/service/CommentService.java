@@ -15,9 +15,4 @@ import java.util.List;
  * @since 2022-10-10 09:53:06
  */
 public interface CommentService extends IService<Comment> {
-    /**
-     * 获取所有评论信息
-     * @return 评论信息列表
-     */
-    List<CommentInformation> getAllComment();
 }

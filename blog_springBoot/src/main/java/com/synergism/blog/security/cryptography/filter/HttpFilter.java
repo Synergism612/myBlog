@@ -1,7 +1,7 @@
 package com.synergism.blog.security.cryptography.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.synergism.blog.result.entity.Result;
+import com.synergism.blog.result.Result;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.security.cryptography.wrapper.RequestWrapper;
 import com.synergism.blog.security.cryptography.wrapper.ResponseWrapper;

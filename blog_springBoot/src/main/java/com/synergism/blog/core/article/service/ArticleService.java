@@ -16,10 +16,4 @@ import java.util.List;
  * @since 2022-10-07 10:07:37
  */
 public interface ArticleService extends IService<Article> {
-    /**
-     * 获取所有文章信息
-     * @return 文章信息列表
-     */
-    List<ArticleInformation> getAllArticleInformation();
-
 }

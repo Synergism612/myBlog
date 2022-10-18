@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.synergism.blog.api.user.entity.Register;
-import com.synergism.blog.utils.TimeUtil;
+import com.synergism.blog.api.userAPI.entity.Register;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

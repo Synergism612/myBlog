@@ -1,10 +1,8 @@
 package com.synergism.blog.security.authentication.aspect;
 
-import com.synergism.blog.result.entity.CodeMsg;
-import com.synergism.blog.result.entity.Result;
-import com.synergism.blog.security.sessionManagement.entity.Session;
+import com.synergism.blog.result.CodeMsg;
+import com.synergism.blog.result.Result;
 import com.synergism.blog.security.sessionManagement.service.SessionService;
-import com.synergism.blog.utils.StringUtil;
 import com.synergism.blog.utils.TypeUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
