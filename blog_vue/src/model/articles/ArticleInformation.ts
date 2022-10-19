@@ -1,5 +1,6 @@
 import Classify from "../classify/Classify";
 import Tag from "../tag/Tag";
+import UserInfo from "../user/UserInfo";
 
 export default class ArticleInformation {
   id!: number;
@@ -15,8 +16,6 @@ export default class ArticleInformation {
   views!: string;
 
   likeCount!: string;
-
-  commentCount!: number;
 
   userName!: string;
 

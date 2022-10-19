@@ -21,7 +21,13 @@
                 <el-col :xs="24" :sm="16" :md="16" :span="16">
                   <div class="header frame">
                     <el-row>
-                      <el-col :span="24"> 头部</el-col>
+                      <el-col :span="24">
+                        <span v-if="ifLogin">我的文章\</span>
+                        <span @click="updateArticle(0)">最新发布</span>\
+                        <span @click="updateArticle(1)">最新更新</span>\
+                        <span @click="updateArticle(2)">查看最多</span>\
+                        <span @click="updateArticle(3)">点赞最多</span>
+                      </el-col>
                     </el-row>
                   </div>
 
@@ -123,15 +129,6 @@
                               :strokeWidth="2"
                             />
                             <span> {{ article.views }} </span>
-                          </el-col>
-                          <el-col :span="2" class="icon">
-                            <comments
-                              theme="outline"
-                              size="21"
-                              fill="#000000"
-                              :strokeWidth="2"
-                            />
-                            <span> {{ article.commentCount }} </span>
                           </el-col>
                           <el-col :span="8" class="icon">
                             <update_rotation
@@ -282,11 +279,17 @@ import CommentList from "@/model/comments/CommentList";
 
 export default defineComponent({
   setup() {
+    const articleSort = ["creation_time", "modify_time", "views", "like_count"];
+
     const viewData = reactive({
+      ifLogin: true,
+      articleOrderBy: articleSort[0],
+
       calender: new Date(),
       pagination: new Pagination(),
       userInfo: new UserInfo(),
       commentList: new CommentList(),
+
       currentPage: 1,
       pageSize: 10,
     });
@@ -301,7 +304,11 @@ export default defineComponent({
 
     const pagination = () => {
       api
-        .getIndexArticle(viewData.currentPage, viewData.pageSize)
+        .getIndexArticle(
+          viewData.currentPage,
+          viewData.pageSize,
+          viewData.articleOrderBy
+        )
         .then(({ data }) => {
           viewData.pagination = data;
           console.log(viewData.pagination);
@@ -314,6 +321,7 @@ export default defineComponent({
         api.getIndexUserInfo().then(({ data }) => {
           viewData.userInfo = data;
           console.log(viewData.userInfo);
+          viewData.ifLogin = false;
         });
       }
     };
@@ -325,9 +333,15 @@ export default defineComponent({
       });
     };
 
+    const updateArticle = (x: number) => {
+      viewData.articleOrderBy = articleSort[x];
+      viewData.currentPage = 1;
+      pagination();
+    };
+
     pagination();
-    userInformation();
-    comments();
+    // userInformation();
+    // comments();
 
     watch(
       () => [viewData.currentPage, viewData.pageSize],
@@ -337,7 +351,12 @@ export default defineComponent({
       }
     );
 
-    return { ...toRefs(viewData), handleSizeChange, handleCurrentChange };
+    return {
+      ...toRefs(viewData),
+      handleSizeChange,
+      handleCurrentChange,
+      updateArticle,
+    };
   },
   components: {
     Menu,

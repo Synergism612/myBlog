@@ -158,13 +158,13 @@ export class api {
    * 首页文章分页接口
    * @param currentPage 第几页
    * @param pageSize 一页几条
-   * @param toOrder 排序
+   * @param articleSort 排序
    * @returns Promise
    */
   public static getIndexArticle(
     currentPage: number,
     pageSize: number,
-    toOrder: string
+    articleSort: string
   ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/index/article",
@@ -172,7 +172,7 @@ export class api {
       params: {
         currentPage: currentPage,
         pageSize: pageSize,
-        orderBy: toOrder,
+        articleSort: articleSort,
       },
     });
   }

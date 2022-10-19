@@ -19,9 +19,19 @@
       }
     }
 
+    .header{
+      span{
+        cursor: pointer;
+      }
+      span:hover{
+        border-bottom: solid 1px black;
+      }
+    }
+
     //文章列表
     .articles {
       .article {
+        width: 100%;
         margin: 0.5em 0;
         flex-direction: initial;
         justify-content: space-around;
@@ -47,7 +57,7 @@
             margin: 0.5em 0;
             span {
               display: block;
-              max-height: 65px;
+              height: 65px;
               overflow: hidden;
               word-wrap: break-word;
               text-align: justify;
@@ -164,8 +174,11 @@
         .el-calendar-day:hover {
           color: #ffffff;
         }
+        .is-selected{
+          color: #ffffff !important;
+        }
         .is-today {
-          color: #ffffff;
+          color: rgb(63, 196, 194);
         }
       }
     }
