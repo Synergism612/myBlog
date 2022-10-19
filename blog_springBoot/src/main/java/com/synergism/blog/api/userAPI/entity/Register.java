@@ -42,7 +42,7 @@ public class Register {
      */
     Register(String username, String password, String code,String key) {
         //判空
-        StringUtil.checkStringIsEmpty(asArray(username,password,code),asArray("账号","密码","验证码"));
+        StringUtil.ifEmpty(asArray(username,password,code),asArray("账号","密码","验证码"));
         //合法性检查
         StringUtil.checkStringIsUnsafe(username,password);
         this.username = username;

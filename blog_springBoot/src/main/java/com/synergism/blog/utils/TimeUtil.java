@@ -52,7 +52,7 @@ public class TimeUtil {
      * @param second 秒数
      * @return 超时为真，反之为假
      */
-    public static boolean ifTimeOut(Date start,Date end,int second){
+    public static boolean isTimeOut(Date start,Date end,int second){
         return timeDifference(start, end)>second;
     }
 

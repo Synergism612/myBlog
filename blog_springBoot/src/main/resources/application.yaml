@@ -45,3 +45,7 @@ server:
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*
+
+logging:
+  level:
+    root: debug

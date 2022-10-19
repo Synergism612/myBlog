@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.synergism.blog.utils.StringUtil.checkStringIfEmpty;
+import static com.synergism.blog.utils.StringUtil.isEmpty;
 
 /**
  * 鉴权拦截器
@@ -58,8 +58,8 @@ public class GlobalInterceptor implements HandlerInterceptor {
 
 
         //检查密钥是否为空
-        if (checkStringIfEmpty(ANOTHER_WORLD_KEY)) {
-            if (URLUtil.checkURLIfToPublic(uri) && checkStringIfEmpty(EVIL_EYE)) {
+        if (isEmpty(ANOTHER_WORLD_KEY)) {
+            if (URLUtil.checkURLIfToPublic(uri) && isEmpty(EVIL_EYE)) {
                 //分配新的会话
                 sessionService.newSession(sessionID, response);
                 return true;
@@ -71,14 +71,14 @@ public class GlobalInterceptor implements HandlerInterceptor {
         }
 
         //检查权限ID是否为空
-        if (!checkStringIfEmpty(EVIL_EYE)) {
+        if (!isEmpty(EVIL_EYE)) {
             //获取权限
             Session session = sessionService.getSession(EVIL_EYE);
-            if (TypeUtil.ifNull(session)) {
+            if (TypeUtil.isNull(session)) {
                 //为null则重新分配一个新的会话
                 session = sessionService.newSession(request, response);
             }
-            if (checkStringIfEmpty(session.getUserKey()))
+            if (isEmpty(session.getUserKey()))
                 //用户密钥为空则写入用户密钥
                 session.setUserKey(cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY));
             if (!session.getSessionID().equals(sessionID)) {

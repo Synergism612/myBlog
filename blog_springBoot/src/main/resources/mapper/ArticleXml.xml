@@ -2,4 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.article.mapper.ArticleMapper">
 
+    <resultMap id="ArticleInformationMap" type="com.synergism.blog.core.article.entity.ArticleInformation">
+        <id column="id" property="id"/>
+        <result column="icon" property="icon"/>
+        <result column="title" property="title"/>
+        <result column="body" property="body"/>
+        <result column="synopsis" property="synopsis"/>
+        <result column="views" property="views"/>
+        <result column="like_count" property="likeCount"/>
+        <result column="creation_time" property="creationTime"/>
+        <result column="modify_time" property="modifyTime"/>
+
+        <result column="if_private" property="ifPrivate"/>
+        <result column="user_name" property="userName"/>
+
+        <collection property="classifyList" ofType="com.synergism.blog.core.classify.entity.Classify">
+            <id column="classify_id" property="id"/>
+            <result column="classify_name" property="name"/>
+            <result column="classify_annotation" property="annotation"/>
+        </collection>
+
+        <collection property="tagList" ofType="com.synergism.blog.core.tag.entity.Tag">
+            <id column="tag_id" property="id"/>
+            <result column="tag_name" property="name"/>
+            <result column="tag_annotation" property="annotation"/>
+        </collection>
+    </resultMap>
+
+    <select id="getArticleInformationList" resultMap="ArticleInformationMap">
+        select a.*,
+               ua.if_private,
+               u.name        as user_name,
+               cy.id         as classify_id,
+               cy.name       as classify_name,
+               cy.annotation as classify_annotation,
+               t.id          as tag_id,
+               t.name        as tag_name,
+               t.annotation  as tag_annotation
+        from user_article ua
+                 join(
+            `user` u ,
+                article a ,
+                article_classify acy ,
+                classify cy ,
+                article_tag atg ,
+                tag t
+            )
+                     on
+                             ua.user_id = u.id and
+                             ua.article_id = a.id and
+                             acy.article_id = a.id and
+                             cy.id = acy.classify_id and
+                             atg.article_id = a.id and
+                             t.id = atg.tag_id
+
+        order by ${articleSort} desc
+    </select>
+
 </mapper>

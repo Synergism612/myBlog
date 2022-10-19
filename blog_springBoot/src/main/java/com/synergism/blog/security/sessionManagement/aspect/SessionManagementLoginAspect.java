@@ -1,6 +1,6 @@
 package com.synergism.blog.security.sessionManagement.aspect;
 
-import com.synergism.blog.api.userAPI.entity.UserInformation;
+import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import com.synergism.blog.security.cacheManager.service.CacheRedisService;
@@ -49,11 +49,11 @@ public class SessionManagementLoginAspect {
 
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
-        TypeUtil.isNull(servletRequestAttributes);
+        TypeUtil.ifNull(servletRequestAttributes);
         assert servletRequestAttributes != null;
         HttpServletRequest request = servletRequestAttributes.getRequest();
         HttpServletResponse response = servletRequestAttributes.getResponse();
-        TypeUtil.isNull(response);
+        TypeUtil.ifNull(response);
         assert response != null;
 
         if (sessionService.checkSessionExistLoginID(request)){
@@ -67,7 +67,7 @@ public class SessionManagementLoginAspect {
         if (object instanceof Result<?>) {
             result = (Result<?>) object;
         }
-        TypeUtil.isNull(result);
+        TypeUtil.ifNull(result);
         assert result != null;
         if (result.getCode() == 200) {
             userInformation = (UserInformation) result.getData();

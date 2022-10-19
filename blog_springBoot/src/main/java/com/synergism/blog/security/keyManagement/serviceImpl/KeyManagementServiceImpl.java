@@ -17,7 +17,7 @@ public class KeyManagementServiceImpl implements KeyManagementService {
      */
     public String getAnotherWorldKey (HttpServletRequest request){
         String result = request.getHeader(Key.ANOTHER_WORLD_KEY());
-        if (StringUtil.checkStringIfEmpty(result))
+        if (StringUtil.isEmpty(result))
             return"";
         return result;
     }

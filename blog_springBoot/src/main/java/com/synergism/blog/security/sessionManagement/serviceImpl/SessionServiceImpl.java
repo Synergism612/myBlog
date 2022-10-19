@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.synergism.blog.utils.StringUtil.checkStringIfEmpty;
-import static com.synergism.blog.utils.StringUtil.checkStringIsEmpty;
+import static com.synergism.blog.utils.StringUtil.isEmpty;
+import static com.synergism.blog.utils.StringUtil.ifEmpty;
 import static com.synergism.blog.utils.TimeUtil.Weeks;
 
 @Service
@@ -59,7 +59,7 @@ public class SessionServiceImpl implements SessionService {
         String sessionID = request.getRequestedSessionId();
         String ANOTHER_WORLD_KEY = request.getHeader(KeyManagementService.ANOTHER_WORLD_KEY());
         String userKey = "";
-        if (!checkStringIfEmpty(ANOTHER_WORLD_KEY))
+        if (!isEmpty(ANOTHER_WORLD_KEY))
             cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY);
 
         //创建基本权限会话
@@ -89,7 +89,7 @@ public class SessionServiceImpl implements SessionService {
      * @return 会话
      */
     public Session getSession(String EVIL_EYE) {
-        checkStringIsEmpty(EVIL_EYE, "邪王真眼");
+        StringUtil.ifEmpty(EVIL_EYE, "邪王真眼");
         return (Session) cacheRedisService.get(EVIL_EYE);
     }
 
@@ -134,7 +134,7 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public boolean checkSessionExistLoginID(HttpServletRequest request) {
         Session session = this.getSession(request);
-        return !StringUtil.checkStringIfEmpty(session.getLoginID());
+        return !StringUtil.isEmpty(session.getLoginID());
     }
 
     @Override

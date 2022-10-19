@@ -1,7 +1,6 @@
 package com.synergism.blog.utils;
 
 import java.lang.reflect.Field;
-import java.util.Map;
 
 public class TypeUtil {
 
@@ -21,7 +20,7 @@ public class TypeUtil {
      * @param objects 对象
      */
     @SafeVarargs
-    public static <O> void isNull(O... objects) {
+    public static <O> void ifNull(O... objects) {
         for (O object : objects) {
             if (object == null)
                 throw new IllegalArgumentException("娶不到对象");
@@ -52,7 +51,7 @@ public class TypeUtil {
      * @return 空为真，否为假
      */
     @SafeVarargs
-    public static <O> boolean ifNull(O... objects) {
+    public static <O> boolean isNull(O... objects) {
         boolean flag = false; //定义返回结果，默认为true
         for (O object : objects) {
             if (object == null) {
@@ -76,19 +75,5 @@ public class TypeUtil {
             }
         }
         return flag;
-    }
-
-    /**
-     * 将字符串数组转为字符串 用逗号隔开
-     * @param array
-     * @return
-     */
-    public static String arrayToString(String[] array){
-        String result = "";
-
-        for (String s : array) {
-            result+=s+"·";
-        }
-        return result.substring(0,result.length()-1);
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BlogApplication {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		//运行
 		SpringApplication.run(BlogApplication.class, args);
 	}

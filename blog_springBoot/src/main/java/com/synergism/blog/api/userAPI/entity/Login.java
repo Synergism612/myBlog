@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import static com.synergism.blog.core.user.untils.LoginUtil.checkPassword;
 import static com.synergism.blog.core.user.untils.LoginUtil.checkUsername;
-import static com.synergism.blog.utils.StringUtil.checkStringIsEmpty;
+import static com.synergism.blog.utils.StringUtil.ifEmpty;
 import static com.synergism.blog.utils.StringUtil.checkStringIsUnsafe;
 import static com.synergism.blog.utils.TypeUtil.asArray;
 
@@ -33,7 +33,7 @@ public class Login {
      */
     Login(String username, String password) {
         //判空
-        checkStringIsEmpty(asArray(username,password),asArray("账号","密码"));
+        ifEmpty(asArray(username,password),asArray("账号","密码"));
         //合法性检查
         checkStringIsUnsafe(username,password);
         //参数检查赋值

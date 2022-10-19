@@ -34,7 +34,7 @@ public class CryptographyServiceImpl implements CryptographyService {
      */
     public boolean filterVerify(String ANOTHER_WORLD_KEY){
         try {
-            StringUtil.checkStringIsEmpty(ANOTHER_WORLD_KEY,"异世界钥匙");
+            StringUtil.ifEmpty(ANOTHER_WORLD_KEY,"异世界钥匙");
             this.RSADecrypt(ANOTHER_WORLD_KEY);
             return true;
         }catch (KeyFailureException e){

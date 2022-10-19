@@ -86,7 +86,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         String paramsBody = request.getParameter("params");
         //解密
         String paramsJSON = cryptographyService.AESDecrypt(paramsBody, key);
-        if (StringUtil.checkStringIfEmpty(paramsJSON))
+        if (StringUtil.isEmpty(paramsJSON))
             this.params = null;
         else
             //转为Map

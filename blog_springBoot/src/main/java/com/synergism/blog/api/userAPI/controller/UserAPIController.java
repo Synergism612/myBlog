@@ -3,7 +3,7 @@ package com.synergism.blog.api.userAPI.controller;
 import com.synergism.blog.api.userAPI.entity.Login;
 import com.synergism.blog.api.userAPI.entity.Logout;
 import com.synergism.blog.api.userAPI.entity.Register;
-import com.synergism.blog.api.userAPI.entity.UserInformation;
+import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.email.note.EmailCodeVerifyNote;
 import com.synergism.blog.api.userAPI.service.UserAPIService;
 import com.synergism.blog.result.Result;

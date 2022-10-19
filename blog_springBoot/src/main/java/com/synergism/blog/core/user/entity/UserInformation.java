@@ -1,6 +1,5 @@
-package com.synergism.blog.api.userAPI.entity;
+package com.synergism.blog.core.user.entity;
 
-import com.synergism.blog.core.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +11,8 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserInformation{
+    //ID
+    private long id;
     //头像
     private String icon = "";
     //昵称
@@ -40,7 +41,8 @@ public class UserInformation{
      * @param sex 性别代码
      * @param intro 个人简介
      */
-    public UserInformation(String icon, String name, String username, Date birthday, Integer sex, String intro) {
+    public UserInformation(long id,String icon, String name, String username, Date birthday, Integer sex, String intro) {
+        this.id = id;
         this.icon = icon;
         this.name = name;
         this.username = username;
@@ -56,6 +58,7 @@ public class UserInformation{
      */
     public static UserInformation getInstance(User user){
         return new UserInformation(
+                user.getId(),
                 user.getIcon(),
                 user.getName(),
                 user.getUsername(),

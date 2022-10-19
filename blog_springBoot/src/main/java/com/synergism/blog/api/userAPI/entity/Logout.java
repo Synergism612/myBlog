@@ -3,7 +3,7 @@ package com.synergism.blog.api.userAPI.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.utils.StringUtil.checkStringIsEmpty;
+import static com.synergism.blog.utils.StringUtil.ifEmpty;
 import static com.synergism.blog.utils.StringUtil.checkStringIsUnsafe;
 import static com.synergism.blog.utils.TypeUtil.asArray;
 
@@ -21,7 +21,7 @@ public class Logout {
 
     Logout(String loginID,String name, String username) {
         //判空
-        checkStringIsEmpty(asArray(loginID,name,username),asArray("登录信息密钥","账号"));
+        ifEmpty(asArray(loginID,name,username),asArray("登录信息密钥","账号"));
         //合法性检查
         checkStringIsUnsafe(loginID,name,username);
         this.loginID = loginID;

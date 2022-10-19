@@ -37,10 +37,10 @@ public class Session implements Serializable {
      */
     public Session(String sessionID, String userKey, String loginID, String[] power) {
         //判空
-        if (StringUtil.checkStringsIfEmpty(sessionID)) throw new PermissionFailureException("存在空值");
+        if (StringUtil.isEmpty(sessionID)) throw new PermissionFailureException("存在空值");
         this.sessionID = sessionID;
         //若没有登录，给空字符串
-        if (StringUtil.checkStringsIfEmpty(userKey, loginID)) {
+        if (StringUtil.isEmpty(userKey, loginID)) {
             this.userKey = "";
             this.loginID = "";
         } else {

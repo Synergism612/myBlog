@@ -1,10 +1,10 @@
 package com.synergism.blog.api.indexAPI.serviceImpl;
 
 import com.synergism.blog.api.articleAPI.entity.Pagination;
-import com.synergism.blog.api.articleAPI.enumeration.OrderBy;
+import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.api.articleAPI.service.ArticleAPIService;
 import com.synergism.blog.api.indexAPI.service.IndexService;
-import com.synergism.blog.api.userAPI.entity.UserInformation;
+import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public Result<Pagination> getArticles(int currentPage, int pageSize, OrderBy orderBy) {
-        return articleAPIService.getPagination(currentPage, pageSize, orderBy);
+    public Result<Pagination> getArticles(int currentPage, int pageSize, ArticleSort articleSort) {
+        return articleAPIService.getPagination(currentPage, pageSize, articleSort);
     }
 
     @Override

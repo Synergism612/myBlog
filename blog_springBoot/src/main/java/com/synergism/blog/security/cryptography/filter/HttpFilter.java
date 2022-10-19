@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.synergism.blog.security.utils.URLUtil.checkURLIfToPublic;
-import static com.synergism.blog.utils.StringUtil.checkStringIfEmpty;
+import static com.synergism.blog.utils.StringUtil.isEmpty;
 
 /**
  * http过滤器
@@ -82,15 +82,15 @@ public class HttpFilter implements Filter {
 
     public int situationAnalysis(String ANOTHER_WORLD_KEY, String uri) {
         //没有密钥，不前往公共接口
-        if (checkStringIfEmpty(ANOTHER_WORLD_KEY) && !checkURLIfToPublic(uri)) {
+        if (isEmpty(ANOTHER_WORLD_KEY) && !checkURLIfToPublic(uri)) {
             return 0;
         }
         //没有密钥，前往公共接口
-        if (checkStringIfEmpty(ANOTHER_WORLD_KEY) && checkURLIfToPublic(uri)) {
+        if (isEmpty(ANOTHER_WORLD_KEY) && checkURLIfToPublic(uri)) {
             return 1;
         }
         //有密钥，不前往公共接口
-        if (!checkStringIfEmpty(ANOTHER_WORLD_KEY) && !checkURLIfToPublic(uri)) {
+        if (!isEmpty(ANOTHER_WORLD_KEY) && !checkURLIfToPublic(uri)) {
             //密钥合法
             if (cryptographyService.filterVerify(ANOTHER_WORLD_KEY))
                 return 2;
@@ -99,7 +99,7 @@ public class HttpFilter implements Filter {
                 return 3;
         }
         //有密钥，前往公共接口
-        if (!checkStringIfEmpty(ANOTHER_WORLD_KEY) && checkURLIfToPublic(uri)) {
+        if (!isEmpty(ANOTHER_WORLD_KEY) && checkURLIfToPublic(uri)) {
             //密钥合法
             if (cryptographyService.filterVerify(ANOTHER_WORLD_KEY))
                 return 4;

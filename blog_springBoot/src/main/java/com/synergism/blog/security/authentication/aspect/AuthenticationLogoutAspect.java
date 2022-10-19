@@ -50,7 +50,7 @@ public class AuthenticationLogoutAspect {
         }
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
-        TypeUtil.isNull(servletRequestAttributes);
+        TypeUtil.ifNull(servletRequestAttributes);
         assert servletRequestAttributes != null;
         HttpServletRequest request = servletRequestAttributes.getRequest();
         HttpServletResponse response = servletRequestAttributes.getResponse();

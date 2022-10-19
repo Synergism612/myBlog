@@ -2,7 +2,7 @@ package com.synergism.blog.api.userAPI.service;
 
 import com.synergism.blog.api.userAPI.entity.Login;
 import com.synergism.blog.api.userAPI.entity.Register;
-import com.synergism.blog.api.userAPI.entity.UserInformation;
+import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.result.Result;
 
 public interface UserAPIService {

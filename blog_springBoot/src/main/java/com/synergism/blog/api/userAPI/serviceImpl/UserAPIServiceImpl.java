@@ -3,7 +3,7 @@ package com.synergism.blog.api.userAPI.serviceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.api.userAPI.entity.Login;
 import com.synergism.blog.api.userAPI.entity.Register;
-import com.synergism.blog.api.userAPI.entity.UserInformation;
+import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.api.userAPI.service.UserAPIService;
 import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.service.UserService;
@@ -28,7 +28,7 @@ public class UserAPIServiceImpl implements UserAPIService {
         //获得对应用户
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, login.getUsername()));
         //对象判空
-        TypeUtil.isNull(user);
+        TypeUtil.ifNull(user);
         //密码比对
         if (user.getPassword().equals(login.getPassword())) {
             //返回成功

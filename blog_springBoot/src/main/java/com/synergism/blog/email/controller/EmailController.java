@@ -36,7 +36,7 @@ public class EmailController {
      */
     @GetMapping("/register/code")
     public Result<String> getRegisterMailCode(@RequestParam String mail, @RequestParam String key) {
-        StringUtil.checkStringIsEmpty(mail, "邮箱");
+        StringUtil.ifEmpty(mail, "邮箱");
         return service.getRegisterMailCode(mail, key);
     }
 }

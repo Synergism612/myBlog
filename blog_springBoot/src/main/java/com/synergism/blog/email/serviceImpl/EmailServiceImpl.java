@@ -62,7 +62,7 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
         CodeMail codeMail = this.checkKeyValidity(key);
 
         //若取出的数据为空或者已经过了一分钟，重新创建对象
-        if (TypeUtil.ifNull(codeMail) || this.checkCodeTime(codeMail))
+        if (TypeUtil.isNull(codeMail) || this.checkCodeTime(codeMail))
             codeMail = new CodeMail(mail);
 
         //若取出的数据与传入的账号不匹配，抛出异常
@@ -75,15 +75,15 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
 
     @Override
     public boolean checkCodeTime(CodeMail codeMail) {
-        return TimeUtil.ifTimeOut(TimeUtil.toDate(codeMail.getTime()), new Date(), 60);
+        return TimeUtil.isTimeOut(TimeUtil.toDate(codeMail.getTime()), new Date(), 60);
     }
 
     @Override
     public CodeMail checkKeyValidity(String key) {
-        if (StringUtil.checkStringIfEmpty(key))
+        if (StringUtil.isEmpty(key))
             return null;
         CodeMail result = this.getCodeMail(key);
-        if (TypeUtil.ifNull(result))
+        if (TypeUtil.isNull(result))
             return null;
         return result;
     }
@@ -97,7 +97,7 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
     @Override
     public boolean verifyCode(String key, String mail, String code) {
         CodeMail codeMail = this.getCodeMail(key);
-        if (TypeUtil.ifNull(codeMail))
+        if (TypeUtil.isNull(codeMail))
             return false;
         return codeMail.getCode().equals(code) && codeMail.getMail().equals(mail);
     }
