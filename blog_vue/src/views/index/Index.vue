@@ -33,7 +33,7 @@
 
                   <el-row class="articles">
                     <el-row
-                      v-for="article in pagination.articleInformationList"
+                      v-for="article in articleInformationList"
                       :key="article.id"
                       class="article frame"
                     >
@@ -110,7 +110,7 @@
                               fill="#000000"
                               :strokeWidth="2"
                             />
-                            <span>{{ article.userName }}</span>
+                            <span>{{ article.nickname }}</span>
                           </el-col>
                           <el-col :span="3" class="icon">
                             <good_two
@@ -148,7 +148,7 @@
                     <el-pagination
                       :page-sizes="[10, 50, 100, 200]"
                       layout="total,sizes, prev, pager, next, jumper"
-                      :total="pagination.total"
+                      :total="total"
                       :current-page="currentPage"
                       @update:page-size="handleSizeChange"
                       @update:current-page="handleCurrentChange"
@@ -172,7 +172,7 @@
                           size="21"
                           fill="#000000"
                           :strokeWidth="2"
-                        />{{ userInfo.name }}
+                        />{{ userInfo.nickname }}
                       </div>
                     </el-col>
                     <el-col :span="24">
@@ -192,59 +192,8 @@
                     <el-calendar id="calender-body" v-model="calender" />
                   </el-row>
 
-                  <el-row class="comments frame">
-                    <el-col :span="24" class="title"> 最热评论 </el-col>
-                    <el-col
-                      :span="24"
-                      v-for="comment in commentList.comments"
-                      :key="comment.id"
-                      class="comment"
-                    >
-                      <el-col :span="4" class="left">
-                        <div
-                          class="icon"
-                          :style="{
-                            backgroundImage:
-                              'url(' + comment.userInformation.icon + ')',
-                          }"
-                        ></div>
-                      </el-col>
-                      <el-col :span="20" class="right">
-                        <el-col :span="24" class="name">
-                          {{ comment.userInformation.name }}
-                        </el-col>
-                        <el-col :span="24" class="body">
-                          {{ comment.body }}
-                        </el-col>
-                        <el-col :span="24" class="info">
-                          <el-col :span="4" class="likeCount">
-                            <good_two
-                              theme="outline"
-                              size="21"
-                              fill="#000000"
-                              :strokeWidth="2"
-                            />
-                            {{ comment.likeCount }}
-                          </el-col>
-                          <el-col :span="4" class="children">
-                            <comments
-                              theme="outline"
-                              size="21"
-                              fill="#000000"
-                              :strokeWidth="2"
-                            />
-                            {{ comment.children.length }}
-                          </el-col>
-                        </el-col>
-                        <el-col
-                          :span="24"
-                          class="parent"
-                          v-if="comment.parent != null"
-                        >
-                          回复:{{ comment.parent.body }}
-                        </el-col>
-                      </el-col>
-                    </el-col>
+                  <el-row class="tagCloud frame">
+                    <Cloud :list="TagInformationList"></Cloud>
                   </el-row>
                 </el-col>
               </el-row>
@@ -257,52 +206,50 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs, watch } from "vue";
-import { store } from "@/store";
-import Menu from "@/components/menu/Menu.vue";
+import Menu from "@/components/Menu/Menu.vue";
 import Screen from "@/components/screen/Screen.vue";
 import { api } from "@/api/api";
-import Pagination from "@/model/articles/Pagination";
 import {
   Avatar as avatar,
   GoodTwo as good_two,
   PreviewOpen as preview_open,
-  Comments as comments,
   UpdateRotation as update_rotation,
   DocumentFolder as document_folder,
   TagOne as tag_one,
   Me as me,
   Loading as loading,
 } from "@icon-park/vue-next";
-import UserInfo from "@/model/user/UserInfo";
 import StringUtil from "@/utils/StringUtil";
-import CommentList from "@/model/comments/CommentList";
+import Index from "./Index";
+import Cloud from "@/components/Cloud/Cloud.vue";
 
 export default defineComponent({
   setup() {
-    const articleSort = ["creation_time", "modify_time", "views", "like_count"];
+    const viewData = reactive(new Index());
 
-    const viewData = reactive({
-      ifLogin: true,
-      articleOrderBy: articleSort[0],
+    console.log("ooookkk"+JSON.stringify(viewData.TagInformationList));
+    
 
-      calender: new Date(),
-      pagination: new Pagination(),
-      userInfo: new UserInfo(),
-      commentList: new CommentList(),
-
-      currentPage: 1,
-      pageSize: 10,
-    });
-
-    const handleSizeChange = (pageSize: number) => {
+    /**
+     *监听页容量
+     * @param pageSize 页容量
+     */
+    const handleSizeChange = (pageSize: number): void => {
       viewData.pageSize = pageSize;
     };
 
-    const handleCurrentChange = (currentPage: number) => {
+    /**
+     *监听页数变化
+     * @param currentPage 页数
+     */
+    const handleCurrentChange = (currentPage: number): void => {
       viewData.currentPage = currentPage;
     };
 
-    const pagination = () => {
+    /**
+     * 分页数据获取
+     */
+    const pagination = (): void => {
       api
         .getIndexArticle(
           viewData.currentPage,
@@ -310,13 +257,12 @@ export default defineComponent({
           viewData.articleOrderBy
         )
         .then(({ data }) => {
-          viewData.pagination = data;
-          console.log(viewData.pagination);
+          viewData.articleInformationList = data.articleInformationList;
+          viewData.total = data.total;
         });
     };
 
-    const userInformation = () => {
-      viewData.userInfo = store.getters.getUser;
+    const userInfo = (): void => {
       if (StringUtil.checkStringIfEmpty(viewData.userInfo.username)) {
         api.getIndexUserInfo().then(({ data }) => {
           viewData.userInfo = data;
@@ -326,25 +272,35 @@ export default defineComponent({
       }
     };
 
-    const comments = () => {
-      api.getIndexComments().then(({ data }) => {
-        viewData.commentList = CommentList.getCommentList(data);
-        console.log(viewData.commentList);
-      });
-    };
-
-    const updateArticle = (x: number) => {
-      viewData.articleOrderBy = articleSort[x];
+    const updateArticle = (x: number): void => {
+      viewData.articleOrderBy = viewData.articleSort[x];
       viewData.currentPage = 1;
       pagination();
     };
 
+    const tags = (): void => {
+      api.getIndexTag(viewData.userInfo.username).then(({ data }): void => {
+        viewData.TagInformationList = data;
+        console.log(viewData.TagInformationList);
+      });
+    };
+
+    const classify = (): void => {
+      api
+        .getIndexClassify(viewData.userInfo.username)
+        .then(({ data }): void => {
+          viewData.classifyInformationList = data;
+          console.log(viewData.classifyInformationList);
+        });
+    };
+
     pagination();
-    // userInformation();
-    // comments();
+    userInfo();
+    tags();
+    classify();
 
     watch(
-      () => [viewData.currentPage, viewData.pageSize],
+      (): Array<number> => [viewData.currentPage, viewData.pageSize],
       (newVal, oldVal) => {
         console.log({ newVal, oldVal });
         pagination();
@@ -364,12 +320,12 @@ export default defineComponent({
     avatar,
     good_two,
     preview_open,
-    comments,
     update_rotation,
     document_folder,
     tag_one,
     me,
     loading,
+    Cloud,
   },
 });
 </script>

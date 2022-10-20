@@ -19,11 +19,11 @@
       }
     }
 
-    .header{
-      span{
+    .header {
+      span {
         cursor: pointer;
       }
-      span:hover{
+      span:hover {
         border-bottom: solid 1px black;
       }
     }
@@ -63,7 +63,7 @@
               text-align: justify;
               text-indent: 2em;
             }
-            span:hover{
+            span:hover {
               border: none !important;
             }
           }
@@ -174,7 +174,7 @@
         .el-calendar-day:hover {
           color: #ffffff;
         }
-        .is-selected{
+        .is-selected {
           color: #ffffff !important;
         }
         .is-today {
@@ -183,51 +183,10 @@
       }
     }
 
-    //评论区
-    .comments {
+    //标签云
+    .tagCloud {
+      min-height: 20vh;
       margin: 0.5em 0;
-      padding: 0.5em 0;
-      .title {
-        text-align: center;
-      }
-
-      //评论
-      .comment {
-        margin: 0.5em;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-content: space-around;
-
-        .left {
-          display: flex;
-          .icon {
-            height: 3em;
-            width: 3em;
-            margin: 0 auto;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-radius: 100%;
-          }
-        }
-
-        .right {
-          .info {
-            display: flex;
-            .likeCount {
-              display: flex;
-            }
-            .children {
-              display: flex;
-            }
-          }
-
-          .parent {
-            color: rgba(0, 0, 0, 0.5);
-          }
-        }
-      }
     }
   }
 }
