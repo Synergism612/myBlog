@@ -26,7 +26,7 @@ import { api } from "./api/api";
 import Particles from "particles.vue3";
 
 const app = createApp(App);
-api.getPublicKey().then(() => {
+api.getPublicKey().then((): void => {
   app
     .use(router)
     .use(store)
