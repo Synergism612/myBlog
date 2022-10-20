@@ -1,5 +1,4 @@
 import axios from "@/axios/axios";
-import Result from "@/model/user/Result";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import RSAUtil from "@/utils/RSAUtil";
@@ -189,13 +188,28 @@ export class api {
   }
 
   /**
-   * 首页评论信息接口
-   * @returns Array[评论信息]
+   * 首页标签接口
+   * @param username 用户名
+   * @returns 标签列表
    */
-  public static getIndexComments(): Promise<AxiosResponse> {
+  public static getIndexTag(username: string): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/index/comments",
+      url: "/api/blog/index/tag",
       method: "get",
+      params: { username: username || "" },
+    });
+  }
+
+  /**
+   * 首页分类接口
+   * @param username 用户名
+   * @returns 分类列表
+   */
+  public static getIndexClassify(username: string): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/index/classify",
+      method: "get",
+      params: { username: username || "" },
     });
   }
 }
