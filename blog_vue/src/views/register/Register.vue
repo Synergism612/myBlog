@@ -60,7 +60,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Menu from "@/components/menu/Menu.vue";
+import Menu from "@/components/Menu/Menu.vue";
 import StringUtil from "@/utils/StringUtil";
 import Message from "@/utils/MessageUtil";
 import { api } from "@/api/api";
@@ -136,7 +136,7 @@ export default defineComponent({
      */
     const getSecurityCode = (): void => {
       //定时器，倒计时效果
-      const timer = window.setInterval(() => {
+      const timer = window.setInterval((): void => {
         if (viewData.codeButton.duration < 1) {
           viewData.codeButton.disabled = false;
           viewData.codeButton.text = "获取验证码";
@@ -152,7 +152,7 @@ export default defineComponent({
       //对表单进行校验
       registerFormRef.value
         .validate()
-        .then(() => {
+        .then((): void => {
           // 注册请求
           api
             .getSecurityCode(
@@ -164,7 +164,7 @@ export default defineComponent({
               viewData.RegisterFrom.key = data;
             });
         })
-        .catch(() => {
+        .catch((): void => {
           Message.errorMessage("校验未通过");
         });
     };
@@ -172,7 +172,7 @@ export default defineComponent({
     const register = (): void => {
       registerFormRef.value
         .validate()
-        .then(() => {
+        .then((): void => {
           api.register(
             viewData.RegisterFrom.username,
             viewData.RegisterFrom.password_first,
@@ -180,7 +180,7 @@ export default defineComponent({
             viewData.RegisterFrom.key
           );
         })
-        .catch(() => {
+        .catch((): void => {
           Message.errorMessage("校验未通过");
         });
     };
