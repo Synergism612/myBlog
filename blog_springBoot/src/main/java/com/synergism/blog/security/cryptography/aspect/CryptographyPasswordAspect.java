@@ -1,6 +1,6 @@
 package com.synergism.blog.security.cryptography.aspect;
 
-import com.synergism.blog.exception.custom.KeyFailureException;
+import com.synergism.blog.exception.custom.PermissionFailureException;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -32,10 +32,10 @@ public class CryptographyPasswordAspect {
      *
      * @param point 数据
      * @return 参数
+     * @throws Throwable 函数运行抛出的异常
      */
     @Around(value = "CryptographyPassword()")
-    public Object around(ProceedingJoinPoint point){
-        try {
+    public Object around(ProceedingJoinPoint point) throws Throwable {
             Object[] args = point.getArgs();
             for (Object arg : args) {
                 Class<?> argsClass = arg.getClass();
@@ -51,8 +51,5 @@ public class CryptographyPasswordAspect {
             }
 
             return point.proceed(args);
-        } catch (Throwable e) {
-            throw  new KeyFailureException("加密切面错误");
-        }
     }
 }
