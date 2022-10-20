@@ -61,8 +61,8 @@ public class SessionManagementLoginAspect {
         }
 
         Object object = point.proceed();
-        String loginID = "";
-        UserInformation userInformation = null;
+        String loginID;
+        UserInformation userInformation;
         Result<?> result = null;
         if (object instanceof Result<?>) {
             result = (Result<?>) object;
@@ -73,7 +73,9 @@ public class SessionManagementLoginAspect {
             userInformation = (UserInformation) result.getData();
             loginID = cacheRedisService.put(userInformation, TimeUtil.Weeks(1));
             sessionService.updateSession(request, loginID, response);
+            return Result.success(new Object[]{loginID,userInformation});
+        }else{
+            return result;
         }
-        return Result.success(new Object[]{loginID,userInformation});
     }
 }
