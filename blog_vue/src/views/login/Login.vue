@@ -47,7 +47,7 @@ import { store } from "@/store";
 import StringUtil from "@/utils/StringUtil";
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import Message from "@/utils/MessageUtil";
-import Menu from "@/components/menu/Menu.vue";
+import Menu from "@/components/Menu/Menu.vue";
 import { useRouter } from "vue-router";
 import UserInfo from "@/model/user/UserInfo";
 
@@ -111,7 +111,7 @@ export default defineComponent({
       if (StringUtil.checkStringIfEmpty(store.state.loginID)) {
         loginFormRef.value
           .validate()
-          .then(() => {
+          .then((): void => {
             api
               .login(viewData.LoginFrom.username, viewData.LoginFrom.password)
               .then(({ data }) => {
@@ -120,10 +120,10 @@ export default defineComponent({
                 store.commit("SET_LOGIN_ID", loginID);
                 store.commit("SET_USER_INFO", userInfo);
                 router.push({ name: "Home" });
-                Message.successMessage("欢迎回来" + userInfo.name);
+                Message.successMessage("欢迎回来" + userInfo.nickname);
               });
           })
-          .catch(() => {
+          .catch((): void => {
             Message.errorMessage("校验未通过");
           });
       } else {
