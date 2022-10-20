@@ -7,8 +7,9 @@ import com.synergism.blog.result.Result;
 public interface ArticleAPIService {
     /**
      * 伙取分页
+     *
      * @param currentPage 当前页
-     * @param pageSize 页容量
+     * @param pageSize    页容量
      * @param articleSort 排序
      * @return 分页
      */

@@ -1,4 +1,5 @@
 package com.synergism.blog.api.articleAPI.serviceImpl;
+
 import com.synergism.blog.api.articleAPI.entity.Pagination;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
@@ -27,6 +28,6 @@ public class ArticleAPIServiceImpl implements ArticleAPIService {
         List<ArticleInformation> articleInformationList = service.getArticleInformationList(articleSort);
         int total = articleInformationList.size();
         endIndex = Math.min(endIndex, total);
-        return Result.success(new Pagination(articleInformationList.subList(startIndex,endIndex),total));
+        return Result.success(new Pagination(articleInformationList.subList(startIndex, endIndex), total));
     }
 }
