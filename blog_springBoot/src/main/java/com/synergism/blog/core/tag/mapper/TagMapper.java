@@ -2,7 +2,10 @@ package com.synergism.blog.core.tag.mapper;
 
 import com.synergism.blog.core.tag.entity.Tag;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.synergism.blog.core.tag.entity.TagInformation;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface TagMapper extends BaseMapper<Tag> {
 
+    /**
+     * 获取全部标签信息列表
+     * @return 标签信息列表
+     */
+    List<TagInformation> getAllTagInformationList();
 }

@@ -2,4 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.tag.mapper.TagMapper">
 
+    <select id="getAllTagInformationList" resultType="com.synergism.blog.core.tag.entity.TagInformation">
+        select t.id,
+               t.name,
+               t.annotation,
+               t.creation_time,
+               t.modify_time,
+               count(atg.article_id) as article_count,
+               u.username,
+               u.nickname
+        from article_tag atg
+                 join(tag t ,user_tag ut ,`user` u )
+                     on
+                             atg.tag_id = t.id and
+                             ut.tag_id = t.id and
+                             u.id = ut.user_id
+        group by t.id,
+                 t.name,
+                 t.annotation,
+                 t.creation_time,
+                 t.modify_time,
+                 u.username,
+                 u.nickname
+
+    </select>
 </mapper>
