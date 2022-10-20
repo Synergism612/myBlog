@@ -14,7 +14,8 @@
         <result column="modify_time" property="modifyTime"/>
 
         <result column="if_private" property="ifPrivate"/>
-        <result column="user_name" property="userName"/>
+        <result column="nickname" property="nickname"/>
+        <result column="username" property="username"/>
 
         <collection property="classifyList" ofType="com.synergism.blog.core.classify.entity.Classify">
             <id column="classify_id" property="id"/>
@@ -32,7 +33,8 @@
     <select id="getArticleInformationList" resultMap="ArticleInformationMap">
         select a.*,
                ua.if_private,
-               u.name        as user_name,
+               u.nickname,
+               u.username,
                cy.id         as classify_id,
                cy.name       as classify_name,
                cy.annotation as classify_annotation,
