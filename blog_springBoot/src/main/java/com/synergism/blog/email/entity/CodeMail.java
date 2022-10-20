@@ -23,6 +23,14 @@ public class CodeMail {
     private String time;
 
     /**
+     * 无参构造
+     * 保证json序列化
+     */
+    CodeMail(){
+    }
+
+
+    /**
      * 从map中读取
      * @param map map
      * @return CodeMail
@@ -30,7 +38,6 @@ public class CodeMail {
     public static CodeMail getInstance(Map<String,String> map){
         return new CodeMail(map.get("mail"),map.get("code"),map.get("createTime"));
     }
-
 
     public CodeMail(String mail) {
         this.mail = mail;
