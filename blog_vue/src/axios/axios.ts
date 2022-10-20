@@ -1,6 +1,6 @@
 import { apiEnum } from "@/enum/apiEnum";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import Result from "@/model/user/Result";
+import Result from "@/model/result/Result";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import StringUtil from "@/utils/StringUtil";
