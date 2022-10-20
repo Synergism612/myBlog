@@ -28,8 +28,8 @@ public class User {
     private String icon;
 
     @ApiModelProperty("昵称")
-    @TableField("name")
-    private String name;
+    @TableField("nickname")
+    private String nickname;
 
     @ApiModelProperty("账号")
     @TableField("username")
@@ -66,7 +66,7 @@ public class User {
      *
      * @param id           id
      * @param icon         头像
-     * @param name         昵称
+     * @param nickname         昵称
      * @param username     账号
      * @param password     密码
      * @param birthday     生日
@@ -75,10 +75,10 @@ public class User {
      * @param creationTime 创建时间
      * @param modifyTime   修改时间
      */
-    public User(Long id, String icon, String name, String username, String password, Date birthday, Integer sex, String intro, Date creationTime, Date modifyTime) {
+    public User(Long id, String icon, String nickname, String username, String password, Date birthday, Integer sex, String intro, Date creationTime, Date modifyTime) {
         this.id = id;
         this.icon = icon;
-        this.name = name;
+        this.nickname = nickname;
         this.username = username;
         this.password = password;
         this.birthday = birthday;

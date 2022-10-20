@@ -16,7 +16,7 @@ public class UserInformation{
     //头像
     private String icon = "";
     //昵称
-    private String name = "";
+    private String nickname = "";
     //账号
     private String username = "";
     //生日
@@ -35,16 +35,16 @@ public class UserInformation{
     /**
      * 构造函数
      * @param icon 头像
-     * @param name 昵称
+     * @param nickname 昵称
      * @param username 账号
      * @param birthday 生日
      * @param sex 性别代码
      * @param intro 个人简介
      */
-    public UserInformation(long id,String icon, String name, String username, Date birthday, Integer sex, String intro) {
+    public UserInformation(long id,String icon, String nickname, String username, Date birthday, Integer sex, String intro) {
         this.id = id;
         this.icon = icon;
-        this.name = name;
+        this.nickname = nickname;
         this.username = username;
         this.birthday = birthday;
         this.sex = sex;
@@ -60,7 +60,7 @@ public class UserInformation{
         return new UserInformation(
                 user.getId(),
                 user.getIcon(),
-                user.getName(),
+                user.getNickname(),
                 user.getUsername(),
                 user.getBirthday(),
                 user.getSex(),
