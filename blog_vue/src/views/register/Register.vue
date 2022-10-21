@@ -160,7 +160,6 @@ export default defineComponent({
               viewData.RegisterFrom.key
             )
             .then(({ data }) => {
-              console.log(data);
               viewData.RegisterFrom.key = data;
             });
         })

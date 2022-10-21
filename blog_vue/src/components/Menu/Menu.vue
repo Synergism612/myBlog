@@ -42,7 +42,6 @@ export default defineComponent({
     });
 
     const logout = (): void => {
-      console.log("执行");
       api
         .logout(
           store.state.loginID,
@@ -50,7 +49,7 @@ export default defineComponent({
           store.getters.getUser.username
         )
         .then(({ data }) => {
-          console.log("logout--\n" + data);
+          data;
           store.commit("DELECT_USER_INFO");
           store.commit("DELECT_LOGIN_ID");
           Message.successMessage("您已登出");
@@ -69,8 +68,6 @@ export default defineComponent({
         } else {
           viewData.ifLogin = false;
         }
-        console.log("新数据" + value);
-        console.log("旧数据" + oldValue);
       },
       { immediate: true }
     );
