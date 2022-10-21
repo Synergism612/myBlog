@@ -8,17 +8,22 @@
       <el-container>
         <el-header>
           <el-row justify="center">
-            <el-col :sm="24" :md="16" class="inform frame">
+            <el-col :xs="24" :sm="24" :md="24" :lg="20" class="inform frame">
               通知栏 通知内容
             </el-col>
           </el-row>
         </el-header>
 
         <el-main>
+          <!-- 主要内容 -->
           <el-row justify="space-around">
-            <el-col :xs="24" :sm="24" :md="16" :span="16">
+            <!-- 主体框架 -->
+            <el-col :xs="24" :sm="24" :md="24" :lg="20">
+              <!-- 分左右区 -->
               <el-row gutter="20" justify="space-around">
-                <el-col :xs="24" :sm="16" :md="16" :span="16">
+                <!-- 左侧 -->
+                <el-col :xs="24" :sm="24" :md="16" :span="16">
+                  <!-- 文章排序 -->
                   <div class="header frame">
                     <el-row>
                       <el-col :span="24">
@@ -30,7 +35,7 @@
                       </el-col>
                     </el-row>
                   </div>
-
+                  <!-- 文章列表 -->
                   <el-row class="articles">
                     <el-row
                       v-for="article in articleInformationList"
@@ -102,8 +107,8 @@
                             </div>
                           </el-col>
                         </el-row>
-                        <el-row class="footer" :gutter="20">
-                          <el-col :span="8" class="icon">
+                        <el-row class="footer" justify="space-between">
+                          <el-col :xs="8" :span="6">
                             <avatar
                               theme="outline"
                               size="21"
@@ -112,7 +117,7 @@
                             />
                             <span>{{ article.nickname }}</span>
                           </el-col>
-                          <el-col :span="3" class="icon">
+                          <el-col :xs="4" :span="4">
                             <good_two
                               theme="outline"
                               size="21"
@@ -121,7 +126,7 @@
                             />
                             <span> {{ article.likeCount }} </span>
                           </el-col>
-                          <el-col :span="3" class="icon">
+                          <el-col :xs="4" :span="4">
                             <preview_open
                               theme="outline"
                               size="21"
@@ -130,7 +135,7 @@
                             />
                             <span> {{ article.views }} </span>
                           </el-col>
-                          <el-col :span="8" class="icon">
+                          <el-col :xs="0" :span="8">
                             <update_rotation
                               theme="outline"
                               size="21"
@@ -143,7 +148,7 @@
                       </el-col>
                     </el-row>
                   </el-row>
-
+                  <!-- 分页插件 -->
                   <el-row class="pagination">
                     <el-pagination
                       :page-sizes="[10, 50, 100, 200]"
@@ -155,11 +160,12 @@
                     />
                   </el-row>
                 </el-col>
+                <!-- 右侧 -->
                 <el-col :xs="0" :sm="8" :md="8" :span="8">
+                  <!-- 用户信息 -->
                   <el-row class="user frame">
                     <el-col :span="24">
                       <div
-                        class="icon"
                         :style="{
                           backgroundImage: 'url(' + userInfo.icon + ')',
                         }"
@@ -188,11 +194,14 @@
                     </el-col>
                   </el-row>
 
+                  <!-- 日历 -->
                   <el-row class="calender frame">
                     <el-calendar id="calender-body" v-model="calender" />
                   </el-row>
 
+                  <!-- 标签云 -->
                   <el-row class="tagCloud frame">
+                    <span>标签云</span>
                     <Cloud
                       v-if="TagInformationList[0].id != -1"
                       :data-list="TagInformationList"
@@ -298,7 +307,8 @@ export default defineComponent({
     watch(
       (): Array<number> => [viewData.currentPage, viewData.pageSize],
       (newVal, oldVal) => {
-        newVal;oldVal;
+        newVal;
+        oldVal;
         pagination();
       }
     );
