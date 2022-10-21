@@ -143,8 +143,6 @@ export default defineComponent({
       viewData.elementList.forEach((element): void => {
         move(element);
       });
-      console.log("speed:--" + viewData.speed);
-
       time = setInterval(animate, viewData.speed);
     };
 
