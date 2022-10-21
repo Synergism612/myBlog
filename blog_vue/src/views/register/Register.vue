@@ -103,7 +103,7 @@ export default defineComponent({
       if (StringUtil.checkStringIfEmpty(viewData.RegisterFrom.password_first)) {
         return callback(new Error("请输入密码"));
       }
-      if (value.indexOf(viewData.RegisterFrom.password_first) == -1) {
+      if (value.indexOf(viewData.RegisterFrom.password_first) === -1) {
         return callback(new Error("两次输入不一致"));
       }
 

@@ -13,7 +13,7 @@ export default class AESUtil {
    */
   public static encryptedData(word: string, publicKey: string): string {
     //判空
-    if (publicKey == null) {
+    if (publicKey === null) {
       return "";
     }
 

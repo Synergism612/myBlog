@@ -10,7 +10,7 @@ export default class StoreUtil {
    * @returns 对应键值
    */
   public static fetch(key: string): string {
-    if (localStorage.getItem(key) == null) {
+    if (localStorage.getItem(key) === null) {
       return "";
     }
     return StringUtil.checkStringIfEmpty(localStorage.getItem(key))
@@ -24,7 +24,7 @@ export default class StoreUtil {
    * @returns 不反回或失败
    */
   public static save(key: string | null, value: string): void | string {
-    if (key == null) {
+    if (key === null) {
       return "";
     }
     localStorage.setItem(key, JSON.stringify(value));
