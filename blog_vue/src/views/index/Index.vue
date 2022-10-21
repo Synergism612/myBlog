@@ -193,7 +193,10 @@
                   </el-row>
 
                   <el-row class="tagCloud frame">
-                    <Cloud :list="TagInformationList"></Cloud>
+                    <Cloud
+                      v-if="TagInformationList[0].id != -1"
+                      :data-list="TagInformationList"
+                    ></Cloud>
                   </el-row>
                 </el-col>
               </el-row>
@@ -226,10 +229,6 @@ import Cloud from "@/components/Cloud/Cloud.vue";
 export default defineComponent({
   setup() {
     const viewData = reactive(new Index());
-
-    console.log("ooookkk"+JSON.stringify(viewData.TagInformationList));
-    
-
     /**
      *监听页容量
      * @param pageSize 页容量
@@ -266,7 +265,6 @@ export default defineComponent({
       if (StringUtil.checkStringIfEmpty(viewData.userInfo.username)) {
         api.getIndexUserInfo().then(({ data }) => {
           viewData.userInfo = data;
-          console.log(viewData.userInfo);
           viewData.ifLogin = false;
         });
       }
@@ -281,7 +279,6 @@ export default defineComponent({
     const tags = (): void => {
       api.getIndexTag(viewData.userInfo.username).then(({ data }): void => {
         viewData.TagInformationList = data;
-        console.log(viewData.TagInformationList);
       });
     };
 
@@ -290,7 +287,6 @@ export default defineComponent({
         .getIndexClassify(viewData.userInfo.username)
         .then(({ data }): void => {
           viewData.classifyInformationList = data;
-          console.log(viewData.classifyInformationList);
         });
     };
 
@@ -302,7 +298,7 @@ export default defineComponent({
     watch(
       (): Array<number> => [viewData.currentPage, viewData.pageSize],
       (newVal, oldVal) => {
-        console.log({ newVal, oldVal });
+        newVal;oldVal;
         pagination();
       }
     );
