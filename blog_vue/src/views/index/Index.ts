@@ -13,14 +13,14 @@ export default class Index {
   /**用户信息*/
   userInfo!: UserInfo;
   /**标签云列表*/
-  TagInformationList!: Array<TagInformation>;
+  tagInformationList!: Array<TagInformation>;
   /**分类云列表 */
   classifyInformationList!: Array<ClassifyInformation>;
 
   constructor() {
     this.userInfo = store.getters.getUser;
     this.ifLogin = StringUtil.checkStringIfEmpty(this.userInfo.username);
-    this.TagInformationList = [new TagInformation()];
+    this.tagInformationList = [new TagInformation()];
     this.classifyInformationList = [new ClassifyInformation()];
   }
 }

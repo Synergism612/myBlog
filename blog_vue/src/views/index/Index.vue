@@ -68,13 +68,21 @@
                   <el-row class="calender frame">
                     <el-calendar id="calender-body" v-model="calender" />
                   </el-row>
-
                   <!-- 标签云 -->
                   <el-row class="tagCloud frame">
                     <span>标签云</span>
                     <Cloud
-                      v-if="TagInformationList[0].id != -1"
-                      :data-list="TagInformationList"
+                      v-if="tagInformationList[0].id != -1"
+                      :data-list="tagInformationList"
+                    ></Cloud>
+                  </el-row>
+
+                  <!-- 分类云 -->
+                  <el-row class="classifyCloud frame">
+                    <span>分类云</span>
+                    <Cloud
+                      v-if="classifyInformationList[0].id != -1"
+                      :data-list="classifyInformationList"
                     ></Cloud>
                   </el-row>
                 </el-col>
@@ -112,7 +120,8 @@ export default defineComponent({
 
     const tags = (): void => {
       api.getIndexTag(viewData.userInfo.username).then(({ data }): void => {
-        viewData.TagInformationList = data;
+        viewData.tagInformationList = data;
+        console.log(viewData.tagInformationList);
       });
     };
 
@@ -121,6 +130,7 @@ export default defineComponent({
         .getIndexClassify(viewData.userInfo.username)
         .then(({ data }): void => {
           viewData.classifyInformationList = data;
+          console.log(viewData.classifyInformationList);
         });
     };
 
