@@ -1,0 +1,65 @@
+#menu_container {
+  position: fixed;
+  display: flex;
+  height: 5vh;
+  width: 100%;
+  margin: auto;
+  --el-menu-bg-color: #545c64;
+  --el-menu-text-color: #fff;
+  z-index: 99;
+
+  // 菜单
+  .el-menu,
+  .el-menu--horizontal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+
+    #menu_logo {
+      --el-menu-item-font-size: 1.5em;
+      margin: 0 1px;
+      padding: 0 1em;
+    }
+
+    .el-menu-item,
+    .el-sub-menu {
+      --el-menu-item-font-size: 1.2em;
+      --el-menu-hover-bg-color: rgba(28, 203, 230, 0.515);
+      --el-menu-hover-text-color: #fff;
+      margin: 0;
+      padding: 0 1em;
+
+      .el-sub-menu__title,
+      .el-tooltip__trigger,
+      .el-tooltip__trigger {
+        background-color: #545c64;
+      }
+    }
+  }
+}
+
+//遮罩
+#menu_shade {
+  position: relative;
+  display: flex;
+  height: 5vh;
+  width: 100%;
+  margin: auto;
+}
+
+// 下拉菜单
+.el-popper {
+  .el-menu--horizontal {
+    .el-menu--popup {
+      --el-menu-bg-color: #545c64;
+      --el-menu-text-color: #fff;
+      padding:0;
+      .el-menu-item {
+        --el-menu-item-font-size: 1.5em;
+        --el-menu-hover-bg-color: rgba(28, 203, 230, 0.515);
+        --el-menu-hover-text-color: #fff;
+      }
+    }
+  }
+}

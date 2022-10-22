@@ -88,14 +88,14 @@
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue";
-import Menu from "@/components/Menu/Menu.vue";
+import Menu from "@/components/menu/Menu.vue";
 import Screen from "@/components/screen/Screen.vue";
 import { api } from "@/api/api";
 import { Me as me, Loading as loading } from "@icon-park/vue-next";
 import StringUtil from "@/utils/StringUtil";
 import Index from "./Index";
-import Cloud from "@/components/Cloud/Cloud.vue";
-import Article from "@/components/Article/IndexArticle/IndexArticle.vue";
+import Cloud from "@/components/cloud/Cloud.vue";
+import Article from "@/components/article/indexArticle/IndexArticle.vue";
 
 export default defineComponent({
   setup() {
