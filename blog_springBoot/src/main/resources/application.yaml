@@ -10,6 +10,18 @@ spring:
     username: root
     # 密码
     password: 123456
+    # hikari配置
+    hikari:
+      connection-timeout: 60000
+      validation-timeout: 3000
+      idle-timeout: 60000
+      login-timeout: 5
+      # 连接池生命周期
+      max-lifetime: 60000
+      maximum-pool-size: 10
+      minimum-idle: 10
+      read-only: false
+
 
   # 配置邮箱
   mail:
