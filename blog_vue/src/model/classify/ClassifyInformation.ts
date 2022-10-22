@@ -7,4 +7,11 @@ export default class ClassifyInformation extends Classify {
   nickname!: string;
   /**所有者账号*/
   username!: string;
+
+  constructor() {
+    super();
+    this.articleCount = -1;
+    this.nickname = "";
+    this.username = "";
+  }
 }
