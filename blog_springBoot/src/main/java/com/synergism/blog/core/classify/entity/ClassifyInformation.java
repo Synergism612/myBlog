@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ClassifyInformation extends Classify{
     //分类下文章数
-    private int article_count;
+    private int articleCount;
     //分类所属账号
     private String username;
     //分类所属账号昵称
