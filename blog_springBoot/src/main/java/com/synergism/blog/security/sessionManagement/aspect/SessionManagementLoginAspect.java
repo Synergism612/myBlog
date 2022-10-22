@@ -56,7 +56,7 @@ public class SessionManagementLoginAspect {
         TypeUtil.ifNull(response);
         assert response != null;
 
-        if (sessionService.checkSessionExistLoginID(request)){
+        if (sessionService.checkSessionExistLoginID(request)) {
             return Result.error(CodeMsg.USER_IS_LOGIN);
         }
 
@@ -73,9 +73,8 @@ public class SessionManagementLoginAspect {
             userInformation = (UserInformation) result.getData();
             loginID = cacheRedisService.put(userInformation, TimeUtil.Weeks(1));
             sessionService.updateSession(request, loginID, response);
-            return Result.success(new Object[]{loginID,userInformation});
-        }else{
-            return result;
+            return Result.success(new Object[]{loginID, userInformation});
         }
+        return result;
     }
 }
