@@ -65,6 +65,6 @@ public class UserAPIController {
     @PostMapping("/logout")
     @AuthenticationLogoutNote //登出解绑会话注解
     public Result<String> logout(@RequestBody Logout logout) {
-        return Result.success("账号" + logout.getName() + "已登出");
+        return Result.success("账号" + logout.getNickname() + "已登出");
     }
 }

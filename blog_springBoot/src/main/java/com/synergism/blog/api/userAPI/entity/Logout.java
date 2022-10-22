@@ -13,19 +13,19 @@ public class Logout {
     //登录信息ID
     private String loginID = "";
     //昵称
-    private String name = "";
+    private String nickname = "";
     //账号
     private String username = "";
 
     Logout(){}
 
-    Logout(String loginID,String name, String username) {
+    Logout(String loginID, String nickname, String username) {
         //判空
-        ifEmpty(asArray(loginID,name,username),asArray("登录信息密钥","账号"));
+        ifEmpty(asArray(loginID, nickname,username),asArray("登录信息密钥","账号"));
         //合法性检查
-        checkStringIsUnsafe(loginID,name,username);
+        checkStringIsUnsafe(loginID, nickname,username);
         this.loginID = loginID;
-        this.name = name;
+        this.nickname = nickname;
         this.username = username;
     }
 }
