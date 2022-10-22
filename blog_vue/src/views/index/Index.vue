@@ -8,9 +8,14 @@
       <el-container>
         <el-header>
           <el-row justify="center">
-            <el-col :xs="24" :sm="24" :md="24" :lg="20" class="inform frame">
-              通知栏 通知内容
-            </el-col>
+            <transition
+              appear
+              appear-active-class="animate__animated animate__zoomIn"
+            >
+              <el-col :xs="24" :sm="24" :md="24" :lg="20" class="inform frame">
+                通知栏 通知内容
+              </el-col>
+            </transition>
           </el-row>
         </el-header>
 
@@ -90,7 +95,7 @@ import { Me as me, Loading as loading } from "@icon-park/vue-next";
 import StringUtil from "@/utils/StringUtil";
 import Index from "./Index";
 import Cloud from "@/components/Cloud/Cloud.vue";
-import Article from "../../components/Article/Article.vue";
+import Article from "@/components/Article/IndexArticle/IndexArticle.vue";
 
 export default defineComponent({
   setup() {

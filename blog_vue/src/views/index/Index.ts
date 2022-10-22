@@ -8,8 +8,6 @@ export default class Index {
   /**是否已经登录*/
   ifLogin!: boolean;
 
-  ifMy!: false;
-
   /**日历日期*/
   calender!: Date;
   /**用户信息*/
@@ -21,7 +19,7 @@ export default class Index {
 
   constructor() {
     this.userInfo = store.getters.getUser;
-    this.ifLogin = !StringUtil.checkStringIfEmpty(this.userInfo.username);
+    this.ifLogin = StringUtil.checkStringIfEmpty(this.userInfo.username);
     this.TagInformationList = [new TagInformation()];
     this.classifyInformationList = [new ClassifyInformation()];
   }
