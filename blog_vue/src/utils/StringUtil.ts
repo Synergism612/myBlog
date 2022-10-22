@@ -9,7 +9,7 @@ export default class StringUtil {
   public static checkStringIfEmpty(str: string | null | undefined): boolean {
     return (
       str === null ||
-      str.length === 0 ||
+      str?.length === 0 ||
       str === "null" ||
       str === undefined ||
       str === "" ||
