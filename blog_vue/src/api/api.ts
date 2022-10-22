@@ -4,7 +4,6 @@ import AESUtil from "@/utils/AESUtil";
 import RSAUtil from "@/utils/RSAUtil";
 import StringUtil from "@/utils/StringUtil";
 import { AxiosResponse } from "axios";
-
 export class api {
   /**
    * 获取公钥接口
@@ -133,13 +132,13 @@ export class api {
   /**
    * 登出接口
    * @param loginID 登录信息ID
-   * @param name 昵称
+   * @param nickname 昵称
    * @param username 账号
    * @returns Promise
    */
   public static logout(
     loginID: string,
-    name: string,
+    nickname: string,
     username: string
   ): Promise<AxiosResponse> {
     return axios({
@@ -147,7 +146,7 @@ export class api {
       method: "post",
       data: {
         loginID: loginID,
-        name: name,
+        nickname: nickname,
         username: username,
       },
     });
@@ -158,12 +157,14 @@ export class api {
    * @param currentPage 第几页
    * @param pageSize 一页几条
    * @param articleSort 排序
+   * @param username 用户名
    * @returns Promise
    */
   public static getIndexArticle(
     currentPage: number,
     pageSize: number,
-    articleSort: string
+    articleSort: string,
+    username: string
   ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/index/article",
@@ -172,6 +173,7 @@ export class api {
         currentPage: currentPage,
         pageSize: pageSize,
         articleSort: articleSort,
+        username: username || "",
       },
     });
   }

@@ -11,7 +11,7 @@
       <el-menu-item index="/blog/login" v-if="!ifLogin">登录</el-menu-item>
       <el-menu-item index="/blog/register" v-if="!ifLogin">注册</el-menu-item>
       <el-sub-menu v-if="ifLogin">
-        <template #title>{{ userInfo.name }}</template>
+        <template #title>{{ userInfo.nickname }}</template>
         <el-menu-item index="/user">基本资料</el-menu-item>
         <el-menu-item index @click="logout()">退出登录</el-menu-item>
       </el-sub-menu>
@@ -36,7 +36,7 @@ export default defineComponent({
       ifLogin: false,
       ellipsis: false,
       userInfo: {
-        name: "",
+        nickname: "",
         icon: "",
       },
     });
@@ -45,7 +45,7 @@ export default defineComponent({
       api
         .logout(
           store.state.loginID,
-          store.getters.getUser.name,
+          store.getters.getUser.nickname,
           store.getters.getUser.username
         )
         .then(({ data }) => {
@@ -62,7 +62,7 @@ export default defineComponent({
       getLoginID,
       (value, oldValue) => {
         if (!StringUtil.checkStringIfEmpty(value)) {
-          viewData.userInfo.name = store.getters.getUser.name;
+          viewData.userInfo.nickname = store.getters.getUser.nickname;
           viewData.userInfo.icon = store.getters.getUser.icons;
           viewData.ifLogin = true;
         } else {
