@@ -12,6 +12,7 @@
       class="element"
     >
       <span>{{ element.name }}</span>
+      <span>{{ element.articleCount }}</span>
     </span>
   </div>
 </template>
