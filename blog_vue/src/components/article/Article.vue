@@ -125,7 +125,7 @@
       <!-- 分页插件 -->
       <el-row class="pagination">
         <el-pagination
-          :page-sizes="[1, 10, 50, 100, 200]"
+          :page-sizes="[10, 50, 100, 200]"
           layout="total,sizes, prev, pager, next, jumper"
           :total="total"
           :current-page="currentPage"
