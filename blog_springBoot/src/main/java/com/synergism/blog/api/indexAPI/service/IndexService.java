@@ -15,9 +15,10 @@ public interface IndexService {
      * @param currentPage 当前页
      * @param pageSize 页容量
      * @param articleSort 排序
+     * @param username 账号
      * @return 结果[分页]
      */
-    Result<Pagination> getIndexArticles(int currentPage, int pageSize, ArticleSort articleSort);
+    Result<Pagination> getIndexArticles(int currentPage, int pageSize, ArticleSort articleSort,String username);
 
     /**
      * 首页默认用户信息

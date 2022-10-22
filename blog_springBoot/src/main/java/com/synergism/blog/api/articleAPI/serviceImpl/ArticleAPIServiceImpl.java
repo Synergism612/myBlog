@@ -6,6 +6,7 @@ import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.api.articleAPI.service.ArticleAPIService;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.synergism.blog.result.Result;
+import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +23,18 @@ public class ArticleAPIServiceImpl implements ArticleAPIService {
     }
 
     @Override
-    public Result<Pagination> getPagination(int currentPage, int pageSize, ArticleSort articleSort) {
+    public Result<Pagination> getPagination(int currentPage, int pageSize, ArticleSort articleSort,String username) {
         int startIndex = (currentPage - 1) * pageSize;
         int endIndex = currentPage * pageSize;
-        List<ArticleInformation> articleInformationList = service.getArticleInformationList(articleSort);
-        int total = articleInformationList.size();
+        List<ArticleInformation> result;
+        if (StringUtil.isEmpty(username)){
+            result = service.getArticleInformationList();
+        }else {
+            result = service.getArticleInformationListByUsername(username);
+        }
+        result = service.ArticleInformationListSort(result,articleSort);
+        int total = result.size();
         endIndex = Math.min(endIndex, total);
-        return Result.success(new Pagination(articleInformationList.subList(startIndex, endIndex), total));
+        return Result.success(new Pagination(result.subList(startIndex, endIndex), total));
     }
 }

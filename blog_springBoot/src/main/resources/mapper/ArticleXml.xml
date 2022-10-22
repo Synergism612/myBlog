@@ -58,7 +58,6 @@
                              atg.article_id = a.id and
                              t.id = atg.tag_id
 
-        order by ${articleSort} desc
     </select>
 
 </mapper>

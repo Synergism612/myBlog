@@ -9,7 +9,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -31,7 +33,26 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleInformation> getArticleInformationList(ArticleSort articleSort) {
-        return mapper.getArticleInformationList(articleSort);
+    public List<ArticleInformation> ArticleInformationListSort(List<ArticleInformation> articleInformationList, ArticleSort articleSort) {
+        switch (articleSort) {
+            case views:
+                return articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getViews).reversed()).collect(Collectors.toList());
+            case like_count:
+                return articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getLikeCount).reversed()).collect(Collectors.toList());
+            case modify_time:
+                return articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getModifyTime).reversed()).collect(Collectors.toList());
+            default:
+                return articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getCreationTime).reversed()).collect(Collectors.toList());
+        }
+    }
+
+    @Override
+    public List<ArticleInformation> getArticleInformationList() {
+        return mapper.getArticleInformationList();
+    }
+
+    @Override
+    public List<ArticleInformation> getArticleInformationListByUsername(String username) {
+        return this.getArticleInformationList().stream().filter(articleInformation -> articleInformation.getUsername().equals(username)).collect(Collectors.toList());
     }
 }

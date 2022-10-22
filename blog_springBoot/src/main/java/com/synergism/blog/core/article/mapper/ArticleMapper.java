@@ -19,6 +19,6 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
-    List<ArticleInformation> getArticleInformationList(ArticleSort articleSort);
+    List<ArticleInformation> getArticleInformationList();
 
 }

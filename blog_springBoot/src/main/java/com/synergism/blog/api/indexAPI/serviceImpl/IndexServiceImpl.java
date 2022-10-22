@@ -34,8 +34,8 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public Result<Pagination> getIndexArticles(int currentPage, int pageSize, ArticleSort articleSort) {
-        return articleAPIService.getPagination(currentPage, pageSize, articleSort);
+    public Result<Pagination> getIndexArticles(int currentPage, int pageSize, ArticleSort articleSort,String username) {
+        return articleAPIService.getPagination(currentPage, pageSize, articleSort,username);
     }
 
     @Override
