@@ -47,7 +47,7 @@ import { store } from "@/store";
 import StringUtil from "@/utils/StringUtil";
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import Message from "@/utils/MessageUtil";
-import Menu from "@/components/Menu/Menu.vue";
+import Menu from "@/components/menu/Menu.vue";
 import { useRouter } from "vue-router";
 import UserInfo from "@/model/user/UserInfo";
 
