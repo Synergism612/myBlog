@@ -12,7 +12,7 @@
       class="element"
     >
       <span>{{ element.name }}</span>
-      <span>{{ element.articleCount }}</span>
+      <span>({{ element.articleCount }})</span>
     </span>
   </div>
 </template>
@@ -38,16 +38,26 @@ export default defineComponent({
     },
   },
   setup(props) {
+    /**数据仓初始化 */
     const viewData = reactive(new Cloud());
-
+    /**用以绑定ref */
     var elementRefs = ref<HTMLElement[]>([]);
+    /**
+     * ref绑定函数，设定上限为20个
+     * 用以v-for中使用:ref动态绑定
+     * @param element 需要绑定的dom
+     */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const setElementRef = (element: any): void => {
-      if (element) {
+      if (element && elementRefs.value.length <= 20) {
         elementRefs.value.push(element);
       }
     };
 
+    /**用以绑定父元素 */
+    const paper = ref<HTMLElement | null>(null);
+
+    /**初始建立坐标 */
     const initCustomFormatter = (): void => {
       /**
        * 因为要用2d模拟3d所以我们只需要正的角度值即可
@@ -91,8 +101,6 @@ export default defineComponent({
       //渲染完成后清空，避免溢出
       elementRefs = ref<HTMLElement[]>([]);
     };
-
-    const paper = ref<HTMLElement | null>(null);
 
     /**绘画函数 */
     const move = (element: CloudElement): void => {
@@ -146,7 +154,7 @@ export default defineComponent({
       time = setInterval(animate, viewData.speed);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    /**用以存放定时器 */
     var time = setInterval(animate, viewData.speed);
 
     /**给与随机颜色，随机生成，限制200，偏暖*/
@@ -160,6 +168,7 @@ export default defineComponent({
       });
     };
 
+    /**速度设置 */
     const setSpeed = (speed: number): void => {
       viewData.speed = speed;
     };
