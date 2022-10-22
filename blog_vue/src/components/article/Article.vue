@@ -1,140 +1,142 @@
 <template>
-  <div v-if="!checkListIsEmpty()" class="box">
-    <!-- 文章列表 -->
-    <el-row class="articles">
-      <el-row
-        v-for="article in articleInformationList"
-        :key="article.id"
-        class="article"
-      >
-        <transition
-          appear
-          appear-active-class="animate__animated animate__zoomIn"
-          enter-active-class="animate__animated animate__zoomIn"
+  <div>
+    <div v-if="!checkListIsEmpty()" class="box">
+      <!-- 文章列表 -->
+      <el-row class="articles">
+        <el-row
+          v-for="article in articleInformationList"
+          :key="article.id"
+          class="article"
         >
-          <div class="article frame">
-            <el-col
-              :span="4"
-              class="left"
-              :style="{
-                backgroundImage: 'url(' + article.icon + ')',
-              }"
-            >
-            </el-col>
-            <el-col :span="20" class="right">
-              <el-row class="title">
-                <el-col :span="24">
-                  <span>{{ article.title }}</span>
-                </el-col>
-              </el-row>
-              <el-row class="synopsis">
-                <el-col :span="24">
-                  <span>{{ article.synopsis }}</span>
-                </el-col>
-              </el-row>
-              <el-row class="label">
-                <el-col :span="24">
-                  <document_folder
-                    theme="outline"
-                    size="21"
-                    fill="#000000"
-                    :strokeWidth="2"
-                  />
-                  <div
-                    v-for="classify in article.classifyList"
-                    :key="classify.id"
-                    class="classifys"
-                  >
-                    <el-tooltip
-                      class="box-item"
-                      effect="dark"
-                      :content="classify.annotation"
-                      placement="right"
+          <transition
+            appear
+            appear-active-class="animate__animated animate__zoomIn"
+            enter-active-class="animate__animated animate__zoomIn"
+          >
+            <div class="article frame">
+              <el-col
+                :span="4"
+                class="left"
+                :style="{
+                  backgroundImage: 'url(' + article.icon + ')',
+                }"
+              >
+              </el-col>
+              <el-col :span="20" class="right">
+                <el-row class="title">
+                  <el-col :span="24">
+                    <span>{{ article.title }}</span>
+                  </el-col>
+                </el-row>
+                <el-row class="synopsis">
+                  <el-col :span="24">
+                    <span>{{ article.synopsis }}</span>
+                  </el-col>
+                </el-row>
+                <el-row class="label">
+                  <el-col :span="24">
+                    <document_folder
+                      theme="outline"
+                      size="21"
+                      fill="#000000"
+                      :strokeWidth="2"
+                    />
+                    <div
+                      v-for="classify in article.classifyList"
+                      :key="classify.id"
+                      class="classifys"
                     >
-                      <span>{{ classify.name }}</span>
-                    </el-tooltip>
-                  </div>
-                </el-col>
-                <el-col :span="24">
-                  <tag_one
-                    theme="outline"
-                    size="21"
-                    fill="#000000"
-                    :strokeWidth="2"
-                  />
-                  <div
-                    v-for="tag in article.tagList"
-                    :key="tag.id"
-                    class="tags"
-                  >
-                    <el-tooltip
-                      class="box-item"
-                      effect="dark"
-                      :content="tag.annotation"
-                      placement="right"
+                      <el-tooltip
+                        class="box-item"
+                        effect="dark"
+                        :content="classify.annotation"
+                        placement="right"
+                      >
+                        <span>{{ classify.name }}</span>
+                      </el-tooltip>
+                    </div>
+                  </el-col>
+                  <el-col :span="24">
+                    <tag_one
+                      theme="outline"
+                      size="21"
+                      fill="#000000"
+                      :strokeWidth="2"
+                    />
+                    <div
+                      v-for="tag in article.tagList"
+                      :key="tag.id"
+                      class="tags"
                     >
-                      <span>{{ tag.name }}</span>
-                    </el-tooltip>
-                  </div>
-                </el-col>
-              </el-row>
-              <el-row class="footer" justify="space-between">
-                <el-col :xs="8" :span="6">
-                  <avatar
-                    theme="outline"
-                    size="21"
-                    fill="#000000"
-                    :strokeWidth="2"
-                  />
-                  <span>{{ article.nickname }}</span>
-                </el-col>
-                <el-col :xs="4" :span="4">
-                  <good_two
-                    theme="outline"
-                    size="21"
-                    fill="#000000"
-                    :strokeWidth="2"
-                  />
-                  <span> {{ article.likeCount }} </span>
-                </el-col>
-                <el-col :xs="4" :span="4">
-                  <preview_open
-                    theme="outline"
-                    size="21"
-                    fill="#000000"
-                    :strokeWidth="2"
-                  />
-                  <span> {{ article.views }} </span>
-                </el-col>
-                <el-col :xs="0" :span="8">
-                  <update_rotation
-                    theme="outline"
-                    size="21"
-                    fill="#000000"
-                    :strokeWidth="2"
-                  />
-                  <span> {{ article.modifyTime }} </span>
-                </el-col>
-              </el-row>
-            </el-col>
-          </div>
-        </transition>
+                      <el-tooltip
+                        class="box-item"
+                        effect="dark"
+                        :content="tag.annotation"
+                        placement="right"
+                      >
+                        <span>{{ tag.name }}</span>
+                      </el-tooltip>
+                    </div>
+                  </el-col>
+                </el-row>
+                <el-row class="footer" justify="space-between">
+                  <el-col :xs="8" :span="6">
+                    <avatar
+                      theme="outline"
+                      size="21"
+                      fill="#000000"
+                      :strokeWidth="2"
+                    />
+                    <span>{{ article.nickname }}</span>
+                  </el-col>
+                  <el-col :xs="4" :span="4">
+                    <good_two
+                      theme="outline"
+                      size="21"
+                      fill="#000000"
+                      :strokeWidth="2"
+                    />
+                    <span> {{ article.likeCount }} </span>
+                  </el-col>
+                  <el-col :xs="4" :span="4">
+                    <preview_open
+                      theme="outline"
+                      size="21"
+                      fill="#000000"
+                      :strokeWidth="2"
+                    />
+                    <span> {{ article.views }} </span>
+                  </el-col>
+                  <el-col :xs="0" :span="8">
+                    <update_rotation
+                      theme="outline"
+                      size="21"
+                      fill="#000000"
+                      :strokeWidth="2"
+                    />
+                    <span> {{ article.modifyTime }} </span>
+                  </el-col>
+                </el-row>
+              </el-col>
+            </div>
+          </transition>
+        </el-row>
       </el-row>
-    </el-row>
-    <!-- 分页插件 -->
-    <el-row class="pagination">
-      <el-pagination
-        :page-sizes="[1, 10, 50, 100, 200]"
-        layout="total,sizes, prev, pager, next, jumper"
-        :total="total"
-        :current-page="currentPage"
-        @update:page-size="handleSizeChange"
-        @update:current-page="handleCurrentChange"
-      />
-    </el-row>
-  </div>
+      <!-- 分页插件 -->
+      <el-row class="pagination">
+        <el-pagination
+          :page-sizes="[1, 10, 50, 100, 200]"
+          layout="total,sizes, prev, pager, next, jumper"
+          :total="total"
+          :current-page="currentPage"
+          @update:page-size="handleSizeChange"
+          @update:current-page="handleCurrentChange"
+        />
+      </el-row>
+    </div>
 
-  <div v-if="checkListIsEmpty()" style="text-align: center">没有文章</div>
+    <div v-if="checkListIsEmpty()" style="text-align: center">没有文章</div>
+  </div>
 </template>
 
 <script lang="ts">
