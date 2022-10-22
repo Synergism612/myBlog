@@ -25,6 +25,9 @@ import { api } from "./api/api";
  */
 import Particles from "particles.vue3";
 
+// 全局引入动画相关的样式
+import "animate.css";
+
 const app = createApp(App);
 api.getPublicKey().then((): void => {
   app
