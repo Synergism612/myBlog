@@ -25,7 +25,7 @@
             <!-- 主体框架 -->
             <el-col :xs="24" :sm="24" :md="24" :lg="20">
               <!-- 分左右区 -->
-              <el-row gutter="20" justify="space-around">
+              <el-row :gutter="20" justify="space-around">
                 <!-- 左侧 -->
                 <el-col :xs="24" :sm="24" :md="18" :span="18">
                   <Article></Article>
