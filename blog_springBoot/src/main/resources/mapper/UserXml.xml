@@ -2,4 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.user.mapper.UserMapper">
 
+    <select id="selectOneByArticleID" resultType="com.synergism.blog.core.user.entity.User">
+        select
+            u.id,
+            u.icon ,
+            u.nickname ,
+            u.username ,
+            u.password ,
+            u.birthday ,
+            u.sex ,
+            u.intro ,
+            u.creation_time ,
+            u.modify_time
+        from
+            user_article ua
+                join
+            `user` u
+            on ua.user_id = u.id
+        where ua.article_id = #{articleID}
+    </select>
 </mapper>
