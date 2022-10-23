@@ -27,11 +27,11 @@
               <!-- 分左右区 -->
               <el-row gutter="20" justify="space-around">
                 <!-- 左侧 -->
-                <el-col :xs="24" :sm="24" :md="16" :span="16">
+                <el-col :xs="24" :sm="24" :md="18" :span="18">
                   <Article></Article>
                 </el-col>
                 <!-- 右侧 -->
-                <el-col :xs="0" :sm="8" :md="8" :span="8">
+                <el-col :xs="0" :sm="6" :md="6" :span="6">
                   <!-- 用户信息 -->
                   <el-row class="user frame">
                     <el-col :span="24">
@@ -68,14 +68,6 @@
                   <el-row class="calender frame">
                     <el-calendar id="calender-body" v-model="calender" />
                   </el-row>
-                  <!-- 标签云 -->
-                  <el-row class="tagCloud frame">
-                    <span>标签云</span>
-                    <Cloud
-                      v-if="tagInformationList[0].id != -1"
-                      :data-list="tagInformationList"
-                    ></Cloud>
-                  </el-row>
 
                   <!-- 分类云 -->
                   <el-row class="classifyCloud frame">
@@ -83,6 +75,15 @@
                     <Cloud
                       v-if="classifyInformationList[0].id != -1"
                       :data-list="classifyInformationList"
+                    ></Cloud>
+                  </el-row>
+
+                  <!-- 标签云 -->
+                  <el-row class="tagCloud frame">
+                    <span>标签云</span>
+                    <Cloud
+                      v-if="tagInformationList[0].id != -1"
+                      :data-list="tagInformationList"
                     ></Cloud>
                   </el-row>
                 </el-col>
