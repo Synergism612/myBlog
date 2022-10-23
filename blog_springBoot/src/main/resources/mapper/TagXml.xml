@@ -26,4 +26,19 @@
                  u.nickname
 
     </select>
+    <select id="getListByArticleID" resultType="com.synergism.blog.core.tag.entity.Tag">
+        select
+            t.id ,
+            t.name ,
+            t.annotation ,
+            t.creation_time ,
+            t.modify_time
+        from
+            article_tag atg
+                join
+            tag t
+            on atg .tag_id = t.id
+        where
+            atg.article_id  = #{articleID}
+    </select>
 </mapper>

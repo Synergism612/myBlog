@@ -43,4 +43,9 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
                         .equals(username))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Tag> getListByArticleID(long articleID) {
+        return mapper.getListByArticleID(articleID);
+    }
 }

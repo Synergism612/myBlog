@@ -23,4 +23,11 @@ public interface TagMapper extends BaseMapper<Tag> {
      * @return 标签信息列表
      */
     List<TagInformation> getAllTagInformationList();
+
+    /**
+     * 通过文章id获取标签列表
+     * @param articleID 文章id
+     * @return 标签列比奥
+     */
+    List<Tag> getListByArticleID(long articleID);
 }

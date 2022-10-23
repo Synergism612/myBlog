@@ -28,4 +28,12 @@ public interface TagService extends IService<Tag> {
      * @return 标签列表
      */
     List<TagInformation> getTagInformationListByUsername(String username);
+
+    /**
+     * 通过文章id获取标签列表
+     * @param articleID 文章id
+     * @return 标签列比奥
+     */
+    List<Tag> getListByArticleID(long articleID);
+
 }
