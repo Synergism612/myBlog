@@ -43,4 +43,9 @@ public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify> i
                         .equals(username))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Classify getOneByArticleID(long articleID) {
+        return mapper.getOneByArticleID(articleID);
+    }
 }

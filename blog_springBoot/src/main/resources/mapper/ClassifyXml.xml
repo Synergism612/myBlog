@@ -31,4 +31,19 @@
                  u.username,
                  u.nickname
     </select>
+    <select id="getOneByArticleID" resultType="com.synergism.blog.core.classify.entity.Classify">
+        select
+            c.id ,
+            c.name ,
+            c.annotation ,
+            c.creation_time ,
+            c.modify_time
+        from
+            article_classify ac
+                join
+            classify c
+            on ac.classify_id = c.id
+        where
+            ac.article_id  = #{articleID}
+    </select>
 </mapper>
