@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import Content from "../views/content/Content.vue";
 import Index from "../views/index/Index.vue";
 import Login from "../views/login/Login.vue";
 import Register from "../views/register/Register.vue";
@@ -8,8 +9,13 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Home",
     redirect: {
-      name: "Register",
+      name: "Index",
     },
+  },
+  {
+    path: "/blog/content/:id?/:title?/:body?",
+    name: "Content",
+    component: Content,
   },
   { path: "/blog/index", name: "Index", component: Index },
   {

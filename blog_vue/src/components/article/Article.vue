@@ -25,7 +25,12 @@
               <el-col :span="20" class="right">
                 <el-row class="title">
                   <el-col :span="24">
-                    <span>{{ article.title }}</span>
+                    <span
+                      @click="
+                        toContent(article.id, article.title, article.body)
+                      "
+                      >{{ article.title }}</span
+                    >
                   </el-col>
                 </el-row>
                 <el-row class="synopsis">
@@ -158,6 +163,7 @@ import {
   TagOne as tag_one,
 } from "@icon-park/vue-next";
 import ArticleInformation from "@/model/article/ArticleInformation";
+import { useRouter } from "vue-router";
 export default defineComponent({
   props: {
     dataList: {
@@ -216,6 +222,19 @@ export default defineComponent({
       return true;
     };
 
+    const router = useRouter();
+
+    const toContent = (id: number, title: string, body: string): void => {
+      router.push({
+        name: "Content",
+        params: {
+          id: id,
+          title: title,
+          body: body,
+        },
+      });
+    };
+
     /**
      * 监听变化后传给父组件
      */
@@ -233,6 +252,7 @@ export default defineComponent({
       handleSizeChange,
       handleCurrentChange,
       checkListIsEmpty,
+      toContent,
     };
   },
   components: {
