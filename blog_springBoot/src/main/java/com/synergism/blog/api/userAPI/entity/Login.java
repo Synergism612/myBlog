@@ -37,7 +37,7 @@ public class Login {
         //合法性检查
         checkStringIsUnsafe(username,password);
         //参数检查赋值
-        setUsername(checkUsername(username));
-        setPassword(checkPassword(password));
+        this.username = checkUsername(username);
+        this.password = checkPassword(password);
     }
 }

@@ -10,8 +10,8 @@ import java.util.List;
 @Setter
 public class Pagination {
     //文章信息列表
-    private List<ArticleInformation> articleInformationList;
-    int total; //总数
+    private final List<ArticleInformation> articleInformationList;
+    private final int total; //总数
 
     public Pagination(List<ArticleInformation> articleInformationList, int total) {
         this.articleInformationList = articleInformationList;
