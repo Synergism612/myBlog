@@ -20,8 +20,8 @@ class Cloud {
 
   constructor() {
     this.fontSize = 12;
-    this.RADIUS = 100;
-    this.fallLength = 180;
+    this.RADIUS = 80;
+    this.fallLength = 160;
     this.elementList = [new CloudElement()];
     this.angleX = ((Math.random() - 0.5) * Math.PI) / 250;
     this.angleY = ((Math.random() - 0.5) * Math.PI) / 250;
