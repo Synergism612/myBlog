@@ -15,4 +15,20 @@ import java.util.List;
  * @since 2022-10-10 09:53:06
  */
 public interface CommentService extends IService<Comment> {
+
+
+    /**
+     * 通过文章id查询评论信息列表
+     * @param articleID 文章id
+     * @return 评论信息列表
+     */
+    List<CommentInformation> getAllCommentInformationListByArticleID(long articleID);
+
+    /**
+     * 通过文章id查询根评论
+     * 包含该根评论下点赞量前三的子评论
+     * @param articleID 文章id
+     * @return 评论信息列表
+     */
+    List<CommentInformation> getTopListByArticleID(long articleID);
 }

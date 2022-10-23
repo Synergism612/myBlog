@@ -40,6 +40,10 @@ public class Comment {
     private String likeCount;
 
     @ApiModelProperty("父评论主键")
+    @TableField("root_id")
+    private Long rootId;
+
+    @ApiModelProperty("父评论主键")
     @TableField("parent_id")
     private Long parentId;
 
@@ -53,5 +57,13 @@ public class Comment {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
-
+    public Comment(Comment comment) {
+        this.id = comment.id;
+        this.body = comment.body;
+        this.likeCount = comment.likeCount;
+        this.rootId = comment.rootId;
+        this.parentId = comment.parentId;
+        this.creationTime = comment.creationTime;
+        this.modifyTime = comment.modifyTime;
+    }
 }
