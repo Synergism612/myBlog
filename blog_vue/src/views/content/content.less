@@ -4,24 +4,63 @@
     background: url(../../assets/img/backgroud/backgroud-index.png);
 
     .content {
-       //展示
-       padding: 1em;
-       display: flex;
-       flex-direction: column;
-       flex-wrap: nowrap;
-       justify-content: flex-start;
+      //展示
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
 
       .title {
-        position: relative;
         width: 100%;
-        text-align: center;
-        font-size: 2em;
+        font-size: 2.5em;
+        font-weight: 500;
       }
-      .infor{
+      .signature {
+        width: 100%;
+        margin-top: 0.5em;
+        font-size: 1em;
+      }
+      .info {
         position: relative;
         width: 100%;
-        text-align: left;
+
+        .md {
+          background-color: rgba(0, 0, 0, 0);
+        }
+      }
+      .author {
+        width: 100%;
+        .left {
+          .icon {
+            width: 10em;
+            height: 10em;
+            margin: auto;
+            border-radius: 100%;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: aqua;
+          }
+        }
+        .middle {
+          display: flex;
+          flex-direction: row;
+          align-content: space-between;
+          justify-content: space-around;
+          flex-wrap: wrap;
+        }
+        .right {
+          display: flex;
+          flex-direction: row;
+          align-content: space-between;
+          justify-content: space-around;
+          flex-wrap: wrap;
+        }
       }
     }
+  }
+  .el-divider__text {
+    background-color: rgba(0, 0, 0, 0);
   }
 }
