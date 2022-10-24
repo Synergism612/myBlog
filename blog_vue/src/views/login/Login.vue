@@ -116,7 +116,7 @@ export default defineComponent({
               .login(viewData.LoginFrom.username, viewData.LoginFrom.password)
               .then(({ data }) => {
                 var loginID = data[0] as string;
-                var userInfo = UserInfo.getUserInfo(data[1]);
+                var userInfo = data[1] as UserInfo;
                 store.commit("SET_LOGIN_ID", loginID);
                 store.commit("SET_USER_INFO", userInfo);
                 router.push({ name: "Home" });
