@@ -3,13 +3,13 @@ import { AxiosResponse } from "axios";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default class Result<T = any> {
   /**代码 */
-  code!: number;
+  code: number;
   /**消息 */
-  msg!: string;
+  msg: string;
   /**时间 */
-  time!: string;
+  time: string;
   /**数据 */
-  data!: T;
+  data: T;
 
   constructor(code: number, msg: string, time: string, data: T) {
     this.code = code;

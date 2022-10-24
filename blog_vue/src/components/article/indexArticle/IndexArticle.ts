@@ -8,26 +8,26 @@ export default class IndexArticle {
   articleSort = ArticleSort;
 
   /**是否已经登录 */
-  isLogin!: boolean;
+  isLogin: boolean;
   /**登录的用户名 */
-  username!: string;
+  username: string;
 
   /**选择我的文章 */
-  isMy!: boolean;
+  isMy: boolean;
 
-  refresh!: boolean;
+  refresh: boolean;
 
   /**分页页数*/
-  currentPage!: number;
+  currentPage: number;
   /**分页页容量*/
-  pageSize!: number;
+  pageSize: number;
   /**排序字段*/
-  articleOrderBy!: string;
+  articleOrderBy: string;
 
   /**文章信息列表*/
-  articleInformationList!: Array<ArticleInformation>;
+  articleInformationList: Array<ArticleInformation>;
   /**文章总数*/
-  total!: number;
+  total: number;
 
   constructor() {
     this.username = store.getters.getUser.username;

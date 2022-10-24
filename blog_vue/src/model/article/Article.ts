@@ -1,22 +1,22 @@
 export default class Article {
   /**主键 */
-  id!: number;
+  id: number;
   /**标题 */
-  title!: string;
+  title: string;
   /**头像 */
-  icon!: string;
+  icon: string;
   /**内容 */
-  body!: string;
+  body: string;
   /**简介 */
-  synopsis!: string;
+  synopsis: string;
   /**阅读量 */
-  views!: string;
+  views: string;
   /**点赞量 */
-  likeCount!: string;
+  likeCount: string;
   /**创建时间 */
-  creationTime!: Date | null;
+  creationTime: Date | null;
   /**修改时间 */
-  modifyTime!: Date | null;
+  modifyTime: Date | null;
 
   constructor() {
     this.id = -1;

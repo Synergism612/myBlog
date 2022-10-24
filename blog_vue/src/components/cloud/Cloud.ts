@@ -1,22 +1,22 @@
 class Cloud {
   /**当元素在X轴上字体大小*/
-  fontSize!: number;
+  fontSize: number;
   /**球体半径*/
-  RADIUS!: number;
+  RADIUS: number;
   /**球体直径，其实用于计算字体大小，如元素在Y轴最大值即160上;字体显示最大24px*/
-  fallLength!: number;
+  fallLength: number;
   /**经过计算沿球表面均匀分布的元素*/
-  elementList!: Array<CloudElement>;
+  elementList: Array<CloudElement>;
   /**沿X轴旋转角度*/
-  angleX!: number;
+  angleX: number;
   /**沿Y轴旋转角度*/
-  angleY!: number;
+  angleY: number;
   /**球体中心x轴*/
-  CX!: number;
+  CX: number;
   /**球体中心y轴*/
-  CY!: number;
+  CY: number;
 
-  speed!: number;
+  speed: number;
 
   constructor() {
     this.fontSize = 12;
@@ -33,10 +33,10 @@ class Cloud {
 }
 
 class CloudElement {
-  data!: HTMLElement;
-  x!: number;
-  y!: number;
-  z!: number;
+  data: HTMLElement;
+  x: number;
+  y: number;
+  z: number;
 
   constructor() {
     this.data = document.createElement("div");

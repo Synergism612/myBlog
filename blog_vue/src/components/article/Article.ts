@@ -2,14 +2,14 @@ import ArticleInformation from "@/model/article/ArticleInformation";
 
 export default class Article {
   /**分页页数*/
-  currentPage!: number;
+  currentPage: number;
   /**分页页容量*/
-  pageSize!: number;
+  pageSize: number;
 
   /**文章信息列表*/
-  articleInformationList!: Array<ArticleInformation>;
+  articleInformationList: Array<ArticleInformation>;
   /**文章总数*/
-  total!: number;
+  total: number;
 
   constructor() {
     this.currentPage = 1;

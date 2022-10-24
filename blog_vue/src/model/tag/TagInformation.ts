@@ -2,11 +2,11 @@ import Tag from "./Tag";
 
 export default class TagInformation extends Tag {
   /**标签下文章数 */
-  articleCount!: number;
+  articleCount: number;
   /**所属者昵称 */
-  nickname!: string;
+  nickname: string;
   /**所属者账号 */
-  username!: string;
+  username: string;
 
   constructor() {
     super();

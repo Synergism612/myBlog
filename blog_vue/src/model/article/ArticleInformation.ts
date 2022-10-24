@@ -4,13 +4,13 @@ import Article from "./Article";
 
 export default class ArticleInformation extends Article {
   /**所属者昵称 */
-  nickname!: string;
+  nickname: string;
 
-  ifPrivate!: number;
+  ifPrivate: number;
 
-  classifyList!: Array<Classify>;
+  classifyList: Array<Classify>;
 
-  tagList!: Array<Tag>;
+  tagList: Array<Tag>;
 
   constructor(){
     super();
