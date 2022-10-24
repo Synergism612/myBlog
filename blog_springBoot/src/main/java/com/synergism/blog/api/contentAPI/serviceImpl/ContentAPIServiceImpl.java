@@ -6,10 +6,11 @@ import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.service.ClassifyService;
-import com.synergism.blog.core.comment.entity.CommentInformation;
+import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.comment.service.CommentService;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.service.TagService;
+import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.result.CodeMsg;
@@ -40,17 +41,17 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     @Override
     public Result<Content> getContent(long id, String title) {
         Article article = articleService.getById(id);
-        if (!title.equals(article.getTitle())) {
+        if (!article.getTitle().equals(title)) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("参数异常"));
         }
-        UserInformation userInformation = userService.getOneByArticleID(id);
+        Author author = userService.getAuthorByArticleID(id);
 
         Classify classify = classifyService.getOneByArticleID(id);
 
         List<Tag> tagList = tagService.getListByArticleID(id);
 
-        List<CommentInformation> commentInformationList = commentService.getTopListByArticleID(id);
+        List<CommentParent> commentParentList = commentService.getTopListByArticleID(id);
 
-        return Result.success(new Content(article, userInformation, classify, tagList, commentInformationList));
+        return Result.success(new Content(article, author, classify, tagList, commentParentList));
     }
 }

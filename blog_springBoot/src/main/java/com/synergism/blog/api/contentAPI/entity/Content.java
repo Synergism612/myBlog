@@ -2,8 +2,9 @@ package com.synergism.blog.api.contentAPI.entity;
 
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.classify.entity.Classify;
-import com.synergism.blog.core.comment.entity.CommentInformation;
+import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.tag.entity.Tag;
+import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.core.user.entity.UserInformation;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,19 +16,19 @@ import java.util.List;
 public class Content {
     private Article article;
 
-    private UserInformation userInformation;
+    private Author author;
 
     private Classify classify;
 
     private List<Tag> tagList;
 
-    private final List<CommentInformation> commentInformationList;
+    private final List<CommentParent> commentParentList;
 
-    public Content(Article article, UserInformation userInformation, Classify classify, List<Tag> tagList, List<CommentInformation> commentInformationList) {
+    public Content(Article article, Author author, Classify classify, List<Tag> tagList, List<CommentParent> commentParentList) {
         this.article = article;
-        this.userInformation = userInformation;
+        this.author = author;
         this.classify = classify;
         this.tagList = tagList;
-        this.commentInformationList = commentInformationList;
+        this.commentParentList = commentParentList;
     }
 }
