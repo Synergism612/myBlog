@@ -1,16 +1,18 @@
 export default class UserInfo {
   //头像
-  icon!: string;
+  icon: string;
   //昵称
-  nickname!: string;
+  nickname: string;
   //账号
-  username!: string;
+  username: string;
   //生日
-  birthday!: Date;
+  birthday: Date;
   //性别代码
-  sex!: number;
+  sex: number;
   //个人简介
-  intro!: string;
+  intro: string;
+  //园龄
+  upToNow: string;
 
   constructor(
     icon?: string,
@@ -18,7 +20,8 @@ export default class UserInfo {
     username?: string,
     birthday?: Date,
     sex?: number,
-    intro?: string
+    intro?: string,
+    upToNow?:string,
   ) {
     this.icon = icon || "";
     this.nickname = nickname || "";
@@ -26,10 +29,6 @@ export default class UserInfo {
     this.birthday = birthday || new Date();
     this.sex = sex || 0;
     this.intro = intro || "";
-  }
-
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-  static getUserInfo(data: UserInfo): UserInfo {
-    return data;
+    this.upToNow = upToNow || "";
   }
 }
