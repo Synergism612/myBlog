@@ -36,6 +36,7 @@
                   <el-row class="user frame">
                     <el-col :span="24">
                       <div
+                        class="icon"
                         :style="{
                           backgroundImage: 'url(' + userInfo.icon + ')',
                         }"

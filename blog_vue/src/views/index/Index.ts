@@ -6,20 +6,21 @@ import StringUtil from "@/utils/StringUtil";
 
 export default class Index {
   /**是否已经登录*/
-  ifLogin!: boolean;
+  ifLogin: boolean;
 
   /**日历日期*/
-  calender!: Date;
+  calender: Date;
   /**用户信息*/
-  userInfo!: UserInfo;
+  userInfo: UserInfo;
   /**标签云列表*/
-  tagInformationList!: Array<TagInformation>;
+  tagInformationList: Array<TagInformation>;
   /**分类云列表 */
-  classifyInformationList!: Array<ClassifyInformation>;
+  classifyInformationList: Array<ClassifyInformation>;
 
   constructor() {
     this.userInfo = store.getters.getUser;
     this.ifLogin = StringUtil.checkStringIfEmpty(this.userInfo.username);
+    this.calender = new Date();
     this.tagInformationList = [new TagInformation()];
     this.classifyInformationList = [new ClassifyInformation()];
   }
