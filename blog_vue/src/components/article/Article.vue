@@ -25,12 +25,9 @@
               <el-col :span="20" class="right">
                 <el-row class="title">
                   <el-col :span="24">
-                    <span
-                      @click="
-                        toContent(article.id, article.title, article.body)
-                      "
-                      >{{ article.title }}</span
-                    >
+                    <span @click="toContent(article.id, article.title)">
+                      {{ article.title }}
+                    </span>
                   </el-col>
                 </el-row>
                 <el-row class="synopsis">
@@ -224,13 +221,12 @@ export default defineComponent({
 
     const router = useRouter();
 
-    const toContent = (id: number, title: string, body: string): void => {
+    const toContent = (id: number, title: string): void => {
       router.push({
         name: "Content",
         params: {
           id: id,
           title: title,
-          body: body,
         },
       });
     };
