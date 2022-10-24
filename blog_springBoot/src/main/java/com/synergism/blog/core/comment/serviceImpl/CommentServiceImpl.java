@@ -2,12 +2,15 @@ package com.synergism.blog.core.comment.serviceImpl;
 
 import com.synergism.blog.core.comment.entity.Comment;
 import com.synergism.blog.core.comment.entity.CommentInformation;
-import com.synergism.blog.core.comment.entity.CommentsChild;
+import com.synergism.blog.core.comment.entity.CommentChild;
+import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.comment.mapper.CommentMapper;
 import com.synergism.blog.core.comment.service.CommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.synergism.blog.utils.TypeUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +39,14 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<CommentInformation> getTopListByArticleID(long articleID) {
+    public List<CommentParent> getTopListByArticleID(long articleID) {
         //获取文章下全部评论
         List<CommentInformation> allList = this.getAllCommentInformationListByArticleID(articleID);
-        //筛选根或子评论列表 根据if(commentInformation.getRootId()==null)
+
+        if (allList.size()==0)
+            return null;
+
+            //筛选根或子评论列表 根据if(commentInformation.getRootId()==null)
         Map<Boolean, List<CommentInformation>> listMap = allList
                 .stream()
                 .collect(Collectors.groupingBy(commentInformation -> commentInformation.getRootId() == null));
@@ -48,23 +55,19 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         //获得子评论
         List<CommentInformation> childList = listMap.get(false);
 
-        //遍历根评论
-        rootList.forEach(
-                //为根评论写入子评论
-                root -> root.setChildren(
-                        //筛选该根评论下的评论
-                        childList.stream()
-                        .filter(child -> child.getRootId().equals(root.getParentId()))
-                                //按点赞数倒序排序
-                        .sorted(Comparator.comparing(Comment::getLikeCount).reversed())
-                                //获得前三个
-                        .limit(3)
-                                //转为子评论
-                        .map(child -> new CommentsChild(child, ""))
-
-                        .collect(Collectors.toList())
-                )
-        );
-        return rootList;
+        return rootList.stream().map(root -> {
+            List<CommentChild> commentChildList = //筛选该根评论下的评论
+                    childList.stream()
+                            .filter(child -> child.getRootId().equals(root.getId()))
+                            //按点赞数倒序排序
+                            .sorted(Comparator.comparing(Comment::getLikeCount).reversed())
+                            //获得前三个
+                            .limit(3)
+                            //转为子评论
+                            .map(child -> new CommentChild(child, ""))
+                            .collect(Collectors.toList());
+            //将根评论封装为父评论
+            return new CommentParent(root, commentChildList);
+        }).collect(Collectors.toList());
     }
 }

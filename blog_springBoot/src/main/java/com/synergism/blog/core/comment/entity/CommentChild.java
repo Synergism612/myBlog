@@ -3,14 +3,12 @@ package com.synergism.blog.core.comment.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class CommentsChild extends CommentInformation {
+public class CommentChild extends CommentInformation {
     private String parentNickname;
 
-    public CommentsChild(CommentInformation commentInformation, String parentNickname) {
+    public CommentChild(CommentInformation commentInformation, String parentNickname) {
         super(commentInformation);
         this.parentNickname = parentNickname;
     }

@@ -3,6 +3,7 @@ package com.synergism.blog.core.comment.service;
 import com.synergism.blog.core.comment.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.comment.entity.CommentInformation;
+import com.synergism.blog.core.comment.entity.CommentParent;
 
 import java.util.List;
 
@@ -30,5 +31,5 @@ public interface CommentService extends IService<Comment> {
      * @param articleID 文章id
      * @return 评论信息列表
      */
-    List<CommentInformation> getTopListByArticleID(long articleID);
+    List<CommentParent> getTopListByArticleID(long articleID);
 }

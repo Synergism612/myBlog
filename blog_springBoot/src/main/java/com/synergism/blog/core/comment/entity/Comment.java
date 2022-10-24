@@ -57,6 +57,9 @@ public class Comment {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
+    public Comment(){
+    }
+
     public Comment(Comment comment) {
         this.id = comment.id;
         this.body = comment.body;
