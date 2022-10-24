@@ -3,22 +3,30 @@
 <mapper namespace="com.synergism.blog.core.user.mapper.UserMapper">
 
     <select id="selectOneByArticleID" resultType="com.synergism.blog.core.user.entity.User">
-        select
-            u.id,
-            u.icon ,
-            u.nickname ,
-            u.username ,
-            u.password ,
-            u.birthday ,
-            u.sex ,
-            u.intro ,
-            u.creation_time ,
-            u.modify_time
-        from
-            user_article ua
-                join
-            `user` u
-            on ua.user_id = u.id
+        select u.id,
+               u.icon,
+               u.nickname,
+               u.username,
+               u.password,
+               u.birthday,
+               u.sex,
+               u.intro,
+               u.creation_time,
+               u.modify_time
+        from user_article ua
+                 join
+             `user` u
+             on ua.user_id = u.id
         where ua.article_id = #{articleID}
+    </select>
+    <select id="selectAuthorInfoCountByID" resultType="com.synergism.blog.core.user.entity.AuthorInformation">
+        select
+            count(distinct ua.article_id) as article_count,
+            sum(if(un.my_id = #{userID},1,0)) as notable_count,
+            sum(if(un.notable_id = #{userID},1,0)) as fans_count
+        from
+            user_article ua ,
+            user_notable un
+        where ua.article_id  = #{userID}
     </select>
 </mapper>

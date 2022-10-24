@@ -1,6 +1,8 @@
 package com.synergism.blog.core.user.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.synergism.blog.core.user.entity.Author;
+import com.synergism.blog.core.user.entity.AuthorInformation;
 import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.core.user.mapper.UserMapper;
@@ -32,7 +34,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserInformation getOneByArticleID(long articleID) {
-        return UserInformation.getInstance(mapper.selectOneByArticleID(articleID));
+    public Author getAuthorByArticleID(long articleID) {
+        User user = mapper.selectOneByArticleID(articleID);
+        UserInformation userInformation = UserInformation.getInstance(user);
+        AuthorInformation authorInformation = mapper.selectAuthorInfoCountByID(user.getId());
+    return new Author(userInformation,authorInformation);
     }
 }

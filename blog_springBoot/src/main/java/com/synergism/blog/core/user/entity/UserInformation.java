@@ -1,5 +1,6 @@
 package com.synergism.blog.core.user.entity;
 
+import com.synergism.blog.utils.TimeUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,23 +15,19 @@ public class UserInformation{
     //ID
     private long id;
     //头像
-    private String icon = "";
+    private String icon;
     //昵称
-    private String nickname = "";
+    private String nickname;
     //账号
-    private String username = "";
+    private String username;
     //生日
-    private Date birthday = new Date();
+    private Date birthday;
     //性别代码
-    private Integer sex = 0;
+    private String sex;
     //个人简介
-    private String intro = "";
-
-    /**
-     * 空参构造函数
-     */
-    public UserInformation(){
-    }
+    private String intro;
+    //至今园龄
+    private String upToNow;
 
     /**
      * 构造函数
@@ -41,14 +38,33 @@ public class UserInformation{
      * @param sex 性别代码
      * @param intro 个人简介
      */
-    public UserInformation(long id,String icon, String nickname, String username, Date birthday, Integer sex, String intro) {
+    public UserInformation(long id,String icon, String nickname, String username, Date birthday, Integer sex, String intro,Date creationTime) {
         this.id = id;
         this.icon = icon;
         this.nickname = nickname;
         this.username = username;
         this.birthday = birthday;
-        this.sex = sex;
+        switch (sex){
+            case 0:this.sex = "不愿透露";
+            break;
+            case 1:this.sex = "男";
+                break;
+            case 2:this.sex = "女";
+                break;
+        }
         this.intro = intro;
+        this.upToNow = TimeUtil.upToNow(creationTime);
+    }
+
+    public UserInformation(UserInformation userInformation) {
+        this.id = userInformation.getId();
+        this.icon = userInformation.getIcon();
+        this.nickname = userInformation.getNickname();
+        this.username = userInformation.getUsername();
+        this.birthday = userInformation.getBirthday();
+        this.sex = userInformation.getSex();
+        this.intro = userInformation.getIntro();
+        this.upToNow = userInformation.getUpToNow();
     }
 
     /**
@@ -64,7 +80,8 @@ public class UserInformation{
                 user.getUsername(),
                 user.getBirthday(),
                 user.getSex(),
-                user.getIntro()
+                user.getIntro(),
+                user.getCreationTime()
         );
     }
 }
