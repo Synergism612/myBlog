@@ -214,4 +214,21 @@ export class api {
       params: { username: username || "" },
     });
   }
+
+  /**
+   * 内容页面接口
+   * @param articleID 文章id
+   * @param title 文章标题
+   * @returns 文章信息
+   */
+  public static getContent(
+    articleID: number,
+    title: string
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/content",
+      method: "get",
+      params: { id: articleID, title: title },
+    });
+  }
 }
