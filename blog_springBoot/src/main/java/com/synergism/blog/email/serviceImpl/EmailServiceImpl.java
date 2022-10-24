@@ -106,7 +106,7 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
     public String sendCodeMail(String to, CodeMail codeMail) {
         try {
             this.sendTemplateMail(to, "验证码", "registerTemplate", codeMail.toMap());
-            return cacheRedisService.put(codeMail, TimeUtil.Minutes(1));
+            return cacheRedisService.put(codeMail, TimeUtil.minutes(1));
         } catch (MessagingException e) {
             throw new MailErrorException("发送失败");
         }

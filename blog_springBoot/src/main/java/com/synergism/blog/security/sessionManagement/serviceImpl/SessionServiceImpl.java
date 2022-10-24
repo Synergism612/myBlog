@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.synergism.blog.utils.StringUtil.isEmpty;
 import static com.synergism.blog.utils.StringUtil.ifEmpty;
-import static com.synergism.blog.utils.TimeUtil.Weeks;
+import static com.synergism.blog.utils.TimeUtil.weeks;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -40,7 +40,7 @@ public class SessionServiceImpl implements SessionService {
         //创建基本权限会话
         Session session = new Session(sessionID, "", "", Power.NOT_LOG_IN.getPower());
         //写入redis
-        String EVIL_EYE = cacheRedisService.put(session, Weeks(1));
+        String EVIL_EYE = cacheRedisService.put(session, weeks(1));
         //写入响应头部
         response.setHeader("EVIL_EYE", EVIL_EYE);
 
@@ -65,7 +65,7 @@ public class SessionServiceImpl implements SessionService {
         //创建基本权限会话
         Session session = new Session(sessionID, userKey, "", Power.NOT_LOG_IN.getPower());
         //写入redis
-        String EVIL_EYE = cacheRedisService.put(session, Weeks(1));
+        String EVIL_EYE = cacheRedisService.put(session, weeks(1));
         //写入响应头部
         response.setHeader("EVIL_EYE", EVIL_EYE);
 
@@ -126,7 +126,7 @@ public class SessionServiceImpl implements SessionService {
      * @param response 响应
      */
     public void updateSession(String EVIL_EYE, Session session, HttpServletResponse response) {
-        cacheRedisService.update(EVIL_EYE, session, Weeks(1));
+        cacheRedisService.update(EVIL_EYE, session, weeks(1));
         //写入响应头部
         response.setHeader("EVIL_EYE", EVIL_EYE);
     }
@@ -141,6 +141,9 @@ public class SessionServiceImpl implements SessionService {
     public boolean removeLoginIDElement(HttpServletRequest request,String loginID,HttpServletResponse response) {
         String EVIL_EYE = this.getEVIL_EYE(request);
         Session session = this.getSession(EVIL_EYE);
+        if (StringUtil.isEmpty(session.getLoginID())){
+            return true;
+        }
         if (loginID.equals(session.getLoginID())){
             cacheRedisService.remove(session.getLoginID());
             session.setLoginID("");

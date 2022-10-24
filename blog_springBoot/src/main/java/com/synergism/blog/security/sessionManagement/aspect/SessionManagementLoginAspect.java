@@ -71,7 +71,7 @@ public class SessionManagementLoginAspect {
         assert result != null;
         if (result.getCode() == 200) {
             userInformation = (UserInformation) result.getData();
-            loginID = cacheRedisService.put(userInformation, TimeUtil.Weeks(1));
+            loginID = cacheRedisService.put(userInformation, TimeUtil.weeks(1));
             sessionService.updateSession(request, loginID, response);
             return Result.success(new Object[]{loginID, userInformation});
         }
