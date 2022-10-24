@@ -36,6 +36,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
      * @param request 原请求
      * @param key     密钥
      */
+    @SuppressWarnings("unchecked") //关闭map转换警告
     public RequestWrapper(HttpServletRequest request, String key, CryptographyService cryptographyService) throws JsonProcessingException {
         //super HttpServletRequestWrapper 构造方法构造请求
         super(request);
