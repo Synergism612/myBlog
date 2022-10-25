@@ -1,5 +1,6 @@
 <template>
   <div class="box">
+    <div id="content_shade" v-if="pageFullScreen"></div>
     <Menu></Menu>
     <div class="container">
       <el-container>
@@ -38,13 +39,25 @@
                   作者:{{ author.nickname }}
                 </el-row>
 
+                <!-- 目录 -->
+                <el-divider />
+                <el-row class="catalog">
+                  <MdCatalog
+                    :editorId="editorName"
+                    :scroll-element="scrollElement"
+                  />
+                </el-row>
+
                 <!-- 文章内容 -->
                 <el-divider />
                 <el-row class="info">
                   <MdEditor
+                    :key="refresh"
+                    :editorId="editorName"
                     v-model="article.body"
-                    :preview-only="true"
-                  ></MdEditor>
+                    preview-only
+                    v-model:pageFullScreen="pageFullScreen"
+                  />
                 </el-row>
 
                 <!-- 文章分类标签信息 -->
@@ -99,28 +112,31 @@
         </el-main>
       </el-container>
     </div>
+    <Toolboxe page-name="content" @toFull="toFull"></Toolboxe>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Menu from "@/components/menu/Menu.vue";
-import MdEditor from "md-editor-v3";
 import Content from "./Content";
-
+import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
+const MdCatalog = MdEditor.MdCatalog;
+
 import { useRoute } from "vue-router";
 import { api } from "@/api/api";
 import CommentParent from "@/model/comment/CommentParent";
+import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
 
 export default defineComponent({
   setup() {
+    /**数据仓 */
     const viewData = reactive(new Content());
 
+    /**路由传参，分清route和router */
     const route = useRoute();
-
+    /**初始化 */
     const init = (): void => {
-      console.log(route.params);
-
       if (route.params) {
         /**从路由中传递的参数只会是字符串|字符串数组类型 */
         const id = Number(route.params.id); //字符串读取为数字
@@ -136,19 +152,30 @@ export default defineComponent({
           viewData.commentParentList = data.commentParentList || [
             new CommentParent(),
           ];
-          console.log(viewData);
-          viewData.article.body = "正文省略";
+          // viewData.article.body = "正文省略";
         });
       }
+    };
+
+    const scrollElement = document.documentElement;
+
+    const toFullOrlessen = (pageFullScreen: boolean) => {
+      if (pageFullScreen) {
+        console.log("background-color: var(--md-bk-color);");
+      } else {
+        /**放大后会将原本的body滚动条删去,所以需要重新添加 */
+        document.body.style.overflow = "auto";
+      }
+      viewData.pageFullScreen = pageFullScreen;
+      viewData.refresh = viewData.refresh + 1;
     };
 
     onMounted(() => {
       init();
     });
-
-    return { ...toRefs(viewData) };
+    return { ...toRefs(viewData), scrollElement, toFull: toFullOrlessen };
   },
-  components: { Menu, MdEditor },
+  components: { Menu, MdEditor, MdCatalog, Toolboxe },
 });
 </script>
 <style lang="less">
