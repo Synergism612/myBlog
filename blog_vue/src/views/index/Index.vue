@@ -93,6 +93,7 @@
           </el-row>
         </el-main>
       </el-container>
+      <Toolboxe page-name="index"></Toolboxe>
     </div>
   </div>
 </template>
@@ -106,6 +107,7 @@ import StringUtil from "@/utils/StringUtil";
 import Index from "./Index";
 import Cloud from "@/components/cloud/Cloud.vue";
 import Article from "@/components/article/indexArticle/IndexArticle.vue";
+import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
 
 export default defineComponent({
   setup() {
@@ -151,6 +153,7 @@ export default defineComponent({
     loading,
     Cloud,
     Article,
+    Toolboxe,
   },
 });
 </script>
