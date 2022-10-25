@@ -55,16 +55,31 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         //获得子评论
         List<CommentInformation> childList = listMap.get(false);
 
+        //根评论是父评论，而子评论还需要判断是否是回复子评论的子评论，如
+        //A:真不错 -> 文章的一个根评论，父评论
+        //  B:确实不错 -> 将作为A的评论的下属子评论，是回复父评论的评论
+        //  A: 回复@B 是吧，很不错吧 -> 该子评论作为父评论的子评论同时还是子评论的回复，所以需要一个被回复者昵称作为标识
         return rootList.stream().map(root -> {
-            List<CommentChild> commentChildList = //筛选该根评论下的评论
+            List<CommentChild> commentChildList =
                     childList.stream()
+                            //筛选该根评论下的所有子评论
                             .filter(child -> child.getRootId().equals(root.getId()))
+                            //转为子评论
+                            .map(child -> {
+                                CommentChild commentChild = new CommentChild(child, "");
+                                //筛选出存在回复的子评论
+                                childList.forEach(childParent->{
+                                    //根据子评论的父评论id填充被回复者昵称
+                                    if (childParent.getId().equals(child.getParentId())){
+                                        commentChild.setParentNickname(childParent.getNickname());
+                                    }
+                                });
+                                return commentChild;
+                            })
                             //按点赞数倒序排序
                             .sorted(Comparator.comparing(Comment::getLikeCount).reversed())
-                            //获得前三个
-                            .limit(3)
-                            //转为子评论
-                            .map(child -> new CommentChild(child, ""))
+                            //获得前五个
+                            .limit(5)
                             .collect(Collectors.toList());
             //将根评论封装为父评论
             return new CommentParent(root, commentChildList);
