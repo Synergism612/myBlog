@@ -1,0 +1,24 @@
+.box {
+  .toolboxes {
+    width: 5vh;
+    min-height: 5vh;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    bottom: 5vh;
+    right: 5vh;
+    z-index: 99999;
+    .tool {
+      height: 5vh;
+      margin: 0.5em 0;
+      display: flex;
+      border-radius: 100%;
+      box-shadow: 0 2px 5px -1px rgba(9, 2, 4, 0.8);
+      cursor: pointer;
+
+      span {
+        margin: auto;
+      }
+    }
+  }
+}
