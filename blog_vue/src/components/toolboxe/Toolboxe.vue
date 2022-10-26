@@ -7,6 +7,12 @@
       <div class="full tool" v-if="full" @click="toFull">
         <FullScreen theme="outline" size="24" fill="#333" />
       </div>
+      <div class="catalog tool" v-if="catalog" @click="toCatalog">
+        <ListMiddle theme="outline" size="24" fill="#333" />
+      </div>
+      <div class="forum tool" v-if="forum" @click="toForum">
+        <Comments theme="outline" size="24" fill="#333" />
+      </div>
       <div class="index tool" v-if="index" @click="toIndex">
         <Home theme="outline" size="24" fill="#333" />
       </div>
@@ -18,7 +24,14 @@
 </template>
 
 <script lang="ts">
-import { ArrowUp, FullScreen, Home, OffScreen } from "@icon-park/vue-next";
+import {
+  ArrowUp,
+  Comments,
+  FullScreen,
+  Home,
+  ListMiddle,
+  OffScreen,
+} from "@icon-park/vue-next";
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import Toolboxe from "./Toolboxe";
@@ -51,13 +64,23 @@ export default defineComponent({
     const toLessen = (): void => {
       viewData.full = true;
       emit("toFull", false);
+      viewData.catalog = true;
       viewData.lessen = false;
     };
 
     const toFull = (): void => {
       viewData.lessen = true;
       emit("toFull", true);
+      viewData.catalog = false;
       viewData.full = false;
+    };
+
+    const toCatalog = (): void => {
+      emit("toCatalog", true);
+    };
+
+    const toForum = (): void => {
+      emit("toForum", true);
     };
 
     const toIndex = (): void => {
@@ -65,11 +88,15 @@ export default defineComponent({
     };
 
     const toTop = (): void => {
+      top();
+    };
+
+    const top = (): void => {
       var timer = setInterval(() => {
         if (html.scrollTop <= 0) {
           clearInterval(timer);
         }
-        html.scrollTop = html.scrollTop - screen / 10;
+        html.scrollTop = html.scrollTop - screen / 2;
       }, 10);
     };
 
@@ -85,6 +112,8 @@ export default defineComponent({
           {
             viewData.show = true;
             viewData.full = true;
+            viewData.catalog = true;
+            viewData.forum = true;
             viewData.index = true;
             viewData.top = true;
           }
@@ -99,13 +128,17 @@ export default defineComponent({
       ...toRefs(viewData),
       toLessen,
       toFull,
+      toCatalog,
+      toForum,
       toIndex,
       toTop,
     };
   },
   components: {
     ArrowUp,
+    Comments,
     Home,
+    ListMiddle,
     FullScreen,
     OffScreen,
   },

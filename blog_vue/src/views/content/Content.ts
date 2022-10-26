@@ -5,10 +5,6 @@ import Tag from "@/model/tag/Tag";
 import Author from "@/model/user/Author";
 
 export default class Content {
-  menuShow: boolean;
-  id: number;
-  title: string;
-
   article: Article;
   author: Author;
   classify: Classify;
@@ -17,13 +13,10 @@ export default class Content {
 
   refresh: number;
   editorName: string;
+  catalogShow: boolean;
   pageFullScreen: boolean;
 
   constructor() {
-    this.menuShow = true;
-    this.id = -1;
-    this.title = "";
-
     this.article = new Article();
     this.author = new Author();
     this.classify = new Classify();
@@ -31,6 +24,7 @@ export default class Content {
     this.commentParentList = [new CommentParent()];
 
     this.refresh = 0;
+    this.catalogShow = false;
     this.editorName = "MyEditor";
     this.pageFullScreen = false;
   }
