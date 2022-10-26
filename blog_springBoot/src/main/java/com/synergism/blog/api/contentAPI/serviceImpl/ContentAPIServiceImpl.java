@@ -17,7 +17,9 @@ import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ContentAPIServiceImpl implements ContentAPIService {
@@ -38,19 +40,37 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     }
 
     @Override
-    public Result<Content> getContent(long id, String title) {
-        Article article = articleService.getById(id);
-        if (!article.getTitle().equals(title)) {
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("参数异常"));
+    public Result<Article> getArticle(long id) {
+        return Result.success(articleService.getById(id));
+    }
+
+    @Override
+    public Result<Author> getAuthor(long id) {
+        return Result.success(userService.getAuthorByArticleID(id));
+    }
+
+    @Override
+    public Result<Classify> getClassify(long id) {
+        return Result.success(classifyService.getOneByArticleID(id));
+    }
+
+    @Override
+    public Result<List<Tag>> getTagList(long id) {
+        return Result.success(tagService.getListByArticleID(id));
+    }
+
+    @Override
+    public Result<List<CommentParent>> getCommentList(long id) {
+        List<CommentParent> result = commentService.getAllListByArticleID(id);
+        if (result.size() > 2) {
+            result = result
+                    .stream()
+                    //按点赞数倒序排序
+                    .sorted(Comparator.comparing(CommentParent::getLikeCount).reversed())
+                    //获得前两个
+                    .limit(2)
+                    .collect(Collectors.toList());
         }
-        Author author = userService.getAuthorByArticleID(id);
-
-        Classify classify = classifyService.getOneByArticleID(id);
-
-        List<Tag> tagList = tagService.getListByArticleID(id);
-
-        List<CommentParent> commentParentList = commentService.getTopListByArticleID(id);
-
-        return Result.success(new Content(article, author, classify, tagList, commentParentList));
+        return Result.success(result);
     }
 }

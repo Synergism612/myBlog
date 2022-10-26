@@ -39,14 +39,14 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<CommentParent> getTopListByArticleID(long articleID) {
+    public List<CommentParent> getAllListByArticleID(long articleID) {
         //获取文章下全部评论
         List<CommentInformation> allList = this.getAllCommentInformationListByArticleID(articleID);
 
-        if (allList.size()==0)
+        if (allList.size() == 0)
             return null;
 
-            //筛选根或子评论列表 根据if(commentInformation.getRootId()==null)
+        //筛选根或子评论列表 根据if(commentInformation.getRootId()==null)
         Map<Boolean, List<CommentInformation>> listMap = allList
                 .stream()
                 .collect(Collectors.groupingBy(commentInformation -> commentInformation.getRootId() == null));
@@ -68,21 +68,18 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
                             .map(child -> {
                                 CommentChild commentChild = new CommentChild(child, "");
                                 //筛选出存在回复的子评论
-                                childList.forEach(childParent->{
+                                childList.forEach(childParent -> {
                                     //根据子评论的父评论id填充被回复者昵称
-                                    if (childParent.getId().equals(child.getParentId())){
+                                    if (childParent.getId().equals(child.getParentId())) {
                                         commentChild.setParentNickname(childParent.getNickname());
                                     }
                                 });
                                 return commentChild;
                             })
-                            //按点赞数倒序排序
-                            .sorted(Comparator.comparing(Comment::getLikeCount).reversed())
-                            //获得前五个
-                            .limit(5)
-                            .collect(Collectors.toList());
+                            .sorted(Comparator.comparing(Comment::getCreationTime)).collect(Collectors.toList());
             //将根评论封装为父评论
-            return new CommentParent(root, commentChildList);
-        }).collect(Collectors.toList());
+            return new CommentParent(root, commentChildList, commentChildList.size());
+        })
+                .collect(Collectors.toList());
     }
 }

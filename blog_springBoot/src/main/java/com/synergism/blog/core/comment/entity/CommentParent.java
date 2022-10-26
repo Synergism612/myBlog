@@ -10,8 +10,11 @@ import java.util.List;
 public class CommentParent extends CommentInformation{
     private List<CommentChild> commentChildList;
 
-    public CommentParent(CommentInformation commentInformation, List<CommentChild> commentChildList) {
+    private int childCount;
+
+    public CommentParent(CommentInformation commentInformation, List<CommentChild> commentChildList,int childCount) {
         super(commentInformation);
         this.commentChildList = commentChildList;
+        this.childCount = childCount;
     }
 }
