@@ -98,7 +98,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Menu from "@/components/menu/Menu.vue";
 import Screen from "@/components/screen/Screen.vue";
 import { api } from "@/api/api";
@@ -125,7 +125,6 @@ export default defineComponent({
     const tags = (): void => {
       api.getIndexTag(viewData.userInfo.username).then(({ data }): void => {
         viewData.tagInformationList = data;
-        console.log(viewData.tagInformationList);
       });
     };
 
@@ -134,13 +133,14 @@ export default defineComponent({
         .getIndexClassify(viewData.userInfo.username)
         .then(({ data }): void => {
           viewData.classifyInformationList = data;
-          console.log(viewData.classifyInformationList);
         });
     };
 
-    userInfo();
-    tags();
-    classify();
+    onMounted(() => {
+      userInfo();
+      tags();
+      classify();
+    });
 
     return {
       ...toRefs(viewData),
