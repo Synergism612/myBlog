@@ -6,6 +6,8 @@ import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.service.ClassifyService;
+import com.synergism.blog.core.comment.entity.Comment;
+import com.synergism.blog.core.comment.entity.CommentChild;
 import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.comment.service.CommentService;
 import com.synergism.blog.core.tag.entity.Tag;
@@ -14,6 +16,7 @@ import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
+import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,16 +64,6 @@ public class ContentAPIServiceImpl implements ContentAPIService {
 
     @Override
     public Result<List<CommentParent>> getCommentList(long id) {
-        List<CommentParent> result = commentService.getAllListByArticleID(id);
-        if (result.size() > 2) {
-            result = result
-                    .stream()
-                    //按点赞数倒序排序
-                    .sorted(Comparator.comparing(CommentParent::getLikeCount).reversed())
-                    //获得前两个
-                    .limit(2)
-                    .collect(Collectors.toList());
-        }
-        return Result.success(result);
+        return Result.success(commentService.getAllListByArticleID(id));
     }
 }
