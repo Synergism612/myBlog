@@ -17,7 +17,6 @@
       </el-sub-menu>
     </el-menu>
   </div>
-  <div id="menu_shade"></div>
 </template>
 
 <script lang="ts">
@@ -61,6 +60,7 @@ export default defineComponent({
     watch(
       getLoginID,
       (value, oldValue) => {
+        oldValue;
         if (!StringUtil.checkStringIfEmpty(value)) {
           viewData.userInfo.nickname = store.getters.getUser.nickname;
           viewData.userInfo.icon = store.getters.getUser.icons;
