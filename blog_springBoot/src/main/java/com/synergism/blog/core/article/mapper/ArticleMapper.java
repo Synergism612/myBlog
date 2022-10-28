@@ -3,7 +3,7 @@ package com.synergism.blog.core.article.mapper;
 import com.synergism.blog.core.article.entity.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.synergism.blog.core.article.entity.ArticleInformation;
-import com.synergism.blog.core.article.enumeration.ArticleSort;
+import com.synergism.blog.core.article.entity.ArticleTagNominate;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,6 +19,9 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
 
-    List<ArticleInformation> getArticleInformationList();
+    List<ArticleInformation> getAllArticleInformationList();
 
+    List<Article> getOneClassifyArticleList(long id);
+
+    List<ArticleTagNominate> getMoreTagArticleList(long id);
 }

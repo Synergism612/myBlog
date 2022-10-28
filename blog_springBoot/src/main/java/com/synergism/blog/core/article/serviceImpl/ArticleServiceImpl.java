@@ -2,6 +2,7 @@ package com.synergism.blog.core.article.serviceImpl;
 
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleInformation;
+import com.synergism.blog.core.article.entity.ArticleTagNominate;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.core.article.mapper.ArticleMapper;
 import com.synergism.blog.core.article.service.ArticleService;
@@ -32,8 +33,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         this.mapper = mapper;
     }
 
+
+    @Override
+    public List<ArticleInformation> getAllArticleInformationList() {
+        return mapper.getAllArticleInformationList();
+    }
+
     @Override
     public List<ArticleInformation> ArticleInformationListSort(List<ArticleInformation> articleInformationList, ArticleSort articleSort) {
+        if (articleInformationList.size() == 0) return null;
         switch (articleSort) {
             case views:
                 return articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getViews).reversed()).collect(Collectors.toList());
@@ -47,12 +55,34 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleInformation> getArticleInformationList() {
-        return mapper.getArticleInformationList();
+    public List<ArticleInformation> getArticleInformationListByUsername(String username) {
+        List<ArticleInformation> result = this.getAllArticleInformationList()
+                .stream()
+                .filter(articleInformation ->
+                        articleInformation.getUsername().equals(username))
+                .collect(Collectors.toList());
+        return result.size() == 0 ? null : result;
     }
 
     @Override
-    public List<ArticleInformation> getArticleInformationListByUsername(String username) {
-        return this.getArticleInformationList().stream().filter(articleInformation -> articleInformation.getUsername().equals(username)).collect(Collectors.toList());
+    public List<Article> getOneClassifyArticleList(long id) {
+        List<Article> result = mapper.getOneClassifyArticleList(id)
+                .stream()
+                .sorted(Comparator.comparing(Article::getCreationTime)
+                        .reversed())
+                .collect(Collectors.toList());
+        return result.size() == 0 ? null : result;
+
+    }
+
+    @Override
+    public List<ArticleTagNominate> getMoreTagArticleList(long id) {
+        List<ArticleTagNominate> result = mapper.getMoreTagArticleList(id)
+                .stream()
+                .sorted(Comparator.comparing(ArticleTagNominate::getTagCount)
+                        .reversed())
+                .collect(Collectors.toList());
+        return result.size() == 0 ? null : result;
+
     }
 }

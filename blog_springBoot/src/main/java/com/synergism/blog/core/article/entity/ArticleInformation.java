@@ -18,7 +18,7 @@ public class ArticleInformation extends Article {
     //是否私有
     private int ifPrivate;
     //分类
-    private List<Classify> classifyList;
+    private Classify classify;
     //标签
     private List<Tag> tagList;
 }

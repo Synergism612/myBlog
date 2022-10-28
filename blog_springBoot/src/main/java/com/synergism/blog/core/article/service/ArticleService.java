@@ -3,8 +3,8 @@ package com.synergism.blog.core.article.service;
 import com.synergism.blog.core.article.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.article.entity.ArticleInformation;
+import com.synergism.blog.core.article.entity.ArticleTagNominate;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
-import com.synergism.blog.core.article.mapper.ArticleMapper;
 
 import java.util.List;
 
@@ -20,6 +20,12 @@ import java.util.List;
 public interface ArticleService extends IService<Article> {
 
     /**
+     * 获取文章信息列表
+     * @return 文章信息列表
+     */
+    List<ArticleInformation> getAllArticleInformationList();
+
+    /**
      * 获取排序后的文章信息列表
      * @param articleInformationList 需要排序的文章信息列表
      * @param articleSort 排序字段
@@ -28,16 +34,18 @@ public interface ArticleService extends IService<Article> {
     List<ArticleInformation> ArticleInformationListSort(List<ArticleInformation> articleInformationList,ArticleSort articleSort);
 
     /**
-     * 获取文章信息列表
-     * @return 文章信息列表
-     */
-    List<ArticleInformation> getArticleInformationList();
-
-    /**
      * 获取该用户下文章信息列表
      * @param username 用户名
      * @return 文章信息列表
      */
     List<ArticleInformation> getArticleInformationListByUsername(String username);
 
+    /**
+     * 获得与文章id同类的文章
+     * @param id 需要查询的文章id
+     * @return 文章列表
+     */
+    List<Article> getOneClassifyArticleList(long id);
+
+    List<ArticleTagNominate> getMoreTagArticleList(long id);
 }
