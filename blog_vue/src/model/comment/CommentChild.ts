@@ -1,10 +1,12 @@
 import CommentInformation from "./CommentInformation";
 
 export default class CommentChild extends CommentInformation {
+  parentUserName: string;
   parentNickname: string;
 
   constructor() {
     super();
-    this, (this.parentNickname = "");
+    this.parentUserName = "";
+    this.parentNickname = "";
   }
 }

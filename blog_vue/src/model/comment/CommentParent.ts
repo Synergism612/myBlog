@@ -9,6 +9,5 @@ export default class CommentParent extends CommentInformation {
     super();
     this.commentChildList = [new CommentChild()];
     this.childCount = -1;
-    console.log(this.id);
   }
 }
