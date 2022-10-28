@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommentChild extends CommentInformation {
+    private String parentUserName;
     private String parentNickname;
 
     public CommentChild(CommentInformation commentInformation, String parentNickname) {

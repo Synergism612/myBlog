@@ -69,8 +69,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
                                 CommentChild commentChild = new CommentChild(child, "");
                                 //筛选出存在回复的子评论
                                 childList.forEach(childParent -> {
-                                    //根据子评论的父评论id填充被回复者昵称
+                                    //根据子评论的父评论id填充被回复者昵称和账号
                                     if (childParent.getId().equals(child.getParentId())) {
+                                        commentChild.setParentUserName(childParent.getUsername());
                                         commentChild.setParentNickname(childParent.getNickname());
                                     }
                                 });
