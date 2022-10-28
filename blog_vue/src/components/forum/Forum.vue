@@ -1,5 +1,21 @@
 <template>
   <div class="box">
+    <el-row class="input">
+      <el-col class="left" :span="1">
+        <span>发表评论</span>
+      </el-col>
+      <el-col class="middle" :span="22">
+        <el-input
+          v-model="commentInput"
+          :rows="2"
+          type="textarea"
+          placeholder="Please input"
+        />
+      </el-col>
+      <el-col class="right" :span="1">
+        <span>提交</span>
+      </el-col>
+    </el-row>
     <el-row class="forum">
       <el-col
         :span="24"
@@ -21,32 +37,36 @@
           <span>{{ comment.creationTime }}</span>
           <span>点赞{{ comment.likeCount }}</span>
           <span>回复</span>
-          <el-col
-            :span="24"
-            v-for="child in comment.commentChildList"
-            :key="child.id"
-            class="child"
-          >
-            <el-col :span="2">
-              <div
-                class="icon"
-                :style="{
-                  backgroundImage: 'url(' + child.icon + ')',
-                }"
-              ></div>
-            </el-col>
-            <el-col :span="22">
-              <span>{{ child.nickname }}</span>
-              <span v-if="child.parentNickname != ''">
-                @{{ child.parentNickname }}
-              </span>
-              <p class="body">{{ child.body }}</p>
-              <span>{{ child.creationTime }}</span>
-              <span>点赞{{ child.likeCount }}</span>
-              <span>回复</span>
+          <el-col class="children" v-if="comment.commentChildList[0].id != -1">
+            <el-col
+              :span="24"
+              v-for="child in comment.commentChildList"
+              :key="child.id"
+              class="child"
+            >
+              <el-col :span="2">
+                <div
+                  class="icon"
+                  :style="{
+                    backgroundImage: 'url(' + child.icon + ')',
+                  }"
+                ></div>
+              </el-col>
+              <el-col :span="22">
+                <span>{{ child.nickname }}</span>
+                <span v-if="child.parentNickname != ''" class="parent">
+                  @{{ child.parentNickname }}
+                </span>
+                <p class="body">{{ child.body }}</p>
+                <span>{{ child.creationTime }}</span>
+                <span>点赞{{ child.likeCount }}</span>
+                <span>回复</span>
+              </el-col>
             </el-col>
           </el-col>
-          <span v-if="comment.childCount > 2">更多评论</span>
+          <el-divider
+            v-if="comment.id != commentList[commentList.length - 1].id"
+          />
         </el-col>
       </el-col>
     </el-row>
@@ -66,7 +86,9 @@ export default defineComponent({
   },
   setup(props) {
     /**数据仓初始化 */
-    const viewData = reactive({});
+    const viewData = reactive({
+      commentInput: "",
+    });
 
     return {
       ...toRefs(viewData),

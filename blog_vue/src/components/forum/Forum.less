@@ -1,7 +1,46 @@
 .box {
+  .input {
+    width: 100%;
+    bottom: 0;
+
+    .left {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-content: space-around;
+      span {
+        width: 2em;
+        height: 2.5em;
+      }
+    }
+
+    .middle {
+      .el-textarea {
+        .el-textarea__inner {
+          min-height: 3.2em !important;
+          background-color: rgba(0, 0, 0, 0);
+          border: none;
+          --el-input-focus-border-color:rgb(63, 196, 194);
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column-reverse;
+      align-content: space-around;
+      span {
+        width: 2em;
+        height: 1.5em;
+      }
+    }
+  }
   .forum {
+    margin-top: 1em;
     .comment {
-      span,p{
+      span,
+      p {
         margin-left: 0.5em;
       }
       display: flex;
@@ -14,31 +53,65 @@
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
-        background-color: aqua;
+        background-color: darkolivegreen;
       }
-      .body{
+      .body {
         font-size: 1.1em;
       }
-      .child {
-        display: flex;
-        font-size: 0.8em;
-        flex-direction: row;
-        align-items: center;
-        margin: 1em 0;
+      .children {
+        height: auto;
+        min-height: 16vh;
+        max-height: 30vh;
+        padding: 10px;
+        resize: vertical; /* 设置元素的高度可调整 */
+        overflow: auto;
 
-        .icon {
-          width: 3em;
-          height: 3em;
-          margin: auto;
-          border-radius: 100%;
-          background-position: center;
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-color: aqua;
+        .child {
+          display: flex;
+          font-size: 0.8em;
+          flex-direction: row;
+          align-items: center;
+          margin: 1em 0;
+
+          .icon {
+            width: 3em;
+            height: 3em;
+            margin: auto;
+            border-radius: 100%;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: darkolivegreen;
+          }
+          .parent {
+            color: rgb(63, 196, 194);
+            cursor: pointer;
+          }
+          .parent:hover {
+            border-bottom: 1px solid rgb(63, 196, 194);
+          }
+          .body {
+            font-size: 1em;
+          }
         }
-        .body{
-          font-size: 1em;
-        }
+      }
+
+      .children::-webkit-scrollbar {
+        width: 4px;
+      }
+      .children::-webkit-scrollbar-thumb {
+        background-color: rgb(84, 92, 100);
+        border-radius: 2px;
+      }
+      .children::-webkit-scrollbar-track {
+        background-color: rgb(150, 150, 150);
+      }
+
+      .more {
+        cursor: pointer;
+      }
+      .more:hover {
+        border-bottom: 1px solid black;
       }
     }
   }
