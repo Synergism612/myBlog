@@ -28,7 +28,7 @@ public class ArticleAPIServiceImpl implements ArticleAPIService {
         int endIndex = currentPage * pageSize;
         List<ArticleInformation> result;
         if (StringUtil.isEmpty(username)){
-            result = service.getArticleInformationList();
+            result = service.getAllArticleInformationList();
         }else {
             result = service.getArticleInformationListByUsername(username);
         }
