@@ -1,5 +1,6 @@
 import Classify from "../classify/Classify";
 import Tag from "../tag/Tag";
+import TagInformation from "../tag/TagInformation";
 import Article from "./Article";
 
 export default class ArticleInformation extends Article {
@@ -8,15 +9,15 @@ export default class ArticleInformation extends Article {
 
   ifPrivate: number;
 
-  classifyList: Array<Classify>;
+  classify: Classify;
 
   tagList: Array<Tag>;
 
-  constructor(){
+  constructor() {
     super();
     this.nickname = "";
     this.ifPrivate = -1;
-    this.classifyList = [];
-    this.tagList = [];
+    this.classify = new Classify();
+    this.tagList = [new TagInformation()];
   }
 }
