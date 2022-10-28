@@ -216,23 +216,6 @@ export class api {
   }
 
   /**
-   * 内容页面接口
-   * @param articleID 文章id
-   * @param title 文章标题
-   * @returns 文章信息
-   */
-  public static getContent(
-    articleID: number,
-    title: string
-  ): Promise<AxiosResponse> {
-    return axios({
-      url: "/api/blog/content",
-      method: "get",
-      params: { id: articleID, title: title },
-    });
-  }
-
-  /**
    * 内容评文章接口
    * @param articleID 文章id
    * @returns 文章内容
@@ -241,9 +224,10 @@ export class api {
     return axios({
       url: "/api/blog/content/article",
       method: "get",
-      params: { id: articleID },
+      params: { articleID: articleID },
     });
   }
+
   /**
    * 内容作者接口
    * @param articleID 文章id
@@ -253,9 +237,10 @@ export class api {
     return axios({
       url: "/api/blog/content/author",
       method: "get",
-      params: { id: articleID },
+      params: { articleID: articleID },
     });
   }
+
   /**
    * 内容分类接口
    * @param articleID 文章id
@@ -265,9 +250,10 @@ export class api {
     return axios({
       url: "/api/blog/content/classify",
       method: "get",
-      params: { id: articleID },
+      params: { articleID: articleID },
     });
   }
+
   /**
    * 内容标签接口
    * @param articleID 文章id
@@ -277,9 +263,10 @@ export class api {
     return axios({
       url: "/api/blog/content/tagList",
       method: "get",
-      params: { id: articleID },
+      params: { articleID: articleID },
     });
   }
+
   /**
    * 内容评论区接口
    * @param articleID 文章id
@@ -291,7 +278,37 @@ export class api {
     return axios({
       url: "/api/blog/content/commentList",
       method: "get",
-      params: { id: articleID },
+      params: { articleID: articleID },
+    });
+  }
+
+  /**
+   * 内容分类推荐区接口
+   * @param articleID 文章id
+   * @returns 评论列表
+   */
+  public static getContentClassifyNominate(
+    articleID: number
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/content/nominate/classify",
+      method: "get",
+      params: { articleID: articleID },
+    });
+  }
+
+  /**
+   * 内容标签推荐区接口
+   * @param articleID 文章id
+   * @returns 评论列表
+   */
+  public static getContentTagNominate(
+    articleID: number
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/content/nominate/tag",
+      method: "get",
+      params: { articleID: articleID },
     });
   }
 }
