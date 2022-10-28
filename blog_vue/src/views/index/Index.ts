@@ -1,3 +1,4 @@
+import { api } from "@/api/api";
 import ClassifyInformation from "@/model/classify/ClassifyInformation";
 import TagInformation from "@/model/tag/TagInformation";
 import UserInfo from "@/model/user/UserInfo";
@@ -23,5 +24,31 @@ export default class Index {
     this.calender = new Date();
     this.tagInformationList = [new TagInformation()];
     this.classifyInformationList = [new ClassifyInformation()];
+  }
+
+  public init(): void {
+    const userInfo = (): void => {
+      if (StringUtil.checkStringIfEmpty(this.userInfo.username)) {
+        api.getIndexUserInfo().then(({ data }) => {
+          this.userInfo = data;
+          this.ifLogin = false;
+        });
+      }
+    };
+
+    const tags = (): void => {
+      api.getIndexTag(this.userInfo.username).then(({ data }): void => {
+        this.tagInformationList = data;
+      });
+    };
+
+    const classify = (): void => {
+      api.getIndexClassify(this.userInfo.username).then(({ data }): void => {
+        this.classifyInformationList = data;
+      });
+    };
+    userInfo();
+    tags();
+    classify();
   }
 }

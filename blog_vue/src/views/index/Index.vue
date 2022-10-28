@@ -27,7 +27,7 @@
               <!-- 分左右区 -->
               <el-row :gutter="20" justify="space-around">
                 <!-- 左侧 -->
-                <el-col :xs="24" :sm="24" :md="18" :span="18">
+                <el-col :xs="24" :sm="18" :md="18" :span="18">
                   <Article></Article>
                 </el-col>
                 <!-- 右侧 -->
@@ -101,9 +101,7 @@
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Menu from "@/components/menu/Menu.vue";
 import Screen from "@/components/screen/Screen.vue";
-import { api } from "@/api/api";
 import { Me as me, Loading as loading } from "@icon-park/vue-next";
-import StringUtil from "@/utils/StringUtil";
 import Index from "./Index";
 import Cloud from "@/components/cloud/Cloud.vue";
 import Article from "@/components/article/indexArticle/IndexArticle.vue";
@@ -113,33 +111,8 @@ export default defineComponent({
   setup() {
     const viewData = reactive(new Index());
 
-    const userInfo = (): void => {
-      if (StringUtil.checkStringIfEmpty(viewData.userInfo.username)) {
-        api.getIndexUserInfo().then(({ data }) => {
-          viewData.userInfo = data;
-          viewData.ifLogin = false;
-        });
-      }
-    };
-
-    const tags = (): void => {
-      api.getIndexTag(viewData.userInfo.username).then(({ data }): void => {
-        viewData.tagInformationList = data;
-      });
-    };
-
-    const classify = (): void => {
-      api
-        .getIndexClassify(viewData.userInfo.username)
-        .then(({ data }): void => {
-          viewData.classifyInformationList = data;
-        });
-    };
-
     onMounted(() => {
-      userInfo();
-      tags();
-      classify();
+      viewData.init();
     });
 
     return {
