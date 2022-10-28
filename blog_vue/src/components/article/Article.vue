@@ -43,19 +43,8 @@
                       fill="#000000"
                       :strokeWidth="2"
                     />
-                    <div
-                      v-for="classify in article.classifyList"
-                      :key="classify.id"
-                      class="classifys"
-                    >
-                      <el-tooltip
-                        class="box-item"
-                        effect="dark"
-                        :content="classify.annotation"
-                        placement="right"
-                      >
-                        <span>{{ classify.name }}</span>
-                      </el-tooltip>
+                    <div class="classify">
+                      <span>{{ article.classify.name }}</span>
                     </div>
                   </el-col>
                   <el-col :span="24">
@@ -70,14 +59,7 @@
                       :key="tag.id"
                       class="tags"
                     >
-                      <el-tooltip
-                        class="box-item"
-                        effect="dark"
-                        :content="tag.annotation"
-                        placement="right"
-                      >
-                        <span>{{ tag.name }}</span>
-                      </el-tooltip>
+                      <span>{{ tag.name }}</span>
                     </div>
                   </el-col>
                 </el-row>
