@@ -36,7 +36,9 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
 
     @Override
     public List<TagInformation> getTagInformationListByUsername(String username) {
-        return this.getAllTagInformationList()
+        List<TagInformation> result = this.getAllTagInformationList();
+        if (result.size() == 0) return null;
+        return result
                 .stream()
                 .filter(tagInformation -> tagInformation
                         .getUsername()
@@ -46,6 +48,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
 
     @Override
     public List<Tag> getListByArticleID(long articleID) {
-        return mapper.getListByArticleID(articleID);
+        List<Tag> result = mapper.getListByArticleID(articleID);
+        return result.size()==0?null:result;
     }
 }

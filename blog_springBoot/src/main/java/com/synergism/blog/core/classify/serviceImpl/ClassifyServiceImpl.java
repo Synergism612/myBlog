@@ -36,7 +36,9 @@ public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify> i
 
     @Override
     public List<ClassifyInformation> getClassifyInformationListByUsername(String username) {
-        return this.getAllClassifyInformationList()
+        List<ClassifyInformation> result = this.getAllClassifyInformationList();
+        if (result.size()==0) return null;
+        return result
                 .stream()
                 .filter(classifyInformation -> classifyInformation
                         .getUsername()
