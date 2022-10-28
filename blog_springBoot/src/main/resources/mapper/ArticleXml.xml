@@ -17,7 +17,7 @@
         <result column="nickname" property="nickname"/>
         <result column="username" property="username"/>
 
-        <collection property="classifyList" ofType="com.synergism.blog.core.classify.entity.Classify">
+        <collection property="classify" ofType="com.synergism.blog.core.classify.entity.Classify">
             <id column="classify_id" property="id"/>
             <result column="classify_name" property="name"/>
             <result column="classify_annotation" property="annotation"/>
@@ -30,7 +30,7 @@
         </collection>
     </resultMap>
 
-    <select id="getArticleInformationList" resultMap="ArticleInformationMap">
+    <select id="getAllArticleInformationList" resultMap="ArticleInformationMap">
         select a.*,
                ua.if_private,
                u.nickname,
@@ -58,6 +58,50 @@
                              atg.article_id = a.id and
                              t.id = atg.tag_id
 
+    </select>
+    <select id="getOneClassifyArticleList" resultType="com.synergism.blog.core.article.entity.Article">
+        select a.id,
+               a.icon,
+               a.title,
+               a.body,
+               a.synopsis,
+               a.views,
+               a.like_count,
+               a.creation_time,
+               a.modify_time
+        from article_classify ac1
+                 join
+             (article_classify ac2,
+                 article a)
+             on
+                     ac1.classify_id = ac2.classify_id and
+                     ac2.article_id = a.id
+        where ac1.article_id != ac2.article_id
+          and ac1.article_id = #{id}
+    </select>
+    <select id="getMoreTagArticleList" resultType="com.synergism.blog.core.article.entity.ArticleTagNominate">
+        select count(atg1.tag_id) tagCount,
+               a.id,
+               a.icon,
+               a.title,
+               a.body,
+               a.synopsis,
+               a.views,
+               a.like_count,
+               a.creation_time,
+               a.modify_time
+        from article_tag atg1
+                 join
+             (article_tag atg2 ,
+                 article a
+                 )
+             on
+                     atg1.tag_id = atg2.tag_id and
+                     atg2.article_id = a.id
+        where atg1.article_id != atg2.article_id
+          and atg1.article_id = #{id}
+        group by atg1.article_id,
+                 atg2.article_id
     </select>
 
 </mapper>
