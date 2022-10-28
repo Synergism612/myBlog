@@ -49,11 +49,13 @@ export default defineComponent({
 
     const router = useRouter();
 
+    /**
+     * 该函数用于是否开启
+     * 当滚动高度大于某值时出现工具栏
+     */
     const showInit = (): void => {
       window.addEventListener("scroll", () => {
-        // 滚动事件
         if (html.scrollTop >= screen) {
-          //当滚动高度大于等于100返回顶部出现
           viewData.show = true;
         } else {
           viewData.show = false;
@@ -91,9 +93,12 @@ export default defineComponent({
       top();
     };
 
+    /**回到顶部函数 */
     const top = (): void => {
+      viewData.show = false;
       var timer = setInterval(() => {
         if (html.scrollTop <= 0) {
+          viewData.show = true;
           clearInterval(timer);
         }
         html.scrollTop = html.scrollTop - screen / 2;
