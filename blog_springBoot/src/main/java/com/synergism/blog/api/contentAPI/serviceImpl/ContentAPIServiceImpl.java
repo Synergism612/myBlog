@@ -1,28 +1,22 @@
 package com.synergism.blog.api.contentAPI.serviceImpl;
 
-import com.synergism.blog.api.contentAPI.entity.Content;
 import com.synergism.blog.api.contentAPI.service.ContentAPIService;
 import com.synergism.blog.core.article.entity.Article;
+import com.synergism.blog.core.article.entity.ArticleTagNominate;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.service.ClassifyService;
-import com.synergism.blog.core.comment.entity.Comment;
-import com.synergism.blog.core.comment.entity.CommentChild;
 import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.comment.service.CommentService;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.core.user.service.UserService;
-import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
-import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ContentAPIServiceImpl implements ContentAPIService {
@@ -43,27 +37,37 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     }
 
     @Override
-    public Result<Article> getArticle(long id) {
-        return Result.success(articleService.getById(id));
+    public Result<Article> getArticle(long articleID) {
+        return Result.success(articleService.getById(articleID));
     }
 
     @Override
-    public Result<Author> getAuthor(long id) {
-        return Result.success(userService.getAuthorByArticleID(id));
+    public Result<Author> getAuthor(long articleID) {
+        return Result.success(userService.getAuthorByArticleID(articleID));
     }
 
     @Override
-    public Result<Classify> getClassify(long id) {
-        return Result.success(classifyService.getOneByArticleID(id));
+    public Result<Classify> getClassify(long articleID) {
+        return Result.success(classifyService.getOneByArticleID(articleID));
     }
 
     @Override
-    public Result<List<Tag>> getTagList(long id) {
-        return Result.success(tagService.getListByArticleID(id));
+    public Result<List<Tag>> getTagList(long articleID) {
+        return Result.success(tagService.getListByArticleID(articleID));
     }
 
     @Override
-    public Result<List<CommentParent>> getCommentList(long id) {
-        return Result.success(commentService.getAllListByArticleID(id));
+    public Result<List<CommentParent>> getCommentList(long articleID) {
+        return Result.success(commentService.getAllListByArticleID(articleID));
+    }
+
+    @Override
+    public Result<List<Article>> getClassifyNominate(long articleID) {
+        return Result.success(articleService.getOneClassifyArticleList(articleID));
+    }
+
+    @Override
+    public Result<List<ArticleTagNominate>> getTagNominate(long articleID) {
+        return Result.success(articleService.getMoreTagArticleList(articleID));
     }
 }

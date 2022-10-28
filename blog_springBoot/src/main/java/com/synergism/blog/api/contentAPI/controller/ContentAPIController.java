@@ -1,9 +1,9 @@
 package com.synergism.blog.api.contentAPI.controller;
 
 
-import com.synergism.blog.api.contentAPI.entity.Content;
 import com.synergism.blog.api.contentAPI.service.ContentAPIService;
 import com.synergism.blog.core.article.entity.Article;
+import com.synergism.blog.core.article.entity.ArticleTagNominate;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.tag.entity.Tag;
@@ -29,27 +29,37 @@ public class ContentAPIController {
     }
 
     @GetMapping("article")
-    public Result<Article> article(@RequestParam long id){
-        return service.getArticle(id);
+    public Result<Article> article(@RequestParam long articleID){
+        return service.getArticle(articleID);
     }
 
     @GetMapping("author")
-    public Result<Author> author(@RequestParam long id){
-        return service.getAuthor(id);
+    public Result<Author> author(@RequestParam long articleID){
+        return service.getAuthor(articleID);
     }
 
     @GetMapping("classify")
-    public Result<Classify> classify(@RequestParam long id){
-        return service.getClassify(id);
+    public Result<Classify> classify(@RequestParam long articleID){
+        return service.getClassify(articleID);
     }
 
     @GetMapping("tagList")
-    public Result<List<Tag>> tagList(@RequestParam long id){
-        return service.getTagList(id);
+    public Result<List<Tag>> tagList(@RequestParam long articleID){
+        return service.getTagList(articleID);
     }
 
     @GetMapping("commentList")
-    public Result<List<CommentParent>> commentList(@RequestParam long id){
-        return service.getCommentList(id);
+    public Result<List<CommentParent>> commentList(@RequestParam long articleID){
+        return service.getCommentList(articleID);
+    }
+
+    @GetMapping("nominate/classify")
+    public Result<List<Article>> classifyNominate(@RequestParam long articleID){
+        return service.getClassifyNominate(articleID);
+    }
+
+    @GetMapping("nominate/tag")
+    public Result<List<ArticleTagNominate>> tagNominate(@RequestParam long articleID){
+        return service.getTagNominate(articleID);
     }
 }
