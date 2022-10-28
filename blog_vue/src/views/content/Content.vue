@@ -1,5 +1,5 @@
 <template>
-  <div class="box" ref="contentRef">
+  <div class="box">
     <div id="content_shade" v-if="pageFullScreen"></div>
     <Menu></Menu>
     <div class="container">
@@ -66,9 +66,44 @@
                 <el-divider />
                 <el-row :gutter="20">
                   <!-- 推荐区 -->
-                  <el-col :span="4"> 推荐区 </el-col>
+                  <el-col :xs="0" :sm="4" :md="4" :lg="4">
+                    <el-row>
+                      <el-col :span="24">
+                        同分类文章
+                        <div>
+                          <ul v-if="classifyNominate[0].id != -1">
+                            <li
+                              v-for="nominate in classifyNominate"
+                              :key="nominate.id"
+                            >
+                              {{ nominate.title }}
+                            </li>
+                          </ul>
+                          <ul v-if="classifyNominate[0].id == -1">
+                            <li>该分类下没有其他文章</li>
+                          </ul>
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="24">
+                        标签匹配文章
+                        <ul v-if="tagNominate[0].id != -1">
+                          <li
+                            v-for="nominate in tagNominate"
+                            :key="nominate.id"
+                          >
+                            {{ nominate.title }}
+                          </li>
+                        </ul>
+                        <ul v-if="classifyNominate[0].id != -1">
+                          <li>没有查到含有相同标签的其他文章</li>
+                        </ul>
+                      </el-col>
+                    </el-row>
+                  </el-col>
                   <!-- 评论区 -->
-                  <el-col :span="16">
+                  <el-col :xs="24" :sm="16" :md="16" :lg="16">
                     <el-col :span="24">
                       <div ref="forumRef">
                         <Forum
@@ -85,23 +120,25 @@
                     </el-col>
                   </el-col>
                   <!-- 作者信息 -->
-                  <el-col :span="4" class="author">
-                    <div
-                      class="icon"
-                      :style="{
-                        backgroundImage: 'url(' + author.icon + ')',
-                      }"
-                    ></div>
-                    <span>昵称:{{ author.nickname }}</span>
-                    <span>性别:{{ author.sex }}</span>
-                    <span> 生日:{{ author.birthday || "不愿透露" }} </span>
-                    <span>园龄:{{ author.upToNow }}</span>
-                    <span>简介:{{ author.intro }}</span>
-                    <span>文章数:{{ author.articleCount }}</span>
-                    <span>关注数:{{ author.notableCount }}</span>
-                    <span>粉丝数:{{ author.fansCount }}</span>
-                    <br />
-                    <span><span>关注他</span> <span>加好友</span></span>
+                  <el-col :xs="0" :sm="4" :md="4" :lg="4">
+                    <div class="author">
+                      <div
+                        class="icon"
+                        :style="{
+                          backgroundImage: 'url(' + author.icon + ')',
+                        }"
+                      ></div>
+                      <span>昵称:{{ author.nickname }}</span>
+                      <span>性别:{{ author.sex }}</span>
+                      <span> 生日:{{ author.birthday || "不愿透露" }} </span>
+                      <span>园龄:{{ author.upToNow }}</span>
+                      <span>简介:{{ author.intro }}</span>
+                      <span>文章数:{{ author.articleCount }}</span>
+                      <span>关注数:{{ author.notableCount }}</span>
+                      <span>粉丝数:{{ author.fansCount }}</span>
+                      <br />
+                      <span><span>关注他</span> <span>加好友</span></span>
+                    </div>
                   </el-col>
                 </el-row>
               </el-col>
@@ -119,6 +156,7 @@
     </div>
 
     <Toolboxe
+      v-if="toolBoxShow"
       page-name="content"
       @toFull="toFullOrlessen"
       @toForum="toForum"
@@ -135,8 +173,6 @@ import "md-editor-v3/lib/style.css";
 const MdCatalog = MdEditor.MdCatalog;
 
 import { useRoute } from "vue-router";
-import { api } from "@/api/api";
-import CommentParent from "@/model/comment/CommentParent";
 import Forum from "@/components/forum/Forum.vue";
 import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
 
@@ -147,39 +183,16 @@ export default defineComponent({
 
     /**路由传参，分清route和router */
     const route = useRoute();
-    /**从路由中传递的参数只会是字符串|字符串数组类型 */
+    /**
+     * 从路由中传递的参数只会是字符串|字符串数组类型
+     * 用于初始化
+     */
     const id = Number(route.params.id); //字符串读取为数字
 
-    const article = (): void => {
-      api.getContentArticle(id).then(({ data }) => {
-        viewData.article = data;
-        // viewData.article.body = "省略";
-      });
-    };
-    const author = (): void => {
-      api.getContentAuthor(id).then(({ data }) => {
-        viewData.author = data;
-      });
-    };
-    const classify = (): void => {
-      api.getContentClassify(id).then(({ data }) => {
-        viewData.classify = data;
-      });
-    };
-    const tagList = (): void => {
-      api.getContentTagList(id).then(({ data }) => {
-        viewData.tagList = data;
-      });
-    };
-
-    const commentList = (): void => {
-      api.getContentCommentList(id).then(({ data }) => {
-        viewData.commentParentList = data;
-        console.log(data);
-        return null;
-      });
-    };
-
+    /**
+     * 获取全页面数据
+     * 用于目录和下方的跳转函数
+     */
     const html = document.documentElement;
 
     /**
@@ -194,30 +207,31 @@ export default defineComponent({
       viewData.pageFullScreen = pageFullScreen;
       viewData.refresh = viewData.refresh + 1;
     };
-
-    /**绑定整个页面dom */
-    const contentRef = ref<HTMLElement>(document.createElement("div"));
-    /**绑定评论区dom */
+    /**用于绑定评论区dom */
     const forumRef = ref<HTMLElement>(document.createElement("div"));
 
     /**
      * 跳转到评论区
      */
     const toForum = (): void => {
-      const height = forumRef.value.getBoundingClientRect().top;
+      /**目标元素距离顶部高度=当前距离顶部高度加目标元素距离当前高度 */
+      const height =
+        html.scrollTop + forumRef.value.getBoundingClientRect().top;
       jump(height);
     };
 
     /**
-     * 跳转函数
+     * 跳转动画函数
+     * 原理每次向下移动一部分
+     * 然后10毫秒触发一次
+     * 直到到达目标高度或者到达底部为止
      * @param to 跳转位置
      */
     const jump = (to: number): void => {
+      viewData.toolBoxShow = false;
       var timer = setInterval(() => {
-        if (
-          html.scrollTop + html.clientHeight >=
-          contentRef.value.clientHeight
-        ) {
+        if (html.scrollTop + html.clientHeight >= to) {
+          viewData.toolBoxShow = true;
           clearInterval(timer);
         }
         html.scrollTop = html.scrollTop + to / 100;
@@ -232,21 +246,12 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      article();
-      // author();
-      // classify();
-      // tagList();
-      commentList();
-
-      //**我认了，匪夷所思 */
-      // viewData.id = viewData.article.id;
-      // viewData.title = viewData.article.title;
+      viewData.init(id);
     });
 
     return {
       ...toRefs(viewData),
       html,
-      contentRef,
       forumRef,
       toFullOrlessen,
       toForum,
