@@ -37,9 +37,9 @@ public class Comment {
 
     @ApiModelProperty("点赞数")
     @TableField("like_count")
-    private String likeCount;
+    private Long likeCount;
 
-    @ApiModelProperty("父评论主键")
+    @ApiModelProperty("根评论主键")
     @TableField("root_id")
     private Long rootId;
 
@@ -68,5 +68,12 @@ public class Comment {
         this.parentId = comment.parentId;
         this.creationTime = comment.creationTime;
         this.modifyTime = comment.modifyTime;
+    }
+
+    public Comment(String body,Long rootId,Long parentId){
+        this.body = body;
+        this.likeCount = 0L;
+        this.rootId = rootId;
+        this.parentId = parentId;
     }
 }

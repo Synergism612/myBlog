@@ -49,11 +49,11 @@ public class Article {
 
     @ApiModelProperty("浏览量")
     @TableField("views")
-    private String views;
+    private Long views;
 
     @ApiModelProperty("点赞数")
     @TableField("like_count")
-    private String likeCount;
+    private Long likeCount;
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty("创建时间")
