@@ -14,7 +14,7 @@
               <el-col :xs="24" :sm="24" :md="24" :lg="20" class="inform frame">
                 <el-breadcrumb separator="/">
                   <el-breadcrumb-item :to="{ path: '/' }">
-                    {{ "path" }}
+                    {{ "首页" }}
                   </el-breadcrumb-item>
                   <el-breadcrumb-item>
                     <a href="/">{{ article.title }}</a>
