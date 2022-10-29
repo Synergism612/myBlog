@@ -1,6 +1,6 @@
 <template>
   <div
-    class="box"
+    class="cloudBox"
     ref="paper"
     @mouseover="setSpeed(30)"
     @mouseleave="setSpeed(1)"

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!checkListIsEmpty()" class="box">
+  <div v-if="!checkListIsEmpty()" class="indexArticleBox">
     <!-- 文章排序 -->
     <transition
       appear

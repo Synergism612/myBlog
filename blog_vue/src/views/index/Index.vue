@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="indexBox">
     <div class="background">
       <Menu></Menu>
       <Screen></Screen>

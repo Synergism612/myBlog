@@ -1,5 +1,5 @@
 <template>
-  <div class="box" v-if="show">
+  <div class="toolBoxesBox" v-if="show">
     <div class="toolboxes">
       <div class="lessen tool" v-if="lessen" @click="toLessen">
         <OffScreen theme="outline" size="24" fill="#333" />

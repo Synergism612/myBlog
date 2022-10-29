@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!checkListIsEmpty()" class="box">
+    <div v-if="!checkListIsEmpty()" class="articleBox">
       <!-- 文章列表 -->
       <el-row class="articles">
         <el-row

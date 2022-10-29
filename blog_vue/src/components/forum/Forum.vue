@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="forumBox">
     <el-row class="input">
       <el-col class="left" :span="1">
         <span>发表评论</span>

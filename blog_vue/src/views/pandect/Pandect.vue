@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="pandectBox">
   
   </div>
 </template>
