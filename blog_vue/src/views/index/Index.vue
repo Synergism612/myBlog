@@ -28,7 +28,7 @@
               <el-row :gutter="20" justify="space-around">
                 <!-- 左侧 -->
                 <el-col :xs="24" :sm="18" :md="18" :span="18">
-                  <Article></Article>
+                  <IndexArticle></IndexArticle>
                 </el-col>
                 <!-- 右侧 -->
                 <el-col :xs="0" :sm="6" :md="6" :span="6">
@@ -104,7 +104,7 @@ import Screen from "@/components/screen/Screen.vue";
 import { Me as me, Loading as loading } from "@icon-park/vue-next";
 import Index from "./Index";
 import Cloud from "@/components/cloud/Cloud.vue";
-import Article from "@/components/article/indexArticle/IndexArticle.vue";
+import IndexArticle from "@/components/article/indexArticle/IndexArticle.vue";
 import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
 
 export default defineComponent({
@@ -125,7 +125,7 @@ export default defineComponent({
     me,
     loading,
     Cloud,
-    Article,
+    IndexArticle,
     Toolboxe,
   },
 });

@@ -23,7 +23,28 @@
             </transition>
           </el-row>
         </el-header>
-        <el-main> </el-main>
+        <el-main>
+          <!-- 主要内容 -->
+          <el-row justify="space-around">
+            <!-- 主体框架 -->
+            <el-col :xs="24" :sm="24" :md="24" :lg="20">
+              <!-- 分左右区 -->
+              <el-row :gutter="20" justify="space-around">
+                <!-- 左侧 -->
+                <el-col :xs="24" :sm="18" :md="18" :span="18">
+                  <IndexArticle></IndexArticle>
+                </el-col>
+                <!-- 右侧 -->
+                <el-col :xs="0" :sm="6" :md="6" :span="6">
+                  <el-col :span="24" class="frame">搜索栏</el-col>
+                  <el-col :span="24" class="frame">分类栏</el-col>
+                  <el-col :span="24" class="frame">标签栏</el-col>
+
+                </el-col>
+              </el-row>
+            </el-col>
+          </el-row>
+        </el-main>
       </el-container>
     </div>
   </div>
@@ -32,6 +53,7 @@
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Pandect from "./Pandect";
 import Menu from "@/components/menu/Menu.vue";
+import IndexArticle from "@/components/article/indexArticle/IndexArticle.vue";
 
 export default defineComponent({
   setup() {
@@ -46,7 +68,7 @@ export default defineComponent({
       ...toRefs(viewData),
     };
   },
-  components: { Menu },
+  components: { Menu, IndexArticle },
 });
 </script>
 <style lang="less">
