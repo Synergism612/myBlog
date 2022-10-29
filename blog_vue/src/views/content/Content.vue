@@ -67,40 +67,44 @@
                 <el-row :gutter="20">
                   <!-- 推荐区 -->
                   <el-col :xs="0" :sm="4" :md="4" :lg="4">
-                    <el-row>
-                      <el-col :span="24">
-                        同分类文章
-                        <div>
+                    <div class="nominate">
+                      <el-row>
+                        <el-col :span="24">
+                          同分类文章
                           <ul v-if="classifyNominate[0].id != -1">
                             <li
                               v-for="nominate in classifyNominate"
                               :key="nominate.id"
                             >
-                              {{ nominate.title }}
+                              <span @click="toArticle(nominate.id)">
+                                {{ nominate.title }}
+                              </span>
                             </li>
                           </ul>
                           <ul v-if="classifyNominate[0].id == -1">
                             <li>该分类下没有其他文章</li>
                           </ul>
-                        </div>
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="24">
-                        标签匹配文章
-                        <ul v-if="tagNominate[0].id != -1">
-                          <li
-                            v-for="nominate in tagNominate"
-                            :key="nominate.id"
-                          >
-                            {{ nominate.title }}
-                          </li>
-                        </ul>
-                        <ul v-if="classifyNominate[0].id != -1">
-                          <li>没有查到含有相同标签的其他文章</li>
-                        </ul>
-                      </el-col>
-                    </el-row>
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24">
+                          标签匹配文章
+                          <ul v-if="tagNominate[0].id != -1">
+                            <li
+                              v-for="nominate in tagNominate"
+                              :key="nominate.id"
+                            >
+                              <span @click="toArticle(nominate.id)">
+                                {{ nominate.title }}
+                              </span>
+                            </li>
+                          </ul>
+                          <ul v-if="classifyNominate[0].id != -1">
+                            <li>没有查到含有相同标签的其他文章</li>
+                          </ul>
+                        </el-col>
+                      </el-row>
+                    </div>
                   </el-col>
                   <!-- 评论区 -->
                   <el-col :xs="24" :sm="16" :md="16" :lg="16">
@@ -172,7 +176,7 @@ import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 const MdCatalog = MdEditor.MdCatalog;
 
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import Forum from "@/components/forum/Forum.vue";
 import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
 
@@ -245,6 +249,17 @@ export default defineComponent({
       viewData.catalogShow = !viewData.catalogShow;
     };
 
+    const router = useRouter();
+    const toArticle = (id: number): void => {
+      const open = router.resolve({
+        name: "Content",
+        params: {
+          id: id,
+        },
+      });
+      window.open(open.href, "_blank");
+    };
+
     onMounted(() => {
       viewData.init(id);
     });
@@ -256,6 +271,7 @@ export default defineComponent({
       toFullOrlessen,
       toForum,
       toCatalog,
+      toArticle,
     };
   },
   components: { Menu, MdEditor, MdCatalog, Forum, Toolboxe },
