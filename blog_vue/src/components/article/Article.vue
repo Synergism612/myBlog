@@ -25,7 +25,7 @@
               <el-col :span="20" class="right">
                 <el-row class="title">
                   <el-col :span="24">
-                    <span @click="toContent(article.id)">
+                    <span class="click" @click="toContent(article.id)">
                       {{ article.title }}
                     </span>
                   </el-col>
@@ -44,7 +44,7 @@
                       :strokeWidth="2"
                     />
                     <div class="classify">
-                      <span>{{ article.classify.name }}</span>
+                      <span class="click">{{ article.classify.name }}</span>
                     </div>
                   </el-col>
                   <el-col :span="24">
@@ -59,7 +59,7 @@
                       :key="tag.id"
                       class="tags"
                     >
-                      <span>{{ tag.name }}</span>
+                      <span class="click">{{ tag.name }}</span>
                     </div>
                   </el-col>
                 </el-row>
@@ -71,7 +71,7 @@
                       fill="#000000"
                       :strokeWidth="2"
                     />
-                    <span>{{ article.nickname }}</span>
+                    <span class="click">{{ article.nickname }}</span>
                   </el-col>
                   <el-col :xs="4" :span="4">
                     <good_two

@@ -7,13 +7,13 @@
     >
       <el-row class="header frame">
         <el-col :span="24">
-          <span @click="myArticle()">我的文章</span>
+          <span class="click" @click="myArticle()">我的文章</span>
           <span @click="myArticle()" v-if="!isMy">○</span>
           <span @click="myArticle()" v-if="isMy">●</span>\
-          <span @click="updateArticle(0)">最新发布</span>\
-          <span @click="updateArticle(1)">最新更新</span>\
-          <span @click="updateArticle(2)">查看最多</span>\
-          <span @click="updateArticle(3)">点赞最多</span>
+          <span class="click" @click="updateArticle(0)">最新发布</span>\
+          <span class="click" @click="updateArticle(1)">最新更新</span>\
+          <span class="click" @click="updateArticle(2)">查看最多</span>\
+          <span class="click" @click="updateArticle(3)">点赞最多</span>
         </el-col>
       </el-row>
     </transition>

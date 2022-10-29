@@ -11,7 +11,7 @@
       :ref="setElementRef"
       class="element"
     >
-      <span>{{ element.name }}</span>
+      <span class="click">{{ element.name }}</span>
       <span>({{ element.articleCount }})</span>
     </span>
   </div>
