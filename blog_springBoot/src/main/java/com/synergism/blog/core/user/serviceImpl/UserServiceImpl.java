@@ -29,8 +29,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public boolean ifExist(String username) {
+    public boolean isExist(String username) {
         return this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username)) != null;
+    }
+
+    @Override
+    public long getID(String username) {
+        if (!this.isExist(username)) return -1;
+        return this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username)).getId();
     }
 
     @Override

@@ -49,7 +49,7 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
 
     @Override
     public Result<String> getRegisterMailCode(String mail, String key) {
-        if (userService.ifExist(mail)) {
+        if (userService.isExist(mail)) {
             return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
         } else
             return Result.success(getMailCode(mail, key));

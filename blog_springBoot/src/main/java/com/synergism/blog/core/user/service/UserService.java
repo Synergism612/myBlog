@@ -20,7 +20,9 @@ public interface UserService extends IService<User> {
      * @param username 账号
      * @return 存在返回真，不存在返回否
      */
-    boolean ifExist(String username);
+    boolean isExist(String username);
+
+    long getID(String username);
 
     /**
      * 通过文章id获得文章作者信息

@@ -41,7 +41,7 @@ public class UserAPIServiceImpl implements UserAPIService {
     @Override
     public Result<String> register(Register register) {
         //账号是否已存在判断
-        if (userService.ifExist(register.getUsername())) {
+        if (userService.isExist(register.getUsername())) {
             return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
         }
         //保存到数据库
