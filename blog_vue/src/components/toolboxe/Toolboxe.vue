@@ -66,6 +66,7 @@ export default defineComponent({
     const toLessen = (): void => {
       viewData.full = true;
       emit("toFull", false);
+      viewData.forum = true;
       viewData.catalog = true;
       viewData.lessen = false;
     };
@@ -73,6 +74,7 @@ export default defineComponent({
     const toFull = (): void => {
       viewData.lessen = true;
       emit("toFull", true);
+      viewData.forum = false;
       viewData.catalog = false;
       viewData.full = false;
     };
