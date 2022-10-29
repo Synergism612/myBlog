@@ -3,7 +3,7 @@
     <el-menu mode="horizontal" :ellipsis="ellipsis" router>
       <el-menu-item id="menu_logo" index="/blog/index">Synergism</el-menu-item>
       <el-menu-item index="/blog/index">网站首页</el-menu-item>
-      <el-menu-item index="3">文章专栏</el-menu-item>
+      <el-menu-item index="/blog/pandect">文章专栏</el-menu-item>
       <el-menu-item index="4">归档</el-menu-item>
       <el-menu-item index="3">资源分享</el-menu-item>
       <el-menu-item index="3">点点滴滴</el-menu-item>

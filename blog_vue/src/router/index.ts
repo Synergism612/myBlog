@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import Pandect from "../views/pandect/Pandect.vue";
 import Content from "../views/content/Content.vue";
 import Index from "../views/index/Index.vue";
 import Login from "../views/login/Login.vue";
@@ -13,7 +14,12 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/blog/content/:id?/:title?/:body?",
+    path: "/blog/pandect",
+    name: "Pandect",
+    component: Pandect,
+  },
+  {
+    path: "/blog/content/:id?/:body?",
     name: "Content",
     component: Content,
   },
