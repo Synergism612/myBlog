@@ -48,4 +48,11 @@ public interface ArticleService extends IService<Article> {
     List<Article> getOneClassifyArticleList(long id);
 
     List<ArticleTagNominate> getMoreTagArticleList(long id);
+
+    /**
+     * 根据文章id判断是否存在
+     * @param articleID 文章id
+     * @return 存在为真，反之为假
+     */
+    boolean isExist(Long articleID);
 }

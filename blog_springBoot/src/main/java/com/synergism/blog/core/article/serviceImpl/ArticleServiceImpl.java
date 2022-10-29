@@ -1,5 +1,6 @@
 package com.synergism.blog.core.article.serviceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.article.entity.ArticleTagNominate;
@@ -84,5 +85,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .collect(Collectors.toList());
         return result.size() == 0 ? null : result;
 
+    }
+
+    @Override
+    public boolean isExist(Long articleID) {
+        return this.getOne(new LambdaQueryWrapper<Article>().eq(Article::getId,articleID))!=null;
     }
 }
