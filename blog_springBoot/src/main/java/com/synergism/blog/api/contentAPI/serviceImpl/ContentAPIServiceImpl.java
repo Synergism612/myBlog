@@ -1,5 +1,7 @@
 package com.synergism.blog.api.contentAPI.serviceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.synergism.blog.api.contentAPI.entity.AddComment;
 import com.synergism.blog.api.contentAPI.service.ContentAPIService;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleTagNominate;
@@ -11,8 +13,11 @@ import com.synergism.blog.core.comment.service.CommentService;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.core.user.entity.Author;
+import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.service.UserService;
+import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
+import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,5 +74,25 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     @Override
     public Result<List<ArticleTagNominate>> getTagNominate(long articleID) {
         return Result.success(articleService.getMoreTagArticleList(articleID));
+    }
+
+    @Override
+    public Result<String> setComment(AddComment addComment) {
+        if (StringUtil.isEmpty(addComment.getComment())){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论不能为空"));
+        }
+        long userID = userService.getID(addComment.getUsername());
+        if (userID==-1){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到用户"));
+        }
+        if (!articleService.isExist(addComment.getArticleID())) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到文章"));
+        }
+        if (addComment.getRootID() == null || commentService.isExist(addComment.getRootID())) {
+            if (addComment.getParentID() == null || commentService.isExist(addComment.getParentID())) {
+                return commentService.save(addComment,userID)?Result.success():Result.error(CodeMsg.BIND_ERROR.fillArgs("评论失败"));
+            }
+        }
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论失败"));
     }
 }

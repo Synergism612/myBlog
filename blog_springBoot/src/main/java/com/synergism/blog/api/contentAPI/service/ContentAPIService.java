@@ -1,5 +1,6 @@
 package com.synergism.blog.api.contentAPI.service;
 
+import com.synergism.blog.api.contentAPI.entity.AddComment;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleTagNominate;
 import com.synergism.blog.core.classify.entity.Classify;
@@ -61,4 +62,5 @@ public interface ContentAPIService {
      */
     Result<List<ArticleTagNominate>> getTagNominate(long articleID);
 
+    Result<String> setComment(AddComment addComment);
 }

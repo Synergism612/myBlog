@@ -1,6 +1,7 @@
 package com.synergism.blog.api.contentAPI.controller;
 
 
+import com.synergism.blog.api.contentAPI.entity.AddComment;
 import com.synergism.blog.api.contentAPI.service.ContentAPIService;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleTagNominate;
@@ -8,12 +9,10 @@ import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.user.entity.Author;
+import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -61,5 +60,14 @@ public class ContentAPIController {
     @GetMapping("nominate/tag")
     public Result<List<ArticleTagNominate>> tagNominate(@RequestParam long articleID){
         return service.getTagNominate(articleID);
+    }
+
+    @PostMapping("comment")
+    public Result<String> addComment(@RequestBody AddComment addComment){
+        if (addComment.getArticleID()<=0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论错误"));
+        if (addComment.getRootID()==-1)addComment.setRootID(null);
+        if (addComment.getParentID()==-1)addComment.setParentID(null);
+
+        return service.setComment(addComment);
     }
 }
