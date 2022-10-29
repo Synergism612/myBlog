@@ -7,7 +7,7 @@ import { AxiosResponse } from "axios";
 export class api {
   /**
    * 获取公钥接口
-   * @returns 返回Promise
+   * @returns Result[String]
    */
   public static async getPublicKey(): Promise<void> {
     //开启请求
@@ -68,7 +68,7 @@ export class api {
    * 登录接口
    * @param username 用户名
    * @param password 密码
-   * @returns Promise
+   * @returns Result[String]
    */
   public static login(
     username: string,
@@ -87,7 +87,7 @@ export class api {
   /**
    * 获取邮箱验证码接口
    * @param mail 邮箱
-   * @returns Promise
+   * @returns Result[String]
    */
   public static getSecurityCode(
     mail: string,
@@ -109,7 +109,7 @@ export class api {
    * @param password 密码
    * @param code 验证码
    * @param key 验证码密钥
-   * @returns Promise
+   * @returns Result[String]
    */
   public static register(
     username: string,
@@ -134,7 +134,7 @@ export class api {
    * @param loginID 登录信息ID
    * @param nickname 昵称
    * @param username 账号
-   * @returns Promise
+   * @returns Result[String]
    */
   public static logout(
     loginID: string,
@@ -158,7 +158,7 @@ export class api {
    * @param pageSize 一页几条
    * @param articleSort 排序
    * @param username 用户名
-   * @returns Promise
+   * @returns Result[分页信息]
    */
   public static getIndexArticle(
     currentPage: number,
@@ -180,7 +180,7 @@ export class api {
 
   /**
    * 首页用户信息接口
-   * @returns 用户信息
+   * @returns Result[用户信息]
    */
   public static getIndexUserInfo(): Promise<AxiosResponse> {
     return axios({
@@ -192,7 +192,7 @@ export class api {
   /**
    * 首页标签接口
    * @param username 用户名
-   * @returns 标签列表
+   * @returns Result[标签列表]
    */
   public static getIndexTag(username: string): Promise<AxiosResponse> {
     return axios({
@@ -205,7 +205,7 @@ export class api {
   /**
    * 首页分类接口
    * @param username 用户名
-   * @returns 分类列表
+   * @returns Result[分类列表]
    */
   public static getIndexClassify(username: string): Promise<AxiosResponse> {
     return axios({
@@ -216,9 +216,9 @@ export class api {
   }
 
   /**
-   * 内容评文章接口
+   * 内容页评文章接口
    * @param articleID 文章id
-   * @returns 文章内容
+   * @returns Result[文章内容]
    */
   public static getContentArticle(articleID: number): Promise<AxiosResponse> {
     return axios({
@@ -229,9 +229,9 @@ export class api {
   }
 
   /**
-   * 内容作者接口
+   * 内容页作者接口
    * @param articleID 文章id
-   * @returns 作者信息
+   * @returns Result[作者信息]
    */
   public static getContentAuthor(articleID: number): Promise<AxiosResponse> {
     return axios({
@@ -242,9 +242,9 @@ export class api {
   }
 
   /**
-   * 内容分类接口
+   * 内容页分类接口
    * @param articleID 文章id
-   * @returns 分类
+   * @returns Result[分类]
    */
   public static getContentClassify(articleID: number): Promise<AxiosResponse> {
     return axios({
@@ -255,9 +255,9 @@ export class api {
   }
 
   /**
-   * 内容标签接口
+   * 内容页标签接口
    * @param articleID 文章id
-   * @returns 标签列表
+   * @returns Result[标签列表]
    */
   public static getContentTagList(articleID: number): Promise<AxiosResponse> {
     return axios({
@@ -268,9 +268,9 @@ export class api {
   }
 
   /**
-   * 内容评论区接口
+   * 内容页评论区接口
    * @param articleID 文章id
-   * @returns 评论列表
+   * @returns Result[评论列表]
    */
   public static getContentCommentList(
     articleID: number
@@ -283,9 +283,9 @@ export class api {
   }
 
   /**
-   * 内容分类推荐区接口
+   * 内容页分类推荐区接口
    * @param articleID 文章id
-   * @returns 评论列表
+   * @returns Result[评论列表]
    */
   public static getContentClassifyNominate(
     articleID: number
@@ -298,9 +298,9 @@ export class api {
   }
 
   /**
-   * 内容标签推荐区接口
+   * 内容页标签推荐区接口
    * @param articleID 文章id
-   * @returns 评论列表
+   * @returns Result[评论列表]
    */
   public static getContentTagNominate(
     articleID: number
@@ -309,6 +309,35 @@ export class api {
       url: "/api/blog/content/nominate/tag",
       method: "get",
       params: { articleID: articleID },
+    });
+  }
+
+  /**
+   * 内容页新的评论接口
+   * @param username 用户名
+   * @param comment 评论内容
+   * @param articleID 文章id
+   * @param rootID 根评论id
+   * @param parentID 父评论id
+   * @returns Result[String]
+   */
+  public static addComment(
+    username: string,
+    comment: string,
+    articleID: number,
+    rootID: number,
+    parentID: number
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/content/comment",
+      method: "post",
+      data: {
+        username: username,
+        comment: comment,
+        articleID: articleID,
+        rootID: rootID,
+        parentID: parentID,
+      },
     });
   }
 }
