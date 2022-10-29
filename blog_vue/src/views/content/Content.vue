@@ -36,7 +36,7 @@
                   {{ article.title }}
                 </el-row>
                 <el-row class="signature" justify="space-around">
-                  作者:{{ author.nickname }}
+                  <span class="click">作者:{{ author.nickname }}</span>
                 </el-row>
 
                 <!-- 文章内容 -->
@@ -54,11 +54,13 @@
                 <!-- 文章分类标签信息 -->
                 <el-divider />
                 <el-row>
-                  <el-col :span="24"> 文章所属分类:{{ classify.name }}</el-col>
+                  <el-col :span="24">
+                    <span class="click">文章所属分类:{{ classify.name }}</span>
+                  </el-col>
                   <el-col :span="24">
                     文章所属标签:
                     <span v-for="tag in tagList" :key="tag.id">
-                      {{ tag.name }}
+                      <span class="click">{{ tag.name }}</span>
                     </span>
                   </el-col>
                 </el-row>
@@ -76,7 +78,10 @@
                               v-for="nominate in classifyNominate"
                               :key="nominate.id"
                             >
-                              <span @click="toArticle(nominate.id)">
+                              <span
+                                class="click"
+                                @click="toArticle(nominate.id)"
+                              >
                                 {{ nominate.title }}
                               </span>
                             </li>
@@ -94,7 +99,10 @@
                               v-for="nominate in tagNominate"
                               :key="nominate.id"
                             >
-                              <span @click="toArticle(nominate.id)">
+                              <span
+                                class="click"
+                                @click="toArticle(nominate.id)"
+                              >
                                 {{ nominate.title }}
                               </span>
                             </li>
@@ -109,8 +117,11 @@
                   <!-- 评论区 -->
                   <el-col :xs="24" :sm="16" :md="16" :lg="16">
                     <el-col :span="24">
-                      <div ref="forumRef">
-                        <Forum :comment-list="commentParentList"></Forum>
+                      <div ref="forumRef" v-if="article.id != -1">
+                        <Forum
+                          :articleID="article.id"
+                          @toForum="toForum"
+                        ></Forum>
                       </div>
                     </el-col>
                   </el-col>
@@ -132,7 +143,10 @@
                       <span>关注数:{{ author.notableCount }}</span>
                       <span>粉丝数:{{ author.fansCount }}</span>
                       <br />
-                      <span><span>关注他</span> <span>加好友</span></span>
+                      <span>
+                        <span class="click">关注他</span>
+                        <span class="click">加好友</span>
+                      </span>
                     </div>
                   </el-col>
                 </el-row>
@@ -200,7 +214,7 @@ export default defineComponent({
         document.body.style.removeProperty("overflow");
       }
       viewData.pageFullScreen = pageFullScreen;
-      viewData.refresh = viewData.refresh + 1;
+      viewData.refresh += 1;
     };
     /**用于绑定评论区dom */
     const forumRef = ref<HTMLElement>(document.createElement("div"));
@@ -224,13 +238,37 @@ export default defineComponent({
      */
     const jump = (to: number): void => {
       viewData.toolBoxShow = false;
-      var timer = setInterval(() => {
-        if (html.scrollTop + html.clientHeight >= to) {
-          viewData.toolBoxShow = true;
-          clearInterval(timer);
-        }
-        html.scrollTop = html.scrollTop + to / 100;
-      }, 10);
+
+      console.log(to);
+      console.log(html.scrollTop);
+      console.log(html.clientHeight);
+      console.log("\n");
+
+      if (
+        to < html.scrollTop + html.clientHeight &&
+        to > html.scrollTop - html.clientHeight
+      ) {
+        viewData.toolBoxShow = true;
+        return;
+      }
+
+      if (to >= html.scrollTop + html.clientHeight / 2) {
+        var time1 = setInterval(() => {
+          if (html.scrollTop + html.clientHeight >= to) {
+            viewData.toolBoxShow = true;
+            clearInterval(time1);
+          }
+          html.scrollTop = html.scrollTop + html.clientHeight / 2;
+        }, 10);
+      } else {
+        var time2 = setInterval(() => {
+          if (html.scrollTop <= to) {
+            viewData.toolBoxShow = true;
+            clearInterval(time2);
+          }
+          html.scrollTop = html.scrollTop - html.clientHeight / 10;
+        }, 10);
+      }
     };
 
     /**

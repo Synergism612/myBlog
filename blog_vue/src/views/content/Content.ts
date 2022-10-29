@@ -2,6 +2,7 @@ import { api } from "@/api/api";
 import Article from "@/model/article/Article";
 import ArticleTagNominate from "@/model/article/ArticleTagNominate";
 import Classify from "@/model/classify/Classify";
+import CommentChild from "@/model/comment/CommentChild";
 import CommentParent from "@/model/comment/CommentParent";
 import Tag from "@/model/tag/Tag";
 import Author from "@/model/user/Author";
@@ -11,7 +12,6 @@ export default class Content {
   author: Author;
   classify: Classify;
   tagList: Array<Tag>;
-  commentParentList: Array<CommentParent>;
 
   refresh: number;
   editorName: string;
@@ -28,7 +28,6 @@ export default class Content {
     this.author = new Author();
     this.classify = new Classify();
     this.tagList = [new Tag()];
-    this.commentParentList = [new CommentParent()];
 
     this.refresh = 0;
     this.catalogShow = false;
@@ -63,12 +62,6 @@ export default class Content {
       });
     };
 
-    const commentList = (): void => {
-      api.getContentCommentList(articleID).then(({ data }) => {
-        this.commentParentList = data || [new CommentParent()];
-      });
-    };
-
     const classifyNominate = (): void => {
       api.getContentClassifyNominate(articleID).then(({ data }) => {
         this.classifyNominate = data || [new Article()];
@@ -85,7 +78,6 @@ export default class Content {
     author();
     classify();
     tagList();
-    commentList();
     classifyNominate();
     tagNominate();
   }
