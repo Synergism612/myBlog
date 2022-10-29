@@ -110,16 +110,7 @@
                   <el-col :xs="24" :sm="16" :md="16" :lg="16">
                     <el-col :span="24">
                       <div ref="forumRef">
-                        <Forum
-                          v-if="commentParentList[0].id !== -1"
-                          :comment-list="commentParentList"
-                        ></Forum>
-                      </div>
-                      <div
-                        v-if="commentParentList[0].id === -1"
-                        style="text-align: center"
-                      >
-                        还没有评论哦~
+                        <Forum :comment-list="commentParentList"></Forum>
                       </div>
                     </el-col>
                   </el-col>

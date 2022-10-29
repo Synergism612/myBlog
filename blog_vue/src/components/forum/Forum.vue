@@ -9,14 +9,14 @@
           v-model="commentInput"
           :rows="2"
           type="textarea"
-          placeholder="Please input"
+          placeholder="请输入..."
         />
       </el-col>
       <el-col class="right" :span="1">
         <span>提交</span>
       </el-col>
     </el-row>
-    <el-row class="forum">
+    <el-row class="forum" v-if="commentList[0].id != -1">
       <el-col
         :span="24"
         v-for="comment in props.commentList"
@@ -69,6 +69,9 @@
           />
         </el-col>
       </el-col>
+    </el-row>
+    <el-row v-if="commentList[0].id === -1">
+      <el-col style="text-align: center" :span="24">还没有评论哦</el-col>
     </el-row>
   </div>
 </template>
