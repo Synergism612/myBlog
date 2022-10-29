@@ -10,9 +10,9 @@ export default class Article {
   /**简介 */
   synopsis: string;
   /**阅读量 */
-  views: string;
+  views: number;
   /**点赞量 */
-  likeCount: string;
+  likeCount: number;
   /**创建时间 */
   creationTime: Date | null;
   /**修改时间 */
@@ -24,8 +24,8 @@ export default class Article {
     this.icon = "";
     this.body = "";
     this.synopsis = "";
-    this.views = "";
-    this.likeCount = "";
+    this.views = 0;
+    this.likeCount = 0;
     this.creationTime = null;
     this.modifyTime = null;
   }
