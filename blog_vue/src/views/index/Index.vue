@@ -12,7 +12,7 @@
               appear
               appear-active-class="animate__animated animate__zoomIn"
             >
-              <el-col :xs="24" :sm="24" :md="24" :lg="20" class="inform frame">
+              <el-col :xs="24" :sm="24" :md="24" :lg="20" class="header inform frame">
                 通知栏 通知内容
               </el-col>
             </transition>

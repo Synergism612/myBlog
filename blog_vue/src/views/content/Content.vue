@@ -11,7 +11,7 @@
               appear
               appear-active-class="animate__animated animate__zoomIn"
             >
-              <el-col :xs="24" :sm="24" :md="24" :lg="20" class="inform frame">
+              <el-col :xs="24" :sm="24" :md="24" :lg="20" class="header frame">
                 <el-breadcrumb separator="/">
                   <el-breadcrumb-item :to="{ path: '/' }">
                     {{ "首页" }}
