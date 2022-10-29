@@ -73,7 +73,7 @@
                     />
                     <span class="click">{{ article.nickname }}</span>
                   </el-col>
-                  <el-col :xs="4" :span="4">
+                  <el-col :xs="4" :span="2">
                     <good_two
                       theme="outline"
                       size="21"
@@ -82,7 +82,7 @@
                     />
                     <span> {{ article.likeCount }} </span>
                   </el-col>
-                  <el-col :xs="4" :span="4">
+                  <el-col :xs="4" :span="2">
                     <preview_open
                       theme="outline"
                       size="21"
@@ -90,6 +90,15 @@
                       :strokeWidth="2"
                     />
                     <span> {{ article.views }} </span>
+                  </el-col>
+                  <el-col :xs="4" :span="2">
+                    <comment
+                      theme="outline"
+                      size="21"
+                      fill="#000000"
+                      :strokeWidth="2"
+                    />
+                    <span> {{ article.commentCount }} </span>
                   </el-col>
                   <el-col :xs="0" :span="8">
                     <update_rotation
@@ -137,6 +146,7 @@ import {
   Avatar as avatar,
   GoodTwo as good_two,
   PreviewOpen as preview_open,
+  Comment as comment,
   UpdateRotation as update_rotation,
   DocumentFolder as document_folder,
   TagOne as tag_one,
@@ -236,6 +246,7 @@ export default defineComponent({
     avatar,
     good_two,
     preview_open,
+    comment,
     update_rotation,
     document_folder,
     tag_one,

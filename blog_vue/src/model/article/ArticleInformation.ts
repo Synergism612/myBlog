@@ -6,17 +6,23 @@ import Article from "./Article";
 export default class ArticleInformation extends Article {
   /**所属者昵称 */
   nickname: string;
-
+  /**所属者账号 */
+  username: string;
+  /**是否私有 */
   ifPrivate: number;
-
+  /**评论数 */
+  commentCount: number;
+  /**分类 */
   classify: Classify;
-
+  /**标签列表 */
   tagList: Array<Tag>;
 
   constructor() {
     super();
     this.nickname = "";
+    this.username = "";
     this.ifPrivate = -1;
+    this.commentCount = -1;
     this.classify = new Classify();
     this.tagList = [new TagInformation()];
   }
