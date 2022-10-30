@@ -57,7 +57,7 @@ export default class IndexArticle {
       .then(({ data }) => {
         this.articleInformationList = data.articleInformationList;
         this.total = data.total;
+        this.refresh = true;
       });
-    this.refresh = true;
   }
 }
