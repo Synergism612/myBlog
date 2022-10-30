@@ -101,7 +101,6 @@
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Menu from "@/components/menu/Menu.vue";
 import Screen from "@/components/screen/Screen.vue";
-import { Me as me, Loading as loading } from "@icon-park/vue-next";
 import Index from "./Index";
 import Cloud from "@/components/cloud/Cloud.vue";
 import IndexArticle from "@/components/article/indexArticle/IndexArticle.vue";
@@ -122,8 +121,6 @@ export default defineComponent({
   components: {
     Menu,
     Screen,
-    me,
-    loading,
     Cloud,
     IndexArticle,
     Toolboxe,

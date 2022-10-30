@@ -10,7 +10,6 @@
     "report": "vue-cli-service build --report"
   },
   "dependencies": {
-    "@icon-park/vue-next": "^1.4.2",
     "@types/crypto-js": "^4.1.1",
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",

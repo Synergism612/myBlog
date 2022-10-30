@@ -24,14 +24,6 @@
 </template>
 
 <script lang="ts">
-import {
-  ArrowUp,
-  Comments,
-  FullScreen,
-  Home,
-  ListMiddle,
-  OffScreen,
-} from "@icon-park/vue-next";
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import Toolboxe from "./Toolboxe";
@@ -142,12 +134,6 @@ export default defineComponent({
     };
   },
   components: {
-    ArrowUp,
-    Comments,
-    Home,
-    ListMiddle,
-    FullScreen,
-    OffScreen,
   },
 });
 </script>

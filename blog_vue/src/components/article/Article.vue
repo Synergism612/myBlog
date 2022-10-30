@@ -142,15 +142,6 @@ import {
   watchEffect,
 } from "vue";
 import Article from "./Article";
-import {
-  Avatar as avatar,
-  GoodTwo as good_two,
-  PreviewOpen as preview_open,
-  Comment as comment,
-  UpdateRotation as update_rotation,
-  DocumentFolder as document_folder,
-  TagOne as tag_one,
-} from "@icon-park/vue-next";
 import ArticleInformation from "@/model/article/ArticleInformation";
 import { useRouter } from "vue-router";
 export default defineComponent({
@@ -242,15 +233,7 @@ export default defineComponent({
       toContent,
     };
   },
-  components: {
-    avatar,
-    good_two,
-    preview_open,
-    comment,
-    update_rotation,
-    document_folder,
-    tag_one,
-  },
+  components: {},
 });
 </script>
 <style lang="less">
