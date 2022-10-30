@@ -2,5 +2,32 @@
   .container {
     min-height: 95vh;
     background: url(../../assets/img/backgroud/backgroud-index.png);
+
+    .right {
+      .search {
+        display: flex;
+        align-items: center;
+        .el-input__wrapper {
+          background-color: rgba(0, 0, 0, 0);
+          --el-select-input-focus-border-color: #3fc4c2;
+          --el-input-focus-border-color: #3fc4c2;
+        }
+      }
+      .tags{
+        margin-top: 1em;
+        text-align: center;
+
+        .tag{
+          margin-bottom: 5px;
+          border-radius: 5px;
+          border: 2px solid rgba(0, 0, 0, 0.473);
+          transition: 0.5s;
+          cursor:pointer;
+        }
+        .tag:hover{
+          border: 2px solid rgba(0, 0, 0, 0.812);
+        }
+      }
+    }
   }
 }

@@ -32,14 +32,66 @@
               <el-row :gutter="20" justify="space-around">
                 <!-- 左侧 -->
                 <el-col :xs="24" :sm="18" :md="18" :span="18">
-                  <IndexArticle></IndexArticle>
+                  <div class="left">
+                    <IndexArticle></IndexArticle>
+                  </div>
                 </el-col>
                 <!-- 右侧 -->
                 <el-col :xs="0" :sm="6" :md="6" :span="6">
-                  <el-col :span="24" class="frame">搜索栏</el-col>
-                  <el-col :span="24" class="frame">分类栏</el-col>
-                  <el-col :span="24" class="frame">标签栏</el-col>
-
+                  <div class="right">
+                    <el-col :span="24" class="frame">
+                      <div class="center">搜索</div>
+                      <el-row class="search">
+                        <el-col :span="20">
+                          <el-input
+                            v-model="searchInput"
+                            placeholder="请输入搜索内容"
+                          />
+                        </el-col>
+                        <el-col :span="3" :offset="1">
+                          <span class="click">
+                            <font-awesome-icon
+                              :icon="['fas', 'magnifying-glass']"
+                            />
+                          </span>
+                        </el-col>
+                      </el-row>
+                    </el-col>
+                    <el-col :span="24" class="frame">
+                      <div class="center">分类</div>
+                      <el-row :gutter="5" class="tags">
+                        <el-col :span="12">
+                          <div class="tag">你好</div>
+                        </el-col>
+                        <el-col :span="12">
+                          <div class="tag">你好</div>
+                        </el-col>
+                        <el-col :span="12">
+                          <div class="tag">你好</div>
+                        </el-col>
+                        <el-col :span="12">
+                          <div class="tag">你好</div>
+                        </el-col>
+                      </el-row>
+                    </el-col>
+                    <el-col :span="24" class="frame">
+                      <div class="center">标签</div>
+                      <el-row :gutter="5" class="tags">
+                        <el-col :span="12">
+                          <div class="tag">你好</div>
+                        </el-col>
+                        <el-col :span="12">
+                          <div class="tag">你好</div>
+                        </el-col>
+                        <el-col :span="12">
+                          <div class="tag">你好</div>
+                        </el-col>
+                        <el-col :span="12">
+                          <div class="tag">你好</div>
+                        </el-col>
+                      </el-row>
+                    </el-col>
+                  </div>
                 </el-col>
               </el-row>
             </el-col>
