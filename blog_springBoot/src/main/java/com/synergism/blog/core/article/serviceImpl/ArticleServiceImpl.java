@@ -9,6 +9,7 @@ import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.core.article.mapper.ArticleMapper;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public Pagination Pagination(List<ArticleInformation> articleInformationList, int currentPage, int pageSize) {
+        if(TypeUtil.isNull(articleInformationList)){
+            return new Pagination(null, 0);
+        }
         int startIndex = (currentPage - 1) * pageSize;
         int endIndex = currentPage * pageSize;
         int total = articleInformationList.size();
