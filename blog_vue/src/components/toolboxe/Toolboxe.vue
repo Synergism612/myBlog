@@ -2,22 +2,22 @@
   <div class="toolBoxesBox" v-if="show">
     <div class="toolboxes">
       <div class="lessen tool" v-if="lessen" @click="toLessen">
-        <OffScreen theme="outline" size="24" fill="#333" />
+        <font-awesome-icon :icon="['fas', 'compress']" />
       </div>
       <div class="full tool" v-if="full" @click="toFull">
-        <FullScreen theme="outline" size="24" fill="#333" />
+        <font-awesome-icon :icon="['fas', 'expand']" />
       </div>
       <div class="catalog tool" v-if="catalog" @click="toCatalog">
-        <ListMiddle theme="outline" size="24" fill="#333" />
+        <font-awesome-icon :icon="['fas', 'bars']" />
       </div>
       <div class="forum tool" v-if="forum" @click="toForum">
-        <Comments theme="outline" size="24" fill="#333" />
+        <font-awesome-icon :icon="['fas', 'comments']" />
       </div>
       <div class="index tool" v-if="index" @click="toIndex">
-        <Home theme="outline" size="24" fill="#333" />
+        <font-awesome-icon :icon="['fas', 'house']" />
       </div>
       <div class="top tool" v-if="top" @click="toTop">
-        <ArrowUp theme="outline" size="24" fill="#333" />
+        <font-awesome-icon :icon="['fas', 'chevron-up']" />
       </div>
     </div>
   </div>

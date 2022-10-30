@@ -44,22 +44,11 @@
                     </el-col>
                     <el-col :span="24">
                       <div class="name">
-                        <me
-                          theme="outline"
-                          size="21"
-                          fill="#000000"
-                          :strokeWidth="2"
-                        />{{ userInfo.nickname }}
+                      {{ userInfo.nickname }}
                       </div>
                     </el-col>
                     <el-col :span="24">
                       <div class="intro">
-                        <loading
-                          theme="outline"
-                          size="21"
-                          fill="#000000"
-                          :strokeWidth="2"
-                        />
                         {{ userInfo.intro }}
                       </div>
                     </el-col>

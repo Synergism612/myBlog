@@ -159,7 +159,13 @@
 
     <!-- 目录 -->
     <div>
-      <el-drawer v-model="catalogShow" title="目录" :withHeader="false">
+      <el-drawer
+        v-model="catalogShow"
+        title="目录"
+        :withHeader="false"
+        :modal="false"
+        :lock-scroll="false"
+      >
         <MdCatalog :editorId="editorName" :scroll-element="html" />
       </el-drawer>
     </div>

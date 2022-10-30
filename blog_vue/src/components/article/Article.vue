@@ -37,23 +37,13 @@
                 </el-row>
                 <el-row class="label">
                   <el-col :span="24">
-                    <document_folder
-                      theme="outline"
-                      size="21"
-                      fill="#000000"
-                      :strokeWidth="2"
-                    />
+                    <font-awesome-icon :icon="['fas', 'bookmark']" />
                     <div class="classify">
                       <span class="click">{{ article.classify.name }}</span>
                     </div>
                   </el-col>
                   <el-col :span="24">
-                    <tag_one
-                      theme="outline"
-                      size="21"
-                      fill="#000000"
-                      :strokeWidth="2"
-                    />
+                    <font-awesome-icon :icon="['fas', 'tags']" />
                     <div
                       v-for="tag in article.tagList"
                       :key="tag.id"
@@ -65,48 +55,23 @@
                 </el-row>
                 <el-row class="footer" justify="space-between">
                   <el-col :xs="8" :span="6">
-                    <avatar
-                      theme="outline"
-                      size="21"
-                      fill="#000000"
-                      :strokeWidth="2"
-                    />
+                    <font-awesome-icon :icon="['fas', 'user']" />
                     <span class="click">{{ article.nickname }}</span>
                   </el-col>
                   <el-col :xs="4" :span="2">
-                    <good_two
-                      theme="outline"
-                      size="21"
-                      fill="#000000"
-                      :strokeWidth="2"
-                    />
+                    <font-awesome-icon :icon="['fas', 'thumbs-up']" />
                     <span> {{ article.likeCount }} </span>
                   </el-col>
                   <el-col :xs="4" :span="2">
-                    <preview_open
-                      theme="outline"
-                      size="21"
-                      fill="#000000"
-                      :strokeWidth="2"
-                    />
+                    <font-awesome-icon :icon="['fas', 'eye']" />
                     <span> {{ article.views }} </span>
                   </el-col>
                   <el-col :xs="4" :span="2">
-                    <comment
-                      theme="outline"
-                      size="21"
-                      fill="#000000"
-                      :strokeWidth="2"
-                    />
+                    <font-awesome-icon :icon="['fas', 'comment']" />
                     <span> {{ article.commentCount }} </span>
                   </el-col>
                   <el-col :xs="0" :span="8">
-                    <update_rotation
-                      theme="outline"
-                      size="21"
-                      fill="#000000"
-                      :strokeWidth="2"
-                    />
+                    <font-awesome-icon :icon="['fas', 'clock-rotate-left']" />
                     <span> {{ article.modifyTime }} </span>
                   </el-col>
                 </el-row>

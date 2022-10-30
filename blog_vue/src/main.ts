@@ -28,6 +28,14 @@ import Particles from "particles.vue3";
 // 全局引入动画相关的样式
 import "animate.css";
 
+/* fontawesome 核心 */
+import { library } from "@fortawesome/fontawesome-svg-core";
+/* awesome图库 */
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+/* specific图库 */
+import { fas } from "@fortawesome/free-solid-svg-icons";
+library.add(fas);
+
 const app = createApp(App);
 api.getPublicKey().then((): void => {
   app
@@ -37,6 +45,7 @@ api.getPublicKey().then((): void => {
       locale: zhCn,
     })
     .use(Particles);
+  app.component("font-awesome-icon", FontAwesomeIcon);
   app.config.globalProperties.$axios = axios;
   app.mount("#app");
 });
