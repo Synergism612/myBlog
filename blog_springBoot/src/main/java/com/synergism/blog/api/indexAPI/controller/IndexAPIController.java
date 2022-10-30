@@ -2,13 +2,12 @@ package com.synergism.blog.api.indexAPI.controller;
 
 import com.synergism.blog.api.articleAPI.entity.Pagination;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
-import com.synergism.blog.api.indexAPI.service.IndexService;
+import com.synergism.blog.api.indexAPI.service.IndexAPIService;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
-import com.synergism.blog.utils.StringUtil;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +19,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/blog/index")
-public class IndexController {
+public class IndexAPIController {
 
-    private final IndexService service;
+    private final IndexAPIService service;
 
     @Autowired
-    public IndexController(IndexService service) {
+    public IndexAPIController(IndexAPIService service) {
         this.service = service;
     }
 

@@ -3,7 +3,7 @@ package com.synergism.blog.api.indexAPI.serviceImpl;
 import com.synergism.blog.api.articleAPI.entity.Pagination;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.api.articleAPI.service.ArticleAPIService;
-import com.synergism.blog.api.indexAPI.service.IndexService;
+import com.synergism.blog.api.indexAPI.service.IndexAPIService;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.classify.service.ClassifyService;
 import com.synergism.blog.core.tag.entity.TagInformation;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IndexServiceImpl implements IndexService {
+public class IndexAPIServiceImpl implements IndexAPIService {
 
     private final ArticleAPIService articleAPIService;
     private final UserService userService;
@@ -26,7 +26,7 @@ public class IndexServiceImpl implements IndexService {
     private final ClassifyService classifyService;
 
     @Autowired
-    public IndexServiceImpl(ArticleAPIService articleAPIService, UserService userService, TagService tagService, ClassifyService classifyService) {
+    public IndexAPIServiceImpl(ArticleAPIService articleAPIService, UserService userService, TagService tagService, ClassifyService classifyService) {
         this.articleAPIService = articleAPIService;
         this.userService = userService;
         this.tagService = tagService;

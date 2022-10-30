@@ -9,7 +9,7 @@ import com.synergism.blog.result.Result;
 
 import java.util.List;
 
-public interface IndexService {
+public interface IndexAPIService {
     /**
      * 首页文章列表
      * @param currentPage 当前页
