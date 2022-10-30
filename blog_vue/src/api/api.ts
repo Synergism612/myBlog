@@ -167,7 +167,7 @@ export class api {
     username: string
   ): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/index/article",
+      url: "/api/blog/article",
       method: "get",
       params: {
         currentPage: currentPage,
@@ -337,6 +337,48 @@ export class api {
         articleID: articleID,
         rootID: rootID,
         parentID: parentID,
+      },
+    });
+  }
+
+  /**
+   * 总览页获取分类接口
+   * @returns Result[分类列表]
+   */
+  public static getPandectClissify(): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/pandect/classify",
+      method: "get",
+    });
+  }
+
+  /**
+   * 总览页获取标签接口
+   * @returns Result[标签列表]
+   */
+  public static getPandectTag(): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/pandect/tag",
+      method: "get",
+    });
+  }
+
+  public static getPandectArticle(
+    currentPage: number,
+    pageSize: number,
+    articleSort: string,
+    username: string,
+    keyword: string
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/article/search",
+      method: "get",
+      params: {
+        currentPage: currentPage,
+        pageSize: pageSize,
+        articleSort: articleSort,
+        username: username || "",
+        keyword: keyword || "",
       },
     });
   }
