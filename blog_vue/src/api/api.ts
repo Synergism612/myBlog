@@ -167,7 +167,7 @@ export class api {
     username: string
   ): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/article",
+      url: "/api/blog/article/index",
       method: "get",
       params: {
         currentPage: currentPage,
@@ -368,7 +368,9 @@ export class api {
     pageSize: number,
     articleSort: string,
     username: string,
-    keyword: string
+    keyword: string,
+    classifyIDList: Array<number>,
+    tagIDList: Array<number>
   ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/article/search",
@@ -379,6 +381,8 @@ export class api {
         articleSort: articleSort,
         username: username || "",
         keyword: keyword || "",
+        classifyIDList: classifyIDList.toString(),
+        tagIDList: tagIDList.toString(),
       },
     });
   }
