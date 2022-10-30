@@ -1,7 +1,5 @@
 package com.synergism.blog.api.indexAPI.service;
 
-import com.synergism.blog.api.articleAPI.entity.Pagination;
-import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.core.user.entity.UserInformation;
