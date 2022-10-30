@@ -30,7 +30,7 @@ public class ArticleAPIController {
         return service.getPagination(currentPage, pageSize, ArticleSort.valueOf(articleSort));
     }
 
-    @GetMapping
+    @GetMapping("index")
     public Result<Pagination> username(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam String articleSort,@RequestParam String username){
         if (!EnumUtils.isValidEnum(ArticleSort.class, articleSort)) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("排序字段错误"));
