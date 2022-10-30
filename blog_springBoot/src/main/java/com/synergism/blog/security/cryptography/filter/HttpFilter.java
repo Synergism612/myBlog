@@ -1,12 +1,14 @@
 package com.synergism.blog.security.cryptography.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.security.cryptography.wrapper.RequestWrapper;
 import com.synergism.blog.security.cryptography.wrapper.ResponseWrapper;
 import com.synergism.blog.security.cryptography.utils.AESUtil;
 import com.synergism.blog.security.keyManagement.service.KeyManagementService;
+import com.synergism.blog.utils.StringUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -120,7 +122,14 @@ public class HttpFilter implements Filter {
         //请求加密在自定义请求RequestWrapper中
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Result<?> resultClass = objectMapper.readValue(responseWrapper.getTextContent(), Result.class);
+        Result<?> resultClass;
+        String textContent = responseWrapper.getTextContent();
+        if (StringUtil.isEmpty(textContent)) {
+            resultClass = Result.error(CodeMsg.SERVER_ERROR);
+        } else {
+            resultClass = objectMapper.readValue(textContent, Result.class);
+
+        }
         String json = objectMapper.writeValueAsString(resultClass);
         String result = AESUtil.encrypt(json, key); //转字符串并加密
 
