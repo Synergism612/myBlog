@@ -4,6 +4,7 @@ import com.synergism.blog.core.article.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.article.entity.ArticleTagNominate;
+import com.synergism.blog.core.article.entity.Pagination;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
 
 import java.util.List;
@@ -18,6 +19,8 @@ import java.util.List;
  * @since 2022-10-07 10:07:37
  */
 public interface ArticleService extends IService<Article> {
+
+    Pagination Pagination(List<ArticleInformation> articleInformationList, int currentPage, int pageSize);
 
     /**
      * 获取文章信息列表
@@ -67,5 +70,28 @@ public interface ArticleService extends IService<Article> {
      */
     boolean isExist(Long articleID);
 
+    /**
+     * 根据关键字从文章列表中筛选
+     * @param articleInformationList 文章列表
+     * @param keyword 关键字
+     * @return 文章列表
+     */
     List<ArticleInformation> searchArticleInformationListByKeyword(List<ArticleInformation> articleInformationList, String keyword);
+
+    /**
+     * 根据分类列表从文章列表中筛选
+     * @param articleInformationList 文章列表
+     * @param classifyIDList 分类列表
+     * @return 文章列表
+     */
+    List<ArticleInformation> searchArticleInformationListByClassifyList(List<ArticleInformation> articleInformationList, List<Long> classifyIDList);
+
+    /**
+     * 根据标签列表从文章列表中筛选
+     * @param articleInformationList 文章列表
+     * @param tagIDList 标签列表
+     * @return 文章列表
+     */
+    List<ArticleInformation> searchArticleInformationListByTagList(List<ArticleInformation> articleInformationList, List<Long> tagIDList);
+
 }

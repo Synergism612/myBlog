@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.article.entity.ArticleTagNominate;
+import com.synergism.blog.core.article.entity.Pagination;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.core.article.mapper.ArticleMapper;
 import com.synergism.blog.core.article.service.ArticleService;
@@ -34,6 +35,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         this.mapper = mapper;
     }
 
+
+    @Override
+    public Pagination Pagination(List<ArticleInformation> articleInformationList, int currentPage, int pageSize) {
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = currentPage * pageSize;
+        int total = articleInformationList.size();
+        endIndex = Math.min(endIndex, total);
+        return new Pagination(articleInformationList.subList(startIndex, endIndex), total);
+    }
 
     @Override
     public List<ArticleInformation> getAllArticleInformationList() {
@@ -72,7 +82,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<ArticleInformation> result = this.getAllArticleInformationList()
                 .stream()
                 .filter(articleInformation ->
-                        articleInformation.getIfPrivate()==0)
+                        articleInformation.getIfPrivate() == 0)
                 .collect(Collectors.toList());
         return result.size() == 0 ? null : result;
     }
@@ -106,14 +116,28 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public List<ArticleInformation> searchArticleInformationListByKeyword(List<ArticleInformation> articleInformationList, String keyword) {
+        if (articleInformationList.size() == 0) return null;
         return articleInformationList.stream().filter(articleInformation ->
-                articleInformation.getUsername().contains(keyword) ||
                         articleInformation.getNickname().contains(keyword) ||
                         articleInformation.getTitle().contains(keyword) ||
-                        articleInformation.getSynopsis().contains(keyword) ||
-                        articleInformation.getClassify().getName().contains(keyword) ||
-                        articleInformation.getTagList().stream().anyMatch(tag ->
-                                tag.getName().contains(keyword))
+                        articleInformation.getSynopsis().contains(keyword)
+        ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ArticleInformation> searchArticleInformationListByClassifyList(List<ArticleInformation> articleInformationList, List<Long> classifyIDList) {
+        if (articleInformationList.size() == 0) return null;
+        return articleInformationList.stream().filter(articleInformation ->
+                classifyIDList.contains(articleInformation.getClassify().getId())
+        ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ArticleInformation> searchArticleInformationListByTagList(List<ArticleInformation> articleInformationList, List<Long> tagIDList) {
+        if (articleInformationList.size() == 0) return null;
+        return articleInformationList.stream().filter(articleInformation ->
+                articleInformation.getTagList().stream().anyMatch(tag ->
+                        tagIDList.contains(tag.getId()))
         ).collect(Collectors.toList());
     }
 }
