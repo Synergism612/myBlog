@@ -28,7 +28,7 @@
     ></Article>
   </div>
 
-  <div v-if="total <= 0" style="text-align: center">没有文章</div>
+  <div v-if="total <= 0" style="text-align: center">没有找到文章</div>
 </template>
 
 <script lang="ts">
@@ -88,6 +88,7 @@ export default defineComponent({
           viewData.articleInformationList = data.articleInformationList;
           viewData.total = data.total;
           viewData.refresh = true;
+          console.log(viewData.total);
         });
     };
 
