@@ -33,7 +33,12 @@
                 <!-- 左侧 -->
                 <el-col :xs="24" :sm="18" :md="18" :span="18">
                   <div class="left">
-                    <IndexArticle></IndexArticle>
+                    <PandectArticle
+                      ref="pandectArticle"
+                      v-model:keyword="keyword"
+                      v-model:classifyIDList="classifyIDList"
+                      v-model:tagIDList="tagIDList"
+                    ></PandectArticle>
                   </div>
                 </el-col>
                 <!-- 右侧 -->
@@ -44,12 +49,13 @@
                       <el-row class="search">
                         <el-col :span="20">
                           <el-input
-                            v-model="searchInput"
+                            v-model="keyword"
                             placeholder="请输入搜索内容"
+                            @keyup.enter="search()"
                           />
                         </el-col>
                         <el-col :span="3" :offset="1">
-                          <span class="click">
+                          <span class="click" @click="search">
                             <font-awesome-icon
                               :icon="['fas', 'magnifying-glass']"
                             />
@@ -59,21 +65,38 @@
                     </el-col>
                     <el-col :span="24" class="frame">
                       <div class="center">分类</div>
-                      <el-row :gutter="5" class="tags">
+                      <el-row :gutter="5" class="elements">
                         <el-col
                           v-for="classify in classifyList"
                           :key="classify.id"
                           :span="12"
                         >
-                          <div class="tag">{{ classify.name }}</div>
+                          <div
+                            :class="
+                              (classifyIDList.indexOf(classify.id) != -1
+                                ? 'down'
+                                : '') + ' element'
+                            "
+                            @click="classifyClick(classify.id)"
+                          >
+                            {{ classify.name }}
+                          </div>
                         </el-col>
                       </el-row>
                     </el-col>
                     <el-col :span="24" class="frame">
                       <div class="center">标签</div>
-                      <el-row :gutter="5" class="tags">
+                      <el-row :gutter="5" class="elements">
                         <el-col v-for="tag in tagList" :key="tag.id" :span="12">
-                          <div class="tag">{{ tag.name }}</div>
+                          <div
+                            :class="
+                              (tagIDList.indexOf(tag.id) != -1 ? 'down' : '') +
+                              ' element'
+                            "
+                            @click="tagClick(tag.id)"
+                          >
+                            {{ tag.name }}
+                          </div>
                         </el-col>
                       </el-row>
                     </el-col>
@@ -88,15 +111,54 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs } from "vue";
+import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
 import Pandect from "./Pandect";
 import Menu from "@/components/menu/Menu.vue";
-import IndexArticle from "@/components/article/indexArticle/IndexArticle.vue";
+import PandectArticle from "@/components/article/pandectArticle/PandectArticle.vue";
 
 export default defineComponent({
   setup() {
     /**数据仓 */
     const viewData = reactive(new Pandect());
+
+    const pandectArticle = ref();
+
+    const search = (): void => {
+      pandectArticle.value.getPagination();
+    };
+
+    const classifyClick = (id: number): void => {
+      if (viewData.classifyIDList.indexOf(id) === -1) {
+        viewData.classifyIDList.push(id);
+      } else {
+        viewData.classifyIDList.splice(viewData.classifyIDList.indexOf(id), 1);
+      }
+      if (
+        viewData.classifyIDList.length > 1 &&
+        viewData.classifyIDList[0] === -1
+      ) {
+        viewData.classifyIDList.splice(0, 1);
+      }
+      if (viewData.classifyIDList.length === 0) {
+        viewData.classifyIDList.push(-1);
+      }
+      search();
+    };
+
+    const tagClick = (id: number): void => {
+      if (viewData.tagIDList.indexOf(id) === -1) {
+        viewData.tagIDList.push(id);
+      } else {
+        viewData.tagIDList.splice(viewData.tagIDList.indexOf(id), 1);
+      }
+      if (viewData.tagIDList.length > 1 && viewData.tagIDList[0] === -1) {
+        viewData.tagIDList.splice(0, 1);
+      }
+      if (viewData.tagIDList.length === 0) {
+        viewData.tagIDList.push(-1);
+      }
+      search();
+    };
 
     onMounted(() => {
       viewData.init();
@@ -104,9 +166,13 @@ export default defineComponent({
 
     return {
       ...toRefs(viewData),
+      pandectArticle,
+      search,
+      classifyClick,
+      tagClick,
     };
   },
-  components: { Menu, IndexArticle },
+  components: { Menu, PandectArticle },
 });
 </script>
 <style lang="less">

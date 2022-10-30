@@ -3,19 +3,25 @@ import Classify from "@/model/classify/Classify";
 import Tag from "@/model/tag/Tag";
 
 export default class Pandect {
-  searchInput: string;
+  keyword: string;
 
   classifyList: Array<Classify>;
   tagList: Array<Tag>;
 
+  classifyIDList: Array<number>;
+  tagIDList: Array<number>;
+
   constructor() {
-    this.searchInput = "";
+    this.keyword = "";
 
     this.classifyList = [new Classify()];
     this.tagList = [new Tag()];
+
+    this.classifyIDList = [-1];
+    this.tagIDList = [-1];
   }
 
-  public init() {
+  public init(): void {
     const classify = (): void => {
       api.getPandectClissify().then(({ data }): void => {
         this.classifyList = data;
