@@ -13,7 +13,8 @@
           <span class="click" @click="updateArticle(0)">最新发布</span>\
           <span class="click" @click="updateArticle(1)">最新更新</span>\
           <span class="click" @click="updateArticle(2)">查看最多</span>\
-          <span class="click" @click="updateArticle(3)">点赞最多</span>
+          <span class="click" @click="updateArticle(3)">点赞最多</span>\
+          <span class="click" @click="updateArticle(4)">评论最多</span>
         </el-col>
       </el-row>
     </transition>
