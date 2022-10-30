@@ -48,6 +48,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 return articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getViews).reversed()).collect(Collectors.toList());
             case like_count:
                 return articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getLikeCount).reversed()).collect(Collectors.toList());
+            case comment_count:
+                return articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getCommentCount).reversed()).collect(Collectors.toList());
             case modify_time:
                 return articleInformationList.stream().sorted(Comparator.comparing(ArticleInformation::getModifyTime).reversed()).collect(Collectors.toList());
             default:
@@ -89,6 +91,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public boolean isExist(Long articleID) {
-        return this.getOne(new LambdaQueryWrapper<Article>().eq(Article::getId,articleID))!=null;
+        return this.getOne(new LambdaQueryWrapper<Article>().eq(Article::getId, articleID)) != null;
     }
 }

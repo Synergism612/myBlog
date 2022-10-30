@@ -8,5 +8,7 @@ public enum ArticleSort {
     //查看最多
     views,
     //点赞最多
-    like_count
+    like_count,
+    //评论最多
+    comment_count
 }
