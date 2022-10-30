@@ -60,34 +60,20 @@
                     <el-col :span="24" class="frame">
                       <div class="center">分类</div>
                       <el-row :gutter="5" class="tags">
-                        <el-col :span="12">
-                          <div class="tag">你好</div>
-                        </el-col>
-                        <el-col :span="12">
-                          <div class="tag">你好</div>
-                        </el-col>
-                        <el-col :span="12">
-                          <div class="tag">你好</div>
-                        </el-col>
-                        <el-col :span="12">
-                          <div class="tag">你好</div>
+                        <el-col
+                          v-for="classify in classifyList"
+                          :key="classify.id"
+                          :span="12"
+                        >
+                          <div class="tag">{{ classify.name }}</div>
                         </el-col>
                       </el-row>
                     </el-col>
                     <el-col :span="24" class="frame">
                       <div class="center">标签</div>
                       <el-row :gutter="5" class="tags">
-                        <el-col :span="12">
-                          <div class="tag">你好</div>
-                        </el-col>
-                        <el-col :span="12">
-                          <div class="tag">你好</div>
-                        </el-col>
-                        <el-col :span="12">
-                          <div class="tag">你好</div>
-                        </el-col>
-                        <el-col :span="12">
-                          <div class="tag">你好</div>
+                        <el-col v-for="tag in tagList" :key="tag.id" :span="12">
+                          <div class="tag">{{ tag.name }}</div>
                         </el-col>
                       </el-row>
                     </el-col>
@@ -113,7 +99,7 @@ export default defineComponent({
     const viewData = reactive(new Pandect());
 
     onMounted(() => {
-      console.log("");
+      viewData.init();
     });
 
     return {
