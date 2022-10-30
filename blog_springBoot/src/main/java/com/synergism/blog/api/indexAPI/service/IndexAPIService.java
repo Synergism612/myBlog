@@ -11,16 +11,6 @@ import java.util.List;
 
 public interface IndexAPIService {
     /**
-     * 首页文章列表
-     * @param currentPage 当前页
-     * @param pageSize 页容量
-     * @param articleSort 排序
-     * @param username 账号
-     * @return 结果[分页]
-     */
-    Result<Pagination> getIndexArticles(int currentPage, int pageSize, ArticleSort articleSort,String username);
-
-    /**
      * 首页默认用户信息
      * 默认用户一般指向管理用户
      * 用户id一般为1

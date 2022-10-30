@@ -23,18 +23,23 @@ public class ArticleAPIServiceImpl implements ArticleAPIService {
     }
 
     @Override
-    public Result<Pagination> getPagination(int currentPage, int pageSize, ArticleSort articleSort,String username) {
+    public Result<Pagination> getPagination(int currentPage, int pageSize, ArticleSort articleSort,String username,String keyword) {
         int startIndex = (currentPage - 1) * pageSize;
         int endIndex = currentPage * pageSize;
         List<ArticleInformation> result;
+
         if (StringUtil.isEmpty(username)){
-            result = service.getAllArticleInformationList();
+            result = service.getArticleInformationListByPublic();
         }else {
             result = service.getArticleInformationListByUsername(username);
+        }
+        if (StringUtil.isEmpty(keyword)){
+            result = service.searchArticleInformationListByKeyword(result,keyword);
         }
         result = service.ArticleInformationListSort(result,articleSort);
         int total = result.size();
         endIndex = Math.min(endIndex, total);
         return Result.success(new Pagination(result.subList(startIndex, endIndex), total));
     }
+
 }

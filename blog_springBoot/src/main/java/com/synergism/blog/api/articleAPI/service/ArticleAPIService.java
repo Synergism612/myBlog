@@ -13,5 +13,5 @@ public interface ArticleAPIService {
      * @param articleSort 排序
      * @return 分页
      */
-    Result<Pagination> getPagination(int currentPage, int pageSize, ArticleSort articleSort,String username);
+    Result<Pagination> getPagination(int currentPage, int pageSize, ArticleSort articleSort,String username,String keyword);
 }

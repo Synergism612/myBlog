@@ -68,6 +68,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    public List<ArticleInformation> getArticleInformationListByPublic() {
+        List<ArticleInformation> result = this.getAllArticleInformationList()
+                .stream()
+                .filter(articleInformation ->
+                        articleInformation.getIfPrivate()==0)
+                .collect(Collectors.toList());
+        return result.size() == 0 ? null : result;
+    }
+
+    @Override
     public List<Article> getOneClassifyArticleList(long id) {
         List<Article> result = mapper.getOneClassifyArticleList(id)
                 .stream()
@@ -92,5 +102,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public boolean isExist(Long articleID) {
         return this.getOne(new LambdaQueryWrapper<Article>().eq(Article::getId, articleID)) != null;
+    }
+
+    @Override
+    public List<ArticleInformation> searchArticleInformationListByKeyword(List<ArticleInformation> articleInformationList, String keyword) {
+        return articleInformationList.stream().filter(articleInformation ->
+                articleInformation.getUsername().contains(keyword) ||
+                        articleInformation.getNickname().contains(keyword) ||
+                        articleInformation.getTitle().contains(keyword) ||
+                        articleInformation.getSynopsis().contains(keyword) ||
+                        articleInformation.getClassify().getName().contains(keyword) ||
+                        articleInformation.getTagList().stream().anyMatch(tag ->
+                                tag.getName().contains(keyword))
+        ).collect(Collectors.toList());
     }
 }

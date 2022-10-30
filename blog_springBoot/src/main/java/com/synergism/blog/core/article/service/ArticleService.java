@@ -41,12 +41,23 @@ public interface ArticleService extends IService<Article> {
     List<ArticleInformation> getArticleInformationListByUsername(String username);
 
     /**
+     * 获取公共的文章信息列表
+     * @return 文章信息列表
+     */
+    List<ArticleInformation> getArticleInformationListByPublic();
+
+    /**
      * 获得与文章id同类的文章
      * @param id 需要查询的文章id
      * @return 文章列表
      */
     List<Article> getOneClassifyArticleList(long id);
 
+    /**
+     * 获取与该文章有相同标签的文章
+     * @param id 需要查询的文章id
+     * @return 文章列表
+     */
     List<ArticleTagNominate> getMoreTagArticleList(long id);
 
     /**
@@ -55,4 +66,6 @@ public interface ArticleService extends IService<Article> {
      * @return 存在为真，反之为假
      */
     boolean isExist(Long articleID);
+
+    List<ArticleInformation> searchArticleInformationListByKeyword(List<ArticleInformation> articleInformationList, String keyword);
 }
