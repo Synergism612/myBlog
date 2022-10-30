@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!checkListIsEmpty()" class="articleBox">
+    <div v-if="total > 0" class="articleBox">
       <!-- 文章列表 -->
       <el-row class="articles">
         <el-row
@@ -93,7 +93,7 @@
       </el-row>
     </div>
 
-    <div v-if="checkListIsEmpty()" style="text-align: center">没有文章</div>
+    <div v-if="total <= 0" style="text-align: center">没有文章</div>
   </div>
 </template>
 
@@ -154,19 +154,6 @@ export default defineComponent({
       viewData.currentPage = currentPage;
     };
 
-    /**
-     * 检查文章列表是否为空
-     */
-    const checkListIsEmpty = (): boolean => {
-      if (
-        viewData.articleInformationList[0] !== (null || undefined) &&
-        viewData.articleInformationList[0].id !== -1
-      ) {
-        return false;
-      }
-      return true;
-    };
-
     const router = useRouter();
 
     const toContent = (id: number): void => {
@@ -194,7 +181,6 @@ export default defineComponent({
       ...toRefs(viewData),
       handleSizeChange,
       handleCurrentChange,
-      checkListIsEmpty,
       toContent,
     };
   },

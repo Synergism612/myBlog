@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!checkListIsEmpty()" class="indexArticleBox">
+  <div v-if="total > 0" class="indexArticleBox">
     <!-- 文章排序 -->
     <transition
       appear
@@ -28,11 +28,10 @@
     ></Article>
   </div>
 
-  <div v-if="checkListIsEmpty()" style="text-align: center">没有文章</div>
+  <div v-if="total <= 0" style="text-align: center">没有文章</div>
 </template>
 
 <script lang="ts">
-import { api } from "@/api/api";
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import IndexArticle from "./IndexArticle";
 import Article from "@/components/article/Article.vue";
@@ -52,7 +51,7 @@ export default defineComponent({
         !StringUtil.checkStringIfEmpty(viewData.username)
       ) {
         viewData.isMy = !viewData.isMy;
-        getPagination();
+        viewData.getPagination();
       } else {
         Message.warningMessage("您还没有登录");
       }
@@ -65,26 +64,7 @@ export default defineComponent({
     const updateArticle = (x: number): void => {
       viewData.articleOrderBy = viewData.articleSort[x];
       viewData.currentPage = 1;
-      getPagination();
-    };
-
-    /**
-     * 分页数据获取
-     */
-    const getPagination = (): void => {
-      viewData.refresh = false;
-      api
-        .getIndexArticle(
-          viewData.currentPage,
-          viewData.pageSize,
-          viewData.articleOrderBy,
-          viewData.isMy === true ? viewData.username : ""
-        )
-        .then(({ data }) => {
-          viewData.articleInformationList = data.articleInformationList;
-          viewData.total = data.total;
-        });
-      viewData.refresh = true;
+      viewData.getPagination();
     };
     /**
      *监听页容量
@@ -103,29 +83,16 @@ export default defineComponent({
     };
 
     /**
-     * 检查文章列表是否为空
-     */
-    const checkListIsEmpty = (): boolean => {
-      if (
-        viewData.articleInformationList[0] !== (null || undefined) &&
-        viewData.articleInformationList[0].id !== -1
-      ) {
-        return false;
-      }
-      return true;
-    };
-
-    /**
      * 监听变化后立刻刷新分页
      */
     const pagination = (pagination: Array<number>): void => {
       viewData.currentPage = pagination[0];
       viewData.pageSize = pagination[1];
-      getPagination();
+      viewData.getPagination();
     };
 
     onMounted((): void => {
-      getPagination();
+      viewData.getPagination();
     });
 
     return {
@@ -134,7 +101,6 @@ export default defineComponent({
       handleCurrentChange,
       updateArticle,
       myArticle,
-      checkListIsEmpty,
       pagination,
     };
   },

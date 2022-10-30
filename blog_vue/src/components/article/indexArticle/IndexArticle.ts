@@ -1,3 +1,4 @@
+import { api } from "@/api/api";
 import ArticleInformation from "@/model/article/ArticleInformation";
 import ArticleSort from "@/model/article/ArticleSort";
 import { store } from "@/store";
@@ -39,5 +40,24 @@ export default class IndexArticle {
     this.articleOrderBy = this.articleSort[0];
     this.articleInformationList = [new ArticleInformation()];
     this.total = 0;
+  }
+
+  /**
+   * 分页数据获取
+   */
+  getPagination(): void {
+    this.refresh = false;
+    api
+      .getIndexArticle(
+        this.currentPage,
+        this.pageSize,
+        this.articleOrderBy,
+        this.isMy === true ? this.username : ""
+      )
+      .then(({ data }) => {
+        this.articleInformationList = data.articleInformationList;
+        this.total = data.total;
+      });
+    this.refresh = true;
   }
 }
