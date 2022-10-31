@@ -5,4 +5,21 @@
     <insert id="addCollection">
         INSERT INTO favorite_collection(favorite_id,collection_id) values (#{favoriteID},#{collectionID})
     </insert>
+    <select id="selectOneByFavoriteIDAndHref"
+            resultType="com.synergism.blog.core.collection.entity.Collection">
+        select
+            c.id ,
+            c.title ,
+            c.href ,
+            c.synopsis
+        from
+            favorite_collection fc
+                join
+            collection c
+            on
+                fc.collection_id = c.id
+        where
+            fc.favorite_id = #{favoriteID} and
+            c.href = #{href}
+    </select>
 </mapper>

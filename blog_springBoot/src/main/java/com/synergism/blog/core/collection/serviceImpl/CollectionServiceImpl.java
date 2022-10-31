@@ -37,4 +37,9 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         }
         return false;
     }
+
+    @Override
+    public boolean isExist(Long favoriteID, String href) {
+        return mapper.selectOneByFavoriteIDAndHref(favoriteID,href)!=null;
+    }
 }

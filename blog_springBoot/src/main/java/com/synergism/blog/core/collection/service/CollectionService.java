@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface CollectionService extends IService<Collection> {
 
     boolean save(String title, String url, String synopsis, Long groupID);
+
+    boolean isExist(Long favoriteID, String href);
 }

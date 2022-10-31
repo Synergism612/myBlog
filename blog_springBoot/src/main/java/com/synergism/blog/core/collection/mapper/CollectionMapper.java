@@ -16,4 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CollectionMapper extends BaseMapper<Collection> {
 
     void addCollection(Long favoriteID,long collectionID);
+
+    Collection selectOneByFavoriteIDAndHref(Long favoriteID, String href);
 }

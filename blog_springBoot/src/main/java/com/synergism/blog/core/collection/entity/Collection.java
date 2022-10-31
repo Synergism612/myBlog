@@ -32,8 +32,8 @@ public class Collection {
     private String title;
 
     @ApiModelProperty("网址")
-    @TableField("url")
-    private String url;
+    @TableField("href")
+    private String href;
 
     @ApiModelProperty("摘要")
     @TableField("synopsis")
@@ -41,9 +41,9 @@ public class Collection {
 
     public Collection(){}
 
-    public Collection(String title,String url,String synopsis){
+    public Collection(String title,String href,String synopsis){
         this.title = title;
-        this.url = url;
+        this.href = href;
         this.synopsis = synopsis;
     }
 
