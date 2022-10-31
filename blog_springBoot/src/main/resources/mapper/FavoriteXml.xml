@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.synergism.blog.core.favorite.mapper.FavoriteMapper">
+
+    <select id="selectListByUserID" resultType="com.synergism.blog.core.favorite.entity.Favorite">
+        select f.id,
+               f.name,
+               f.annotation,
+               f.if_private
+        from user_favorite uf
+                 join
+             favorite f
+             on
+                 uf.favorite_id = f.id
+        where uf.user_id = #{userID}
+    </select>
+</mapper>
