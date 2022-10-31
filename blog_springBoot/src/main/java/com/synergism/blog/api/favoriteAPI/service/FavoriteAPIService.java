@@ -1,5 +1,7 @@
 package com.synergism.blog.api.favoriteAPI.service;
 
+import com.synergism.blog.api.favoriteAPI.entity.AddCollection;
+import com.synergism.blog.api.favoriteAPI.entity.AddFavoriteGroup;
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.synergism.blog.result.Result;
 
@@ -13,4 +15,8 @@ public interface FavoriteAPIService {
      * @return 收藏夹列表
      */
     Result<List<Favorite>> getGroup(String username);
+
+    Result<String> setGroup(AddFavoriteGroup addFavoriteGroup);
+
+    Result<String> setCollection(AddCollection addCollection);
 }
