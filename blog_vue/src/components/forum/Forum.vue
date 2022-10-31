@@ -172,7 +172,7 @@ export default defineComponent({
         viewData.parentUsername = parentUsername;
         viewData.parentID = parentID;
         emit("toForum");
-        Message.infoMessage("请输入评论");
+        Message.successMessage("已为您锁定目标");
       } else {
         Message.warningMessage("您未登录");
       }

@@ -53,14 +53,28 @@
 
                 <!-- 文章分类标签信息 -->
                 <el-divider />
-                <el-row>
+                <el-row class="more">
                   <el-col :span="24">
-                    <span class="click">文章所属分类:{{ classify.name }}</span>
+                    文章所属分类:
+                    <span class="click element">
+                      {{ classify.name }}
+                    </span>
                   </el-col>
                   <el-col :span="24">
                     文章所属标签:
                     <span v-for="tag in tagList" :key="tag.id">
-                      <span class="click">{{ tag.name }}</span>
+                      <span class="click element">{{ tag.name }}</span>
+                    </span>
+                  </el-col>
+                  <el-col :span="24">
+                    <span class="click function">
+                      <font-awesome-icon :icon="['fas', 'thumbs-up']" />
+                      点赞
+                      {{ article.likeCount }}
+                    </span>
+                    <span class="click function">
+                      <font-awesome-icon :icon="['fas', 'heart']" />
+                      收藏
                     </span>
                   </el-col>
                 </el-row>

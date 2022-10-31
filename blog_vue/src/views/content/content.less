@@ -35,6 +35,33 @@
           background-color: rgba(0, 0, 0, 0);
         }
       }
+      .more {
+        div{
+          margin: 0.5em 0;
+        }
+        .element {
+          margin: 0 0.5em;
+          padding: 0.1em;
+          border-radius: 5px;
+          border: 2px solid rgba(0, 0, 0, 0.473);
+          transition: 0.5s;
+          cursor: pointer;
+        }
+        .element:hover{
+          border: 2px solid rgba(0, 0, 0, 0.812);
+        }
+        .function{
+          margin: 0 0.5em;
+          .svg{
+            transition: 0.5s;
+          }
+        }
+        .function:hover{
+          svg{
+            scale: 1.5;
+          }
+        }
+      }
       .author {
         display: flex;
         flex-direction: column;
