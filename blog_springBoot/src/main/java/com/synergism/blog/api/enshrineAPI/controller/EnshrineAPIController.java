@@ -1,9 +1,10 @@
-package com.synergism.blog.api.favoriteAPI.controller;
+package com.synergism.blog.api.enshrineAPI.controller;
 
-import com.synergism.blog.api.favoriteAPI.entity.AddCollection;
-import com.synergism.blog.api.favoriteAPI.entity.AddFavoriteGroup;
-import com.synergism.blog.api.favoriteAPI.service.FavoriteAPIService;
+import com.synergism.blog.api.enshrineAPI.entity.AddCollection;
+import com.synergism.blog.api.enshrineAPI.entity.AddFavoriteGroup;
+import com.synergism.blog.api.enshrineAPI.service.EnshrineAPIService;
 import com.synergism.blog.core.favorite.entity.Favorite;
+import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,30 +13,33 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/favorite")
-public class FavoriteAPIController {
+public class EnshrineAPIController {
 
-    FavoriteAPIService service;
+    EnshrineAPIService service;
 
     @Autowired
-    FavoriteAPIController(FavoriteAPIService service){
+    EnshrineAPIController(EnshrineAPIService service){
         this.service = service;
     }
 
 
     //需要登录验证
-    @GetMapping("group")
-    public Result<List<Favorite>> group(@RequestParam String username){
-        return service.getGroup(username);
+    @GetMapping("favorite")
+    public Result<List<Favorite>> getFavorite(@RequestParam String username){
+        return service.getFavorite(username);
     }
 
     //需要登录验证
-    @PostMapping("group")
-    public Result<String> group(@RequestBody AddFavoriteGroup addFavoriteGroup){
-        return service.setGroup(addFavoriteGroup);
+    @PostMapping("favorite")
+    public Result<String> setFavorite(@RequestBody AddFavoriteGroup addFavoriteGroup){
+        return service.setFavorite(addFavoriteGroup);
     }
 
     @PostMapping("collection")
-    public Result<String> collection(@RequestBody AddCollection addCollection){
+    public Result<String> setCollection(@RequestBody AddCollection addCollection){
+        if (addCollection.getFavoriteID()==-1){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不能为空"));
+        }
         return service.setCollection(addCollection);
     }
 

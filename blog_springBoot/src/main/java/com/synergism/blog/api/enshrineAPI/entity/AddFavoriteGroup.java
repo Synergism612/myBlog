@@ -1,4 +1,4 @@
-package com.synergism.blog.api.favoriteAPI.entity;
+package com.synergism.blog.api.enshrineAPI.entity;
 
 import lombok.Getter;
 import lombok.Setter;
