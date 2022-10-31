@@ -321,7 +321,7 @@ export class api {
    * @param parentID 父评论id
    * @returns Result[String]
    */
-  public static addComment(
+  public static setComment(
     username: string,
     comment: string,
     articleID: number,
@@ -383,6 +383,39 @@ export class api {
         keyword: keyword || "",
         classifyIDList: classifyIDList.toString(),
         tagIDList: tagIDList.toString(),
+      },
+    });
+  }
+
+  /**
+   * 收藏获取收藏夹接口
+   * @param username 账号
+   * @returns 收藏夹列表
+   */
+  public static getEnshrineFavorite(username: string): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/favorite/favorite",
+      method: "get",
+      params: {
+        username: username,
+      },
+    });
+  }
+
+  public static setEnshrineCollection(
+    title: string,
+    href: string,
+    annotation: string,
+    favoriteID: number
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/favorite/collection",
+      method: "post",
+      data: {
+        title: title,
+        href: href,
+        annotation: annotation,
+        favoriteID: favoriteID,
       },
     });
   }
