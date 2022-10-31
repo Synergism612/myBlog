@@ -90,7 +90,9 @@ public class ContentAPIServiceImpl implements ContentAPIService {
         }
         if (addComment.getRootID() == null || commentService.isExist(addComment.getRootID())) {
             if (addComment.getParentID() == null || commentService.isExist(addComment.getParentID())) {
-                return commentService.save(addComment,userID)?Result.success():Result.error(CodeMsg.BIND_ERROR.fillArgs("评论失败"));
+                return commentService.save(addComment.getComment(),addComment.getRootID(),addComment.getParentID(), addComment.getArticleID(),userID)
+                        ?Result.success()
+                        :Result.error(CodeMsg.BIND_ERROR.fillArgs("评论失败"));
             }
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论失败"));
