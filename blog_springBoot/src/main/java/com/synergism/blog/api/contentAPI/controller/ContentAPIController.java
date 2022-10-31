@@ -62,12 +62,12 @@ public class ContentAPIController {
         return service.getTagNominate(articleID);
     }
 
+    //需要登录验证
     @PostMapping("comment")
     public Result<String> addComment(@RequestBody AddComment addComment){
         if (addComment.getArticleID()<=0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论错误"));
         if (addComment.getRootID()==-1)addComment.setRootID(null);
         if (addComment.getParentID()==-1)addComment.setParentID(null);
-
         return service.setComment(addComment);
     }
 }
