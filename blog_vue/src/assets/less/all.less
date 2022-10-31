@@ -37,8 +37,28 @@ body {
 
     margin-top: 1vh;
   }
-  .center{
+  .center {
     text-align: center;
+  }
+  //选择器
+  .el-popper.is-light {
+    background-color: rgba(240, 240, 240, 1);
+
+    .hover {
+      background-color: rgba(185, 185, 185, 1);
+    }
+  }
+  .el-scrollbar__wrap {
+    ul {
+      .selected {
+        color: #3fc4c2;
+      }
+    }
+  }
+  .el-popper__arrow::before {
+    background-color: rgba(0, 0, 0, 0.402) !important;
+    border-radius: 100% !important;
+    box-shadow: var(--el-box-shadow-light) !important;
   }
 }
 
