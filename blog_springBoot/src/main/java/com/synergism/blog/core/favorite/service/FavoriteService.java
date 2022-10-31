@@ -1,6 +1,5 @@
 package com.synergism.blog.core.favorite.service;
 
-import com.synergism.blog.api.favoriteAPI.entity.AddFavoriteGroup;
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.baomidou.mybatisplus.extension.service.IService;
 

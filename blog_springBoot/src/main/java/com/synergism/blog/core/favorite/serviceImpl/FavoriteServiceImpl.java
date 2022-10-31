@@ -1,13 +1,10 @@
 package com.synergism.blog.core.favorite.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.synergism.blog.api.favoriteAPI.entity.AddFavoriteGroup;
-import com.synergism.blog.core.comment.entity.Comment;
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.synergism.blog.core.favorite.mapper.FavoriteMapper;
 import com.synergism.blog.core.favorite.service.FavoriteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.synergism.blog.core.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
