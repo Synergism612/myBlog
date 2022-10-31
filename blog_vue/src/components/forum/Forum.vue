@@ -136,7 +136,7 @@ export default defineComponent({
           return;
         }
         api
-          .addComment(
+          .setComment(
             viewData.userInfo.username,
             viewData.commentInput,
             props.articleID,
