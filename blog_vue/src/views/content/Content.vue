@@ -72,9 +72,9 @@
                       点赞
                       {{ article.likeCount }}
                     </span>
-                    <span class="click function">
+                    <span class="click function" @click="myafavorite">
                       <font-awesome-icon :icon="['fas', 'heart']" />
-                      收藏
+                      添加进收藏
                     </span>
                   </el-col>
                 </el-row>
@@ -191,6 +191,15 @@
       @toForum="toForum"
       @toCatalog="toCatalog"
     ></Toolboxe>
+
+    <Enshrine
+      v-if="favoriteShow"
+      @close="myafavorite"
+      :title="article.title"
+      :href="href"
+      :annotation="article.synopsis"
+      :username="username"
+    ></Enshrine>
   </div>
 </template>
 <script lang="ts">
@@ -204,6 +213,8 @@ const MdCatalog = MdEditor.MdCatalog;
 import { useRoute, useRouter } from "vue-router";
 import Forum from "@/components/forum/Forum.vue";
 import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
+import Enshrine from "@/components/enshrine/Enshrine.vue";
+import Message from "@/utils/MessageUtil";
 
 export default defineComponent({
   setup() {
@@ -258,12 +269,6 @@ export default defineComponent({
      */
     const jump = (to: number): void => {
       viewData.toolBoxShow = false;
-
-      console.log(to);
-      console.log(html.scrollTop);
-      console.log(html.clientHeight);
-      console.log("\n");
-
       if (
         to < html.scrollTop + html.clientHeight &&
         to > html.scrollTop - html.clientHeight
@@ -309,6 +314,16 @@ export default defineComponent({
       window.open(open.href, "_blank");
     };
 
+    const href = window.location.href;
+
+    const myafavorite = (): void => {
+      if (viewData.isLogin) {
+        viewData.favoriteShow = !viewData.favoriteShow;
+      } else {
+        Message.warningMessage("您未登录");
+      }
+    };
+
     onMounted(() => {
       viewData.init(id);
     });
@@ -321,11 +336,13 @@ export default defineComponent({
       toForum,
       toCatalog,
       toArticle,
+      myafavorite,
+      href,
     };
   },
-  components: { Menu, MdEditor, MdCatalog, Forum, Toolboxe },
+  components: { Menu, MdEditor, MdCatalog, Forum, Toolboxe, Enshrine },
 });
 </script>
 <style lang="less">
-@import url("./content.less");
+@import url("./Content.less");
 </style>

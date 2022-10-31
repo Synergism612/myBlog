@@ -2,10 +2,10 @@ import { api } from "@/api/api";
 import Article from "@/model/article/Article";
 import ArticleTagNominate from "@/model/article/ArticleTagNominate";
 import Classify from "@/model/classify/Classify";
-import CommentChild from "@/model/comment/CommentChild";
-import CommentParent from "@/model/comment/CommentParent";
 import Tag from "@/model/tag/Tag";
 import Author from "@/model/user/Author";
+import { store } from "@/store";
+import StringUtil from "@/utils/StringUtil";
 
 export default class Content {
   article: Article;
@@ -23,6 +23,11 @@ export default class Content {
 
   toolBoxShow: boolean;
 
+  favoriteShow: boolean;
+
+  isLogin: boolean;
+  username: string;
+
   constructor() {
     this.article = new Article();
     this.author = new Author();
@@ -38,6 +43,10 @@ export default class Content {
     this.tagNominate = [new ArticleTagNominate()];
 
     this.toolBoxShow = true;
+    this.favoriteShow = false;
+
+    this.username = store.getters.getUser.username;
+    this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
   }
 
   public init(articleID: number): void {
