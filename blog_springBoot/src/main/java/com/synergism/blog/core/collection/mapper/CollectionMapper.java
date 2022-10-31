@@ -15,4 +15,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CollectionMapper extends BaseMapper<Collection> {
 
+    void addCollection(Long favoriteID,long collectionID);
 }

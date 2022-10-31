@@ -39,5 +39,12 @@ public class Collection {
     @TableField("synopsis")
     private String synopsis;
 
+    public Collection(){}
+
+    public Collection(String title,String url,String synopsis){
+        this.title = title;
+        this.url = url;
+        this.synopsis = synopsis;
+    }
 
 }
