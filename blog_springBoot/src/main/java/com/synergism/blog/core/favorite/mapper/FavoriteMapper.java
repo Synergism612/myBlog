@@ -18,4 +18,6 @@ import java.util.List;
 public interface FavoriteMapper extends BaseMapper<Favorite> {
 
     List<Favorite> selectListByUserID(long userID);
+
+    void addFavorite(long userID,long favoriteID);
 }

@@ -39,5 +39,12 @@ public class Favorite {
     @TableField("if_private")
     private Integer ifPrivate;
 
+    public Favorite(){}
+
+    public Favorite(String name,String annotation,Integer ifPrivate){
+        this.name = name;
+        this.annotation = annotation;
+        this.ifPrivate = ifPrivate;
+    }
 
 }
