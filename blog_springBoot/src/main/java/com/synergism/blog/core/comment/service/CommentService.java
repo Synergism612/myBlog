@@ -37,11 +37,14 @@ public interface CommentService extends IService<Comment> {
 
     /**
      * 保存新的评论
-     * @param addComment 新的评论信息
+     * @param body 评论内容
+     * @param rootId 根评论id
+     * @param parentId 父评论id
+     * @param articleID 文章id
      * @param userID 用户id
      * @return 成功为真，反之为假
      */
-    boolean save(AddComment addComment,long userID);
+    boolean save(String body,Long rootId,Long parentId,long articleID,long userID);
 
     /**
      * 根据评论id判断是否存在

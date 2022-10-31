@@ -1,7 +1,6 @@
 package com.synergism.blog.core.comment.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.synergism.blog.api.contentAPI.entity.AddComment;
 import com.synergism.blog.core.comment.entity.Comment;
 import com.synergism.blog.core.comment.entity.CommentInformation;
 import com.synergism.blog.core.comment.entity.CommentChild;
@@ -9,11 +8,8 @@ import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.comment.mapper.CommentMapper;
 import com.synergism.blog.core.comment.service.CommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.synergism.blog.result.Result;
-import com.synergism.blog.utils.TypeUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -90,12 +86,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public boolean save(AddComment addComment,long userID) {
-        Comment comment = new Comment(addComment.getComment(),addComment.getRootID(),addComment.getParentID());
+    public boolean save(String body,Long rootId,Long parentId,long articleID,long userID) {
+        Comment comment = new Comment(body, rootId, parentId);
         mapper.insert(comment);
         long commentID = comment.getId();
         try {
-            mapper.addComment(commentID,addComment.getArticleID(),userID);
+            mapper.addComment(commentID,articleID,userID);
             return true;
         }catch (Exception e){
             mapper.delete(new LambdaQueryWrapper<Comment>().eq(Comment::getId,commentID));
