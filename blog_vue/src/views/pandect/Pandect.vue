@@ -38,6 +38,8 @@
                       v-model:keyword="keyword"
                       v-model:classifyIDList="classifyIDList"
                       v-model:tagIDList="tagIDList"
+                      @classifyClick="classifyClick"
+                      @tagClick="tagClick"
                     ></PandectArticle>
                   </div>
                 </el-col>
@@ -115,6 +117,7 @@ import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
 import Pandect from "./Pandect";
 import Menu from "@/components/menu/Menu.vue";
 import PandectArticle from "@/components/article/pandectArticle/PandectArticle.vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   setup() {
@@ -160,8 +163,26 @@ export default defineComponent({
       search();
     };
 
+    const route = useRoute();
+
+    const routeInit = (): void => {
+      const type = route.params.type;
+      const id = Number(route.params.id);
+      switch (type) {
+        case "tag":
+          tagClick(id);
+          break;
+        case "classify":
+          classifyClick(id);
+          break;
+        default:
+          break;
+      }
+    };
+
     onMounted(() => {
       viewData.init();
+      routeInit();
     });
 
     return {

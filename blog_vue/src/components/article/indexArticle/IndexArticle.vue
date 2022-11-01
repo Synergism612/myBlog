@@ -18,14 +18,18 @@
         </el-col>
       </el-row>
     </transition>
-    <Article
-      v-if="refresh"
-      v-model:dataList="articleInformationList"
-      v-model:total="total"
-      v-model:currentPage="currentPage"
-      v-model:pageSize="pageSize"
-      @pagination="pagination"
-    ></Article>
+    <div>
+      <Article
+        v-if="refresh"
+        v-model:dataList="articleInformationList"
+        v-model:total="total"
+        v-model:currentPage="currentPage"
+        v-model:pageSize="pageSize"
+        @pagination="pagination"
+        @classifyClick="classifyClick"
+        @tagClick="tagClick"
+      ></Article>
+    </div>
   </div>
 
   <div v-if="total <= 0" style="text-align: center">没有文章</div>
@@ -37,6 +41,7 @@ import IndexArticle from "./IndexArticle";
 import Article from "@/components/article/Article.vue";
 import StringUtil from "@/utils/StringUtil";
 import Message from "@/utils/MessageUtil";
+import { useRouter } from "vue-router";
 export default defineComponent({
   setup() {
     const viewData = reactive(new IndexArticle());
@@ -91,6 +96,28 @@ export default defineComponent({
       viewData.getPagination();
     };
 
+    const router = useRouter();
+    const classifyClick = (id: number): void => {
+      console.log("传递了" + id);
+      router.push({
+        name: "Pandect",
+        params: {
+          type: "classify",
+          id: id,
+        },
+      });
+    };
+
+    const tagClick = (id: number): void => {
+      router.push({
+        name: "Pandect",
+        params: {
+          type: "tag",
+          id: id,
+        },
+      });
+    };
+
     onMounted((): void => {
       viewData.getPagination();
     });
@@ -102,6 +129,8 @@ export default defineComponent({
       updateArticle,
       myArticle,
       pagination,
+      classifyClick,
+      tagClick,
     };
   },
   components: {

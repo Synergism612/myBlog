@@ -32,6 +32,11 @@ export default defineComponent({
   props: {
     pageName: { type: String, required: true },
   },
+  emits: {
+    toFull: null,
+    toCatalog: null,
+    toForum: null,
+  },
   setup(props, { emit }) {
     /**数据仓初始化 */
     const viewData = reactive(new Toolboxe());
@@ -133,8 +138,7 @@ export default defineComponent({
       toTop,
     };
   },
-  components: {
-  },
+  components: {},
 });
 </script>
 <style lang="less">

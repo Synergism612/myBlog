@@ -117,7 +117,7 @@ import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Forum from "./Forum";
 
 export default defineComponent({
-  emits: ["toForum"],
+  emits: { toForum: null },
   props: {
     articleID: {
       type: Number,

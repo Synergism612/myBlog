@@ -52,6 +52,9 @@ import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Favorite from "./Enshrine";
 
 export default defineComponent({
+  emits: {
+    close: null,
+  },
   props: {
     title: {
       type: String,

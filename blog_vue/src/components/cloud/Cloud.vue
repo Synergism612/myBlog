@@ -11,7 +11,9 @@
       :ref="setElementRef"
       class="element"
     >
-      <span class="click">{{ element.name }}</span>
+      <span @click="elementClick(element.id)" class="click">
+        {{ element.name }}
+      </span>
       <span>({{ element.articleCount }})</span>
     </span>
   </div>
@@ -37,7 +39,10 @@ export default defineComponent({
       required: true, //该参数不可为空
     },
   },
-  setup(props) {
+  emits: {
+    elementClick: null,
+  },
+  setup(props, { emit }) {
     /**数据仓初始化 */
     const viewData = reactive(new Cloud());
     /**用以绑定ref */
@@ -185,6 +190,10 @@ export default defineComponent({
       time;
     };
 
+    const elementClick = (id: number): void => {
+      emit("elementClick", id);
+    };
+
     onMounted(() => {
       init();
       initCustomFormatter();
@@ -196,6 +205,7 @@ export default defineComponent({
       setElementRef,
       paper,
       setSpeed,
+      elementClick,
     };
   },
 });

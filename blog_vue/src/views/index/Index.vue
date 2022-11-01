@@ -12,7 +12,13 @@
               appear
               appear-active-class="animate__animated animate__zoomIn"
             >
-              <el-col :xs="24" :sm="24" :md="24" :lg="20" class="header inform frame">
+              <el-col
+                :xs="24"
+                :sm="24"
+                :md="24"
+                :lg="20"
+                class="header inform frame"
+              >
                 通知栏 通知内容
               </el-col>
             </transition>
@@ -44,7 +50,7 @@
                     </el-col>
                     <el-col :span="24">
                       <div class="name">
-                      {{ userInfo.nickname }}
+                        {{ userInfo.nickname }}
                       </div>
                     </el-col>
                     <el-col :span="24">
@@ -65,6 +71,7 @@
                     <Cloud
                       v-if="classifyInformationList[0].id != -1"
                       :data-list="classifyInformationList"
+                      @element-click="classifyClick"
                     ></Cloud>
                   </el-row>
 
@@ -74,6 +81,7 @@
                     <Cloud
                       v-if="tagInformationList[0].id != -1"
                       :data-list="tagInformationList"
+                      @element-click="tagClick"
                     ></Cloud>
                   </el-row>
                 </el-col>
@@ -94,10 +102,33 @@ import Index from "./Index";
 import Cloud from "@/components/cloud/Cloud.vue";
 import IndexArticle from "@/components/article/indexArticle/IndexArticle.vue";
 import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
     const viewData = reactive(new Index());
+
+    const router = useRouter();
+    const classifyClick = (id: number): void => {
+      console.log("传递了" + id);
+      router.push({
+        name: "Pandect",
+        params: {
+          type: "classify",
+          id: id,
+        },
+      });
+    };
+
+    const tagClick = (id: number): void => {
+      router.push({
+        name: "Pandect",
+        params: {
+          type: "tag",
+          id: id,
+        },
+      });
+    };
 
     onMounted(() => {
       viewData.init();
@@ -105,6 +136,8 @@ export default defineComponent({
 
     return {
       ...toRefs(viewData),
+      classifyClick,
+      tagClick,
     };
   },
   components: {
