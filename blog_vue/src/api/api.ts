@@ -402,6 +402,14 @@ export class api {
     });
   }
 
+  /**
+   * 添加到收藏夹接口
+   * @param title 标题
+   * @param href 链接
+   * @param annotation 注释
+   * @param favoriteID 收藏夹id
+   * @returns Result[String]
+   */
   public static setEnshrineCollection(
     title: string,
     href: string,
@@ -417,6 +425,19 @@ export class api {
         annotation: annotation,
         favoriteID: favoriteID,
       },
+    });
+  }
+
+  /**
+   * 个人信息页作者接口
+   * @param username 账号
+   * @returns Result[作者信息]
+   */
+  public static getHomepageAuthor(username: string): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/homepage/author",
+      method: "get",
+      params: { username: username },
     });
   }
 }
