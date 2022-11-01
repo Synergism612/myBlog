@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Synergism
@@ -44,6 +44,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = mapper.selectOneByArticleID(articleID);
         UserInformation userInformation = UserInformation.getInstance(user);
         AuthorInformation authorInformation = mapper.selectAuthorInfoCountByID(user.getId());
-    return new Author(userInformation,authorInformation);
+        return new Author(userInformation, authorInformation);
+    }
+
+    @Override
+    public Author getAuthorByUsername(String username) {
+        User user = mapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUsername,username));
+        UserInformation userInformation = UserInformation.getInstance(user);
+        AuthorInformation authorInformation = mapper.selectAuthorInfoCountByID(user.getId());
+        return new Author(userInformation, authorInformation);
     }
 }

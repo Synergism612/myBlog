@@ -1,46 +1,26 @@
-package com.synergism.blog.api.enshrineAPI.controller;
+package com.synergism.blog.api.homepageAPI.controller;
 
-import com.synergism.blog.api.enshrineAPI.entity.AddCollection;
-import com.synergism.blog.api.enshrineAPI.entity.AddFavoriteGroup;
-import com.synergism.blog.api.enshrineAPI.service.EnshrineAPIService;
-import com.synergism.blog.core.favorite.entity.Favorite;
-import com.synergism.blog.result.CodeMsg;
+import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
+import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/favorite")
-public class EnshrineAPIController {
+@RequestMapping("/api/blog/homepage")
+public class HomepageAPIController {
 
-    EnshrineAPIService service;
+    private final HomepageAPIService service;
 
     @Autowired
-    EnshrineAPIController(EnshrineAPIService service){
+    public HomepageAPIController(HomepageAPIService service) {
         this.service = service;
     }
 
-
     //需要登录验证
-    @GetMapping("favorite")
-    public Result<List<Favorite>> getFavorite(@RequestParam String username){
-        return service.getFavorite(username);
-    }
-
-    //需要登录验证
-    @PostMapping("favorite")
-    public Result<String> setFavorite(@RequestBody AddFavoriteGroup addFavoriteGroup){
-        return service.setFavorite(addFavoriteGroup);
-    }
-
-    @PostMapping("collection")
-    public Result<String> setCollection(@RequestBody AddCollection addCollection){
-        if (addCollection.getFavoriteID()==-1){
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不能为空"));
-        }
-        return service.setCollection(addCollection);
+    @GetMapping("author")
+    public Result<Author> getAuthor(@RequestParam String username){
+        return service.getAuthor(username);
     }
 
 }

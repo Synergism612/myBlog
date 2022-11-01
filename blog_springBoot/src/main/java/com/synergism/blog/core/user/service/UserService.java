@@ -31,4 +31,5 @@ public interface UserService extends IService<User> {
      */
     Author getAuthorByArticleID(long articleID);
 
+    Author getAuthorByUsername(String username);
 }
