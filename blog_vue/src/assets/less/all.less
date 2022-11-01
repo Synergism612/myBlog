@@ -41,11 +41,16 @@ body {
     text-align: center;
   }
   //选择器
-  .el-popper.is-light {
+  .el-popper {
     background-color: rgba(240, 240, 240, 1);
 
     .hover {
       background-color: rgba(185, 185, 185, 1);
+    }
+
+    .el-picker-panel__body {
+      --el-datepicker-hover-text-color:#3fc4c2;
+      --el-datepicker-active-color:#3fc4c2;
     }
   }
   .el-scrollbar__wrap {
