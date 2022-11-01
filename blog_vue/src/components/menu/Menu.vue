@@ -10,10 +10,10 @@
       <el-menu-item index="3">关于本站</el-menu-item>
       <el-menu-item index="/blog/login" v-if="!ifLogin">登录</el-menu-item>
       <el-menu-item index="/blog/register" v-if="!ifLogin">注册</el-menu-item>
-      <el-sub-menu v-if="ifLogin">
+      <el-sub-menu v-if="ifLogin" index="">
         <template #title>{{ userInfo.nickname }}</template>
         <el-menu-item index="/user">基本资料</el-menu-item>
-        <el-menu-item index @click="logout()">退出登录</el-menu-item>
+        <el-menu-item index="" @click="logout()">退出登录</el-menu-item>
       </el-sub-menu>
     </el-menu>
   </div>
@@ -52,7 +52,7 @@ export default defineComponent({
           store.commit("DELECT_USER_INFO");
           store.commit("DELECT_LOGIN_ID");
           Message.successMessage("您已登出");
-        })
+        });
     };
 
     const getLoginID = computed((): string => store.state.loginID);
