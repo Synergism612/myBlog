@@ -12,7 +12,7 @@
       <el-menu-item index="/blog/register" v-if="!ifLogin">注册</el-menu-item>
       <el-sub-menu v-if="ifLogin" index="">
         <template #title>{{ userInfo.nickname }}</template>
-        <el-menu-item index="/user">基本资料</el-menu-item>
+        <el-menu-item index="/blog/homepage">基本资料</el-menu-item>
         <el-menu-item index="" @click="logout()">退出登录</el-menu-item>
       </el-sub-menu>
     </el-menu>

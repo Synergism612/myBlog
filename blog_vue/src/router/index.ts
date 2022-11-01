@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Pandect from "../views/pandect/Pandect.vue";
-import Content from "../views/content/Content.vue";
-import Index from "../views/index/Index.vue";
-import Login from "../views/login/Login.vue";
-import Register from "../views/register/Register.vue";
+import Homepage from "@/views/homepage/Homepage.vue";
+import Pandect from "@/views/pandect/Pandect.vue";
+import Content from "@/views/content/Content.vue";
+import Index from "@/views/index/Index.vue";
+import Login from "@/views/login/Login.vue";
+import Register from "@/views/register/Register.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,6 +13,11 @@ const routes: Array<RouteRecordRaw> = [
     redirect: {
       name: "Index",
     },
+  },
+  {
+    path: "/blog/homepage",
+    name: "Homepage",
+    component: Homepage,
   },
   {
     path: "/blog/pandect/:type?/:id?",
