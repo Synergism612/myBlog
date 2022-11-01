@@ -39,7 +39,12 @@
                   <el-col :span="24">
                     <font-awesome-icon :icon="['fas', 'bookmark']" />
                     <div class="classify">
-                      <span class="click">{{ article.classify.name }}</span>
+                      <span
+                        @click="classifyClick(article.classify.id)"
+                        class="click"
+                      >
+                        {{ article.classify.name }}
+                      </span>
                     </div>
                   </el-col>
                   <el-col :span="24">
@@ -49,7 +54,9 @@
                       :key="tag.id"
                       class="tags"
                     >
-                      <span class="click">{{ tag.name }}</span>
+                      <span @click="tagClick(tag.id)" class="click">{{
+                        tag.name
+                      }}</span>
                     </div>
                   </el-col>
                 </el-row>
@@ -108,7 +115,7 @@ import {
 } from "vue";
 import Article from "./Article";
 import ArticleInformation from "@/model/article/ArticleInformation";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
   props: {
     dataList: {
@@ -127,6 +134,11 @@ export default defineComponent({
       type: Number,
       required: true, //该参数不可为空
     },
+  },
+  emits: {
+    pagination: null,
+    classifyClick: null,
+    tagClick: null,
   },
   setup(props, { emit }) {
     const viewData = reactive(new Article());
@@ -165,6 +177,14 @@ export default defineComponent({
       });
     };
 
+    const classifyClick = (id: number): void => {
+      emit("classifyClick", id);
+    };
+
+    const tagClick = (id: number): void => {
+      emit("tagClick", id);
+    };
+
     /**
      * 监听变化后传给父组件
      */
@@ -182,6 +202,8 @@ export default defineComponent({
       handleSizeChange,
       handleCurrentChange,
       toContent,
+      classifyClick,
+      tagClick,
     };
   },
   components: {},

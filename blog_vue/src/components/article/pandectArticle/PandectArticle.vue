@@ -18,14 +18,18 @@
         </el-col>
       </el-row>
     </transition>
-    <Article
-      v-if="refresh"
-      v-model:dataList="articleInformationList"
-      v-model:total="total"
-      v-model:currentPage="currentPage"
-      v-model:pageSize="pageSize"
-      @pagination="pagination"
-    ></Article>
+    <div>
+      <Article
+        v-if="refresh"
+        v-model:dataList="articleInformationList"
+        v-model:total="total"
+        v-model:currentPage="currentPage"
+        v-model:pageSize="pageSize"
+        @pagination="pagination"
+        @classifyClick="classifyClick"
+        @tagClick="tagClick"
+      ></Article>
+    </div>
   </div>
 
   <div v-if="total <= 0" style="text-align: center">没有找到文章</div>
@@ -46,6 +50,10 @@ import StringUtil from "@/utils/StringUtil";
 import Message from "@/utils/MessageUtil";
 import { api } from "@/api/api";
 export default defineComponent({
+  emits: {
+    classifyClick: null,
+    tagClick: null,
+  },
   props: {
     keyword: {
       type: String,
@@ -60,7 +68,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const viewData = reactive(new PandectArticle());
 
     watchEffect((): void => {
@@ -88,7 +96,7 @@ export default defineComponent({
           viewData.articleInformationList = data.articleInformationList;
           viewData.total = data.total;
           viewData.refresh = true;
-          console.log(viewData.total);
+          console.log(viewData);
         });
     };
 
@@ -142,10 +150,17 @@ export default defineComponent({
       getPagination();
     };
 
-    onMounted((): void => {
-      getPagination();
-      console.log(props.keyword);
-    });
+    const classifyClick = (id: number): void => {
+      emit("classifyClick", id);
+    };
+
+    const tagClick = (id: number): void => {
+      emit("tagClick", id);
+    };
+
+    // onMounted((): void => {
+    //   getPagination();
+    // });
 
     return {
       ...toRefs(viewData),
@@ -155,6 +170,8 @@ export default defineComponent({
       updateArticle,
       myArticle,
       pagination,
+      classifyClick,
+      tagClick,
     };
   },
   components: {
