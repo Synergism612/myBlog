@@ -85,6 +85,10 @@ class Axios {
         }
       }
       if (result.code != 200) {
+        if (result.code == 12008) {
+          Message.warningMessage(result.msg);
+          throw new Error(result.msg);
+        }
         Message.errorMessage(result.msg);
         throw new Error(result.msg);
       }
