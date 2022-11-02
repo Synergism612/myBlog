@@ -394,7 +394,7 @@ export class api {
    */
   public static getEnshrineFavorite(username: string): Promise<AxiosResponse> {
     return axios({
-      url: "/api/favorite/favorite",
+      url: "/api/blog/enshrine/favorite",
       method: "get",
       params: {
         username: username,
@@ -406,23 +406,23 @@ export class api {
    * 添加到收藏夹接口
    * @param title 标题
    * @param href 链接
-   * @param annotation 注释
+   * @param synopsis 注释
    * @param favoriteID 收藏夹id
    * @returns Result[String]
    */
   public static setEnshrineCollection(
     title: string,
     href: string,
-    annotation: string,
+    synopsis: string,
     favoriteID: number
   ): Promise<AxiosResponse> {
     return axios({
-      url: "/api/favorite/collection",
+      url: "/api/blog/enshrine/collection",
       method: "post",
       data: {
         title: title,
         href: href,
-        annotation: annotation,
+        synopsis: synopsis,
         favoriteID: favoriteID,
       },
     });
@@ -436,6 +436,14 @@ export class api {
   public static getHomepageAuthor(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/homepage/author",
+      method: "get",
+      params: { username: username },
+    });
+  }
+
+  static getMyFavorite(username: string): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/homepage/favorite",
       method: "get",
       params: { username: username },
     });
