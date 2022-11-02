@@ -62,5 +62,5 @@ public interface ContentAPIService {
      */
     Result<List<ArticleTagNominate>> getTagNominate(long articleID);
 
-    Result<String> setComment(AddComment addComment);
+    Result<String> saveComment(AddComment addComment);
 }

@@ -77,7 +77,7 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     }
 
     @Override
-    public Result<String> setComment(AddComment addComment) {
+    public Result<String> saveComment(AddComment addComment) {
         if (StringUtil.isEmpty(addComment.getComment())){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论不能为空"));
         }
