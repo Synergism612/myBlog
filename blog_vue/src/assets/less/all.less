@@ -18,14 +18,35 @@ body {
   z-index: -999;
 
   .is-link:hover {
-    color: rgb(63, 196, 194) !important;
+    color: #3fc4c2 !important;
+  }
+
+  .rotate {
+    svg {
+      transition: 0.5s;
+    }
+  }
+  .rotate:hover {
+    svg {
+      transform: rotate(180deg);
+    }
   }
 
   .click {
+    position: relative;
     cursor: pointer;
   }
-  .click:hover {
-    border-bottom: solid 1px black;
+  .click::before {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    width: 0;
+    height: 1px;
+    background-color: #3fc4c2;
+    transition: 0.5s;
+  }
+  .click:hover::before {
+    width: 100%;
   }
   .header {
     padding: 1em;
@@ -49,8 +70,8 @@ body {
     }
 
     .el-picker-panel__body {
-      --el-datepicker-hover-text-color:#3fc4c2;
-      --el-datepicker-active-color:#3fc4c2;
+      --el-datepicker-hover-text-color: #3fc4c2;
+      --el-datepicker-active-color: #3fc4c2;
     }
   }
   .el-scrollbar__wrap {
