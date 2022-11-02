@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.favorite.mapper.FavoriteMapper">
+
+    <resultMap id="MyFavorite" type="com.synergism.blog.core.favorite.entity.MyFavorite">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="annotation" property="annotation"/>
+        <result column="if_private" property="ifPrivate"/>
+        <collection property="collectionList" ofType="com.synergism.blog.core.collection.entity.Collection">
+            <result column="cId" property="id"/>
+            <result column="title" property="title"/>
+            <result column="href" property="href"/>
+            <result column="synopsis" property="synopsis"/>
+        </collection>
+    </resultMap>
+
     <insert id="addFavorite">
-        INSERT INTO user_favorite(user_id,favorite_id) values (#{userID},#{favoriteID})
+        INSERT INTO user_favorite(user_id, favorite_id)
+        values (#{userID}, #{favoriteID})
     </insert>
 
     <select id="selectListByUserID" resultType="com.synergism.blog.core.favorite.entity.Favorite">
@@ -15,6 +30,28 @@
              favorite f
              on
                  uf.favorite_id = f.id
+        where uf.user_id = #{userID}
+    </select>
+    <select id="selectFavoriteByUserID" resultMap="MyFavorite">
+        select f.id,
+               f.name,
+               f.annotation,
+               f.if_private,
+               c.id as cId,
+               c.title,
+               c.href,
+               c.synopsis
+        from user_favorite uf
+                 join
+             (
+                 favorite f ,
+                     favorite_collection fc ,
+                     collection c
+                 )
+             on
+                     uf.favorite_id = f.id and
+                     f.id = fc.favorite_id and
+                     fc.collection_id = c.id
         where uf.user_id = #{userID}
     </select>
 </mapper>

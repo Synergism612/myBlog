@@ -2,6 +2,8 @@ package com.synergism.blog.core.favorite.mapper;
 
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.synergism.blog.core.favorite.entity.MyFavorite;
+import com.synergism.blog.result.Result;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,4 +22,6 @@ public interface FavoriteMapper extends BaseMapper<Favorite> {
     List<Favorite> selectListByUserID(long userID);
 
     void addFavorite(long userID,long favoriteID);
+
+    List<MyFavorite> selectFavoriteByUserID(long userID);
 }

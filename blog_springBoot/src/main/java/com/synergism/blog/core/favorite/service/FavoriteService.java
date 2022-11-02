@@ -2,6 +2,8 @@ package com.synergism.blog.core.favorite.service;
 
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.synergism.blog.core.favorite.entity.MyFavorite;
+import com.synergism.blog.result.Result;
 
 import java.util.List;
 
@@ -20,4 +22,6 @@ public interface FavoriteService extends IService<Favorite> {
     boolean save(String name,String annotation,Integer ifPrivate, long userID);
 
     boolean isExist(Long favoriteID);
+
+    List<MyFavorite> getFavorite(long userID);
 }
