@@ -149,7 +149,7 @@
                         }"
                       ></div>
                       <span>昵称:{{ author.nickname }}</span>
-                      <span>性别:{{ author.sex }}</span>
+                      <span>性别:{{ author.sexName }}</span>
                       <span> 生日:{{ author.birthday || "不愿透露" }} </span>
                       <span>园龄:{{ author.upToNow }}</span>
                       <span>简介:{{ author.intro }}</span>

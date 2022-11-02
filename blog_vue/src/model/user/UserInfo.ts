@@ -9,6 +9,8 @@ export default class UserInfo {
   birthday: Date;
   //性别代码
   sex: number;
+  //性别
+  sexName: string;
   //个人简介
   intro: string;
   //园龄
@@ -21,13 +23,14 @@ export default class UserInfo {
     birthday?: Date,
     sex?: number,
     intro?: string,
-    upToNow?:string,
+    upToNow?: string
   ) {
     this.icon = icon || "";
     this.nickname = nickname || "";
     this.username = username || "";
     this.birthday = birthday || new Date();
     this.sex = sex || 0;
+    this.sexName = "";
     this.intro = intro || "";
     this.upToNow = upToNow || "";
   }
