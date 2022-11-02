@@ -3,6 +3,7 @@ package com.synergism.blog.api.enshrineAPI.controller;
 import com.synergism.blog.api.enshrineAPI.entity.AddCollection;
 import com.synergism.blog.api.enshrineAPI.entity.AddFavoriteGroup;
 import com.synergism.blog.api.enshrineAPI.service.EnshrineAPIService;
+import com.synergism.blog.core.collection.entity.Collection;
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
@@ -35,6 +36,13 @@ public class EnshrineAPIController {
         return service.setFavorite(addFavoriteGroup);
     }
 
+    //需要登录验证
+    @GetMapping("collection")
+    public Result<List<Collection>> getCollection(@RequestParam Long favoriteID){
+        return service.getCollection(favoriteID);
+    }
+
+    //需要登录验证
     @PostMapping("collection")
     public Result<String> setCollection(@RequestBody AddCollection addCollection){
         if (addCollection.getFavoriteID()==-1){

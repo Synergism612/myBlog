@@ -47,13 +47,20 @@ public class EnshrineAPIServiceImpl implements EnshrineAPIService {
     @Override
     public Result<String> setCollection(AddCollection addCollection) {
         if (favoriteService.isExist(addCollection.getFavoriteID())) {
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹中已经存在该收藏"));
+            if (collectionService.isExist(addCollection.getFavoriteID(), addCollection.getHref())) {
+                return Result.error(CodeMsg.MESSAGE.fillArgs("您已收藏"));
+            }
+        } else {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("不存在该收藏夹"));
         }
-        if (collectionService.isExist(addCollection.getFavoriteID(), addCollection.getHref())) {
-            return collectionService.save(addCollection.getTitle(), addCollection.getHref(), addCollection.getSynopsis(), addCollection.getFavoriteID())
-                    ? Result.success()
-                    : Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹错误"));
-        }
-        return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹错误"));
+
+        return collectionService.save(addCollection.getTitle(), addCollection.getHref(), addCollection.getSynopsis(), addCollection.getFavoriteID())
+                ? Result.success()
+                : Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹错误"));
+    }
+
+    @Override
+    public Result<List<Collection>> getCollection(Long favoriteID) {
+        return null;
     }
 }
