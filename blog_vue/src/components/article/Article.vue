@@ -115,7 +115,7 @@ import {
 } from "vue";
 import Article from "./Article";
 import ArticleInformation from "@/model/article/ArticleInformation";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 export default defineComponent({
   props: {
     dataList: {

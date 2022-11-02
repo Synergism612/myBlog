@@ -13,6 +13,8 @@ export default class Article {
   views: number;
   /**点赞量 */
   likeCount: number;
+  /**是否私有 */
+  ifPrivate: number;
   /**创建时间 */
   creationTime: Date | null;
   /**修改时间 */
@@ -26,6 +28,7 @@ export default class Article {
     this.synopsis = "";
     this.views = 0;
     this.likeCount = 0;
+    this.ifPrivate = -1;
     this.creationTime = null;
     this.modifyTime = null;
   }
