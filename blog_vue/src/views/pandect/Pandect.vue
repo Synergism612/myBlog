@@ -176,6 +176,7 @@ export default defineComponent({
           classifyClick(id);
           break;
         default:
+          search();
           break;
       }
     };
