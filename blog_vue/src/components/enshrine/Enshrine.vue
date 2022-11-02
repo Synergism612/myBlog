@@ -1,13 +1,23 @@
 <template>
-  <div class="favoriteBox">
-    <div class="favorite frame">
-      <el-row justify="space-around" align="middle">
-        <div class="close">
-          <span class="title">添加到收藏夹</span>
-          <span @click="close" class="click">
-            <font-awesome-icon :icon="['fas', 'times']" />
-          </span>
+  <div>
+    <el-dialog
+      v-model="favoriteShow"
+      :show-close="false"
+      custom-class="favoriteBox"
+      destroy-on-close
+      @close="close"
+    >
+      <template #header>
+        <div class="my-header">
+          <div class="close">
+            <span class="title">添加到收藏夹</span>
+            <span @click="close" class="click rotate">
+              <font-awesome-icon :icon="['fas', 'times']" />
+            </span>
+          </div>
         </div>
+      </template>
+      <el-row justify="space-around" align="middle">
         <el-col :span="24">
           <el-form
             label-position="top"
@@ -21,8 +31,12 @@
             <el-form-item label="地址">
               <el-input v-model="favoriteForm.href" />
             </el-form-item>
-            <el-form-item label="注释">
-              <el-input v-model="favoriteForm.annotation" />
+            <el-form-item label="摘要">
+              <el-input
+                v-model="favoriteForm.synopsis"
+                :rows="2"
+                type="textarea"
+              />
             </el-form-item>
             <el-form-item label="收藏夹" prop="region">
               <el-select v-model="favoriteForm.favoriteID" placeholder="请选择">
@@ -42,14 +56,14 @@
           <span @click="close" class="click">取消</span>
         </el-col>
       </el-row>
-    </div>
+    </el-dialog>
   </div>
 </template>
 <script lang="ts">
 import { api } from "@/api/api";
 import Message from "@/utils/MessageUtil";
-import { defineComponent, onMounted, reactive, toRefs } from "vue";
-import Favorite from "./Enshrine";
+import { defineComponent, onMounted, reactive, toRefs, watchEffect } from "vue";
+import Enshrine from "./Enshrine";
 
 export default defineComponent({
   emits: {
@@ -58,27 +72,40 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      required: true,
+      required: false,
     },
     href: {
       type: String,
-      required: true,
+      required: false,
     },
-    annotation: {
+    synopsis: {
       type: String,
-      required: true,
+      required: false,
+    },
+    favoriteID: {
+      type: Number,
+      required: false,
     },
     username: {
       type: String,
       required: true,
     },
+    show: {
+      type: Boolean,
+      required: true,
+    },
   },
   setup(props, { emit }) {
     /**数据仓 */
-    const viewData = reactive(new Favorite());
+    const viewData = reactive(new Enshrine());
+
+    watchEffect((): void => {
+      viewData.favoriteForm.favoriteID = props.favoriteID || 0;
+      viewData.favoriteShow = props.show;
+    });
 
     const close = (): void => {
-      emit("close", true);
+      emit("close", false);
     };
 
     const add = (): void => {
@@ -86,7 +113,7 @@ export default defineComponent({
         .setEnshrineCollection(
           viewData.favoriteForm.title,
           viewData.favoriteForm.href,
-          viewData.favoriteForm.annotation,
+          viewData.favoriteForm.synopsis,
           viewData.favoriteForm.favoriteID === 0
             ? -1
             : viewData.favoriteForm.favoriteID
@@ -98,7 +125,13 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      viewData.init(props.title, props.href, props.annotation, props.username);
+      viewData.init(
+        props.title || "",
+        props.href || "",
+        props.synopsis || "",
+        props.favoriteID || 0,
+        props.username
+      );
     });
     return {
       ...toRefs(viewData),

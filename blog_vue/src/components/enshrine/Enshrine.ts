@@ -5,20 +5,25 @@ export default class Enshrine {
   favoriteForm: FavoriteForm;
   favoriteList: Array<Favorite>;
 
+  favoriteShow: boolean;
   constructor() {
     this.favoriteForm = new FavoriteForm();
     this.favoriteList = [new Favorite()];
+
+    this.favoriteShow = true;
   }
 
   public init(
     title: string,
     href: string,
-    annotation: string,
+    synopsis: string,
+    favoriteID: number,
     username: string
   ): void {
     this.favoriteForm.title = title;
     this.favoriteForm.href = href;
-    this.favoriteForm.annotation = annotation;
+    this.favoriteForm.synopsis = synopsis;
+    this.favoriteForm.favoriteID = favoriteID;
     api.getEnshrineFavorite(username).then(({ data }) => {
       this.favoriteList = data;
     });
@@ -27,13 +32,13 @@ export default class Enshrine {
 class FavoriteForm {
   title: string;
   href: string;
-  annotation: string;
+  synopsis: string;
   favoriteID: number;
 
   constructor() {
     this.title = "";
     this.href = "";
-    this.annotation = "";
+    this.synopsis = "";
     this.favoriteID = 0;
   }
 }

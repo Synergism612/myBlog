@@ -1,55 +1,43 @@
 .favoriteBox {
-  position: fixed;
-  width: 100%;
-  height: 100%;
+  width: 20em !important;
   display: flex;
-  background-color: rgba(0, 0, 0, 0.66);
-  top: 0;
-  justify-content: space-around;
-  align-items: center;
-  .favorite {
-    width: 20em;
-    height: 25em;
-    padding: 1em;
-    background-color: rgba(255, 255, 255, 1);
-    display: flex;
-    .el-row {
-      width: 100%;
+  border-radius: 1em !important;
+  flex-direction: column;
 
-      .close {
-        width: 100%;
-        .title {
-          font-size: 1.2em;
-        }
-        .click {
-          position: absolute;
-          top: 0;
-          right: 0;
-          transition: 0.5s;
-          border: none;
-          font-size: 1.1em;
-        }
-        .click:hover {
-          transform: rotate(180deg);
-        }
-      }
-      .button {
-        display: flex;
-        justify-content: space-around;
-        flex-direction: row;
-      }
+  .close {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .title {
+      font-size: 1.2em;
+    }
+    .click {
+      border: none;
+      font-size: 1.1em;
     }
   }
-  .el-select{
+  .el-row {
+    width: 100%;
+    .button {
+      display: flex;
+      justify-content: space-around;
+      flex-direction: row;
+    }
+  }
+  .el-select {
     width: 100%;
   }
   .el-input {
-    --el-select-input-focus-border-color: rgb(63, 196, 194);
+    --el-select-input-focus-border-color: #3fc4c2;
     .el-input__wrapper {
       border: none;
     }
     .is-focus {
-      box-shadow: 0 0 0 1px rgb(63, 196, 194) inset !important;
+      box-shadow: 0 0 0 1px #3fc4c2 inset !important;
     }
+  }
+  .el-textarea__inner {
+    --el-input-focus-border-color: #3fc4c2;
+    background-color: rgba(0, 0, 0, 0);
   }
 }

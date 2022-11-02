@@ -72,7 +72,7 @@
                       点赞
                       {{ article.likeCount }}
                     </span>
-                    <span class="click function" @click="myafavorite">
+                    <span class="click function" @click="myfavorite(true)">
                       <font-awesome-icon :icon="['fas', 'heart']" />
                       添加进收藏
                     </span>
@@ -193,11 +193,11 @@
     ></Toolboxe>
 
     <Enshrine
-      v-if="favoriteShow"
-      @close="myafavorite"
+      @close="myfavorite"
+      v-model:show="favoriteShow"
       :title="article.title"
       :href="href"
-      :annotation="article.synopsis"
+      :synopsis="article.synopsis"
       :username="username"
     ></Enshrine>
   </div>
@@ -316,9 +316,9 @@ export default defineComponent({
 
     const href = window.location.href;
 
-    const myafavorite = (): void => {
+    const myfavorite = (show: boolean): void => {
       if (viewData.isLogin) {
-        viewData.favoriteShow = !viewData.favoriteShow;
+        viewData.favoriteShow = show;
       } else {
         Message.warningMessage("您未登录");
       }
@@ -336,7 +336,7 @@ export default defineComponent({
       toForum,
       toCatalog,
       toArticle,
-      myafavorite,
+      myfavorite,
       href,
     };
   },
