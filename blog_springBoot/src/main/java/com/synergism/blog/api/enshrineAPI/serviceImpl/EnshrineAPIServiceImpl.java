@@ -7,6 +7,7 @@ import com.synergism.blog.api.enshrineAPI.service.EnshrineAPIService;
 import com.synergism.blog.core.collection.entity.Collection;
 import com.synergism.blog.core.collection.service.CollectionService;
 import com.synergism.blog.core.favorite.entity.Favorite;
+import com.synergism.blog.core.favorite.entity.MyFavorite;
 import com.synergism.blog.core.favorite.service.FavoriteService;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.result.CodeMsg;
@@ -36,16 +37,7 @@ public class EnshrineAPIServiceImpl implements EnshrineAPIService {
     }
 
     @Override
-    public Result<String> setFavorite(AddFavoriteGroup addFavoriteGroup) {
-        long userID = userService.getID(addFavoriteGroup.getUsername());
-        if (userID == -1) return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户错误"));
-        return favoriteService.save(addFavoriteGroup.getName(), addFavoriteGroup.getAnnotation(), addFavoriteGroup.getIf_private(), userID)
-                ? Result.success()
-                : Result.error(CodeMsg.BIND_ERROR.fillArgs("创建失败"));
-    }
-
-    @Override
-    public Result<String> setCollection(AddCollection addCollection) {
+    public Result<String> saveCollection(AddCollection addCollection) {
         if (favoriteService.isExist(addCollection.getFavoriteID())) {
             if (collectionService.isExist(addCollection.getFavoriteID(), addCollection.getHref())) {
                 return Result.error(CodeMsg.MESSAGE.fillArgs("您已收藏"));
@@ -57,10 +49,5 @@ public class EnshrineAPIServiceImpl implements EnshrineAPIService {
         return collectionService.save(addCollection.getTitle(), addCollection.getHref(), addCollection.getSynopsis(), addCollection.getFavoriteID())
                 ? Result.success()
                 : Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹错误"));
-    }
-
-    @Override
-    public Result<List<Collection>> getCollection(Long favoriteID) {
-        return null;
     }
 }
