@@ -23,7 +23,9 @@ public class UserInformation{
     //生日
     private Date birthday;
     //性别代码
-    private String sex;
+    private Integer sex;
+    //性别
+    private String sexName;
     //个人简介
     private String intro;
     //至今园龄
@@ -44,12 +46,13 @@ public class UserInformation{
         this.nickname = nickname;
         this.username = username;
         this.birthday = birthday;
+        this.sex = sex;
         switch (sex){
-            case 0:this.sex = "不愿透露";
+            case 0:this.sexName = "不愿透露";
             break;
-            case 1:this.sex = "男";
+            case 1:this.sexName = "男";
                 break;
-            case 2:this.sex = "女";
+            case 2:this.sexName = "女";
                 break;
         }
         this.intro = intro;
@@ -63,6 +66,7 @@ public class UserInformation{
         this.username = userInformation.getUsername();
         this.birthday = userInformation.getBirthday();
         this.sex = userInformation.getSex();
+        this.sexName = userInformation.getSexName();
         this.intro = userInformation.getIntro();
         this.upToNow = userInformation.getUpToNow();
     }
