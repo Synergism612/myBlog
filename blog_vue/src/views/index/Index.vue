@@ -33,7 +33,7 @@
               <!-- 分左右区 -->
               <el-row :gutter="20" justify="space-around">
                 <!-- 左侧 -->
-                <el-col :xs="24" :sm="18" :md="18" :span="18">
+                <el-col :xs="24" :sm="24" :md="18" :span="18">
                   <IndexArticle></IndexArticle>
                 </el-col>
                 <!-- 右侧 -->
