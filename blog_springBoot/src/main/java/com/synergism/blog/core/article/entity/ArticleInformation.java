@@ -15,8 +15,6 @@ public class ArticleInformation extends Article {
     private String nickname;
     //所属者账号
     private String username;
-    //是否私有
-    private int ifPrivate;
     //评论数
     private int commentCount;
     //分类

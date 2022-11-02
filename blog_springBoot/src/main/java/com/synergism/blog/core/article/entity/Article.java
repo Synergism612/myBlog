@@ -55,6 +55,10 @@ public class Article {
     @TableField("like_count")
     private Long likeCount;
 
+    @ApiModelProperty("是否私有")
+    @TableField("if_private")
+    private int ifPrivate;
+
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty("创建时间")
     @TableField("creation_time")

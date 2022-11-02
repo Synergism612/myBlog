@@ -12,7 +12,6 @@
         <result column="like_count" property="likeCount"/>
         <result column="creation_time" property="creationTime"/>
         <result column="modify_time" property="modifyTime"/>
-
         <result column="if_private" property="ifPrivate"/>
         <result column="nickname" property="nickname"/>
         <result column="username" property="username"/>
@@ -42,7 +41,7 @@
                a.like_count,
                a.creation_time,
                a.modify_time,
-               ua.if_private,
+               a.if_private,
                u.nickname,
                u.username,
                cy.id         as classify_id,
@@ -85,7 +84,7 @@
                  a.like_count,
                  a.creation_time,
                  a.modify_time,
-                 ua.if_private,
+                 a.if_private,
                  u.nickname,
                  u.username,
                  cy.id,
