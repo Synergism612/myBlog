@@ -28,7 +28,9 @@ public class UserAPIServiceImpl implements UserAPIService {
         //获得对应用户
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, login.getUsername()));
         //对象判空
-        TypeUtil.ifNull(user);
+        if (TypeUtil.isNull(user)) {
+            return Result.error(CodeMsg.USERNAME_ERROR);
+        }
         //密码比对
         if (user.getPassword().equals(login.getPassword())) {
             //返回成功
