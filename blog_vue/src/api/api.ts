@@ -441,11 +441,38 @@ export class api {
     });
   }
 
-  static getMyFavorite(username: string): Promise<AxiosResponse> {
+  /**
+   * 个人信息页我的收藏接口
+   * @param username 账号
+   * @returns 我的收藏列表
+   */
+  public static getMyFavorite(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "get",
       params: { username: username },
+    });
+  }
+
+  /**
+   * 个人信息页删除收藏接口
+   * @param favoriteID 收藏夹id
+   * @param collectionIDList 收藏id列表
+   * @returns 成功
+   */
+  public static delectCollection(
+    favoriteID: number,
+    collectionIDList: Array<number>
+  ): Promise<AxiosResponse> {
+    console.log(collectionIDList);
+
+    return axios({
+      url: "/api/blog/homepage/collection",
+      method: "delete",
+      params: {
+        favoriteID: favoriteID,
+        collectionIDList: collectionIDList.toString(),
+      },
     });
   }
 }
