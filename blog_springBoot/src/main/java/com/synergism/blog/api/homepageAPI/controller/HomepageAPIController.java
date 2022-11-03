@@ -1,8 +1,7 @@
 package com.synergism.blog.api.homepageAPI.controller;
 
-import com.synergism.blog.api.enshrineAPI.entity.AddFavoriteGroup;
 import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
-import com.synergism.blog.core.favorite.entity.MyFavorite;
+import com.synergism.blog.api.homepageAPI.entity.MyFavorite;
 import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 个人主页接口
+ */
 @RestController
 @RequestMapping("/api/blog/homepage")
 public class HomepageAPIController {
@@ -21,22 +23,33 @@ public class HomepageAPIController {
         this.service = service;
     }
 
+    /**
+     * 个人主页获取我的作者信息
+     * @param username 账号
+     * @return 作者信息
+     */
     //需要登录验证
     @GetMapping("author")
     public Result<Author> getAuthor(@RequestParam String username){
         return service.getAuthor(username);
     }
 
+    /**
+     * 个人主页删除收藏
+     * @param favoriteID 收藏夹id
+     * @param collectionIDList 收藏id列表
+     * @return 成功
+     */
     //需要登录验证
-    @GetMapping("favorite")
-    public Result<List<MyFavorite>> getFavorite(@RequestParam String username){
-        return service.getFavorite(username);
+    @DeleteMapping("collection")
+    public Result<String> deleteCollection(@RequestParam Long favoriteID,@RequestParam List<Long>collectionIDList ){
+        return service.deleteCollection(favoriteID,collectionIDList);
     }
 
     //需要登录验证
-    @PostMapping("favorite")
-    public Result<String> saveFavorite(@RequestBody AddFavoriteGroup addFavoriteGroup){
-        return service.saveFavorite(addFavoriteGroup);
+    @GetMapping("favorite")
+    public Result<List<MyFavorite>> getMyFavoriteList(@RequestParam String username){
+        return service.getMyFavoriteList(username);
     }
 
 }
