@@ -1,5 +1,8 @@
 package com.synergism.blog.core.article.enumeration;
 
+/**
+ * 排序方式枚举
+ */
 public enum ArticleSort {
     //最新发布
     creation_time,

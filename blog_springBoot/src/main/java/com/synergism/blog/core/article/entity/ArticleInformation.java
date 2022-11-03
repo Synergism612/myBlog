@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * 文章详细信息
+ */
 @Getter
 @Setter
 public class ArticleInformation extends Article {

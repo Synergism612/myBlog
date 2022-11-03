@@ -51,7 +51,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public List<ArticleInformation> getAllArticleInformationList() {
-        return mapper.getAllArticleInformationList();
+        return mapper.selectAllArticleInformationList();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public List<Article> getOneClassifyArticleList(long id) {
-        List<Article> result = mapper.getOneClassifyArticleList(id)
+        List<Article> result = mapper.selectOneClassifyArticleList(id)
                 .stream()
                 .sorted(Comparator.comparing(Article::getCreationTime)
                         .reversed())
@@ -104,7 +104,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public List<ArticleTagNominate> getMoreTagArticleList(long id) {
-        List<ArticleTagNominate> result = mapper.getMoreTagArticleList(id)
+        List<ArticleTagNominate> result = mapper.selectMoreTagArticleList(id)
                 .stream()
                 .sorted(Comparator.comparing(ArticleTagNominate::getTagCount)
                         .reversed())

@@ -31,7 +31,7 @@
         </collection>
     </resultMap>
 
-    <select id="getAllArticleInformationList" resultMap="ArticleInformationMap">
+    <select id="selectAllArticleInformationList" resultMap="ArticleInformationMap">
         select a.id,
                a.icon,
                a.title,
@@ -94,7 +94,7 @@
                  t.name,
                  t.annotation
     </select>
-    <select id="getOneClassifyArticleList" resultType="com.synergism.blog.core.article.entity.Article">
+    <select id="selectOneClassifyArticleList" resultType="com.synergism.blog.core.article.entity.Article">
         select a.id,
                a.icon,
                a.title,
@@ -114,7 +114,7 @@
         where ac1.article_id != ac2.article_id
           and ac1.article_id = #{id}
     </select>
-    <select id="getMoreTagArticleList" resultType="com.synergism.blog.core.article.entity.ArticleTagNominate">
+    <select id="selectMoreTagArticleList" resultType="com.synergism.blog.core.article.entity.ArticleTagNominate">
         select count(atg1.tag_id) tagCount,
                a.id,
                a.icon,
