@@ -22,12 +22,12 @@ public interface TagMapper extends BaseMapper<Tag> {
      * 获取全部标签信息列表
      * @return 标签信息列表
      */
-    List<TagInformation> getAllTagInformationList();
+    List<TagInformation> selectAllTagInformationList();
 
     /**
      * 通过文章id获取标签列表
      * @param articleID 文章id
      * @return 标签列比奥
      */
-    List<Tag> getListByArticleID(long articleID);
+    List<Tag> selectListByArticleID(long articleID);
 }
