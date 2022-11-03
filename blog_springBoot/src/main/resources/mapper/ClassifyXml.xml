@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.classify.mapper.ClassifyMapper">
 
-    <select id="getAllClassifyInformationList"
+    <select id="selectAllClassifyInformationList"
             resultType="com.synergism.blog.core.classify.entity.ClassifyInformation">
         select c.id,
                c.name,
@@ -31,7 +31,7 @@
                  u.username,
                  u.nickname
     </select>
-    <select id="getOneByArticleID" resultType="com.synergism.blog.core.classify.entity.Classify">
+    <select id="selectOneByArticleID" resultType="com.synergism.blog.core.classify.entity.Classify">
         select
             c.id ,
             c.name ,

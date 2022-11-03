@@ -31,7 +31,7 @@ public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify> i
 
     @Override
     public List<ClassifyInformation> getAllClassifyInformationList() {
-        return mapper.getAllClassifyInformationList();
+        return mapper.selectAllClassifyInformationList();
     }
 
     @Override
@@ -48,6 +48,6 @@ public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify> i
 
     @Override
     public Classify getOneByArticleID(long articleID) {
-        return mapper.getOneByArticleID(articleID);
+        return mapper.selectOneByArticleID(articleID);
     }
 }

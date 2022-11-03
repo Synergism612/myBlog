@@ -23,12 +23,12 @@ public interface ClassifyMapper extends BaseMapper<Classify> {
      * 
      * @return 分类信息列表
      */
-    List<ClassifyInformation> getAllClassifyInformationList();
+    List<ClassifyInformation> selectAllClassifyInformationList();
 
     /**
      * 通过文章id找到对应分类
      * @param articleID 文章id
      * @return 分类
      */
-    Classify getOneByArticleID(long articleID);
+    Classify selectOneByArticleID(long articleID);
 }
