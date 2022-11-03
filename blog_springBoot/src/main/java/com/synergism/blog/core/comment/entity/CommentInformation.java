@@ -3,12 +3,20 @@ package com.synergism.blog.core.comment.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 评论详细信息
+ */
 @Getter
 @Setter
 public class CommentInformation extends Comment {
-    private String username;
+    //所属用户头像
     private String icon;
+    //所属用户账号
+    private String username;
+    //所属用户昵称
     private String nickname;
+    //所属文章id
+    private Long articleID;
 
     /**
      * 空参构造器
@@ -23,8 +31,9 @@ public class CommentInformation extends Comment {
 
     public CommentInformation(CommentInformation commentInformation) {
         super(commentInformation);
-        this.username = commentInformation.username;
         this.icon = commentInformation.icon;
+        this.username = commentInformation.username;
         this.nickname = commentInformation.nickname;
+        this.articleID = commentInformation.getArticleID();
     }
 }

@@ -1,11 +1,9 @@
 package com.synergism.blog.core.comment.service;
 
-import com.synergism.blog.api.contentAPI.entity.AddComment;
 import com.synergism.blog.core.comment.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.comment.entity.CommentInformation;
 import com.synergism.blog.core.comment.entity.CommentParent;
-import com.synergism.blog.result.Result;
 
 import java.util.List;
 
@@ -19,13 +17,19 @@ import java.util.List;
  */
 public interface CommentService extends IService<Comment> {
 
+    /**
+     * 获得全部评论信息
+     * @return 评论信息列表
+     */
+    List<CommentInformation> getAllCommentInformationList();
+
 
     /**
      * 通过文章id查询评论信息列表
      * @param articleID 文章id
      * @return 评论信息列表
      */
-    List<CommentInformation> getAllCommentInformationListByArticleID(long articleID);
+    List<CommentInformation> getCommentInformationListByArticleID(long articleID);
 
     /**
      * 通过文章id查询根评论
@@ -33,7 +37,7 @@ public interface CommentService extends IService<Comment> {
      * @param articleID 文章id
      * @return 评论信息列表
      */
-    List<CommentParent> getAllListByArticleID(long articleID);
+    List<CommentParent> getCommentParentListByArticleID(long articleID);
 
     /**
      * 保存新的评论

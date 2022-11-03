@@ -33,14 +33,25 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<CommentInformation> getAllCommentInformationListByArticleID(long articleID) {
-        return mapper.getAllCommentInformationListByArticleID(articleID);
+    public List<CommentInformation> getAllCommentInformationList() {
+        return mapper.selectAllCommentInformationList();
     }
 
     @Override
-    public List<CommentParent> getAllListByArticleID(long articleID) {
+    public List<CommentInformation> getCommentInformationListByArticleID(long articleID) {
+        return this.getAllCommentInformationList()
+                .stream()
+                .filter(commentInformation ->
+                        commentInformation
+                                .getArticleID()
+                                .equals(articleID))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CommentParent> getCommentParentListByArticleID(long articleID) {
         //获取文章下全部评论
-        List<CommentInformation> allList = this.getAllCommentInformationListByArticleID(articleID);
+        List<CommentInformation> allList = this.getCommentInformationListByArticleID(articleID);
 
         if (allList.size() == 0) return null;
 
@@ -58,7 +69,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         //  B:确实不错 -> 将作为A的评论的下属子评论，是回复父评论的评论
         //  A: 回复@B 是吧，很不错吧 -> 该子评论作为父评论的子评论同时还是子评论的回复，所以需要一个被回复者昵称作为标识
         return rootList.stream().map(root -> {
-            if (childList==null){
+            if (childList == null) {
                 return new CommentParent(root, null, 0);
             }
             List<CommentChild> commentChildList =
@@ -86,21 +97,21 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public boolean save(String body,Long rootId,Long parentId,long articleID,long userID) {
+    public boolean save(String body, Long rootId, Long parentId, long articleID, long userID) {
         Comment comment = new Comment(body, rootId, parentId);
         mapper.insert(comment);
         long commentID = comment.getId();
         try {
-            mapper.addComment(commentID,articleID,userID);
+            mapper.insertComment(commentID, articleID, userID);
             return true;
-        }catch (Exception e){
-            mapper.delete(new LambdaQueryWrapper<Comment>().eq(Comment::getId,commentID));
+        } catch (Exception e) {
+            mapper.delete(new LambdaQueryWrapper<Comment>().eq(Comment::getId, commentID));
         }
         return false;
     }
 
     @Override
     public boolean isExist(Long commentID) {
-        return this.getOne(new LambdaQueryWrapper<Comment>().eq(Comment::getId,commentID))!=null;
+        return this.getOne(new LambdaQueryWrapper<Comment>().eq(Comment::getId, commentID)) != null;
     }
 }
