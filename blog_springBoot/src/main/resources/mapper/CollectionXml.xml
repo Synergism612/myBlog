@@ -2,24 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.collection.mapper.CollectionMapper">
 
-    <insert id="addCollection">
-        INSERT INTO favorite_collection(favorite_id,collection_id) values (#{favoriteID},#{collectionID})
+    <insert id="insertCollection">
+        INSERT INTO favorite_collection(favorite_id, collection_id)
+        values (#{favoriteID}, #{collectionID})
     </insert>
+    <delete id="deleteCollection">
+        delete
+        from
+        favorite_collection
+        where
+        favorite_id = #{favoriteID} and
+        collection_id in
+        <foreach collection="collectionIDList" item="collectionID" open="(" separator="," close=")">
+            #{collectionID}
+        </foreach>
+    </delete>
     <select id="selectOneByFavoriteIDAndHref"
             resultType="com.synergism.blog.core.collection.entity.Collection">
-        select
-            c.id ,
-            c.title ,
-            c.href ,
-            c.synopsis
-        from
-            favorite_collection fc
-                join
-            collection c
-            on
-                fc.collection_id = c.id
-        where
-            fc.favorite_id = #{favoriteID} and
-            c.href = #{href}
+        select c.id,
+               c.title,
+               c.href,
+               c.synopsis
+        from favorite_collection fc
+                 join
+             collection c
+             on
+                 fc.collection_id = c.id
+        where fc.favorite_id = #{favoriteID}
+          and c.href = #{href}
+    </select>
+    <select id="selectAllCollectionInformationList"
+            resultType="com.synergism.blog.core.collection.entity.CollectionInformation">
+        select c.id,
+               c.title,
+               c.href,
+               c.synopsis,
+               fc.favorite_id
+        from favorite_collection fc
+                 join
+             collection c
+             on
+                 fc.collection_id = c.id
     </select>
 </mapper>

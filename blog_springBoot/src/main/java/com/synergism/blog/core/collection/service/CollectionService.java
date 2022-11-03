@@ -2,6 +2,10 @@ package com.synergism.blog.core.collection.service;
 
 import com.synergism.blog.core.collection.entity.Collection;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.synergism.blog.core.collection.entity.CollectionInformation;
+import com.synergism.blog.result.Result;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,7 +17,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CollectionService extends IService<Collection> {
 
+    List<CollectionInformation> getAllCollectionInformationList();
+
     boolean save(String title, String url, String synopsis, Long groupID);
 
     boolean isExist(Long favoriteID, String href);
+
+    boolean remove(Long favoriteID, List<Long> collectionIDList);
 }

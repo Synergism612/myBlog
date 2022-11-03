@@ -2,10 +2,13 @@ package com.synergism.blog.core.collection.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.collection.entity.Collection;
+import com.synergism.blog.core.collection.entity.CollectionInformation;
 import com.synergism.blog.core.collection.mapper.CollectionMapper;
 import com.synergism.blog.core.collection.service.CollectionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -25,21 +28,37 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
     }
 
     @Override
+    public List<CollectionInformation> getAllCollectionInformationList() {
+        return mapper.selectAllCollectionInformationList();
+    }
+
+    @Override
     public boolean save(String title, String url, String synopsis, Long groupID) {
-        Collection collection = new Collection(title,url,synopsis);
+        Collection collection = new Collection(title, url, synopsis);
         mapper.insert(collection);
         long collectionID = collection.getId();
         try {
-            mapper.addCollection(groupID,collectionID);
+            mapper.insertCollection(groupID, collectionID);
             return true;
-        }catch (Exception e){
-            mapper.delete(new LambdaQueryWrapper<Collection>().eq(Collection::getId,collectionID));
+        } catch (Exception e) {
+            mapper.delete(new LambdaQueryWrapper<Collection>().eq(Collection::getId, collectionID));
         }
         return false;
     }
 
     @Override
     public boolean isExist(Long favoriteID, String href) {
-        return mapper.selectOneByFavoriteIDAndHref(favoriteID,href)!=null;
+        return mapper.selectOneByFavoriteIDAndHref(favoriteID, href) != null;
+    }
+
+    @Override
+    public boolean remove(Long favoriteID, List<Long> collectionIDList) {
+        try {
+            mapper.deleteCollection(favoriteID, collectionIDList);
+            mapper.delete(new LambdaQueryWrapper<Collection>().in(Collection::getId, collectionIDList));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

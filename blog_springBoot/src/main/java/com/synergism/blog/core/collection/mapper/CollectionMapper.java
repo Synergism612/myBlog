@@ -2,7 +2,11 @@ package com.synergism.blog.core.collection.mapper;
 
 import com.synergism.blog.core.collection.entity.Collection;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.synergism.blog.core.collection.entity.CollectionInformation;
+import com.synergism.blog.result.Result;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +19,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CollectionMapper extends BaseMapper<Collection> {
 
-    void addCollection(Long favoriteID,long collectionID);
+    List<CollectionInformation> selectAllCollectionInformationList();
+
+    void insertCollection(Long favoriteID, long collectionID);
 
     Collection selectOneByFavoriteIDAndHref(Long favoriteID, String href);
+
+    void deleteCollection(Long favoriteID, List<Long> collectionIDList);
+
 }
