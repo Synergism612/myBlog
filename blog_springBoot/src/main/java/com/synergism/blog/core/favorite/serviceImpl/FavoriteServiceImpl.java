@@ -2,7 +2,7 @@ package com.synergism.blog.core.favorite.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.favorite.entity.Favorite;
-import com.synergism.blog.core.favorite.entity.MyFavorite;
+import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.favorite.mapper.FavoriteMapper;
 import com.synergism.blog.core.favorite.service.FavoriteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -29,22 +30,20 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     }
 
     @Override
-    public List<Favorite> getFavoriteListByUserID(long userID) {
-        return mapper.selectListByUserID(userID);
+    public List<FavoriteInformation> getAllFavoriteInformationList() {
+        return mapper.selectAllFavoriteInformationList();
     }
 
     @Override
-    public boolean save(String name,String annotation,Integer ifPrivate, long userID) {
-        Favorite favorite = new Favorite(name,annotation,ifPrivate);
-        mapper.insert(favorite);
-        long favoriteID = favorite.getId();
-        try {
-            mapper.addFavorite(userID,favoriteID);
-            return true;
-        }catch (Exception e){
-            mapper.delete(new LambdaQueryWrapper<Favorite>().eq(Favorite::getId,favoriteID));
-        }
-        return false;
+    public List<FavoriteInformation> getFavoriteListByUsername(String username) {
+        List<FavoriteInformation> result = this.getAllFavoriteInformationList()
+                .stream()
+                .filter(favoriteInformation ->
+                        favoriteInformation
+                                .getUsername()
+                                .equals(username))
+                .collect(Collectors.toList());
+        return result.size() == 0 ? null : result;
     }
 
     @Override
@@ -52,8 +51,4 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         return this.getOne(new LambdaQueryWrapper<Favorite>().eq(Favorite::getId, favoriteID)) != null;
     }
 
-    @Override
-    public List<MyFavorite> getFavorite(long userID) {
-        return mapper.selectFavoriteByUserID(userID);
-    }
 }
