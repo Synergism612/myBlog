@@ -3,6 +3,9 @@ package com.synergism.blog.api.contentAPI.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 新增评论接口类
+ */
 @Setter
 @Getter
 public class AddComment {

@@ -1,6 +1,5 @@
 package com.synergism.blog.api.contentAPI.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.api.contentAPI.entity.AddComment;
 import com.synergism.blog.api.contentAPI.service.ContentAPIService;
 import com.synergism.blog.core.article.entity.Article;
@@ -13,7 +12,6 @@ import com.synergism.blog.core.comment.service.CommentService;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.core.user.entity.Author;
-import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
@@ -63,7 +61,7 @@ public class ContentAPIServiceImpl implements ContentAPIService {
 
     @Override
     public Result<List<CommentParent>> getCommentList(long articleID) {
-        return Result.success(commentService.getAllListByArticleID(articleID));
+        return Result.success(commentService.getCommentParentListByArticleID(articleID));
     }
 
     @Override

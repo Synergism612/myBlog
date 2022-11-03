@@ -62,5 +62,10 @@ public interface ContentAPIService {
      */
     Result<List<ArticleTagNominate>> getTagNominate(long articleID);
 
+    /**
+     * 保存新的评论
+     * @param addComment 评论信息
+     * @return 成功
+     */
     Result<String> saveComment(AddComment addComment);
 }
