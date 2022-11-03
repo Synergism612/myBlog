@@ -33,7 +33,7 @@
               <!-- 主体框架 -->
               <el-col :xs="24" :sm="24" :md="24" :lg="20">
                 <el-col :span="24" class="info frame">
-                  <el-row>
+                  <el-row class="top">
                     <el-col :span="12">
                       <el-col :span="24" class="icon">
                         <el-avatar :size="200" :src="icon" />
@@ -95,7 +95,7 @@
                       </el-col>
                     </el-col>
                   </el-row>
-                  <el-row>
+                  <el-row class="bottom">
                     <el-col :span="24">
                       <el-tabs v-model="tabsName" class="demo-tabs">
                         <el-tab-pane label="我的收藏" name="first">
@@ -158,8 +158,13 @@
                                 </span>
                               </div>
                               <el-row :gutter="20">
+                                <div
+                                  v-if="myFavorite.collectionList[0].id === -1"
+                                >
+                                  收藏夹为空
+                                </div>
                                 <el-col
-                                  :span="12"
+                                  :span="8"
                                   v-for="collection in myFavorite.collectionList"
                                   :key="collection.id"
                                   class="collection"
@@ -187,6 +192,18 @@
                                       {{ collection.href }}
                                     </span>
                                   </div>
+                                  <div>
+                                    <span
+                                      @click="
+                                        delectCollection(myFavorite.id, [
+                                          collection.id,
+                                        ])
+                                      "
+                                      class="click"
+                                    >
+                                      删除
+                                    </span>
+                                  </div>
                                 </el-col>
                               </el-row>
                             </el-collapse-item>
@@ -211,6 +228,7 @@
     <div>
       <Enshrine
         @close="addFavorite"
+        @succeed="addFavoriteSucceed"
         v-model:show="addFavoriteShow"
         v-model:favoriteID="addFavoriteID"
         :username="username"
@@ -223,6 +241,8 @@ import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Menu from "@/components/menu/Menu.vue";
 import Homepage from "./Homepage";
 import Enshrine from "@/components/enshrine/Enshrine.vue";
+import Message from "@/utils/MessageUtil";
+import { api } from "@/api/api";
 
 export default defineComponent({
   setup() {
@@ -243,6 +263,22 @@ export default defineComponent({
       viewData.addFavoriteID = addFavoriteID;
     };
 
+    const addFavoriteSucceed = () => {
+      viewData.updateMyFavorite();
+    };
+
+    const delectCollection = (
+      favoriteID: number,
+      collectionIDList: Array<number>
+    ) => {
+      console.log(collectionIDList);
+
+      api.delectCollection(favoriteID, collectionIDList).then(() => {
+        addFavoriteSucceed();
+        Message.successMessage("删除成功");
+      });
+    };
+
     onMounted(() => {
       viewData.init();
     });
@@ -252,6 +288,8 @@ export default defineComponent({
       close,
       goCollection,
       addFavorite,
+      addFavoriteSucceed,
+      delectCollection,
     };
   },
   components: { Menu, Enshrine },

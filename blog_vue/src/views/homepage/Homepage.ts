@@ -25,6 +25,7 @@ export default class Homepage {
   collapseName: number;
 
   myFavoriteList: Array<MyFavorite>;
+  myFavoriteShow: boolean;
 
   addFavoriteShow: boolean;
   addFavoriteID: number;
@@ -40,9 +41,10 @@ export default class Homepage {
     this.intro = "";
 
     this.tabsName = "first";
-    this.collapseName = 1;
+    this.collapseName = 0;
 
     this.myFavoriteList = [new MyFavorite()];
+    this.myFavoriteShow = true;
 
     this.addFavoriteShow = false;
     this.addFavoriteID = 0;
@@ -54,6 +56,12 @@ export default class Homepage {
       this.author = data;
       this.fromInit();
     });
+    api.getMyFavorite(this.username).then(({ data }) => {
+      this.myFavoriteList = data || [new MyFavorite()];
+    });
+  }
+
+  public updateMyFavorite(): void {
     api.getMyFavorite(this.username).then(({ data }) => {
       this.myFavoriteList = data;
     });
