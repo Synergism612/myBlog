@@ -68,6 +68,7 @@ import Enshrine from "./Enshrine";
 export default defineComponent({
   emits: {
     close: null,
+    succeed: null,
   },
   props: {
     title: {
@@ -102,6 +103,14 @@ export default defineComponent({
     watchEffect((): void => {
       viewData.favoriteForm.favoriteID = props.favoriteID || 0;
       viewData.favoriteShow = props.show;
+
+      viewData.init(
+        props.title || "",
+        props.href || "",
+        props.synopsis || "",
+        props.favoriteID || 0,
+        props.username
+      );
     });
 
     const close = (): void => {
@@ -119,20 +128,11 @@ export default defineComponent({
             : viewData.favoriteForm.favoriteID
         )
         .then(() => {
-          emit("close", true);
+          emit("close", false);
+          emit("succeed", true);
           Message.successMessage("成功添加");
         });
     };
-
-    onMounted(() => {
-      viewData.init(
-        props.title || "",
-        props.href || "",
-        props.synopsis || "",
-        props.favoriteID || 0,
-        props.username
-      );
-    });
     return {
       ...toRefs(viewData),
       close,
