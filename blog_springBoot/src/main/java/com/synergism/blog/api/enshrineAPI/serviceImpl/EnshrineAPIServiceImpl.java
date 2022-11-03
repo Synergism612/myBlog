@@ -1,13 +1,9 @@
 package com.synergism.blog.api.enshrineAPI.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.api.enshrineAPI.entity.AddCollection;
-import com.synergism.blog.api.enshrineAPI.entity.AddFavoriteGroup;
 import com.synergism.blog.api.enshrineAPI.service.EnshrineAPIService;
-import com.synergism.blog.core.collection.entity.Collection;
 import com.synergism.blog.core.collection.service.CollectionService;
-import com.synergism.blog.core.favorite.entity.Favorite;
-import com.synergism.blog.core.favorite.entity.MyFavorite;
+import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.favorite.service.FavoriteService;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.result.CodeMsg;
@@ -30,10 +26,8 @@ public class EnshrineAPIServiceImpl implements EnshrineAPIService {
     }
 
     @Override
-    public Result<List<Favorite>> getFavorite(String username) {
-        long userID = userService.getID(username);
-        if (userID == -1) return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户错误"));
-        return Result.success(favoriteService.getFavoriteListByUserID(userID));
+    public Result<List<FavoriteInformation>> getFavorite(String username) {
+        return Result.success(favoriteService.getFavoriteListByUsername(username));
     }
 
     @Override
