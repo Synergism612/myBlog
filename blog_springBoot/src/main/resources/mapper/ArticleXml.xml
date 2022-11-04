@@ -17,7 +17,6 @@
         <result column="username" property="username"/>
         <result column="comment_count" property="commentCount"/>
 
-
         <collection property="classify" ofType="com.synergism.blog.core.classify.entity.Classify">
             <id column="classify_id" property="id"/>
             <result column="classify_name" property="name"/>
@@ -94,7 +93,7 @@
                  t.name,
                  t.annotation
     </select>
-    <select id="selectSameClassifyArticleList" resultType="com.synergism.blog.core.article.entity.Article">
+    <select id="selectSameClassifyArticleList" resultMap="ArticleInformationMap">
         select a.id,
                a.icon,
                a.title,
@@ -141,7 +140,7 @@
         order by tagCount desc
     </select>
     <select id="selectPublicArticleInformationList"
-            resultType="com.synergism.blog.core.article.entity.ArticleInformation">
+            resultMap="ArticleInformationMap">
         select a.id,
                a.icon,
                a.title,
@@ -206,7 +205,7 @@
                  t.annotation
     </select>
     <select id="selectArticleInformationByUsername"
-            resultType="com.synergism.blog.core.article.entity.ArticleInformation">
+            resultMap="ArticleInformationMap">
         select a.id,
                a.icon,
                a.title,
