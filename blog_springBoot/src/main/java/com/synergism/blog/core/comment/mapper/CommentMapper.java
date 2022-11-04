@@ -24,10 +24,17 @@ public interface CommentMapper extends BaseMapper<Comment> {
     List<CommentInformation> selectAllCommentInformationList();
 
     /**
-     * 添加新的评论外键绑定
+     * 查询该文章下的评论信息
+     * @param articleID 文章id
+     * @return 评论信息列表
+     */
+    List<CommentInformation> selectCommentInformationListByArticleID(long articleID);
+
+    /**
+     * 绑定新的评论
      * @param commentID 评论id
      * @param articleID 文章id
      * @param userID 用户id
      */
-    void insertComment(long commentID, long articleID, long userID);
+    void bundle(long commentID, long articleID, long userID);
 }

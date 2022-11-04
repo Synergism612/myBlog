@@ -34,29 +34,25 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public List<CommentInformation> getAllCommentInformationList() {
-        return mapper.selectAllCommentInformationList();
+        List<CommentInformation> result = mapper.selectAllCommentInformationList();
+        return result.size() == 0 ? null : result;
     }
 
     @Override
     public List<CommentInformation> getCommentInformationListByArticleID(long articleID) {
-        return this.getAllCommentInformationList()
-                .stream()
-                .filter(commentInformation ->
-                        commentInformation
-                                .getArticleID()
-                                .equals(articleID))
-                .collect(Collectors.toList());
+        List<CommentInformation> result = mapper.selectCommentInformationListByArticleID(articleID);
+        return result.size() == 0 ? null : result;
     }
 
     @Override
     public List<CommentParent> getCommentParentListByArticleID(long articleID) {
         //获取文章下全部评论
-        List<CommentInformation> allList = this.getCommentInformationListByArticleID(articleID);
-
-        if (allList.size() == 0) return null;
+        List<CommentInformation> list = this.getCommentInformationListByArticleID(articleID);
+        //判空
+        if (list.size() == 0) return null;
 
         //筛选根或子评论列表 根据if(commentInformation.getRootId()==null)
-        Map<Boolean, List<CommentInformation>> listMap = allList
+        Map<Boolean, List<CommentInformation>> listMap = list
                 .stream()
                 .collect(Collectors.groupingBy(commentInformation -> commentInformation.getRootId() == null));
         //获得根评论
@@ -100,9 +96,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public boolean save(String body, Long rootId, Long parentId, long articleID, long userID) {
         Comment comment = new Comment(body, rootId, parentId);
         mapper.insert(comment);
+        if (comment.getId() == null) return false;
         long commentID = comment.getId();
         try {
-            mapper.insertComment(commentID, articleID, userID);
+            mapper.bundle(commentID, articleID, userID);
             return true;
         } catch (Exception e) {
             mapper.delete(new LambdaQueryWrapper<Comment>().eq(Comment::getId, commentID));

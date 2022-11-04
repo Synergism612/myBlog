@@ -1,33 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.comment.mapper.CommentMapper">
-    <insert id="insertComment">
-        INSERT INTO article_comment(article_id ,comment_id ) values (#{articleID},#{commentID});
-        INSERT INTO user_comment(user_id ,comment_id ) values (#{userID},#{commentID});
+    <insert id="bundle">
+        INSERT INTO article_comment(article_id, comment_id)
+        values (#{articleID}, #{commentID});
+        INSERT INTO user_comment(user_id, comment_id)
+        values (#{userID}, #{commentID});
     </insert>
 
     <select id="selectAllCommentInformationList"
             resultType="com.synergism.blog.core.comment.entity.CommentInformation">
-        select
-               ac.article_id,
-            c.id,
-            c.body ,
-            c.like_count ,
-            c.root_id ,
-            c.parent_id ,
-            c.creation_time ,
-            c.modify_time ,
-            u.icon ,
-            u.nickname ,
-            u.username
-        from
-            article_comment ac
-                left join
-            (comment c,
-                user_comment uc ,
-                `user` u )
-            on ac.comment_id = c.id and
-               c.id = uc.comment_id and
-               uc.user_id = u.id
+        select ac.article_id,
+               c.id,
+               c.body,
+               c.like_count,
+               c.root_id,
+               c.parent_id,
+               c.creation_time,
+               c.modify_time,
+               u.icon,
+               u.nickname,
+               u.username
+        from article_comment ac
+                 left join
+             (comment c,
+                 user_comment uc ,
+                 `user` u )
+             on ac.comment_id = c.id and
+                c.id = uc.comment_id and
+                uc.user_id = u.id
+    </select>
+    <select id="selectCommentInformationListByArticleID"
+            resultType="com.synergism.blog.core.comment.entity.CommentInformation">
+        select ac.article_id,
+               c.id,
+               c.body,
+               c.like_count,
+               c.root_id,
+               c.parent_id,
+               c.creation_time,
+               c.modify_time,
+               u.icon,
+               u.nickname,
+               u.username
+        from article_comment ac
+                 left join
+             (comment c,
+                 user_comment uc ,
+                 `user` u )
+             on ac.comment_id = c.id and
+                c.id = uc.comment_id and
+                uc.user_id = u.id
+where ac.article_id = #{articleID}
     </select>
 </mapper>
