@@ -1,5 +1,6 @@
 package com.synergism.blog.core.favorite.mapper;
 
+import com.synergism.blog.core.favorite.entity.Collection;
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
@@ -18,7 +19,14 @@ import java.util.List;
 @Mapper
 public interface FavoriteMapper extends BaseMapper<Favorite> {
 
-    void insertFavorite(long userID, long favoriteID);
+    List<Favorite> selectListByUsername(String username);
+
+    void bundle(long userID, long favoriteID);
 
     List<FavoriteInformation> selectAllFavoriteInformationList();
+
+    List<FavoriteInformation> selectFavoriteInformationList(String username);
+
+    Collection selectCollectionInFavoriteHref(Long favoriteID, String href);
+
 }

@@ -1,27 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.favorite.mapper.FavoriteMapper">
-    <insert id="insertFavorite">
+
+    <resultMap id="FavoriteInformationMap" type="com.synergism.blog.core.favorite.entity.FavoriteInformation">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="annotation" property="annotation"/>
+        <result column="if_private" property="ifPrivate"/>
+        <result column="nickname" property="nickname"/>
+        <result column="username" property="username"/>
+        <collection property="collectionList" ofType="com.synergism.blog.core.favorite.entity.Collection">
+            <result column="collection_id" property="id"/>
+            <result column="title" property="title"/>
+            <result column="synopsis" property="synopsis"/>
+            <result column="href" property="href"/>
+        </collection>
+    </resultMap>
+
+    <insert id="bundle">
         INSERT INTO user_favorite(user_id, favorite_id)
         values (#{userID}, #{favoriteID})
     </insert>
 
     <select id="selectAllFavoriteInformationList"
-            resultType="com.synergism.blog.core.favorite.entity.FavoriteInformation">
+            resultMap="FavoriteInformationMap">
         select f.id,
                f.name,
                f.annotation,
                f.if_private,
+               c.id as collection_id,
+               c.title,
+               c.href,
+               c.synopsis,
+               u.nickname,
+               u.username
+        from favorite_collection fc
+                 join
+             (favorite f ,
+                 user_favorite uf,
+                 `user` u)
+             on
+                     fc.favorite_id = f.id and
+                     f.id = uf.favorite_id and
+                     uf.user_id = u.id
+                 left join
+             collection c
+             on
+                 fc.collection_id = c.id
+    </select>
+    <select id="selectFavoriteInformationList"
+            resultMap="FavoriteInformationMap">
+        select f.id,
+               f.name,
+               f.annotation,
+               f.if_private,
+               c.id as collection_id,
+               c.title,
+               c.href,
+               c.synopsis,
                u.nickname,
                u.username
         from user_favorite uf
                  join
-             (
-                 favorite f ,
-                     `user` u
+             (`user` u,
+                 favorite f)
+             on
+                     uf.user_id = u.id
+                     and
+                     uf.favorite_id = f.id
+                 left join
+             favorite_collection fc
+             on
+                 fc.favorite_id = f.id
+                 left join
+             collection c
+             on
+                 fc.collection_id = c.id
+        where u.username = #{username}
+    </select>
+    <select id="selectCollectionInFavoriteHref"
+            resultType="com.synergism.blog.core.favorite.entity.Collection">
+        select c.id,
+               c.title,
+               c.href,
+               c.synopsis
+        from favorite_collection fc
+                 join
+             collection c
+             on
+                 fc.collection_id = c.id
+        where fc.favorite_id = #{favoriteID}
+          and c.href = #{href}
+    </select>
+    <select id="selectListByUsername" resultType="com.synergism.blog.core.favorite.entity.Favorite">
+        select f.id,
+               f.name,
+               f.annotation,
+               f.if_private
+        from user_favorite uf
+                 join
+             (favorite f ,
+                 `user` u
                  )
              on
                      uf.favorite_id = f.id and
                      uf.user_id = u.id
+        where u.username = #{username}
     </select>
 </mapper>

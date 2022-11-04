@@ -1,8 +1,8 @@
 package com.synergism.blog.api.homepageAPI.serviceImpl;
 
 import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
-import com.synergism.blog.core.collection.service.CollectionService;
 import com.synergism.blog.api.homepageAPI.entity.MyFavorite;
+import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.favorite.service.FavoriteService;
 import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.core.user.service.UserService;
@@ -20,13 +20,10 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
 
     private final FavoriteService favoriteService;
 
-    private final CollectionService collectionService;
-
     @Autowired
-    public HomepageAPIServiceImpl(UserService userService, FavoriteService favoriteService, CollectionService collectionService) {
+    public HomepageAPIServiceImpl(UserService userService, FavoriteService favoriteService) {
         this.userService = userService;
         this.favoriteService = favoriteService;
-        this.collectionService = collectionService;
     }
 
     @Override
@@ -35,17 +32,16 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
     }
 
     @Override
-    public Result<List<MyFavorite>> getMyFavoriteList(String username) {
-        if (userService.isExist(username)){
+    public Result<List<FavoriteInformation>> getMyFavoriteList(String username) {
+        if (!userService.isExist(username)){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("账号错误"));
         }
-        favoriteService.getFavoriteListByUsername(username);
-        return null;
+        return Result.success(favoriteService.getFavoriteInformationListByUsername(username));
     }
 
     @Override
     public Result<String> deleteCollection(Long favoriteID, List<Long> collectionIDList) {
-        return collectionService.remove(favoriteID, collectionIDList) ? Result.success() : Result.error(CodeMsg.MESSAGE.fillArgs("删除失败"));
+        return favoriteService.remove(favoriteID, collectionIDList) ? Result.success() : Result.error(CodeMsg.MESSAGE.fillArgs("删除失败"));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.synergism.blog.api.homepageAPI.service;
 
 import com.synergism.blog.api.homepageAPI.entity.MyFavorite;
+import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.result.Result;
 
@@ -21,7 +22,7 @@ public interface HomepageAPIService {
      * @param username 账号
      * @return 我的收藏夹列表
      */
-    Result<List<MyFavorite>> getMyFavoriteList(String username);
+    Result<List<FavoriteInformation>> getMyFavoriteList(String username);
 
     Result<String> deleteCollection(Long favoriteID, List<Long> collection);
 }

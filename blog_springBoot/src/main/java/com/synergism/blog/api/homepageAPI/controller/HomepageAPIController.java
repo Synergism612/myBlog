@@ -2,6 +2,7 @@ package com.synergism.blog.api.homepageAPI.controller;
 
 import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
 import com.synergism.blog.api.homepageAPI.entity.MyFavorite;
+import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class HomepageAPIController {
 
     //需要登录验证
     @GetMapping("favorite")
-    public Result<List<MyFavorite>> getMyFavoriteList(@RequestParam String username){
+    public Result<List<FavoriteInformation>> getMyFavoriteList(@RequestParam String username){
         return service.getMyFavoriteList(username);
     }
 

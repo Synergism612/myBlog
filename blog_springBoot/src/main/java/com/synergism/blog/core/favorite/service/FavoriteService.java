@@ -16,10 +16,56 @@ import java.util.List;
  */
 public interface FavoriteService extends IService<Favorite> {
 
+    /**
+     * 获取全部收藏夹
+     * @return 收藏夹信息列表
+     */
     List<FavoriteInformation> getAllFavoriteInformationList();
 
-    List<FavoriteInformation> getFavoriteListByUsername(String username);
+    /**
+     * 获取用户所属的收藏夹
+     * @param username 账号
+     * @return 收藏夹信息列表
+     */
+    List<FavoriteInformation> getFavoriteInformationListByUsername(String username);
 
+    /**
+     * 是否存在收藏夹
+     * @param favoriteID 收藏夹id
+     * @return 存在为真，反之为夹
+     */
     boolean isExist(Long favoriteID);
 
+    /**
+     * 保存新的收藏
+     * @param title 标题
+     * @param href 链接
+     * @param synopsis 摘要
+     * @param favoriteID 收藏夹id
+     * @return 成功为真，反之为假
+     */
+    boolean save(String title, String href, String synopsis, Long favoriteID);
+
+    /**
+     * 收藏夹中是否存在该收藏
+     * @param favoriteID 收藏夹id
+     * @param href 收藏的链接
+     * @return 存在为真，反之为假
+     */
+    boolean isExist(Long favoriteID, String href);
+
+    /**
+     * 删除收藏
+     * @param favoriteID 收藏夹id
+     * @param collectionIDList 收藏id列表
+     * @return 成功为真，反之为假
+     */
+    boolean remove(Long favoriteID, List<Long> collectionIDList);
+
+    /**
+     *
+     * @param username
+     * @return
+     */
+    List<Favorite> getListByUsername(String username);
 }

@@ -33,7 +33,7 @@ public class EnshrineAPIController {
      */
     //需要登录验证
     @GetMapping("favorite")
-    public Result<List<FavoriteInformation>> getFavorite(@RequestParam String username){
+    public Result<List<Favorite>> getFavorite(@RequestParam String username){
         return service.getFavorite(username);
     }
 
