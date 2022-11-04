@@ -30,20 +30,48 @@
                  c.modify_time,
                  u.username,
                  u.nickname
+        order by article_count desc
     </select>
     <select id="selectOneByArticleID" resultType="com.synergism.blog.core.classify.entity.Classify">
-        select
-            c.id ,
-            c.name ,
-            c.annotation ,
-            c.creation_time ,
-            c.modify_time
-        from
-            article_classify ac
-                join
-            classify c
-            on ac.classify_id = c.id
-        where
-            ac.article_id  = #{articleID}
+        select c.id,
+               c.name,
+               c.annotation,
+               c.creation_time,
+               c.modify_time
+        from article_classify ac
+                 join
+             classify c
+             on ac.classify_id = c.id
+        where ac.article_id = #{articleID}
+    </select>
+    <select id="selectClassifyInformationListByUsername"
+            resultType="com.synergism.blog.core.classify.entity.ClassifyInformation">
+        select c.id,
+               c.name,
+               c.annotation,
+               c.creation_time,
+               c.modify_time,
+               count(ac.article_id) as article_count,
+               u.username,
+               u.nickname
+        from article_classify ac
+                 left join
+             (classify c,
+                 user_classify uc, `user` u)
+             on
+                     ac.classify_id = c.id
+                     and
+                     uc.classify_id = c.id
+                     and
+                     u.id = uc.user_id
+        where u.username = #{username}
+        group by c.id,
+                 c.name,
+                 c.annotation,
+                 c.creation_time,
+                 c.modify_time,
+                 u.username,
+                 u.nickname
+        order by article_count desc
     </select>
 </mapper>

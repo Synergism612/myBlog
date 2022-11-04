@@ -36,23 +36,26 @@ public class IndexAPIServiceImpl implements IndexAPIService {
     @Override
     public Result<List<TagInformation>> getIndexTag(String username) {
         List<TagInformation> result;
-        if (StringUtil.isEmpty(username))
+        if (username.isEmpty())
             result = tagService.getAllTagInformationList();
         else
             result = tagService.getTagInformationListByUsername(username);
-
-        result = result.subList(0, Math.min(20, result.size()));
+        if (result!=null){
+            result = result.subList(0, Math.min(20, result.size()));
+        }
         return Result.success(result);
     }
 
     @Override
     public Result<List<ClassifyInformation>> getIndexClassify(String username) {
         List<ClassifyInformation> result;
-        if (StringUtil.isEmpty(username))
+        if (username.isEmpty())
             result = classifyService.getAllClassifyInformationList();
         else
             result = classifyService.getClassifyInformationListByUsername(username);
-        result = result.subList(0,Math.min(20,result.size()));
+        if (result != null){
+            result = result.subList(0,Math.min(20,result.size()));
+        }
         return Result.success(result);
     }
 }

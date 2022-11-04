@@ -31,19 +31,14 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
 
     @Override
     public List<TagInformation> getAllTagInformationList() {
-        return mapper.selectAllTagInformationList();
+        List<TagInformation> result = mapper.selectAllTagInformationList();
+        return result.size()==0?null:result;
     }
 
     @Override
     public List<TagInformation> getTagInformationListByUsername(String username) {
-        List<TagInformation> result = this.getAllTagInformationList();
-        if (result.size() == 0) return null;
-        return result
-                .stream()
-                .filter(tagInformation -> tagInformation
-                        .getUsername()
-                        .equals(username))
-                .collect(Collectors.toList());
+        List<TagInformation> result = mapper.selectTagInformationListByUsername(username);
+        return result.size()==0?null:result;
     }
 
     @Override

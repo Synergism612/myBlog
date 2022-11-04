@@ -31,19 +31,14 @@ public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify> i
 
     @Override
     public List<ClassifyInformation> getAllClassifyInformationList() {
-        return mapper.selectAllClassifyInformationList();
+        List<ClassifyInformation> result = mapper.selectAllClassifyInformationList();
+        return result.size()==0?null:result;
     }
 
     @Override
     public List<ClassifyInformation> getClassifyInformationListByUsername(String username) {
-        List<ClassifyInformation> result = this.getAllClassifyInformationList();
-        if (result.size()==0) return null;
-        return result
-                .stream()
-                .filter(classifyInformation -> classifyInformation
-                        .getUsername()
-                        .equals(username))
-                .collect(Collectors.toList());
+        List<ClassifyInformation> result = mapper.selectClassifyInformationListByUsername(username);
+        return result.size()==0?null:result;
     }
 
     @Override
