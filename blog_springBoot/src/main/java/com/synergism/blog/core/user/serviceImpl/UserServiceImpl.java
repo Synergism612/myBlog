@@ -2,9 +2,7 @@ package com.synergism.blog.core.user.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.user.entity.Author;
-import com.synergism.blog.core.user.entity.AuthorInformation;
 import com.synergism.blog.core.user.entity.User;
-import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.core.user.mapper.UserMapper;
 import com.synergism.blog.core.user.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,23 +33,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public long getID(String username) {
-        if (!this.isExist(username)) return -1;
-        return this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username)).getId();
+        User result = this.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
+        return result==null?-1: result.getId();
     }
 
     @Override
     public Author getAuthorByArticleID(long articleID) {
-        User user = mapper.selectOneByArticleID(articleID);
-        UserInformation userInformation = UserInformation.getInstance(user);
-        AuthorInformation authorInformation = mapper.selectAuthorInfoCountByID(user.getId());
-        return new Author(userInformation, authorInformation);
+        Author result = mapper.selectAuthorByArticleID(articleID);
+        result.replenish();
+        return result;
     }
 
     @Override
     public Author getAuthorByUsername(String username) {
-        User user = mapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUsername,username));
-        UserInformation userInformation = UserInformation.getInstance(user);
-        AuthorInformation authorInformation = mapper.selectAuthorInfoCountByID(user.getId());
-        return new Author(userInformation, authorInformation);
+        Author result = mapper.selectAuthorByUsername(username);
+        result.replenish();
+        return result;
     }
 }

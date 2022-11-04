@@ -16,10 +16,7 @@ public class Author extends UserInformation {
     //粉丝数量
     private int fansCount;
 
-    public Author(UserInformation userInformation,AuthorInformation authorInformation) {
-        super(userInformation);
-        this.articleCount = authorInformation.getArticleCount();
-        this.notableCount = authorInformation.getNotableCount();
-        this.fansCount = authorInformation.getFansCount();
+    public Author() {
+        super();
     }
 }

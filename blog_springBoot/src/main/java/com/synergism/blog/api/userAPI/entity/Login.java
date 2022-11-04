@@ -3,8 +3,8 @@ package com.synergism.blog.api.userAPI.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.core.user.untils.LoginUtil.checkPassword;
-import static com.synergism.blog.core.user.untils.LoginUtil.checkUsername;
+import static com.synergism.blog.api.userAPI.untils.LoginUtil.checkPassword;
+import static com.synergism.blog.api.userAPI.untils.LoginUtil.checkUsername;
 import static com.synergism.blog.utils.StringUtil.ifEmpty;
 import static com.synergism.blog.utils.StringUtil.checkStringIsUnsafe;
 import static com.synergism.blog.utils.TypeUtil.asArray;

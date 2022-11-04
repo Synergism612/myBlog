@@ -22,6 +22,11 @@ public interface UserService extends IService<User> {
      */
     boolean isExist(String username);
 
+    /**
+     * 通过账号获取用户id
+     * @param username 账号
+     * @return 用户id
+     */
     long getID(String username);
 
     /**
@@ -31,5 +36,10 @@ public interface UserService extends IService<User> {
      */
     Author getAuthorByArticleID(long articleID);
 
+    /**
+     * 通过账号获取作者信息
+     * @param username 账号
+     * @return 作者信息
+     */
     Author getAuthorByUsername(String username);
 }

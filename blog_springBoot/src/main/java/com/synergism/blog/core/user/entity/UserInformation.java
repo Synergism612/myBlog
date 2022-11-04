@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class UserInformation{
+public class UserInformation {
     //ID
     private long id;
     //头像
@@ -28,55 +28,45 @@ public class UserInformation{
     private String sexName;
     //个人简介
     private String intro;
+    //创建时间
+    private Date creationTime;
     //至今园龄
     private String upToNow;
+    //修改时间
+    private Date modify_time;
+
+    public UserInformation() {
+    }
 
     /**
      * 构造函数
-     * @param icon 头像
+     *
+     * @param icon     头像
      * @param nickname 昵称
      * @param username 账号
      * @param birthday 生日
-     * @param sex 性别代码
-     * @param intro 个人简介
+     * @param sex      性别代码
+     * @param intro    个人简介
      */
-    public UserInformation(long id,String icon, String nickname, String username, Date birthday, Integer sex, String intro,Date creationTime) {
+    public UserInformation(long id, String icon, String nickname, String username, Date birthday, Integer sex, String intro, Date creationTime) {
         this.id = id;
         this.icon = icon;
         this.nickname = nickname;
         this.username = username;
         this.birthday = birthday;
         this.sex = sex;
-        switch (sex){
-            case 0:this.sexName = "不愿透露";
-            break;
-            case 1:this.sexName = "男";
-                break;
-            case 2:this.sexName = "女";
-                break;
-        }
         this.intro = intro;
-        this.upToNow = TimeUtil.upToNow(creationTime);
-    }
-
-    public UserInformation(UserInformation userInformation) {
-        this.id = userInformation.getId();
-        this.icon = userInformation.getIcon();
-        this.nickname = userInformation.getNickname();
-        this.username = userInformation.getUsername();
-        this.birthday = userInformation.getBirthday();
-        this.sex = userInformation.getSex();
-        this.sexName = userInformation.getSexName();
-        this.intro = userInformation.getIntro();
-        this.upToNow = userInformation.getUpToNow();
+        this.creationTime = creationTime;
+        this.replenish();
     }
 
     /**
      * 从用户中获得用户信息
+     *
      * @param user 用户
      * @return 用户信息
      */
-    public static UserInformation getInstance(User user){
+    public static UserInformation getInstance(User user) {
         return new UserInformation(
                 user.getId(),
                 user.getIcon(),
@@ -88,4 +78,23 @@ public class UserInformation{
                 user.getCreationTime()
         );
     }
+
+    /**
+     * 补充性别与至今时间字段
+     */
+    public void replenish() {
+        switch (this.sex) {
+            case 1:
+                this.sexName = "男";
+                break;
+            case 2:
+                this.sexName = "女";
+                break;
+            default:
+                this.sexName = "不愿透露";
+                break;
+        }
+        this.upToNow = TimeUtil.upToNow(this.creationTime);
+    }
+
 }

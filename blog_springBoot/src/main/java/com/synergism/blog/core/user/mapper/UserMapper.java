@@ -1,11 +1,9 @@
 package com.synergism.blog.core.user.mapper;
 
-import com.synergism.blog.core.user.entity.AuthorInformation;
+import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.core.user.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.Map;
 
 /**
  * <p>
@@ -19,11 +17,16 @@ import java.util.Map;
 public interface UserMapper extends BaseMapper<User> {
 
     /**
-     * 通过文章id查询用户信息
+     * 查询该文章的作者
      * @param articleID 文章id
-     * @return 用户信息
+     * @return 作者信息
      */
-    User selectOneByArticleID(long articleID);
+    Author selectAuthorByArticleID(long articleID);
 
-    AuthorInformation selectAuthorInfoCountByID(long userID);
+    /**
+     * 查询该用户的作者信息
+     * @param username 账号
+     * @return 作者信息
+     */
+    Author selectAuthorByUsername(String username);
 }
