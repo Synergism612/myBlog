@@ -182,7 +182,7 @@ export class api {
    * 首页用户信息接口
    * @returns Result[用户信息]
    */
-  public static getIndexUserInfo(): Promise<AxiosResponse> {
+  public static getIndexUserInformation(): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/index/userInfo",
       method: "get",
@@ -321,7 +321,7 @@ export class api {
    * @param parentID 父评论id
    * @returns Result[String]
    */
-  public static setComment(
+  public static saveComment(
     username: string,
     comment: string,
     articleID: number,
@@ -410,7 +410,7 @@ export class api {
    * @param favoriteID 收藏夹id
    * @returns Result[String]
    */
-  public static setEnshrineCollection(
+  public static saveEnshrineCollection(
     title: string,
     href: string,
     synopsis: string,
@@ -446,7 +446,7 @@ export class api {
    * @param username 账号
    * @returns 我的收藏列表
    */
-  public static getMyFavorite(username: string): Promise<AxiosResponse> {
+  public static getFavoriteInformationList(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "get",

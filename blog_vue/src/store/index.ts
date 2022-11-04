@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import StoreUtil from "@/utils/StoreUtil";
-import UserInfo from "@/model/user/UserInfo";
+import UserInformation from "@/model/user/UserInformation";
 
 /**
  * 数据仓库
@@ -63,7 +63,7 @@ export const store = createStore({
      * @param state state
      * @param userInfo 用户信息
      */
-    SET_USER_INFO: (state, userInfo: UserInfo) => {
+    SET_USER_INFO: (state, userInfo: UserInformation) => {
       state.userInfo = userInfo;
       StoreUtil.save("userInfo", JSON.stringify(userInfo));
     },
@@ -109,8 +109,8 @@ export const store = createStore({
   //
   getters: {
     //get方法，也可以不写
-    getUser: (state): UserInfo => {
-      return state.userInfo as UserInfo;
+    getUser: (state): UserInformation => {
+      return state.userInfo as UserInformation;
     },
   },
   //异步函数

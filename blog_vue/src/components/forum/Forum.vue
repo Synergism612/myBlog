@@ -13,7 +13,7 @@
         />
       </el-col>
       <el-col class="right" :span="1">
-        <span class="click" @click="addComment()">提交</span>
+        <span class="click" @click="saveComment()">提交</span>
       </el-col>
     </el-row>
     <el-row>
@@ -129,14 +129,14 @@ export default defineComponent({
     const viewData = reactive(new Forum());
 
     /**新的评论函数 */
-    const addComment = (): void => {
+    const saveComment = (): void => {
       if (viewData.isLogin) {
         if (viewData.checkInput()) {
           Message.warningMessage("评论校验未通过");
           return;
         }
         api
-          .setComment(
+          .saveComment(
             viewData.userInfo.username,
             viewData.commentInput,
             props.articleID,
@@ -193,7 +193,7 @@ export default defineComponent({
     return {
       ...toRefs(viewData),
       props,
-      addComment,
+      saveComment,
       toForum,
       cancel,
     };

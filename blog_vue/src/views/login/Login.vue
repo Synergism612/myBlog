@@ -49,7 +49,7 @@ import { defineComponent, reactive, ref, toRefs } from "vue";
 import Message from "@/utils/MessageUtil";
 import Menu from "@/components/menu/Menu.vue";
 import { useRouter } from "vue-router";
-import UserInfo from "@/model/user/UserInfo";
+import UserInformation from "@/model/user/UserInformation";
 
 export default defineComponent({
   /**
@@ -116,7 +116,7 @@ export default defineComponent({
               .login(viewData.LoginFrom.username, viewData.LoginFrom.password)
               .then(({ data }) => {
                 var loginID = data[0] as string;
-                var userInfo = data[1] as UserInfo;
+                var userInfo = data[1] as UserInformation;
                 store.commit("SET_LOGIN_ID", loginID);
                 store.commit("SET_USER_INFO", userInfo);
                 router.push({ name: "Home" });

@@ -1,7 +1,7 @@
 import { api } from "@/api/api";
 import CommentChild from "@/model/comment/CommentChild";
 import CommentParent from "@/model/comment/CommentParent";
-import UserInfo from "@/model/user/UserInfo";
+import UserInformation from "@/model/user/UserInformation";
 import { store } from "@/store";
 import StringUtil from "@/utils/StringUtil";
 
@@ -9,7 +9,7 @@ export default class Forum {
   commentList: Array<CommentParent>;
 
   commentInput: string;
-  userInfo: UserInfo;
+  userInfo: UserInformation;
   isLogin: boolean;
 
   rootID: number;

@@ -1,5 +1,6 @@
 import { api } from "@/api/api";
-import MyFavorite from "@/model/favorite/MyFavorite";
+import Collection from "@/model/favorite/Collection";
+import FavoriteInformation from "@/model/favorite/FavoriteInformation";
 import Author from "@/model/user/Author";
 import { store } from "@/store";
 
@@ -24,11 +25,11 @@ export default class Homepage {
 
   collapseName: number;
 
-  myFavoriteList: Array<MyFavorite>;
+  favoriteInformationList: Array<FavoriteInformation>;
   myFavoriteShow: boolean;
 
-  addFavoriteShow: boolean;
-  addFavoriteID: number;
+  saveFavoriteShow: boolean;
+  saveFavoriteID: number;
 
   constructor() {
     this.author = new Author();
@@ -43,11 +44,11 @@ export default class Homepage {
     this.tabsName = "first";
     this.collapseName = 0;
 
-    this.myFavoriteList = [new MyFavorite()];
+    this.favoriteInformationList = [new FavoriteInformation()];
     this.myFavoriteShow = true;
 
-    this.addFavoriteShow = false;
-    this.addFavoriteID = 0;
+    this.saveFavoriteShow = false;
+    this.saveFavoriteID = 0;
   }
 
   public init(): void {
@@ -56,14 +57,21 @@ export default class Homepage {
       this.author = data;
       this.fromInit();
     });
-    api.getMyFavorite(this.username).then(({ data }) => {
-      this.myFavoriteList = data || [new MyFavorite()];
+    api.getFavoriteInformationList(this.username).then(({ data }) => {
+      this.favoriteInformationList = data || [new FavoriteInformation()];
+      this.favoriteInformationList.forEach(
+        (favoriteInformation: FavoriteInformation) => {
+          if (favoriteInformation.collectionList.length === 0) {
+            favoriteInformation.collectionList = [new Collection()];
+          }
+        }
+      );
     });
   }
 
   public updateMyFavorite(): void {
-    api.getMyFavorite(this.username).then(({ data }) => {
-      this.myFavoriteList = data;
+    api.getFavoriteInformationList(this.username).then(({ data }) => {
+      this.favoriteInformationList = data;
     });
   }
 

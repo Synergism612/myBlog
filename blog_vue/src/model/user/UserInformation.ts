@@ -1,4 +1,4 @@
-export default class UserInfo {
+export default class UserInformation {
   //头像
   icon: string;
   //昵称

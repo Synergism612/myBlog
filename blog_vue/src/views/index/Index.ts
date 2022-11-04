@@ -1,7 +1,7 @@
 import { api } from "@/api/api";
 import ClassifyInformation from "@/model/classify/ClassifyInformation";
 import TagInformation from "@/model/tag/TagInformation";
-import UserInfo from "@/model/user/UserInfo";
+import UserInformation from "@/model/user/UserInformation";
 import { store } from "@/store";
 import StringUtil from "@/utils/StringUtil";
 
@@ -12,7 +12,7 @@ export default class Index {
   /**日历日期*/
   calender: Date;
   /**用户信息*/
-  userInfo: UserInfo;
+  userInfo: UserInformation;
   /**标签云列表*/
   tagInformationList: Array<TagInformation>;
   /**分类云列表 */
@@ -29,7 +29,7 @@ export default class Index {
   public init(): void {
     const userInfo = (): void => {
       if (StringUtil.checkStringIfEmpty(this.userInfo.username)) {
-        api.getIndexUserInfo().then(({ data }) => {
+        api.getIndexUserInformation().then(({ data }) => {
           this.userInfo = data;
           this.ifLogin = false;
         });

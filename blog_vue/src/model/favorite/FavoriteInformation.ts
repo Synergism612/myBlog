@@ -1,24 +1,15 @@
+import Collection from "./Collection";
 import Favorite from "./Favorite";
 
 export default class MyFavorite extends Favorite {
   collectionList: Array<Collection>;
+  nickname: string;
+  username: string;
 
   constructor() {
     super();
     this.collectionList = [new Collection()];
-  }
-}
-
-class Collection {
-  id: number;
-  title: string;
-  href: string;
-  synopsis: string;
-
-  constructor() {
-    this.id = -1;
-    this.title = "";
-    this.href = "";
-    this.synopsis = "";
+    this.nickname = "";
+    this.username = "";
   }
 }

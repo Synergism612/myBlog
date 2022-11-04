@@ -52,7 +52,7 @@
           </el-form>
         </el-col>
         <el-col :span="24" class="button">
-          <span @click="add" class="click">添加</span>
+          <span @click="save" class="click">添加</span>
           <span @click="close" class="click">取消</span>
         </el-col>
       </el-row>
@@ -117,9 +117,9 @@ export default defineComponent({
       emit("close", false);
     };
 
-    const add = (): void => {
+    const save = (): void => {
       api
-        .setEnshrineCollection(
+        .saveEnshrineCollection(
           viewData.favoriteForm.title,
           viewData.favoriteForm.href,
           viewData.favoriteForm.synopsis,
@@ -136,7 +136,7 @@ export default defineComponent({
     return {
       ...toRefs(viewData),
       close,
-      add,
+      save,
     };
   },
   components: {},

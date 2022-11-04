@@ -109,36 +109,38 @@
                             class="myFavorite"
                           >
                             <el-collapse-item
-                              v-for="myFavorite in myFavoriteList"
-                              :key="myFavorite.id"
-                              :name="myFavorite.id"
+                              v-for="favoriteInformation in favoriteInformationList"
+                              :key="favoriteInformation.id"
+                              :name="favoriteInformation.id"
                             >
                               <template #title>
-                                <span v-if="myFavorite.ifPrivate === 1">
+                                <span
+                                  v-if="favoriteInformation.ifPrivate === 1"
+                                >
                                   <font-awesome-icon :icon="['fas', 'lock']" />
                                   （私密）
                                 </span>
-                                <span v-if="myFavorite.ifPrivate != 1">
+                                <span v-if="favoriteInformation.ifPrivate != 1">
                                   <font-awesome-icon
                                     :icon="['fas', 'unlock']"
                                   />
                                   （公开）
                                 </span>
                                 <span>
-                                  {{ myFavorite.name }}
+                                  {{ favoriteInformation.name }}
                                 </span>
                               </template>
                               <div class="option">
                                 <span
                                   class="click"
-                                  v-if="myFavorite.ifPrivate != 1"
+                                  v-if="favoriteInformation.ifPrivate != 1"
                                 >
                                   <font-awesome-icon :icon="['fas', 'lock']" />
                                   设为私密
                                 </span>
                                 <span
                                   class="click"
-                                  v-if="myFavorite.ifPrivate === 1"
+                                  v-if="favoriteInformation.ifPrivate === 1"
                                 >
                                   <font-awesome-icon
                                     :icon="['fas', 'unlock']"
@@ -146,7 +148,9 @@
                                   设为公开
                                 </span>
                                 <span
-                                  @click="addFavorite(true, myFavorite.id)"
+                                  @click="
+                                    saveFavorite(true, favoriteInformation.id)
+                                  "
                                   class="click rotate"
                                 >
                                   <font-awesome-icon :icon="['fas', 'plus']" />
@@ -158,53 +162,65 @@
                                 </span>
                               </div>
                               <el-row :gutter="20">
-                                <div
-                                  v-if="myFavorite.collectionList[0].id === -1"
+                                <el-col
+                                  :span="24"
+                                  v-if="
+                                    favoriteInformation.collectionList[0].id ===
+                                    -1
+                                  "
                                 >
                                   收藏夹为空
-                                </div>
-                                <el-col
-                                  :span="8"
-                                  v-for="collection in myFavorite.collectionList"
-                                  :key="collection.id"
-                                  class="collection"
-                                >
-                                  <div>
-                                    <span
-                                      @click="goCollection(collection.href)"
-                                      class="click"
-                                    >
-                                      {{ collection.title }}
-                                    </span>
-                                  </div>
-                                  <div>
-                                    摘要：
-                                    <span>
-                                      {{ collection.synopsis }}
-                                    </span>
-                                  </div>
-                                  <div>
-                                    链接：
-                                    <span
-                                      @click="goCollection(collection.href)"
-                                      class="click"
-                                    >
-                                      {{ collection.href }}
-                                    </span>
-                                  </div>
-                                  <div>
-                                    <span
-                                      @click="
-                                        delectCollection(myFavorite.id, [
-                                          collection.id,
-                                        ])
-                                      "
-                                      class="click"
-                                    >
-                                      删除
-                                    </span>
-                                  </div>
                                 </el-col>
+                                <div
+                                  v-if="
+                                    favoriteInformation.collectionList[0].id !=
+                                    -1
+                                  "
+                                >
+                                  <el-col
+                                    :span="8"
+                                    v-for="collection in favoriteInformation.collectionList"
+                                    :key="collection.id"
+                                    class="collection"
+                                  >
+                                    <div>
+                                      <span
+                                        @click="goCollection(collection.href)"
+                                        class="click"
+                                      >
+                                        {{ collection.title }}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      摘要：
+                                      <span>
+                                        {{ collection.synopsis }}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      链接：
+                                      <span
+                                        @click="goCollection(collection.href)"
+                                        class="click"
+                                      >
+                                        {{ collection.href }}
+                                      </span>
+                                    </div>
+                                    <div>
+                                      <span
+                                        @click="
+                                          delectCollection(
+                                            favoriteInformation.id,
+                                            [collection.id]
+                                          )
+                                        "
+                                        class="click"
+                                      >
+                                        删除
+                                      </span>
+                                    </div>
+                                  </el-col>
+                                </div>
                               </el-row>
                             </el-collapse-item>
                           </el-collapse>
@@ -227,10 +243,10 @@
     </div>
     <div>
       <Enshrine
-        @close="addFavorite"
-        @succeed="addFavoriteSucceed"
-        v-model:show="addFavoriteShow"
-        v-model:favoriteID="addFavoriteID"
+        @close="saveFavorite"
+        @succeed="saveFavoriteSucceed"
+        v-model:show="saveFavoriteShow"
+        v-model:favoriteID="saveFavoriteID"
         :username="username"
       ></Enshrine>
     </div>
@@ -258,12 +274,12 @@ export default defineComponent({
       window.open(href);
     };
 
-    const addFavorite = (show: boolean, addFavoriteID: number): void => {
-      viewData.addFavoriteShow = show;
-      viewData.addFavoriteID = addFavoriteID;
+    const saveFavorite = (show: boolean, saveFavoriteID: number): void => {
+      viewData.saveFavoriteShow = show;
+      viewData.saveFavoriteID = saveFavoriteID;
     };
 
-    const addFavoriteSucceed = () => {
+    const saveFavoriteSucceed = () => {
       viewData.updateMyFavorite();
     };
 
@@ -274,7 +290,7 @@ export default defineComponent({
       console.log(collectionIDList);
 
       api.delectCollection(favoriteID, collectionIDList).then(() => {
-        addFavoriteSucceed();
+        saveFavoriteSucceed();
         Message.successMessage("删除成功");
       });
     };
@@ -287,8 +303,8 @@ export default defineComponent({
       ...toRefs(viewData),
       close,
       goCollection,
-      addFavorite,
-      addFavoriteSucceed,
+      saveFavorite,
+      saveFavoriteSucceed,
       delectCollection,
     };
   },
