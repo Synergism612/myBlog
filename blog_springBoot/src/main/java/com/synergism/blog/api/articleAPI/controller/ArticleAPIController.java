@@ -26,22 +26,6 @@ public class ArticleAPIController {
     }
 
     /**
-     * 获取全部的文章信息
-     * 分页
-     * @param currentPage 页数
-     * @param pageSize 页容
-     * @param articleSort 排序
-     * @return 分页后的文章信息
-     */
-    @GetMapping("all")
-    public Result<Pagination> all(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam String articleSort){
-        if (!EnumUtils.isValidEnum(ArticleSort.class, articleSort)) {
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("排序字段错误"));
-        }
-        return service.getPagination(currentPage, pageSize, ArticleSort.valueOf(articleSort));
-    }
-
-    /**
      * 主页文章获取接口
      * @param currentPage 页数
      * @param pageSize 页容

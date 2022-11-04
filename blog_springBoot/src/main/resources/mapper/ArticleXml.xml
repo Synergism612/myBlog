@@ -94,7 +94,7 @@
                  t.name,
                  t.annotation
     </select>
-    <select id="selectOneClassifyArticleList" resultType="com.synergism.blog.core.article.entity.Article">
+    <select id="selectSameClassifyArticleList" resultType="com.synergism.blog.core.article.entity.Article">
         select a.id,
                a.icon,
                a.title,
@@ -113,6 +113,7 @@
                      ac2.article_id = a.id
         where ac1.article_id != ac2.article_id
           and ac1.article_id = #{id}
+        order by a.creation_time desc
     </select>
     <select id="selectMoreTagArticleList" resultType="com.synergism.blog.core.article.entity.ArticleTagNominate">
         select count(atg1.tag_id) tagCount,
@@ -137,6 +138,137 @@
           and atg1.article_id = #{id}
         group by atg1.article_id,
                  atg2.article_id
+        order by tagCount desc
+    </select>
+    <select id="selectPublicArticleInformationList"
+            resultType="com.synergism.blog.core.article.entity.ArticleInformation">
+        select a.id,
+               a.icon,
+               a.title,
+               a.body,
+               a.synopsis,
+               a.views,
+               a.like_count,
+               a.creation_time,
+               a.modify_time,
+               a.if_private,
+               u.nickname,
+               u.username,
+               cy.id         as classify_id,
+               cy.name       as classify_name,
+               cy.annotation as classify_annotation,
+               t.id          as tag_id,
+               t.name        as tag_name,
+               t.annotation  as tag_annotation,
+               count(ac.id)  as comment_count
+        from user_article ua
+                 join(
+            `user` u ,
+                article a ,
+                article_classify acy ,
+                classify cy ,
+                article_tag atg ,
+                tag t,
+                article_comment ac
+            )
+                     on
+                             ua.user_id = u.id
+                             and
+                             ua.article_id = a.id
+                             and
+                             acy.article_id = a.id
+                             and
+                             cy.id = acy.classify_id
+                             and
+                             atg.article_id = a.id
+                             and
+                             t.id = atg.tag_id
+                             and
+                             ac.article_id = a.id
+        where a.if_private = 0
+        group by a.id,
+                 a.icon,
+                 a.title,
+                 a.body,
+                 a.synopsis,
+                 a.views,
+                 a.like_count,
+                 a.creation_time,
+                 a.modify_time,
+                 a.if_private,
+                 u.nickname,
+                 u.username,
+                 cy.id,
+                 cy.name,
+                 cy.annotation,
+                 t.id,
+                 t.name,
+                 t.annotation
+    </select>
+    <select id="selectArticleInformationByUsername"
+            resultType="com.synergism.blog.core.article.entity.ArticleInformation">
+        select a.id,
+               a.icon,
+               a.title,
+               a.body,
+               a.synopsis,
+               a.views,
+               a.like_count,
+               a.creation_time,
+               a.modify_time,
+               a.if_private,
+               u.nickname,
+               u.username,
+               cy.id         as classify_id,
+               cy.name       as classify_name,
+               cy.annotation as classify_annotation,
+               t.id          as tag_id,
+               t.name        as tag_name,
+               t.annotation  as tag_annotation,
+               count(ac.id)  as comment_count
+        from user_article ua
+                 join(
+            `user` u ,
+                article a ,
+                article_classify acy ,
+                classify cy ,
+                article_tag atg ,
+                tag t,
+                article_comment ac
+            )
+                     on
+                             ua.user_id = u.id
+                             and
+                             ua.article_id = a.id
+                             and
+                             acy.article_id = a.id
+                             and
+                             cy.id = acy.classify_id
+                             and
+                             atg.article_id = a.id
+                             and
+                             t.id = atg.tag_id
+                             and
+                             ac.article_id = a.id
+        where u.username = #{username}
+        group by a.id,
+                 a.icon,
+                 a.title,
+                 a.body,
+                 a.synopsis,
+                 a.views,
+                 a.like_count,
+                 a.creation_time,
+                 a.modify_time,
+                 a.if_private,
+                 u.nickname,
+                 u.username,
+                 cy.id,
+                 cy.name,
+                 cy.annotation,
+                 t.id,
+                 t.name,
+                 t.annotation
     </select>
 
 </mapper>

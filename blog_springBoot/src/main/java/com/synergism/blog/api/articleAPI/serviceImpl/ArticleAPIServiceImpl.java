@@ -6,8 +6,6 @@ import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.api.articleAPI.service.ArticleAPIService;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.synergism.blog.result.Result;
-import com.synergism.blog.utils.StringUtil;
-import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,33 +20,38 @@ public class ArticleAPIServiceImpl implements ArticleAPIService {
     public ArticleAPIServiceImpl(ArticleService service) {
         this.service = service;
     }
-
-    @Override
-    public Result<Pagination> getPagination(int currentPage, int pageSize, ArticleSort articleSort) {
-        List<ArticleInformation> result = service.getAllArticleInformationList();
-        return Result.success(service.Pagination(result, currentPage, pageSize));
-    }
-
     @Override
     public Result<Pagination> getPagination(int currentPage, int pageSize, ArticleSort articleSort, String username, String keyword, List<Long> classifyIDList, List<Long> tagIDList) {
         List<ArticleInformation> result;
-        if (StringUtil.isEmpty(username)) {
-            result = service.getArticleInformationListByPublic();
+        //传入账号是否为空
+        if (username.isEmpty()) {
+            //为空获取公开文章列表
+            result = service.getPublicArticleInformationList();
         } else {
+            //不为空获取用户下的文章列表
             result = service.getArticleInformationListByUsername(username);
         }
-        if (!StringUtil.isEmpty(keyword) && !TypeUtil.isNull(result)) {
-            result = service.searchArticleInformationListByKeyword(result, keyword);
+        //传入关键字不为空且暂存结果不为空
+        if (!keyword.isEmpty() && result!=null) {
+            //根据关键字获取文章列表
+            result = service.getArticleInformationListByKeyword(result, keyword);
         }
-        if (!TypeUtil.isNull(classifyIDList) && !TypeUtil.isNull(result)) {
-            result = service.searchArticleInformationListByClassifyList(result, classifyIDList);
+        //传入分类id列表不为空且暂存结果不为空
+        if (classifyIDList!=null && result!=null) {
+            //根据分类id列表获取文章列表
+            result = service.getArticleInformationListByClassifyList(result, classifyIDList);
         }
-        if (!TypeUtil.isNull(tagIDList) && !TypeUtil.isNull(result)) {
-            result = service.searchArticleInformationListByTagList(result, tagIDList);
+        //传入标签id列表不为空且暂存结果不为空
+        if (tagIDList!=null && result!=null) {
+            //根据标签id列表获取文章列表
+            result = service.getArticleInformationListByTagList(result, tagIDList);
         }
-        if (!TypeUtil.isNull(result)) {
-            result = service.ArticleInformationListSort(result, articleSort);
+        //暂存结果不为空
+        if (result!=null) {
+            //排序
+            result = service.sortArticleInformationList(result, articleSort);
         }
+        //封装分页
         return Result.success(service.Pagination(result, currentPage, pageSize));
     }
 }

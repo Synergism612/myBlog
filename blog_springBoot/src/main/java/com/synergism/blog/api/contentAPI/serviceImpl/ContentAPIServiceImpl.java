@@ -66,7 +66,7 @@ public class ContentAPIServiceImpl implements ContentAPIService {
 
     @Override
     public Result<List<Article>> getClassifyNominate(long articleID) {
-        return Result.success(articleService.getOneClassifyArticleList(articleID));
+        return Result.success(articleService.getSameClassifyArticleList(articleID));
     }
 
     @Override

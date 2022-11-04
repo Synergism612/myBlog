@@ -9,16 +9,6 @@ import java.util.List;
 public interface ArticleAPIService {
     /**
      * 获取分页
-     * 全部文章
-     * @param currentPage 当前页
-     * @param pageSize    页容量
-     * @param articleSort 排序
-     * @return Result[分页]
-     */
-    Result<Pagination> getPagination(int currentPage, int pageSize, ArticleSort articleSort);
-
-    /**
-     * 获取分页
      * 搜索字段使用
      * @param currentPage 当前页
      * @param pageSize 页容量

@@ -38,24 +38,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
 
     @Override
-    public Pagination Pagination(List<ArticleInformation> articleInformationList, int currentPage, int pageSize) {
-        if(TypeUtil.isNull(articleInformationList)){
-            return new Pagination(null, 0);
-        }
-        int startIndex = (currentPage - 1) * pageSize;
-        int endIndex = currentPage * pageSize;
-        int total = articleInformationList.size();
-        endIndex = Math.min(endIndex, total);
-        return new Pagination(articleInformationList.subList(startIndex, endIndex), total);
+    public List<ArticleInformation> getArticleInformationListByUsername(String username) {
+        List<ArticleInformation> result = mapper.selectArticleInformationByUsername(username);
+        return result.size() == 0 ? null : result;
     }
 
     @Override
-    public List<ArticleInformation> getAllArticleInformationList() {
-        return mapper.selectAllArticleInformationList();
+    public List<ArticleInformation> getPublicArticleInformationList() {
+        List<ArticleInformation> result = mapper.selectPublicArticleInformationList();
+        return result.size() == 0 ? null : result;
     }
 
     @Override
-    public List<ArticleInformation> ArticleInformationListSort(List<ArticleInformation> articleInformationList, ArticleSort articleSort) {
+    public List<ArticleInformation> sortArticleInformationList(List<ArticleInformation> articleInformationList, ArticleSort articleSort) {
         if (articleInformationList.size() == 0) return null;
         switch (articleSort) {
             case views:
@@ -72,45 +67,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleInformation> getArticleInformationListByUsername(String username) {
-        List<ArticleInformation> result = this.getAllArticleInformationList()
-                .stream()
-                .filter(articleInformation ->
-                        articleInformation.getUsername().equals(username))
-                .collect(Collectors.toList());
-        return result.size() == 0 ? null : result;
-    }
-
-    @Override
-    public List<ArticleInformation> getArticleInformationListByPublic() {
-        List<ArticleInformation> result = this.getAllArticleInformationList()
-                .stream()
-                .filter(articleInformation ->
-                        articleInformation.getIfPrivate() == 0)
-                .collect(Collectors.toList());
-        return result.size() == 0 ? null : result;
-    }
-
-    @Override
-    public List<Article> getOneClassifyArticleList(long id) {
-        List<Article> result = mapper.selectOneClassifyArticleList(id)
-                .stream()
-                .sorted(Comparator.comparing(Article::getCreationTime)
-                        .reversed())
-                .collect(Collectors.toList());
+    public List<Article> getSameClassifyArticleList(long id) {
+        List<Article> result = mapper.selectSameClassifyArticleList(id);
         return result.size() == 0 ? null : result;
 
     }
 
     @Override
     public List<ArticleTagNominate> getMoreTagArticleList(long id) {
-        List<ArticleTagNominate> result = mapper.selectMoreTagArticleList(id)
-                .stream()
-                .sorted(Comparator.comparing(ArticleTagNominate::getTagCount)
-                        .reversed())
-                .collect(Collectors.toList());
+        List<ArticleTagNominate> result = mapper.selectMoreTagArticleList(id);
         return result.size() == 0 ? null : result;
-
     }
 
     @Override
@@ -119,8 +85,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleInformation> searchArticleInformationListByKeyword(List<ArticleInformation> articleInformationList, String keyword) {
+    public List<ArticleInformation> getArticleInformationListByKeyword(List<ArticleInformation> articleInformationList, String keyword) {
         if (articleInformationList.size() == 0) return null;
+        //筛选方法，在文章的作者昵称、标题、摘要中存在关键字
         return articleInformationList.stream().filter(articleInformation ->
                         articleInformation.getNickname().contains(keyword) ||
                         articleInformation.getTitle().contains(keyword) ||
@@ -129,7 +96,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleInformation> searchArticleInformationListByClassifyList(List<ArticleInformation> articleInformationList, List<Long> classifyIDList) {
+    public List<ArticleInformation> getArticleInformationListByClassifyList(List<ArticleInformation> articleInformationList, List<Long> classifyIDList) {
         if (articleInformationList.size() == 0) return null;
         return articleInformationList.stream().filter(articleInformation ->
                 classifyIDList.contains(articleInformation.getClassify().getId())
@@ -137,11 +104,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleInformation> searchArticleInformationListByTagList(List<ArticleInformation> articleInformationList, List<Long> tagIDList) {
+    public List<ArticleInformation> getArticleInformationListByTagList(List<ArticleInformation> articleInformationList, List<Long> tagIDList) {
         if (articleInformationList.size() == 0) return null;
         return articleInformationList.stream().filter(articleInformation ->
                 articleInformation.getTagList().stream().anyMatch(tag ->
                         tagIDList.contains(tag.getId()))
         ).collect(Collectors.toList());
     }
+
+    @Override
+    public Pagination Pagination(List<ArticleInformation> articleInformationList, int currentPage, int pageSize) {
+        if(TypeUtil.isNull(articleInformationList)){
+            return new Pagination(null, 0);
+        }
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = currentPage * pageSize;
+        int total = articleInformationList.size();
+        endIndex = Math.min(endIndex, total);
+        return new Pagination(articleInformationList.subList(startIndex, endIndex), total);
+    }
+
 }

@@ -20,17 +20,26 @@ import java.util.List;
 public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
-     * 获取全部文章信息
+     * 查询公开的所有文章
      * @return 文章信息列表
      */
-    List<ArticleInformation> selectAllArticleInformationList();
+    List<ArticleInformation> selectPublicArticleInformationList();
+
+
+    /**
+     * 查询用户下的所有文章
+     * @param username 账号
+     * @return 文章信息列表
+     */
+    List<ArticleInformation> selectArticleInformationByUsername(String username);
+
 
     /**
      * 查询与文章id对应文章相同分类的文章
      * @param id 文章id
      * @return 文章列表
      */
-    List<Article> selectOneClassifyArticleList(long id);
+    List<Article> selectSameClassifyArticleList(long id);
 
     /**
      * 查询与文章id对应的文章有相同标签的文章
@@ -38,4 +47,5 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @return 文章标签推荐列表
      */
     List<ArticleTagNominate> selectMoreTagArticleList(long id);
+
 }
