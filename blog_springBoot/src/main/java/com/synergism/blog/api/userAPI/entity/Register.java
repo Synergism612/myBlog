@@ -17,6 +17,8 @@ public class Register {
     private String username;
     //密码
     private String password;
+    //二次密码输入
+    private String passwordAgen;
     //验证码
     private String code;
 
@@ -40,11 +42,11 @@ public class Register {
      * @param code 验证码
      * @param key 验证码密钥
      */
-    Register(String username, String password, String code,String key) {
+    Register(String username, String password,String passwordAgen, String code,String key) {
         //判空
-        StringUtil.ifEmpty(asArray(username,password,code),asArray("账号","密码","验证码"));
+        StringUtil.ifEmpty(asArray(username,password,passwordAgen,code),asArray("账号","密码","二次输入密码","验证码"));
         //合法性检查
-        StringUtil.checkStringIsUnsafe(username,password);
+        StringUtil.checkStringIsUnsafe(username,password,passwordAgen);
         this.username = username;
         this.password = password;
         this.code = code;
