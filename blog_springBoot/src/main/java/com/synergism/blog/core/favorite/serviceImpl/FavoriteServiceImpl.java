@@ -101,4 +101,15 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         return false;
     }
 
+    @Override
+    public boolean remove(Long userID, Long favoriteID) {
+        try {
+            mapper.unbundled(userID,favoriteID);
+            mapper.delete(new LambdaQueryWrapper<Favorite>().eq(Favorite::getId,favoriteID));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

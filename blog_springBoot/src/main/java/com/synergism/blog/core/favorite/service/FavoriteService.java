@@ -79,4 +79,12 @@ public interface FavoriteService extends IService<Favorite> {
      * @return 成功为真，反之为假
      */
     boolean save(String name, String annotation, Integer ifPrivate, Long userID);
+
+    /**
+     * 删除收藏夹
+     * @param userID 用户id
+     * @param favoriteID 收藏夹id
+     * @return 成功为真，反之为假
+     */
+    boolean remove(Long userID,Long favoriteID);
 }

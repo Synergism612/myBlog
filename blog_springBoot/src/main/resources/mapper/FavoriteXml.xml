@@ -18,9 +18,16 @@
     </resultMap>
 
     <insert id="bundle">
-        INSERT INTO user_favorite(favorite_id,user_id)
-        values (#{favoriteID},#{userID})
+        INSERT INTO user_favorite(favorite_id, user_id)
+        values (#{favoriteID}, #{userID})
     </insert>
+
+    <delete id="unbundled">
+        delete
+        from user_favorite
+        where user_id = #{userID}
+          and favorite_id = #{favoriteID}
+    </delete>
 
     <select id="selectAllFavoriteInformationList"
             resultMap="FavoriteInformationMap">

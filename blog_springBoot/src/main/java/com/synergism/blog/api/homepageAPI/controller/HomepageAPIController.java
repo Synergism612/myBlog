@@ -45,6 +45,8 @@ public class HomepageAPIController {
     //需要登录验证
     @DeleteMapping("collection")
     public Result<String> deleteCollection(@RequestParam Long favoriteID,@RequestParam List<Long>collectionIDList ){
+        if (collectionIDList.size() == 0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏不存在"));
+        if (favoriteID == null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
         return service.deleteCollection(favoriteID,collectionIDList);
     }
 
@@ -65,6 +67,15 @@ public class HomepageAPIController {
     public Result<String> updateFavorite(@RequestBody FavoriteForm favoriteForm){
         if (favoriteForm.getId()==null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
         return service.updateFavorite(favoriteForm);
+    }
+
+
+    //需要登录验证
+    @DeleteMapping("favorite")
+    public Result<String> deleteFavorite(@RequestParam String username,@RequestParam Long favoriteID){
+        if (username.isEmpty()) return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+        if (favoriteID == null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
+        return service.deleteFavorite(username,favoriteID);
     }
 
 }

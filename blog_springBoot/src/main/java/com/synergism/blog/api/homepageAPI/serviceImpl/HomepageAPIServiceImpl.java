@@ -66,4 +66,15 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
     }
 
+    @Override
+    public Result<String> deleteFavorite(String username, Long favoriteID) {
+        long userID = userService.getID(username);
+        if (userID!=-1){
+            return favoriteService.remove(userID,favoriteID)
+                    ?Result.success()
+                    :Result.error(CodeMsg.MESSAGE.fillArgs("删除失败"));
+        }
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+    }
+
 }

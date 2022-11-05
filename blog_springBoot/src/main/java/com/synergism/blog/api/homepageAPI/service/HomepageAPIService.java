@@ -45,4 +45,12 @@ public interface HomepageAPIService {
      * @return 成功
      */
     Result<String> updateFavorite(FavoriteForm favoriteForm);
+
+    /**
+     * 删除收藏夹
+     * @param username 账号
+     * @param favoriteID 收藏夹id
+     * @return
+     */
+    Result<String> deleteFavorite(String username, Long favoriteID);
 }
