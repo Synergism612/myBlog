@@ -22,24 +22,27 @@
           <el-form
             label-position="top"
             label-width="100px"
-            :model="favoriteForm"
+            :model="collectionForm"
             style="max-width: 460px"
           >
             <el-form-item label="标题">
-              <el-input v-model="favoriteForm.title" />
+              <el-input v-model="collectionForm.title" />
             </el-form-item>
             <el-form-item label="地址">
-              <el-input v-model="favoriteForm.href" />
+              <el-input v-model="collectionForm.href" />
             </el-form-item>
             <el-form-item label="摘要">
               <el-input
-                v-model="favoriteForm.synopsis"
+                v-model="collectionForm.synopsis"
                 :rows="2"
                 type="textarea"
               />
             </el-form-item>
             <el-form-item label="收藏夹" prop="region">
-              <el-select v-model="favoriteForm.favoriteID" placeholder="请选择">
+              <el-select
+                v-model="collectionForm.favoriteID"
+                placeholder="请选择"
+              >
                 <el-option label="请选择" :value="0" />
                 <el-option
                   v-for="favorite in favoriteList"
@@ -101,7 +104,7 @@ export default defineComponent({
     const viewData = reactive(new Enshrine());
 
     watchEffect((): void => {
-      viewData.favoriteForm.favoriteID = props.favoriteID || 0;
+      viewData.collectionForm.favoriteID = props.favoriteID || 0;
       viewData.favoriteShow = props.show;
 
       viewData.init(
@@ -120,12 +123,12 @@ export default defineComponent({
     const save = (): void => {
       api
         .saveEnshrineCollection(
-          viewData.favoriteForm.title,
-          viewData.favoriteForm.href,
-          viewData.favoriteForm.synopsis,
-          viewData.favoriteForm.favoriteID === 0
+          viewData.collectionForm.title,
+          viewData.collectionForm.href,
+          viewData.collectionForm.synopsis,
+          viewData.collectionForm.favoriteID === 0
             ? -1
-            : viewData.favoriteForm.favoriteID
+            : viewData.collectionForm.favoriteID
         )
         .then(() => {
           emit("close", false);

@@ -99,7 +99,10 @@
                     <el-col :span="24">
                       <el-tabs v-model="tabsName" class="demo-tabs">
                         <el-tab-pane label="我的收藏" name="first">
-                          <span class="click rotate">
+                          <span
+                            @click="saveFavoriteShow = true"
+                            class="click rotate"
+                          >
                             <font-awesome-icon :icon="['fas', 'plus']" />
                             新建收藏夹
                           </span>
@@ -149,7 +152,7 @@
                                 </span>
                                 <span
                                   @click="
-                                    saveFavorite(true, favoriteInformation.id)
+                                    saveCollection(true, favoriteInformation.id)
                                   "
                                   class="click rotate"
                                 >
@@ -243,12 +246,59 @@
     </div>
     <div>
       <Enshrine
-        @close="saveFavorite"
-        @succeed="saveFavoriteSucceed"
-        v-model:show="saveFavoriteShow"
-        v-model:favoriteID="saveFavoriteID"
+        @close="saveCollection"
+        @succeed="saveCollectionSucceed"
+        v-model:show="saveCollectionShow"
+        v-model:favoriteID="saveCollectionfavoriteID"
         :username="username"
       ></Enshrine>
+    </div>
+    <div>
+      <el-dialog
+        v-model="saveFavoriteShow"
+        :show-close="false"
+        custom-class="favoriteBox"
+        destroy-on-close
+        @close="close"
+      >
+        <template #header>
+          <div class="my-header">
+            <div class="close">
+              <span class="title">添加到收藏夹</span>
+              <span @click="saveFavoriteShow = false" class="click rotate">
+                <font-awesome-icon :icon="['fas', 'times']" />
+              </span>
+            </div>
+          </div>
+        </template>
+        <el-row justify="space-around" align="middle">
+          <el-col :span="24">
+            <el-form
+              label-position="top"
+              label-width="100px"
+              :model="favoriteForm"
+              style="max-width: 460px"
+            >
+              <el-form-item label="名称">
+                <el-input v-model="favoriteForm.name" />
+              </el-form-item>
+              <el-form-item label="注释">
+                <el-input v-model="favoriteForm.annotation" />
+              </el-form-item>
+              <el-form-item label="">
+                <el-radio-group v-model="favoriteForm.ifPrivate">
+                  <el-radio :label="0">公开</el-radio>
+                  <el-radio :label="1">私密</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-form>
+          </el-col>
+          <el-col :span="24" class="button">
+            <span @click="saveFavorite" class="click">添加</span>
+            <span @click="saveFavoriteShow = false" class="click">取消</span>
+          </el-col>
+        </el-row>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -274,12 +324,12 @@ export default defineComponent({
       window.open(href);
     };
 
-    const saveFavorite = (show: boolean, saveFavoriteID: number): void => {
-      viewData.saveFavoriteShow = show;
-      viewData.saveFavoriteID = saveFavoriteID;
+    const saveCollection = (show: boolean, favoriteID: number): void => {
+      viewData.saveCollectionShow = show;
+      viewData.saveCollectionfavoriteID = favoriteID;
     };
 
-    const saveFavoriteSucceed = () => {
+    const saveCollectionSucceed = () => {
       viewData.updateMyFavorite();
     };
 
@@ -287,11 +337,16 @@ export default defineComponent({
       favoriteID: number,
       collectionIDList: Array<number>
     ) => {
-      console.log(collectionIDList);
-
       api.delectCollection(favoriteID, collectionIDList).then(() => {
-        saveFavoriteSucceed();
+        saveCollectionSucceed();
         Message.successMessage("删除成功");
+      });
+    };
+
+    const saveFavorite = () => {
+      api.saveFavorite(viewData.favoriteForm).then(()=>{
+        console.log("你好");
+        
       });
     };
 
@@ -303,9 +358,10 @@ export default defineComponent({
       ...toRefs(viewData),
       close,
       goCollection,
-      saveFavorite,
-      saveFavoriteSucceed,
+      saveCollection,
+      saveCollectionSucceed,
       delectCollection,
+      saveFavorite,
     };
   },
   components: { Menu, Enshrine },

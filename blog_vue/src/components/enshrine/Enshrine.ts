@@ -2,12 +2,12 @@ import { api } from "@/api/api";
 import Favorite from "@/model/favorite/Favorite";
 
 export default class Enshrine {
-  favoriteForm: FavoriteForm;
+  collectionForm: CollectionForm;
   favoriteList: Array<Favorite>;
 
   favoriteShow: boolean;
   constructor() {
-    this.favoriteForm = new FavoriteForm();
+    this.collectionForm = new CollectionForm();
     this.favoriteList = [new Favorite()];
 
     this.favoriteShow = true;
@@ -20,16 +20,16 @@ export default class Enshrine {
     favoriteID: number,
     username: string
   ): void {
-    this.favoriteForm.title = title;
-    this.favoriteForm.href = href;
-    this.favoriteForm.synopsis = synopsis;
-    this.favoriteForm.favoriteID = favoriteID;
+    this.collectionForm.title = title;
+    this.collectionForm.href = href;
+    this.collectionForm.synopsis = synopsis;
+    this.collectionForm.favoriteID = favoriteID;
     api.getEnshrineFavorite(username).then(({ data }) => {
       this.favoriteList = data;
     });
   }
 }
-class FavoriteForm {
+class CollectionForm {
   title: string;
   href: string;
   synopsis: string;

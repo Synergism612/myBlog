@@ -21,17 +21,17 @@
             clearable
           />
         </el-form-item>
-        <el-form-item label="密码" prop="password_first">
+        <el-form-item label="密码" prop="password">
           <el-input
-            v-model="RegisterFrom.password_first"
+            v-model="RegisterFrom.password"
             type="password"
             placeholder="请输入密码"
             clearable
           />
         </el-form-item>
-        <el-form-item label="确认密码" prop="password_agen">
+        <el-form-item label="确认密码" prop="passwordAgen">
           <el-input
-            v-model="RegisterFrom.password_agen"
+            v-model="RegisterFrom.passwordAgen"
             type="password"
             placeholder="请确认密码"
             clearable
@@ -64,6 +64,7 @@ import Menu from "@/components/menu/Menu.vue";
 import StringUtil from "@/utils/StringUtil";
 import Message from "@/utils/MessageUtil";
 import { api } from "@/api/api";
+import RegisterForm from "@/api/entity/RegisterForm";
 
 export default defineComponent({
   setup() {
@@ -95,15 +96,16 @@ export default defineComponent({
       }
       return callback();
     };
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const checkPassword_agen = (rule: any, value: string, callback: any) => {
+      console.log(value);
       if (StringUtil.checkStringIfEmpty(value)) {
         return callback(new Error("不能为空"));
       }
-      if (StringUtil.checkStringIfEmpty(viewData.RegisterFrom.password_first)) {
+      if (StringUtil.checkStringIfEmpty(viewData.RegisterFrom.password)) {
         return callback(new Error("请输入密码"));
       }
-      if (value.indexOf(viewData.RegisterFrom.password_first) === -1) {
+      if (value.localeCompare(viewData.RegisterFrom.password) != 0) {
         return callback(new Error("两次输入不一致"));
       }
 
@@ -111,17 +113,11 @@ export default defineComponent({
     };
 
     const viewData = reactive({
-      RegisterFrom: {
-        username: "",
-        password_first: "",
-        password_agen: "",
-        code: "",
-        key: "",
-      },
+      RegisterFrom: new RegisterForm(),
       rules: {
         username: [{ validator: checkUsername }],
-        password_first: [{ validator: checkPassword }],
-        password_agen: [{ validator: checkPassword_agen }],
+        password: [{ validator: checkPassword }],
+        passwordAgen: [{ validator: checkPassword_agen }],
       },
       hideRequiredAsterisk: false,
       codeButton: {
@@ -172,12 +168,7 @@ export default defineComponent({
       registerFormRef.value
         .validate()
         .then((): void => {
-          api.register(
-            viewData.RegisterFrom.username,
-            viewData.RegisterFrom.password_first,
-            viewData.RegisterFrom.code,
-            viewData.RegisterFrom.key
-          );
+          api.register(viewData.RegisterFrom);
         })
         .catch((): void => {
           Message.errorMessage("校验未通过");

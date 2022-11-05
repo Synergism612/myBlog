@@ -1,9 +1,11 @@
+import FavoriteForm from "@/api/entity/FavoriteForm";
 import axios from "@/axios/axios";
 import { store } from "@/store";
 import AESUtil from "@/utils/AESUtil";
 import RSAUtil from "@/utils/RSAUtil";
 import StringUtil from "@/utils/StringUtil";
 import { AxiosResponse } from "axios";
+import RegisterForm from "./entity/RegisterForm";
 export class api {
   /**
    * 获取公钥接口
@@ -111,21 +113,11 @@ export class api {
    * @param key 验证码密钥
    * @returns Result[String]
    */
-  public static register(
-    username: string,
-    password: string,
-    code: string,
-    key: string
-  ): Promise<AxiosResponse> {
+  public static register(registerForm: RegisterForm): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/user/register",
       method: "post",
-      data: {
-        username: username,
-        password: password,
-        code: code,
-        key: key,
-      },
+      data: registerForm,
     });
   }
 
@@ -446,7 +438,9 @@ export class api {
    * @param username 账号
    * @returns 我的收藏列表
    */
-  public static getFavoriteInformationList(username: string): Promise<AxiosResponse> {
+  public static getFavoriteInformationList(
+    username: string
+  ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "get",
@@ -465,7 +459,6 @@ export class api {
     collectionIDList: Array<number>
   ): Promise<AxiosResponse> {
     console.log(collectionIDList);
-
     return axios({
       url: "/api/blog/homepage/collection",
       method: "delete",
@@ -473,6 +466,21 @@ export class api {
         favoriteID: favoriteID,
         collectionIDList: collectionIDList.toString(),
       },
+    });
+  }
+
+  /**
+   * 个人信息页保存收藏夹接口
+   * @param favoriteForm 收藏夹信息表单
+   * @returns 成功
+   */
+  public static saveFavorite(
+    favoriteForm: FavoriteForm
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/homepage/favorite",
+      method: "post",
+      data: favoriteForm,
     });
   }
 }
