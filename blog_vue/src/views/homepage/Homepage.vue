@@ -341,7 +341,7 @@ export default defineComponent({
       favoriteID: number,
       collectionIDList: Array<number>
     ) => {
-      api.delectCollection(favoriteID, collectionIDList).then(() => {
+      api.deleteHomepageCollection(favoriteID, collectionIDList).then(() => {
         saveCollectionSucceed();
         Message.successMessage("删除成功");
       });
@@ -350,16 +350,14 @@ export default defineComponent({
     const saveFavorite = () => {
       viewData.favoriteForm.username = viewData.username;
       if (viewData.isFavoriteFormEdit) {
-        api.updateFavorite(viewData.favoriteForm).then(() => {
+        api.updateHomepageFavorite(viewData.favoriteForm).then(() => {
           Message.successMessage("更新成功");
-
           viewData.saveFavoriteShow = false;
           viewData.init();
         });
       } else {
-        api.saveFavorite(viewData.favoriteForm).then(() => {
+        api.saveHomepageFavorite(viewData.favoriteForm).then(() => {
           Message.successMessage("添加成功");
-
           viewData.saveFavoriteShow = false;
           viewData.init();
         });
@@ -378,8 +376,12 @@ export default defineComponent({
     };
 
     const deleteFavorite = (favoriteID: number) => {
-      console.log(favoriteID);
-      
+      api
+        .deleteHomepageFavorite(viewData.username, favoriteID)
+        .then((): void => {
+          Message.successMessage("删除成功");
+          viewData.init();
+        });
     };
 
     onMounted(() => {

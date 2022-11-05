@@ -418,7 +418,7 @@ export class api {
    * @param username 账号
    * @returns 我的收藏列表
    */
-  public static getFavoriteInformationList(
+  public static getHomepageFavoriteInformationList(
     username: string
   ): Promise<AxiosResponse> {
     return axios({
@@ -434,7 +434,7 @@ export class api {
    * @param collectionIDList 收藏id列表
    * @returns 成功
    */
-  public static delectCollection(
+  public static deleteHomepageCollection(
     favoriteID: number,
     collectionIDList: Array<number>
   ): Promise<AxiosResponse> {
@@ -454,7 +454,7 @@ export class api {
    * @param favoriteForm 收藏夹信息表单
    * @returns 成功
    */
-  public static saveFavorite(
+  public static saveHomepageFavorite(
     favoriteForm: FavoriteForm
   ): Promise<AxiosResponse> {
     return axios({
@@ -469,11 +469,33 @@ export class api {
    * @param favoriteForm 收藏夹信息表单
    * @returns 成功
    */
-  static updateFavorite(favoriteForm: FavoriteForm): Promise<AxiosResponse> {
+  static updateHomepageFavorite(
+    favoriteForm: FavoriteForm
+  ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "put",
       data: favoriteForm,
+    });
+  }
+
+  /**
+   * 个人信息页删除收藏夹接口
+   * @param username 用户名
+   * @param favoriteID 收藏夹id
+   * @returns 成功
+   */
+  static deleteHomepageFavorite(
+    username: string,
+    favoriteID: number
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/homepage/favorite",
+      method: "delete",
+      params: {
+        username: username,
+        favoriteID: favoriteID,
+      },
     });
   }
 }

@@ -66,7 +66,7 @@ export default class Homepage {
       this.author = data;
       this.userInit();
     });
-    api.getFavoriteInformationList(this.username).then(({ data }) => {
+    api.getHomepageFavoriteInformationList(this.username).then(({ data }) => {
       this.favoriteInformationList = data || [new FavoriteInformation()];
       this.favoriteInformationList.forEach(
         (favoriteInformation: FavoriteInformation) => {
@@ -79,7 +79,7 @@ export default class Homepage {
   }
 
   public updateMyFavorite(): void {
-    api.getFavoriteInformationList(this.username).then(({ data }) => {
+    api.getHomepageFavoriteInformationList(this.username).then(({ data }) => {
       this.favoriteInformationList = data;
     });
   }
