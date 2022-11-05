@@ -23,7 +23,7 @@ export default class Content {
 
   toolBoxShow: boolean;
 
-  favoriteShow: boolean;
+  collectionShow: boolean;
 
   isLogin: boolean;
   username: string;
@@ -43,7 +43,7 @@ export default class Content {
     this.tagNominate = [new ArticleTagNominate()];
 
     this.toolBoxShow = true;
-    this.favoriteShow = false;
+    this.collectionShow = false;
 
     this.username = store.getters.getUser.username;
     this.isLogin = !StringUtil.checkStringIfEmpty(this.username);

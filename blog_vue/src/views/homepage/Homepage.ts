@@ -62,7 +62,7 @@ export default class Homepage {
     if (this.username === "") return;
     api.getHomepageAuthor(this.username).then(({ data }) => {
       this.author = data;
-      this.fromInit();
+      this.userInit();
     });
     api.getFavoriteInformationList(this.username).then(({ data }) => {
       this.favoriteInformationList = data || [new FavoriteInformation()];
@@ -82,11 +82,15 @@ export default class Homepage {
     });
   }
 
-  public fromInit(): void {
+  public userInit(): void {
     this.icon = this.author.icon;
     this.nickname = this.author.nickname;
     this.birthday = this.author.birthday;
     this.sex = this.author.sex;
     this.intro = this.author.intro;
+  }
+
+  public favoriteFormInit(): void {
+    this.favoriteForm = new FavoriteForm();
   }
 }

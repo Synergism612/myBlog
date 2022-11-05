@@ -86,6 +86,48 @@ body {
       color: var(--el-radio-text-color);
     }
   }
+  .el-dialog {
+    width: 20em !important;
+    display: flex;
+    border-radius: 1em !important;
+    flex-direction: column;
+    .close {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .title {
+        font-size: 1.2em;
+      }
+      .click {
+        border: none;
+        font-size: 1.1em;
+      }
+    }
+    .el-row {
+      width: 100%;
+      .button {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+      }
+    }
+    .el-select {
+      width: 100%;
+    }
+    .el-input {
+      --el-select-input-focus-border-color: #3fc4c2;
+      .el-input__wrapper {
+        border: none;
+      }
+      .is-focus {
+        box-shadow: 0 0 0 1px #3fc4c2 inset !important;
+      }
+    }
+    .el-textarea__inner {
+      --el-input-focus-border-color: #3fc4c2;
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
   .el-scrollbar__wrap {
     ul {
       .selected {

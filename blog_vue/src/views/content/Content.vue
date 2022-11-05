@@ -194,7 +194,7 @@
 
     <Enshrine
       @close="myfavorite"
-      v-model:show="favoriteShow"
+      v-model:show="collectionShow"
       :title="article.title"
       :href="href"
       :synopsis="article.synopsis"
@@ -318,7 +318,7 @@ export default defineComponent({
 
     const myfavorite = (show: boolean): void => {
       if (viewData.isLogin) {
-        viewData.favoriteShow = show;
+        viewData.collectionShow = show;
       } else {
         Message.warningMessage("您未登录");
       }

@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-dialog
-      v-model="favoriteShow"
+      v-model="collectionShow"
       :show-close="false"
-      custom-class="favoriteBox"
+      custom-class="collectionBox"
       destroy-on-close
       @close="close"
     >
@@ -65,7 +65,7 @@
 <script lang="ts">
 import { api } from "@/api/api";
 import Message from "@/utils/MessageUtil";
-import { defineComponent, onMounted, reactive, toRefs, watchEffect } from "vue";
+import { defineComponent, reactive, toRefs, watchEffect } from "vue";
 import Enshrine from "./Enshrine";
 
 export default defineComponent({
@@ -105,7 +105,7 @@ export default defineComponent({
 
     watchEffect((): void => {
       viewData.collectionForm.favoriteID = props.favoriteID || 0;
-      viewData.favoriteShow = props.show;
+      viewData.collectionShow = props.show;
 
       viewData.init(
         props.title || "",
@@ -139,6 +139,3 @@ export default defineComponent({
   components: {},
 });
 </script>
-<style lang="less">
-@import url("./Enshrine.less");
-</style>

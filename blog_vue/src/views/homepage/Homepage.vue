@@ -259,12 +259,12 @@
         :show-close="false"
         custom-class="favoriteBox"
         destroy-on-close
-        @close="close"
+        @close="favoriteFormClose"
       >
         <template #header>
           <div class="my-header">
             <div class="close">
-              <span class="title">添加到收藏夹</span>
+              <span class="title">新建收藏夹</span>
               <span @click="saveFavoriteShow = false" class="click rotate">
                 <font-awesome-icon :icon="['fas', 'times']" />
               </span>
@@ -280,10 +280,10 @@
               style="max-width: 460px"
             >
               <el-form-item label="名称">
-                <el-input v-model="favoriteForm.name" />
+                <el-input clearable v-model="favoriteForm.name" />
               </el-form-item>
               <el-form-item label="注释">
-                <el-input v-model="favoriteForm.annotation" />
+                <el-input clearable v-model="favoriteForm.annotation" />
               </el-form-item>
               <el-form-item label="">
                 <el-radio-group v-model="favoriteForm.ifPrivate">
@@ -317,7 +317,7 @@ export default defineComponent({
 
     const close = (): void => {
       viewData.changeShow = true;
-      viewData.fromInit();
+      viewData.userInit();
     };
 
     const goCollection = (href: string): void => {
@@ -346,8 +346,14 @@ export default defineComponent({
     const saveFavorite = () => {
       viewData.favoriteForm.username = viewData.username;
       api.saveFavorite(viewData.favoriteForm).then(() => {
-        console.log("你好");
+        Message.successMessage("添加成功");
+        viewData.saveFavoriteShow = false;
+        viewData.init();
       });
+    };
+
+    const favoriteFormClose = (): void => {
+      viewData.favoriteFormInit();
     };
 
     onMounted(() => {
@@ -362,6 +368,7 @@ export default defineComponent({
       saveCollectionSucceed,
       delectCollection,
       saveFavorite,
+      favoriteFormClose,
     };
   },
   components: { Menu, Enshrine },

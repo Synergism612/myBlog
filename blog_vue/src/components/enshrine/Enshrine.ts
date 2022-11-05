@@ -6,12 +6,12 @@ export default class Enshrine {
   collectionForm: CollectionForm;
   favoriteList: Array<Favorite>;
 
-  favoriteShow: boolean;
+  collectionShow: boolean;
   constructor() {
     this.collectionForm = new CollectionForm();
     this.favoriteList = [new Favorite()];
 
-    this.favoriteShow = true;
+    this.collectionShow = true;
   }
 
   public init(
