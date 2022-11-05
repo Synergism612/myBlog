@@ -4,8 +4,8 @@ export default class Comment {
   likeCount: number;
   rootId: number;
   parentId: number;
-  creationTime: Date;
-  modifyTime: Date;
+  creationTime: string;
+  modifyTime: string;
 
   constructor() {
     this.id = -1;
@@ -13,7 +13,7 @@ export default class Comment {
     this.likeCount = 0;
     this.rootId = -1;
     this.parentId = -1;
-    this.creationTime = new Date();
-    this.modifyTime = new Date();
+    this.creationTime = "";
+    this.modifyTime = "";
   }
 }

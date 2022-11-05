@@ -5,6 +5,7 @@ import AESUtil from "@/utils/AESUtil";
 import RSAUtil from "@/utils/RSAUtil";
 import StringUtil from "@/utils/StringUtil";
 import { AxiosResponse } from "axios";
+import UserInformationForm from "./entity/UserInformationForm";
 import CollectionForm from "./entity/CollectionForm";
 import CommentForm from "./entity/CommentForm";
 import RegisterForm from "./entity/RegisterForm";
@@ -496,6 +497,16 @@ export class api {
         username: username,
         favoriteID: favoriteID,
       },
+    });
+  }
+
+  static updateHomepageUserInformation(
+    userInformationForm: UserInformationForm
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/homepage/userInformation",
+      method: "put",
+      data: userInformationForm,
     });
   }
 }

@@ -1,5 +1,6 @@
 import { api } from "@/api/api";
 import FavoriteForm from "@/api/entity/FavoriteForm";
+import UserInformationForm from "@/api/entity/UserInformationForm";
 import Collection from "@/model/favorite/Collection";
 import FavoriteInformation from "@/model/favorite/FavoriteInformation";
 import Author from "@/model/user/Author";
@@ -13,14 +14,8 @@ export default class Homepage {
   changeShow: boolean;
   //头像
   icon: string;
-  //昵称
-  nickname: string;
-  //生日
-  birthday: Date;
-  //性别代码
-  sex: number;
-  //个人简介
-  intro: string;
+
+  userInformationForm: UserInformationForm;
 
   tabsName: string;
 
@@ -41,10 +36,8 @@ export default class Homepage {
     this.username = store.getters.getUser.username;
     this.changeShow = true;
     this.icon = "";
-    this.nickname = "";
-    this.birthday = new Date();
-    this.sex = 0;
-    this.intro = "";
+
+    this.userInformationForm = new UserInformationForm();
 
     this.tabsName = "first";
     this.collapseName = 0;
@@ -78,6 +71,13 @@ export default class Homepage {
     });
   }
 
+  public updateAuthor(): void {
+    api.getHomepageAuthor(this.username).then(({ data }) => {
+      this.author = data;
+      this.userInit();
+    });
+  }
+
   public updateMyFavorite(): void {
     api.getHomepageFavoriteInformationList(this.username).then(({ data }) => {
       this.favoriteInformationList = data;
@@ -86,10 +86,11 @@ export default class Homepage {
 
   public userInit(): void {
     this.icon = this.author.icon;
-    this.nickname = this.author.nickname;
-    this.birthday = this.author.birthday;
-    this.sex = this.author.sex;
-    this.intro = this.author.intro;
+    this.userInformationForm.username = this.username;
+    this.userInformationForm.nickname = this.author.nickname;
+    this.userInformationForm.birthday = this.author.birthday;
+    this.userInformationForm.sex = this.author.sex;
+    this.userInformationForm.intro = this.author.intro;
   }
 
   public favoriteFormInit(favoriteInformation?: FavoriteInformation): void {

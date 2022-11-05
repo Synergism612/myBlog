@@ -44,27 +44,32 @@
                       <el-col :span="18" class="information nickname">
                         <span>昵称：</span>
                         <el-input
-                          v-model="nickname"
+                          v-model="userInformationForm.nickname"
                           placeholder="请输入昵称"
                           :disabled="changeShow"
                           clearable
                         />
                         <div class="information username">
                           账号：
-                          {{ username }}
+                          {{ userInformationForm.username }}
                         </div>
                         <div class="information birthday">
                           生日：
                           <el-date-picker
-                            v-model="birthday"
+                            v-model="userInformationForm.birthday"
                             type="date"
                             placeholder="请选择"
                             :disabled="changeShow"
+                            format="YYYY/MM/DD"
+                            value-format="YYYY-MM-DD"
                           />
                         </div>
                         <div class="information sex">
                           性别：
-                          <el-radio-group v-model="sex" :disabled="changeShow">
+                          <el-radio-group
+                            v-model="userInformationForm.sex"
+                            :disabled="changeShow"
+                          >
                             <el-radio :label="0">不愿透露</el-radio>
                             <el-radio :label="1">男</el-radio>
                             <el-radio :label="2">女</el-radio>
@@ -73,7 +78,7 @@
                         <div class="information intro">
                           个人简介：
                           <el-input
-                            v-model="intro"
+                            v-model="userInformationForm.intro"
                             :rows="2"
                             type="textarea"
                             placeholder="请输入简介"
@@ -85,10 +90,19 @@
                         </div>
                       </el-col>
                       <el-col :span="24" class="information button">
-                        <span @click="changeShow = false" class="click">
+                        <span
+                          v-if="changeShow"
+                          @click="changeShow = false"
+                          class="click"
+                        >
                           修改信息
                         </span>
-                        <span v-if="!changeShow" class="click">提交修改</span>
+                        <span
+                          v-if="!changeShow"
+                          @click="updateUserInformation"
+                          class="click"
+                          >提交修改</span
+                        >
                         <span v-if="!changeShow" @click="close" class="click">
                           取消修改
                         </span>
@@ -313,6 +327,7 @@ import Enshrine from "@/components/enshrine/Enshrine.vue";
 import Message from "@/utils/MessageUtil";
 import { api } from "@/api/api";
 import FavoriteInformation from "@/model/favorite/FavoriteInformation";
+import UserInformationForm from "@/api/entity/UserInformationForm";
 
 export default defineComponent({
   setup() {
@@ -384,6 +399,16 @@ export default defineComponent({
         });
     };
 
+    const updateUserInformation = (): void => {
+      api
+        .updateHomepageUserInformation(viewData.userInformationForm)
+        .then((): void => {
+          viewData.changeShow = true;
+          viewData.init();
+          Message.successMessage("修改成功");
+        });
+    };
+
     onMounted(() => {
       viewData.init();
     });
@@ -399,6 +424,7 @@ export default defineComponent({
       favoriteFormClose,
       favoriteFormEdit,
       deleteFavorite,
+      updateUserInformation,
     };
   },
   components: { Menu, Enshrine },

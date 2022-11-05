@@ -16,9 +16,9 @@ export default class Article {
   /**是否私有 */
   ifPrivate: number;
   /**创建时间 */
-  creationTime: Date | null;
+  creationTime: string;
   /**修改时间 */
-  modifyTime: Date | null;
+  modifyTime: string;
 
   constructor() {
     this.id = -1;
@@ -29,7 +29,7 @@ export default class Article {
     this.views = 0;
     this.likeCount = 0;
     this.ifPrivate = -1;
-    this.creationTime = null;
-    this.modifyTime = null;
+    this.creationTime = "";
+    this.modifyTime = "";
   }
 }

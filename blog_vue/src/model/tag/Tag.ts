@@ -6,15 +6,15 @@ export default class Tag {
   /**标签介绍 */
   annotation: string;
   /**创建时间 */
-  creationTime: Date;
+  creationTime: string;
   /**修改时间 */
-  modifyTime: Date;
+  modifyTime: string;
 
   constructor() {
     this.id = -1;
     this.name = "";
     this.annotation = "";
-    this.creationTime = new Date();
-    this.modifyTime = new Date();
+    this.creationTime = "";
+    this.modifyTime = "";
   }
 }

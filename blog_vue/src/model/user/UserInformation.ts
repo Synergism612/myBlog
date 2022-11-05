@@ -6,7 +6,7 @@ export default class UserInformation {
   //账号
   username: string;
   //生日
-  birthday: Date;
+  birthday: string;
   //性别代码
   sex: number;
   //性别
@@ -20,7 +20,7 @@ export default class UserInformation {
     icon?: string,
     nickname?: string,
     username?: string,
-    birthday?: Date,
+    birthday?: string,
     sex?: number,
     intro?: string,
     upToNow?: string
@@ -28,7 +28,7 @@ export default class UserInformation {
     this.icon = icon || "";
     this.nickname = nickname || "";
     this.username = username || "";
-    this.birthday = birthday || new Date();
+    this.birthday = birthday || "";
     this.sex = sex || 0;
     this.sexName = "";
     this.intro = intro || "";
