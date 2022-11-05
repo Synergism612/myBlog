@@ -135,20 +135,11 @@
                               </template>
                               <div class="option">
                                 <span
+                                  @click="favoriteFormEdit(favoriteInformation)"
                                   class="click"
-                                  v-if="favoriteInformation.ifPrivate != 1"
                                 >
-                                  <font-awesome-icon :icon="['fas', 'lock']" />
-                                  设为私密
-                                </span>
-                                <span
-                                  class="click"
-                                  v-if="favoriteInformation.ifPrivate === 1"
-                                >
-                                  <font-awesome-icon
-                                    :icon="['fas', 'unlock']"
-                                  />
-                                  设为公开
+                                  <font-awesome-icon :icon="['fas', 'edit']" />
+                                  编辑
                                 </span>
                                 <span
                                   @click="
@@ -159,12 +150,17 @@
                                   <font-awesome-icon :icon="['fas', 'plus']" />
                                   添加新的收藏
                                 </span>
-                                <span class="click">
+                                <span
+                                  @click="
+                                    deleteFavorite(favoriteInformation.id)
+                                  "
+                                  class="click"
+                                >
                                   <font-awesome-icon :icon="['fas', 'trash']" />
                                   删除该收藏夹
                                 </span>
                               </div>
-                              <el-row :gutter="20">
+                              <el-row>
                                 <el-col
                                   :span="24"
                                   v-if="
@@ -174,7 +170,8 @@
                                 >
                                   收藏夹为空
                                 </el-col>
-                                <div
+                                <el-row
+                                  :gutter="20"
                                   v-if="
                                     favoriteInformation.collectionList[0].id !=
                                     -1
@@ -201,11 +198,13 @@
                                       </span>
                                     </div>
                                     <div>
-                                      链接：
                                       <span
                                         @click="goCollection(collection.href)"
                                         class="click"
                                       >
+                                        <font-awesome-icon
+                                          :icon="['fas', 'external-link-alt']"
+                                        />
                                         {{ collection.href }}
                                       </span>
                                     </div>
@@ -219,11 +218,15 @@
                                         "
                                         class="click"
                                       >
+                                        <font-awesome-icon
+                                          :icon="['fas', 'minus']"
+                                        />
+
                                         删除
                                       </span>
                                     </div>
                                   </el-col>
-                                </div>
+                                </el-row>
                               </el-row>
                             </el-collapse-item>
                           </el-collapse>
@@ -294,7 +297,7 @@
             </el-form>
           </el-col>
           <el-col :span="24" class="button">
-            <span @click="saveFavorite" class="click">添加</span>
+            <span @click="saveFavorite" class="click">提交</span>
             <span @click="saveFavoriteShow = false" class="click">取消</span>
           </el-col>
         </el-row>
@@ -309,6 +312,7 @@ import Homepage from "./Homepage";
 import Enshrine from "@/components/enshrine/Enshrine.vue";
 import Message from "@/utils/MessageUtil";
 import { api } from "@/api/api";
+import FavoriteInformation from "@/model/favorite/FavoriteInformation";
 
 export default defineComponent({
   setup() {
@@ -345,15 +349,37 @@ export default defineComponent({
 
     const saveFavorite = () => {
       viewData.favoriteForm.username = viewData.username;
-      api.saveFavorite(viewData.favoriteForm).then(() => {
-        Message.successMessage("添加成功");
-        viewData.saveFavoriteShow = false;
-        viewData.init();
-      });
+      if (viewData.isFavoriteFormEdit) {
+        api.updateFavorite(viewData.favoriteForm).then(() => {
+          Message.successMessage("更新成功");
+
+          viewData.saveFavoriteShow = false;
+          viewData.init();
+        });
+      } else {
+        api.saveFavorite(viewData.favoriteForm).then(() => {
+          Message.successMessage("添加成功");
+
+          viewData.saveFavoriteShow = false;
+          viewData.init();
+        });
+      }
     };
 
     const favoriteFormClose = (): void => {
       viewData.favoriteFormInit();
+    };
+
+    const favoriteFormEdit = (
+      favoriteInformation: FavoriteInformation
+    ): void => {
+      viewData.saveFavoriteShow = true;
+      viewData.favoriteFormInit(favoriteInformation);
+    };
+
+    const deleteFavorite = (favoriteID: number) => {
+      console.log(favoriteID);
+      
     };
 
     onMounted(() => {
@@ -369,6 +395,8 @@ export default defineComponent({
       delectCollection,
       saveFavorite,
       favoriteFormClose,
+      favoriteFormEdit,
+      deleteFavorite,
     };
   },
   components: { Menu, Enshrine },

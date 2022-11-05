@@ -396,7 +396,7 @@ export class api {
     return axios({
       url: "/api/blog/enshrine/collection",
       method: "post",
-      data: collectionForm
+      data: collectionForm,
     });
   }
 
@@ -460,6 +460,19 @@ export class api {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "post",
+      data: favoriteForm,
+    });
+  }
+
+  /**
+   * 个人信息页更新收藏夹接口
+   * @param favoriteForm 收藏夹信息表单
+   * @returns 成功
+   */
+  static updateFavorite(favoriteForm: FavoriteForm): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/homepage/favorite",
+      method: "put",
       data: favoriteForm,
     });
   }

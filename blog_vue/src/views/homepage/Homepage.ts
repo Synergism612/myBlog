@@ -34,6 +34,7 @@ export default class Homepage {
 
   saveFavoriteShow: boolean;
   favoriteForm: FavoriteForm;
+  isFavoriteFormEdit: boolean;
 
   constructor() {
     this.author = new Author();
@@ -56,6 +57,7 @@ export default class Homepage {
 
     this.saveFavoriteShow = false;
     this.favoriteForm = new FavoriteForm();
+    this.isFavoriteFormEdit = false;
   }
 
   public init(): void {
@@ -90,7 +92,16 @@ export default class Homepage {
     this.intro = this.author.intro;
   }
 
-  public favoriteFormInit(): void {
-    this.favoriteForm = new FavoriteForm();
+  public favoriteFormInit(favoriteInformation?: FavoriteInformation): void {
+    if (favoriteInformation) {
+      this.isFavoriteFormEdit = true;
+      this.favoriteForm.id = favoriteInformation.id;
+      this.favoriteForm.name = favoriteInformation.name;
+      this.favoriteForm.annotation = favoriteInformation.annotation;
+      this.favoriteForm.ifPrivate = favoriteInformation.ifPrivate;
+    } else {
+      this.isFavoriteFormEdit = false;
+      this.favoriteForm = new FavoriteForm();
+    }
   }
 }

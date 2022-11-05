@@ -1,4 +1,6 @@
 export default class FavoriteForm {
+  /**主键 */
+  id: number;
   /**收藏夹名称 */
   name: string;
   /**收藏夹注释 */
@@ -8,6 +10,7 @@ export default class FavoriteForm {
   /**账号 */
   username: string;
   constructor() {
+    this.id = -1;
     this.name = "";
     this.annotation = "";
     this.ifPrivate = 0;
