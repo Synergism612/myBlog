@@ -187,6 +187,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     @Override
     public Map<String, String[]> getParameterMap() {
         Map<String, String[]> results = new HashMap<>();
+        if (params==null){
+            return results;
+        }
         params.forEach((key, object) -> {
             if (object instanceof Integer) {
                 results.put(key, new String[]{String.valueOf((int) object)});
