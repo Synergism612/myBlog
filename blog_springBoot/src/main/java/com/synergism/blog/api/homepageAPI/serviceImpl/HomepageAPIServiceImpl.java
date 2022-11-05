@@ -1,7 +1,6 @@
 package com.synergism.blog.api.homepageAPI.serviceImpl;
 
 import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
-import com.synergism.blog.api.homepageAPI.entity.MyFavorite;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.favorite.service.FavoriteService;
 import com.synergism.blog.core.user.entity.Author;

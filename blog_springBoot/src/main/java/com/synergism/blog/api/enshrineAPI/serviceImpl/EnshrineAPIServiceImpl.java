@@ -1,6 +1,6 @@
 package com.synergism.blog.api.enshrineAPI.serviceImpl;
 
-import com.synergism.blog.api.enshrineAPI.entity.AddCollection;
+import com.synergism.blog.api.enshrineAPI.entity.CollectionForm;
 import com.synergism.blog.api.enshrineAPI.service.EnshrineAPIService;
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.synergism.blog.core.favorite.service.FavoriteService;
@@ -29,7 +29,7 @@ public class EnshrineAPIServiceImpl implements EnshrineAPIService {
     }
 
     @Override
-    public Result<String> saveCollection(AddCollection addCollection) {
+    public Result<String> saveCollection(CollectionForm addCollection) {
         if (!favoriteService.isExist(addCollection.getFavoriteID()))
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("不存在该收藏夹"));
         if (favoriteService.isExist(addCollection.getFavoriteID(), addCollection.getHref()))

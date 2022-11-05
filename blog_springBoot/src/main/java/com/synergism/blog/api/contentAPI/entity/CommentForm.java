@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class AddComment {
+public class CommentForm {
     private String username;
     private String comment;
     private Long articleID;

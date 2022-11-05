@@ -1,6 +1,6 @@
 package com.synergism.blog.api.contentAPI.service;
 
-import com.synergism.blog.api.contentAPI.entity.AddComment;
+import com.synergism.blog.api.contentAPI.entity.CommentForm;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleTagNominate;
 import com.synergism.blog.core.classify.entity.Classify;
@@ -64,8 +64,8 @@ public interface ContentAPIService {
 
     /**
      * 保存新的评论
-     * @param addComment 评论信息
+     * @param commentForm 评论信息
      * @return 成功
      */
-    Result<String> saveComment(AddComment addComment);
+    Result<String> saveComment(CommentForm commentForm);
 }

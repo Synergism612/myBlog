@@ -1,6 +1,6 @@
 package com.synergism.blog.api.enshrineAPI.service;
 
-import com.synergism.blog.api.enshrineAPI.entity.AddCollection;
+import com.synergism.blog.api.enshrineAPI.entity.CollectionForm;
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.synergism.blog.result.Result;
 
@@ -16,8 +16,8 @@ public interface EnshrineAPIService {
     Result<List<Favorite>> getFavorite(String username);
     /**
      * 添加新的收藏
-     * @param addCollection 收藏信息
+     * @param collectionForm 收藏信息
      * @return 成功
      */
-    Result<String> saveCollection(AddCollection addCollection);
+    Result<String> saveCollection(CollectionForm collectionForm);
 }

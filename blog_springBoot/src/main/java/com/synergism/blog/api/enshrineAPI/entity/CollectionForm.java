@@ -8,7 +8,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class AddCollection {
+public class CollectionForm {
     private String title;
     private String href;
     private String synopsis;

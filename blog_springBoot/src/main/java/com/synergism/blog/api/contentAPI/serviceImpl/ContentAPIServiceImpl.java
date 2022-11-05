@@ -1,6 +1,6 @@
 package com.synergism.blog.api.contentAPI.serviceImpl;
 
-import com.synergism.blog.api.contentAPI.entity.AddComment;
+import com.synergism.blog.api.contentAPI.entity.CommentForm;
 import com.synergism.blog.api.contentAPI.service.ContentAPIService;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleTagNominate;
@@ -75,20 +75,20 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     }
 
     @Override
-    public Result<String> saveComment(AddComment addComment) {
-        if (StringUtil.isEmpty(addComment.getComment())){
+    public Result<String> saveComment(CommentForm commentForm) {
+        if (StringUtil.isEmpty(commentForm.getComment())){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论不能为空"));
         }
-        long userID = userService.getID(addComment.getUsername());
+        long userID = userService.getID(commentForm.getUsername());
         if (userID==-1){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到用户"));
         }
-        if (!articleService.isExist(addComment.getArticleID())) {
+        if (!articleService.isExist(commentForm.getArticleID())) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到文章"));
         }
-        if (addComment.getRootID() == null || commentService.isExist(addComment.getRootID())) {
-            if (addComment.getParentID() == null || commentService.isExist(addComment.getParentID())) {
-                return commentService.save(addComment.getComment(),addComment.getRootID(),addComment.getParentID(), addComment.getArticleID(),userID)
+        if (commentForm.getRootID() == null || commentService.isExist(commentForm.getRootID())) {
+            if (commentForm.getParentID() == null || commentService.isExist(commentForm.getParentID())) {
+                return commentService.save(commentForm.getComment(), commentForm.getRootID(), commentForm.getParentID(), commentForm.getArticleID(),userID)
                         ?Result.success()
                         :Result.error(CodeMsg.BIND_ERROR.fillArgs("评论失败"));
             }

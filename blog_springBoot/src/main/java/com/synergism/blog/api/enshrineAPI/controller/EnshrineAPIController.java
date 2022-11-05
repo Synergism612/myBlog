@@ -1,9 +1,8 @@
 package com.synergism.blog.api.enshrineAPI.controller;
 
-import com.synergism.blog.api.enshrineAPI.entity.AddCollection;
+import com.synergism.blog.api.enshrineAPI.entity.CollectionForm;
 import com.synergism.blog.api.enshrineAPI.service.EnshrineAPIService;
 import com.synergism.blog.core.favorite.entity.Favorite;
-import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,16 +38,16 @@ public class EnshrineAPIController {
 
     /**
      * 收藏添加保存接口
-     * @param addCollection 收藏信息
+     * @param collectionForm 收藏信息
      * @return 成功
      */
     //需要登录验证
     @PostMapping("collection")
-    public Result<String> saveCollection(@RequestBody AddCollection addCollection){
-        if (addCollection.getFavoriteID()==-1){
+    public Result<String> saveCollection(@RequestBody CollectionForm collectionForm){
+        if (collectionForm.getFavoriteID()==-1){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不能为空"));
         }
-        return service.saveCollection(addCollection);
+        return service.saveCollection(collectionForm);
     }
 
 }

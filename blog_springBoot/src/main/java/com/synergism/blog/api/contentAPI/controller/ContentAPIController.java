@@ -1,7 +1,7 @@
 package com.synergism.blog.api.contentAPI.controller;
 
 
-import com.synergism.blog.api.contentAPI.entity.AddComment;
+import com.synergism.blog.api.contentAPI.entity.CommentForm;
 import com.synergism.blog.api.contentAPI.service.ContentAPIService;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleTagNominate;
@@ -96,15 +96,15 @@ public class ContentAPIController {
 
     /**
      * 内容页新增评论接口
-     * @param addComment 评论信息
+     * @param commentForm 评论信息
      * @return 成功
      */
     //需要登录验证
     @PostMapping("comment")
-    public Result<String> saveComment(@RequestBody AddComment addComment){
-        if (addComment.getArticleID()<=0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论错误"));
-        if (addComment.getRootID()==-1)addComment.setRootID(null);
-        if (addComment.getParentID()==-1)addComment.setParentID(null);
-        return service.saveComment(addComment);
+    public Result<String> saveComment(@RequestBody CommentForm commentForm){
+        if (commentForm.getArticleID()<=0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论错误"));
+        if (commentForm.getRootID()==-1) commentForm.setRootID(null);
+        if (commentForm.getParentID()==-1) commentForm.setParentID(null);
+        return service.saveComment(commentForm);
     }
 }
