@@ -53,6 +53,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     public boolean save(String title, String href, String synopsis, Long favoriteID) {
         Collection collection = new Collection(title, href, synopsis);
         collectionMapper.insert(collection);
+        if (collection.getId()==null) return false;
         long collectionID = collection.getId();
         try {
             collectionMapper.bundle(collectionID, favoriteID);
@@ -83,6 +84,21 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     public List<Favorite> getListByUsername(String username) {
         List<Favorite> result = mapper.selectListByUsername(username);
         return result.size() == 0 ? null : result;
+    }
+
+    @Override
+    public boolean save(String name, String annotation, Integer ifPrivate, Long userID) {
+        Favorite favorite = new Favorite(name,annotation,ifPrivate);
+        mapper.insert(favorite);
+        if (favorite.getId()==null) return false;
+        long favoriteID = favorite.getId();
+        try {
+            mapper.bundle(favoriteID, userID);
+            return true;
+        } catch (Exception e) {
+            mapper.delete(new LambdaQueryWrapper<Favorite>().eq(Favorite::getId, favoriteID));
+        }
+        return false;
     }
 
 }

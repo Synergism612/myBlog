@@ -18,8 +18,8 @@
     </resultMap>
 
     <insert id="bundle">
-        INSERT INTO user_favorite(user_id, favorite_id)
-        values (#{userID}, #{favoriteID})
+        INSERT INTO user_favorite(favorite_id,user_id)
+        values (#{favoriteID},#{userID})
     </insert>
 
     <select id="selectAllFavoriteInformationList"

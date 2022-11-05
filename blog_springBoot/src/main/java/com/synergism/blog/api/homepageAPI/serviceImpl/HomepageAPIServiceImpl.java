@@ -46,7 +46,13 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
 
     @Override
     public Result<String> saveFavorite(FavoriteForm favoriteForm) {
-        return null;
+        long userID = userService.getID(favoriteForm.getUsername());
+        if (userID==-1){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("账号错误"));
+        }
+        return favoriteService.save(favoriteForm.getName(),favoriteForm.getAnnotation(),favoriteForm.getIfPrivate(),userID)
+                ?Result.success()
+                :Result.error(CodeMsg.MESSAGE.fillArgs("添加失败"));
     }
 
 }

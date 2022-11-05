@@ -38,4 +38,12 @@ public class Favorite {
     @ApiModelProperty("私有  0-公开 1-私有")
     @TableField("if_private")
     private Integer ifPrivate;
+
+    public Favorite(){}
+
+    public Favorite(String name, String annotation, Integer ifPrivate) {
+        this.name = name;
+        this.annotation = annotation;
+        this.ifPrivate = ifPrivate;
+    }
 }

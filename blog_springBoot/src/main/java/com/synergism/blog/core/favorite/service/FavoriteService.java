@@ -3,6 +3,7 @@ package com.synergism.blog.core.favorite.service;
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
+import com.synergism.blog.result.Result;
 
 import java.util.List;
 
@@ -63,9 +64,19 @@ public interface FavoriteService extends IService<Favorite> {
     boolean remove(Long favoriteID, List<Long> collectionIDList);
 
     /**
-     *
-     * @param username
-     * @return
+     * 获取用户的收藏夹信息
+     * @param username 账号
+     * @return 收藏夹信息列表
      */
     List<Favorite> getListByUsername(String username);
+
+    /**
+     * 保存新的收藏夹
+     * @param name 收藏夹名称
+     * @param annotation 注释
+     * @param ifPrivate 公开/私密
+     * @param userID 用户id
+     * @return 成功为真，反之为假
+     */
+    boolean save(String name, String annotation, Integer ifPrivate, Long userID);
 }

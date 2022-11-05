@@ -21,7 +21,7 @@ public interface FavoriteMapper extends BaseMapper<Favorite> {
 
     List<Favorite> selectListByUsername(String username);
 
-    void bundle(long userID, long favoriteID);
+    void bundle(long favoriteID,long userID);
 
     List<FavoriteInformation> selectAllFavoriteInformationList();
 
