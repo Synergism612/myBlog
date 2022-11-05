@@ -36,6 +36,6 @@ public class EnshrineAPIServiceImpl implements EnshrineAPIService {
             return Result.error(CodeMsg.MESSAGE.fillArgs("您已收藏"));
         return favoriteService.save(addCollection.getTitle(), addCollection.getHref(), addCollection.getSynopsis(), addCollection.getFavoriteID())
                 ? Result.success()
-                : Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹错误"));
+                : Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏失败"));
     }
 }
