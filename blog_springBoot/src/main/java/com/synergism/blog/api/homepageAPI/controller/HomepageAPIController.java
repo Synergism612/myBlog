@@ -4,6 +4,7 @@ import com.synergism.blog.api.homepageAPI.entity.FavoriteForm;
 import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.user.entity.Author;
+import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +58,13 @@ public class HomepageAPIController {
     @PostMapping("favorite")
     public Result<String> saveFavorite(@RequestBody FavoriteForm favoriteForm){
         return service.saveFavorite(favoriteForm);
+    }
+
+    //需要登录验证
+    @PutMapping("favorite")
+    public Result<String> updateFavorite(@RequestBody FavoriteForm favoriteForm){
+        if (favoriteForm.getId()==null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
+        return service.updateFavorite(favoriteForm);
     }
 
 }

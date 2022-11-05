@@ -35,7 +35,14 @@ public interface HomepageAPIService {
     /**
      * 保存新的收藏夹
      * @param favoriteForm 收藏夹信息表单
-     * @return
+     * @return 成功
      */
     Result<String> saveFavorite(FavoriteForm favoriteForm);
+
+    /**
+     * 更新收藏夹
+     * @param favoriteForm 收藏夹信息表单
+     * @return 成功
+     */
+    Result<String> updateFavorite(FavoriteForm favoriteForm);
 }

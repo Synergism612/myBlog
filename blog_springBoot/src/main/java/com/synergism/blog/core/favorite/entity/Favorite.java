@@ -41,7 +41,8 @@ public class Favorite {
 
     public Favorite(){}
 
-    public Favorite(String name, String annotation, Integer ifPrivate) {
+    public Favorite(Long id ,String name, String annotation, Integer ifPrivate) {
+        this.id = id;
         this.name = name;
         this.annotation = annotation;
         this.ifPrivate = ifPrivate;

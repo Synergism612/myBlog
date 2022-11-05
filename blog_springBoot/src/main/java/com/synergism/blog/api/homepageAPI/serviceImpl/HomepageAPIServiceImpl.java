@@ -2,6 +2,7 @@ package com.synergism.blog.api.homepageAPI.serviceImpl;
 
 import com.synergism.blog.api.homepageAPI.entity.FavoriteForm;
 import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
+import com.synergism.blog.core.favorite.entity.Favorite;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.favorite.service.FavoriteService;
 import com.synergism.blog.core.user.entity.Author;
@@ -53,6 +54,16 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
         return favoriteService.save(favoriteForm.getName(),favoriteForm.getAnnotation(),favoriteForm.getIfPrivate(),userID)
                 ?Result.success()
                 :Result.error(CodeMsg.MESSAGE.fillArgs("添加失败"));
+    }
+
+    @Override
+    public Result<String> updateFavorite(FavoriteForm favoriteForm) {
+        if (favoriteService.isExist(favoriteForm.getId())){
+            return favoriteService.updateById(new Favorite(favoriteForm.getId(),favoriteForm.getName(),favoriteForm.getAnnotation(),favoriteForm.getIfPrivate()))
+                    ?Result.success()
+                    :Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
+        }
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
     }
 
 }

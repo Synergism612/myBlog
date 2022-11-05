@@ -88,7 +88,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 
     @Override
     public boolean save(String name, String annotation, Integer ifPrivate, Long userID) {
-        Favorite favorite = new Favorite(name,annotation,ifPrivate);
+        Favorite favorite = new Favorite(null,name,annotation,ifPrivate);
         mapper.insert(favorite);
         if (favorite.getId()==null) return false;
         long favoriteID = favorite.getId();

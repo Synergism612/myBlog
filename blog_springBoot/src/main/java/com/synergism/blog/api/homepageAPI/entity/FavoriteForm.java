@@ -6,10 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FavoriteForm {
-
     //账号
     private String username;
-    //分组名称
+    //主键
+    private Long id;
+    //名称
     private String name;
     //注释
     private String annotation;
