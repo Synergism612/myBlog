@@ -9,21 +9,21 @@
         ref="registerFormRef"
         label-position="top"
         label-width="0px"
-        :model="RegisterFrom"
+        :model="registerFrom"
         :rules="rules"
         style="max-width: 100%"
         :hide-required-asterisk="hideRequiredAsterisk"
       >
         <el-form-item label="邮箱" prop="username">
           <el-input
-            v-model="RegisterFrom.username"
+            v-model="registerFrom.username"
             placeholder="请输入邮箱"
             clearable
           />
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input
-            v-model="RegisterFrom.password"
+            v-model="registerFrom.password"
             type="password"
             placeholder="请输入密码"
             clearable
@@ -31,7 +31,7 @@
         </el-form-item>
         <el-form-item label="确认密码" prop="passwordAgen">
           <el-input
-            v-model="RegisterFrom.passwordAgen"
+            v-model="registerFrom.passwordAgen"
             type="password"
             placeholder="请确认密码"
             clearable
@@ -39,7 +39,7 @@
         </el-form-item>
         <el-form-item label="验证码" prop="code" id="security_code">
           <el-input
-            v-model="RegisterFrom.code"
+            v-model="registerFrom.code"
             placeholder="请输入验证码"
             clearable
           />
@@ -101,10 +101,10 @@ export default defineComponent({
       if (StringUtil.checkStringIfEmpty(value)) {
         return callback(new Error("不能为空"));
       }
-      if (StringUtil.checkStringIfEmpty(viewData.RegisterFrom.password)) {
+      if (StringUtil.checkStringIfEmpty(viewData.registerFrom.password)) {
         return callback(new Error("请输入密码"));
       }
-      if (value.localeCompare(viewData.RegisterFrom.password) != 0) {
+      if (value.localeCompare(viewData.registerFrom.password) != 0) {
         return callback(new Error("两次输入不一致"));
       }
 
@@ -112,7 +112,7 @@ export default defineComponent({
     };
 
     const viewData = reactive({
-      RegisterFrom: new RegisterForm(),
+      registerFrom: new RegisterForm(),
       rules: {
         username: [{ validator: checkUsername }],
         password: [{ validator: checkPassword }],
@@ -151,11 +151,11 @@ export default defineComponent({
           // 注册请求
           api
             .getSecurityCode(
-              viewData.RegisterFrom.username,
-              viewData.RegisterFrom.key
+              viewData.registerFrom.username,
+              viewData.registerFrom.key
             )
             .then(({ data }) => {
-              viewData.RegisterFrom.key = data;
+              viewData.registerFrom.key = data;
             });
         })
         .catch((): void => {
@@ -167,7 +167,7 @@ export default defineComponent({
       registerFormRef.value
         .validate()
         .then((): void => {
-          api.register(viewData.RegisterFrom);
+          api.register(viewData.registerFrom);
         })
         .catch((): void => {
           Message.errorMessage("校验未通过");
