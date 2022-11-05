@@ -344,9 +344,9 @@ export default defineComponent({
     };
 
     const saveFavorite = () => {
-      api.saveFavorite(viewData.favoriteForm).then(()=>{
+      viewData.favoriteForm.username = viewData.username;
+      api.saveFavorite(viewData.favoriteForm).then(() => {
         console.log("你好");
-        
       });
     };
 

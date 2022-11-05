@@ -126,7 +126,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     /**数据仓初始化 */
-    const viewData = reactive(new Forum());
+    const viewData = reactive(new Forum(props.articleID));
 
     /**新的评论函数 */
     const saveComment = (): void => {
@@ -135,19 +135,11 @@ export default defineComponent({
           Message.warningMessage("评论校验未通过");
           return;
         }
-        api
-          .saveComment(
-            viewData.userInfo.username,
-            viewData.commentInput,
-            props.articleID,
-            viewData.rootID,
-            viewData.parentID
-          )
-          .then((): void => {
-            viewData.commentInput = "";
-            Message.successMessage("评论成功");
-            viewData.init(props.articleID);
-          });
+        api.saveContentComment(viewData.getCommentForm()).then((): void => {
+          viewData.commentInput = "";
+          Message.successMessage("评论成功");
+          viewData.init();
+        });
       } else {
         Message.warningMessage("您未登录");
       }
@@ -187,7 +179,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      viewData.init(props.articleID);
+      viewData.init();
     });
 
     return {

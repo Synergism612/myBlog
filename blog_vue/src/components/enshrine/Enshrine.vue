@@ -121,20 +121,14 @@ export default defineComponent({
     };
 
     const save = (): void => {
-      api
-        .saveEnshrineCollection(
-          viewData.collectionForm.title,
-          viewData.collectionForm.href,
-          viewData.collectionForm.synopsis,
-          viewData.collectionForm.favoriteID === 0
-            ? -1
-            : viewData.collectionForm.favoriteID
-        )
-        .then(() => {
-          emit("close", false);
-          emit("succeed", true);
-          Message.successMessage("成功添加");
-        });
+      if (viewData.collectionForm.favoriteID === 0) {
+        viewData.collectionForm.favoriteID = -1;
+      }
+      api.saveEnshrineCollection(viewData.collectionForm).then(() => {
+        emit("close", false);
+        emit("succeed", true);
+        Message.successMessage("成功添加");
+      });
     };
     return {
       ...toRefs(viewData),

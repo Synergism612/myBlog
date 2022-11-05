@@ -96,7 +96,6 @@ export default defineComponent({
           viewData.articleInformationList = data.articleInformationList;
           viewData.total = data.total;
           viewData.refresh = true;
-          console.log(viewData);
         });
     };
 

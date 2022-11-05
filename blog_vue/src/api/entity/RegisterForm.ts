@@ -4,7 +4,7 @@ export default class RegisterForm {
   /**密码 */
   password: string;
   /**二次输入密码 */
-  passwordAgen:string;
+  passwordAgen: string;
   /**验证码 */
   code: string;
   /**验证码密钥 */

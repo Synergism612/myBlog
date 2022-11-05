@@ -5,6 +5,8 @@ import AESUtil from "@/utils/AESUtil";
 import RSAUtil from "@/utils/RSAUtil";
 import StringUtil from "@/utils/StringUtil";
 import { AxiosResponse } from "axios";
+import CollectionForm from "./entity/CollectionForm";
+import CommentForm from "./entity/CommentForm";
 import RegisterForm from "./entity/RegisterForm";
 export class api {
   /**
@@ -306,30 +308,16 @@ export class api {
 
   /**
    * 内容页新的评论接口
-   * @param username 用户名
-   * @param comment 评论内容
-   * @param articleID 文章id
-   * @param rootID 根评论id
-   * @param parentID 父评论id
+   * @param commentForm 评论信息表单
    * @returns Result[String]
    */
-  public static saveComment(
-    username: string,
-    comment: string,
-    articleID: number,
-    rootID: number,
-    parentID: number
+  public static saveContentComment(
+    commentForm: CommentForm
   ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/content/comment",
       method: "post",
-      data: {
-        username: username,
-        comment: comment,
-        articleID: articleID,
-        rootID: rootID,
-        parentID: parentID,
-      },
+      data: commentForm,
     });
   }
 
@@ -403,20 +391,12 @@ export class api {
    * @returns Result[String]
    */
   public static saveEnshrineCollection(
-    title: string,
-    href: string,
-    synopsis: string,
-    favoriteID: number
+    collectionForm: CollectionForm
   ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/enshrine/collection",
       method: "post",
-      data: {
-        title: title,
-        href: href,
-        synopsis: synopsis,
-        favoriteID: favoriteID,
-      },
+      data: collectionForm
     });
   }
 

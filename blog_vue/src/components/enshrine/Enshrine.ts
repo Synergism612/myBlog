@@ -1,4 +1,5 @@
 import { api } from "@/api/api";
+import CollectionForm from "@/api/entity/CollectionForm";
 import Favorite from "@/model/favorite/Favorite";
 
 export default class Enshrine {
@@ -27,18 +28,5 @@ export default class Enshrine {
     api.getEnshrineFavorite(username).then(({ data }) => {
       this.favoriteList = data;
     });
-  }
-}
-class CollectionForm {
-  title: string;
-  href: string;
-  synopsis: string;
-  favoriteID: number;
-
-  constructor() {
-    this.title = "";
-    this.href = "";
-    this.synopsis = "";
-    this.favoriteID = 0;
   }
 }

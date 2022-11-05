@@ -98,7 +98,6 @@ export default defineComponent({
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const checkPassword_agen = (rule: any, value: string, callback: any) => {
-      console.log(value);
       if (StringUtil.checkStringIfEmpty(value)) {
         return callback(new Error("不能为空"));
       }

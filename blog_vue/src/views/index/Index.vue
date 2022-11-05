@@ -110,7 +110,6 @@ export default defineComponent({
 
     const router = useRouter();
     const classifyClick = (id: number): void => {
-      console.log("传递了" + id);
       router.push({
         name: "Pandect",
         params: {
