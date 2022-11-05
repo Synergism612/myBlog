@@ -55,7 +55,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         collectionMapper.insert(collection);
         long collectionID = collection.getId();
         try {
-            collectionMapper.bundle(favoriteID, collectionID);
+            collectionMapper.bundle(collectionID, favoriteID);
             return true;
         } catch (Exception e) {
             collectionMapper.delete(new LambdaQueryWrapper<Collection>().eq(Collection::getId, collectionID));
@@ -65,7 +65,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 
     @Override
     public boolean isExist(Long favoriteID, String href) {
-        return mapper.selectCollectionInFavoriteHref(favoriteID,href)!=null;
+        return mapper.selectCollectionInFavoriteHref(favoriteID, href) != null;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     @Override
     public List<Favorite> getListByUsername(String username) {
         List<Favorite> result = mapper.selectListByUsername(username);
-        return result.size()==0?null:result;
+        return result.size() == 0 ? null : result;
     }
 
 }

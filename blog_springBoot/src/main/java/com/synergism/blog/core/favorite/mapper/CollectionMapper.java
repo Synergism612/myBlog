@@ -21,7 +21,7 @@ public interface CollectionMapper extends BaseMapper<Collection> {
      * @param collectionID 收藏id
      * @param favoriteID 收藏夹id
      */
-    void bundle( long collectionID,Long favoriteID);
+    void bundle( Long collectionID,Long favoriteID);
 
     /**
      * 解绑收藏
