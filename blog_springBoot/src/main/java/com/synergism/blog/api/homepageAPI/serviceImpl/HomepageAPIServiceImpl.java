@@ -1,5 +1,6 @@
 package com.synergism.blog.api.homepageAPI.serviceImpl;
 
+import com.synergism.blog.api.homepageAPI.entity.FavoriteForm;
 import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.favorite.service.FavoriteService;
@@ -41,6 +42,11 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
     @Override
     public Result<String> deleteCollection(Long favoriteID, List<Long> collectionIDList) {
         return favoriteService.remove(favoriteID, collectionIDList) ? Result.success() : Result.error(CodeMsg.MESSAGE.fillArgs("删除失败"));
+    }
+
+    @Override
+    public Result<String> saveFavorite(FavoriteForm favoriteForm) {
+        return null;
     }
 
 }

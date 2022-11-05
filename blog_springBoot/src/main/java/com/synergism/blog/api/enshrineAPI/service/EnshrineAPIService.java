@@ -15,8 +15,8 @@ public interface EnshrineAPIService {
      */
     Result<List<Favorite>> getFavorite(String username);
     /**
-     * 添加新的收藏
-     * @param collectionForm 收藏信息
+     * 保存新的收藏
+     * @param collectionForm 收藏信息表单
      * @return 成功
      */
     Result<String> saveCollection(CollectionForm collectionForm);

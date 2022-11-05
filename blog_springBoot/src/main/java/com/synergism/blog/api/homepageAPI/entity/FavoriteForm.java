@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class FavoriteForm {
 
+    //账号
+    private String username;
     //分组名称
     private String name;
     //注释

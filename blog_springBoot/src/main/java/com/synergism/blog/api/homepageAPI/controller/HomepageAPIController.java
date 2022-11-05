@@ -1,5 +1,6 @@
 package com.synergism.blog.api.homepageAPI.controller;
 
+import com.synergism.blog.api.homepageAPI.entity.FavoriteForm;
 import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.user.entity.Author;
@@ -50,6 +51,12 @@ public class HomepageAPIController {
     @GetMapping("favorite")
     public Result<List<FavoriteInformation>> getMyFavoriteList(@RequestParam String username){
         return service.getMyFavoriteList(username);
+    }
+
+    //需要登录验证
+    @PostMapping("favorite")
+    public Result<String> saveFavorite(@RequestBody FavoriteForm favoriteForm){
+        return service.saveFavorite(favoriteForm);
     }
 
 }

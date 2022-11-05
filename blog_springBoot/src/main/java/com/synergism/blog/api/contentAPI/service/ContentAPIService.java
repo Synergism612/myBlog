@@ -64,7 +64,7 @@ public interface ContentAPIService {
 
     /**
      * 保存新的评论
-     * @param commentForm 评论信息
+     * @param commentForm 评论信息表单
      * @return 成功
      */
     Result<String> saveComment(CommentForm commentForm);
