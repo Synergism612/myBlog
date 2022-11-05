@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class TimeUtil {
 
-    static final String format = "YYYY-MM-dd HH:mm:ss";
+    static final String format = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * 获取当前时间
@@ -28,6 +28,9 @@ public class TimeUtil {
      */
     public static Date toDate(String time) {
         try {
+            if (time.length()<11){
+                return new SimpleDateFormat(format).parse(time+" 00:00:00");
+            }
             return new SimpleDateFormat(format).parse(time);
         }catch (ParseException e){
             throw new TimeFailureException("时间转换错误");
