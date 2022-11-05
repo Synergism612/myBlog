@@ -1,5 +1,6 @@
 package com.synergism.blog.core.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.synergism.blog.utils.TimeUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class UserInformation {
     //账号
     private String username;
     //生日
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthday;
     //性别代码
     private Integer sex;
@@ -29,10 +31,12 @@ public class UserInformation {
     //个人简介
     private String intro;
     //创建时间
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creationTime;
     //至今园龄
     private String upToNow;
     //修改时间
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modify_time;
 
     public UserInformation() {

@@ -1,6 +1,7 @@
 package com.synergism.blog.api.homepageAPI.service;
 
 import com.synergism.blog.api.homepageAPI.entity.FavoriteForm;
+import com.synergism.blog.api.homepageAPI.entity.UserInformationForm;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.result.Result;
@@ -50,7 +51,14 @@ public interface HomepageAPIService {
      * 删除收藏夹
      * @param username 账号
      * @param favoriteID 收藏夹id
-     * @return
+     * @return 成功
      */
     Result<String> deleteFavorite(String username, Long favoriteID);
+
+    /**
+     * 更新用户信息
+     * @param userInformationForm 用户信息表单
+     * @return 成功
+     */
+    Result<String> updateUserInformation(UserInformationForm userInformationForm);
 }

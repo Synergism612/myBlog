@@ -41,6 +41,7 @@ public class User {
 
     @ApiModelProperty("生日")
     @TableField("birthday")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthday;
 
     @ApiModelProperty("性别(0为未知，1为男，2为女)")
