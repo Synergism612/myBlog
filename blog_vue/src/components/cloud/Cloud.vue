@@ -184,8 +184,9 @@ export default defineComponent({
         viewData.CX = paper.value.offsetWidth / 2;
         viewData.CY = paper.value.offsetHeight / 2;
       }
-      viewData.angleX = ((Math.random() - 0.5) * Math.PI) / 250;
-      viewData.angleY = ((Math.random() - 0.5) * Math.PI) / 250;
+      /**每一次的旋转角度，角度越大，转的越快 */
+      viewData.angleX = ((Math.random() + 0.5) * Math.PI) / 250;
+      viewData.angleY = ((Math.random() + 0.5) * Math.PI) / 250;
       randomColor();
       time;
     };
