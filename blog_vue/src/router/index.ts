@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import Write from "@/views/write/Write.vue";
 import Homepage from "@/views/homepage/Homepage.vue";
 import Pandect from "@/views/pandect/Pandect.vue";
 import Content from "@/views/content/Content.vue";
@@ -13,6 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     redirect: {
       name: "Index",
     },
+  },
+  {
+    path: "/blog/write",
+    name: "Write",
+    component: Write,
   },
   {
     path: "/blog/homepage",
