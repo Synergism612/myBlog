@@ -9,6 +9,7 @@ import UserInformationForm from "./entity/UserInformationForm";
 import CollectionForm from "./entity/CollectionForm";
 import CommentForm from "./entity/CommentForm";
 import RegisterForm from "./entity/RegisterForm";
+import ArticleForm from "./entity/ArticleForm";
 export class api {
   /**
    * 获取公钥接口
@@ -162,7 +163,7 @@ export class api {
     username: string
   ): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/article/index",
+      url: "/api/blog/index/article",
       method: "get",
       params: {
         currentPage: currentPage,
@@ -326,10 +327,13 @@ export class api {
    * 总览页获取分类接口
    * @returns Result[分类列表]
    */
-  public static getPandectClissify(): Promise<AxiosResponse> {
+  public static getPandectClissify(username?: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/pandect/classify",
       method: "get",
+      params: {
+        username: username || "",
+      },
     });
   }
 
@@ -337,10 +341,13 @@ export class api {
    * 总览页获取标签接口
    * @returns Result[标签列表]
    */
-  public static getPandectTag(): Promise<AxiosResponse> {
+  public static getPandectTag(username?: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/pandect/tag",
       method: "get",
+      params: {
+        username: username || "",
+      },
     });
   }
 
@@ -354,7 +361,7 @@ export class api {
     tagIDList: Array<number>
   ): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/article/search",
+      url: "/api/blog/pandect/article",
       method: "get",
       params: {
         currentPage: currentPage,
@@ -500,6 +507,11 @@ export class api {
     });
   }
 
+  /**
+   * 个人信息页更新用户信息接口
+   * @param userInformationForm 用户信息表单
+   * @returns 成功
+   */
   static updateHomepageUserInformation(
     userInformationForm: UserInformationForm
   ): Promise<AxiosResponse> {
@@ -507,6 +519,35 @@ export class api {
       url: "/api/blog/homepage/userInformation",
       method: "put",
       data: userInformationForm,
+    });
+  }
+
+  static getWriteClassify(username: string): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/write/classify",
+      method: "get",
+      params: {
+        username: username,
+      },
+    });
+  }
+
+  static getWriteTag(username: string): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/write/tag",
+      method: "get",
+      params: {
+        username: username,
+      },
+    });
+  }
+  static saveWriteArticle(articleForm: ArticleForm): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/write/article",
+      method: "post",
+      params: {
+        articleForm: articleForm,
+      },
     });
   }
 }
