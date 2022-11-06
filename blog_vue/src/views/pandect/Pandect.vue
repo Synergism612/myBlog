@@ -40,13 +40,14 @@
                       v-model:tagIDList="tagIDList"
                       @classifyClick="classifyClick"
                       @tagClick="tagClick"
+                      @my-article="myArticle"
                     ></PandectArticle>
                   </div>
                 </el-col>
                 <!-- 右侧 -->
                 <el-col :xs="0" :sm="6" :md="6" :span="6">
                   <div class="right">
-                    <el-col :span="24" class="frame">
+                    <el-col :span="24" class="child frame">
                       <div class="center">搜索</div>
                       <el-row class="search">
                         <el-col :span="20">
@@ -65,7 +66,7 @@
                         </el-col>
                       </el-row>
                     </el-col>
-                    <el-col :span="24" class="frame">
+                    <el-col :span="24" class="child frame">
                       <div class="center">分类</div>
                       <el-row :gutter="5" class="elements">
                         <el-col
@@ -86,7 +87,7 @@
                         </el-col>
                       </el-row>
                     </el-col>
-                    <el-col :span="24" class="frame">
+                    <el-col :span="24" class="child frame">
                       <div class="center">标签</div>
                       <el-row :gutter="5" class="elements">
                         <el-col v-for="tag in tagList" :key="tag.id" :span="12">
@@ -110,6 +111,7 @@
         </el-main>
       </el-container>
     </div>
+    <Toolboxe page-name="pandect"></Toolboxe>
   </div>
 </template>
 <script lang="ts">
@@ -118,6 +120,7 @@ import Pandect from "./Pandect";
 import Menu from "@/components/menu/Menu.vue";
 import PandectArticle from "@/components/article/pandectArticle/PandectArticle.vue";
 import { useRoute } from "vue-router";
+import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
 
 export default defineComponent({
   setup() {
@@ -181,6 +184,14 @@ export default defineComponent({
       }
     };
 
+    const myArticle = (isMy: boolean): void => {
+      if (isMy) {
+        viewData.isMyInit();
+      } else {
+        viewData.init();
+      }
+    };
+
     onMounted(() => {
       viewData.init();
       routeInit();
@@ -192,9 +203,10 @@ export default defineComponent({
       search,
       classifyClick,
       tagClick,
+      myArticle,
     };
   },
-  components: { Menu, PandectArticle },
+  components: { Menu, PandectArticle, Toolboxe },
 });
 </script>
 <style lang="less">

@@ -53,6 +53,7 @@ export default defineComponent({
   emits: {
     classifyClick: null,
     tagClick: null,
+    myArticle: null,
   },
   props: {
     keyword: {
@@ -109,6 +110,7 @@ export default defineComponent({
         !StringUtil.checkStringIfEmpty(viewData.username)
       ) {
         viewData.isMy = !viewData.isMy;
+        emit("myArticle", viewData.isMy);
         getPagination();
       } else {
         Message.warningMessage("您还没有登录");

@@ -1,12 +1,13 @@
 import { api } from "@/api/api";
-import Classify from "@/model/classify/Classify";
-import Tag from "@/model/tag/Tag";
+import ClassifyInformation from "@/model/classify/ClassifyInformation";
+import TagInformation from "@/model/tag/TagInformation";
+import { store } from "@/store";
 
 export default class Pandect {
   keyword: string;
 
-  classifyList: Array<Classify>;
-  tagList: Array<Tag>;
+  classifyList: Array<ClassifyInformation>;
+  tagList: Array<TagInformation>;
 
   classifyIDList: Array<number>;
   tagIDList: Array<number>;
@@ -14,8 +15,8 @@ export default class Pandect {
   constructor() {
     this.keyword = "";
 
-    this.classifyList = [new Classify()];
-    this.tagList = [new Tag()];
+    this.classifyList = [new ClassifyInformation()];
+    this.tagList = [new TagInformation()];
 
     this.classifyIDList = [-1];
     this.tagIDList = [-1];
@@ -29,6 +30,24 @@ export default class Pandect {
     };
     const tag = (): void => {
       api.getPandectTag().then(({ data }): void => {
+        this.tagList = data;
+      });
+    };
+
+    classify();
+    tag();
+  }
+
+  public isMyInit(): void {
+    const username = store.getters.getUser.username;
+
+    const classify = (): void => {
+      api.getPandectClissify(username).then(({ data }): void => {
+        this.classifyList = data;
+      });
+    };
+    const tag = (): void => {
+      api.getPandectTag(username).then(({ data }): void => {
         this.tagList = data;
       });
     };
