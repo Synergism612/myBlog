@@ -42,6 +42,7 @@
               <el-select
                 v-model="collectionForm.favoriteID"
                 placeholder="请选择"
+                filterable
               >
                 <el-option label="请选择" :value="0" />
                 <el-option
