@@ -4,7 +4,6 @@ import router from "@/router";
 import { store } from "@/store";
 
 import "./assets/less/all.less";
-import "./assets/less/frame.less";
 
 /**
  * 引入ElementPlus
