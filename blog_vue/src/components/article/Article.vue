@@ -3,11 +3,7 @@
     <div v-if="total > 0" class="articleBox">
       <!-- 文章列表 -->
       <el-row class="articles">
-        <el-row
-          v-for="article in articleInformationList"
-          :key="article.id"
-          class="article"
-        >
+        <el-row v-for="article in articleInformationList" :key="article.id">
           <transition
             appear
             appear-active-class="animate__animated animate__zoomIn"
@@ -61,23 +57,27 @@
                   </el-col>
                 </el-row>
                 <el-row class="footer" justify="space-between">
-                  <el-col :xs="8" :span="6">
+                  <el-col :md="4" :span="6">
                     <font-awesome-icon :icon="['fas', 'user']" />
                     <span class="click">{{ article.nickname }}</span>
                   </el-col>
-                  <el-col :xs="4" :span="2">
+                  <el-col :md="2" :span="3">
                     <font-awesome-icon :icon="['fas', 'thumbs-up']" />
                     <span> {{ article.likeCount }} </span>
                   </el-col>
-                  <el-col :xs="4" :span="2">
+                  <el-col :md="2" :span="3">
                     <font-awesome-icon :icon="['fas', 'eye']" />
                     <span> {{ article.views }} </span>
                   </el-col>
-                  <el-col :xs="4" :span="2">
+                  <el-col :md="2" :span="3">
                     <font-awesome-icon :icon="['fas', 'comment']" />
                     <span> {{ article.commentCount }} </span>
                   </el-col>
-                  <el-col :xs="0" :span="8">
+                  <el-col :md="6" :span="9">
+                    <font-awesome-icon :icon="['fas', 'clock']" />
+                    <span> {{ article.creationTime }} </span>
+                  </el-col>
+                  <el-col :md="6" :span="0">
                     <font-awesome-icon :icon="['fas', 'clock-rotate-left']" />
                     <span> {{ article.modifyTime }} </span>
                   </el-col>
