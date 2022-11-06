@@ -1,10 +1,14 @@
 package com.synergism.blog.api.indexAPI.controller;
 
 import com.synergism.blog.api.indexAPI.service.IndexAPIService;
+import com.synergism.blog.core.article.entity.Pagination;
+import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.core.user.entity.UserInformation;
+import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +36,23 @@ public class IndexAPIController {
     @GetMapping("/userInfo")
     public Result<UserInformation> userInfo() {
         return service.getIndexUserInfo();
+    }
+
+
+    /**
+     * 首页文章获取接口
+     * @param currentPage 页数
+     * @param pageSize 页容
+     * @param articleSort 排序
+     * @param username 账号
+     * @return 分页后的文章信息
+     */
+    @GetMapping("article")
+    public Result<Pagination> article(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam String articleSort, @RequestParam String username){
+        if (!EnumUtils.isValidEnum(ArticleSort.class, articleSort)) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("排序字段错误"));
+        }
+        return service.getArticle(currentPage, pageSize, ArticleSort.valueOf(articleSort),username);
     }
 
     /**

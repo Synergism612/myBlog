@@ -69,5 +69,16 @@ public class Article {
     @TableField(value = "modify_time", fill = FieldFill.INSERT_UPDATE)
     private Date modifyTime;
 
+    public Article(){}
 
+    public Article(Long id, String icon, String title, String body, String synopsis, Long views, Long likeCount, int ifPrivate) {
+        this.id = id;
+        this.icon = icon;
+        this.title = title;
+        this.body = body;
+        this.synopsis = synopsis;
+        this.views = views;
+        this.likeCount = likeCount;
+        this.ifPrivate = ifPrivate;
+    }
 }

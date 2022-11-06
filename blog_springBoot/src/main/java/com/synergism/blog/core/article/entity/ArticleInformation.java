@@ -24,4 +24,8 @@ public class ArticleInformation extends Article {
     private Classify classify;
     //标签
     private List<Tag> tagList;
+
+    public ArticleInformation() {
+       super();
+    }
 }

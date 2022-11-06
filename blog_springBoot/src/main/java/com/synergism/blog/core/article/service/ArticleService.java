@@ -102,4 +102,6 @@ public interface ArticleService extends IService<Article> {
      * @return 分页信息
      */
     Pagination Pagination(List<ArticleInformation> articleInformationList, int currentPage, int pageSize);
+
+    Pagination getPagination(int currentPage, int pageSize, ArticleSort articleSort, String username, String keyword, List<Long> classifyIDList, List<Long> tagIDList);
 }

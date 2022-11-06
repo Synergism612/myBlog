@@ -124,4 +124,39 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return new Pagination(articleInformationList.subList(startIndex, endIndex), total);
     }
 
+    @Override
+    public Pagination getPagination(int currentPage, int pageSize, ArticleSort articleSort, String username, String keyword, List<Long> classifyIDList, List<Long> tagIDList) {
+        List<ArticleInformation> result;
+        //传入账号是否为空
+        if (username.isEmpty()) {
+            //为空获取公开文章列表
+            result = this.getPublicArticleInformationList();
+        } else {
+            //不为空获取用户下的文章列表
+            result = this.getArticleInformationListByUsername(username);
+        }
+        //传入关键字不为空且暂存结果不为空
+        if (!keyword.isEmpty() && result!=null) {
+            //根据关键字获取文章列表
+            result = this.getArticleInformationListByKeyword(result, keyword);
+        }
+        //传入分类id列表不为空且暂存结果不为空
+        if (classifyIDList!=null && result!=null) {
+            //根据分类id列表获取文章列表
+            result = this.getArticleInformationListByClassifyList(result, classifyIDList);
+        }
+        //传入标签id列表不为空且暂存结果不为空
+        if (tagIDList!=null && result!=null) {
+            //根据标签id列表获取文章列表
+            result = this.getArticleInformationListByTagList(result, tagIDList);
+        }
+        //暂存结果不为空
+        if (result!=null) {
+            //排序
+            result = this.sortArticleInformationList(result, articleSort);
+        }
+        //封装分页
+        return this.Pagination(result, currentPage, pageSize);
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.synergism.blog.api.indexAPI.service;
 
+import com.synergism.blog.core.article.entity.Pagination;
+import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.core.user.entity.UserInformation;
@@ -35,4 +37,14 @@ public interface IndexAPIService {
      * @return 分类列表
      */
     Result<List<ClassifyInformation>> getIndexClassify(String username);
+
+    /**
+     * 首页文章获取接口
+     * @param currentPage 页数
+     * @param pageSize 页容
+     * @param articleSort 排序
+     * @param username 账号
+     * @return 分页后的文章信息
+     */
+    Result<Pagination> getArticle(int currentPage, int pageSize, ArticleSort articleSort, String username);
 }

@@ -11,4 +11,8 @@ import lombok.Setter;
 public class ArticleTagNominate extends Article{
     //查询与某文章的同标签数量
     private int tagCount;
+
+    public ArticleTagNominate(){
+        super();
+    }
 }
