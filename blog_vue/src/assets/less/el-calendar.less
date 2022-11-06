@@ -1,0 +1,27 @@
+.el-calendar {
+  border-radius: 0.5em;
+  background-color: rgba(225, 199, 55, 0);
+  --el-calendar-selected-bg-color: rgba(74, 74, 74, 0.3);
+
+  .el-calendar-day {
+    --el-calendar-cell-width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .el-calendar-day:hover {
+    color: #ffffff;
+  }
+  .is-selected {
+    color: #ffffff !important;
+  }
+  .is-today {
+    color: #3fc4c2;
+  }
+  .el-button {
+    --el-button-bg-color: rgba(0, 0, 0, 0);
+    --el-button-hover-bg-color: rgba(0, 0, 0, 0);
+    --el-button-hover-border-color: #3fc4c2;
+    --el-button-hover-text-color: #3fc4c2;
+  }
+}

@@ -1,0 +1,47 @@
+body {
+  margin: 0px;
+  width: 100%;
+  background-color: bisque;
+  z-index: -999;
+
+  --el-color-primary: #3fc4c2;
+
+  .is-link:hover {
+    color: #3fc4c2 !important;
+  }
+
+  .rotate {
+    svg {
+      transition: 0.5s;
+    }
+  }
+  .rotate:hover {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  .header {
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin-top: 1vh;
+  }
+  .center {
+    text-align: center;
+  }
+
+  @import url(./el.less);
+  @import url(./el-calendar.less);
+  @import url(./el-dialog.less);
+  @import url(./el-input.less);
+  @import url(./el-radio.less);
+  @import url(./el-select.less);
+  @import url(./el-textarea.less);
+
+  @import url(./md.less);
+}
