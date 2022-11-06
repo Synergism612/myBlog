@@ -113,11 +113,6 @@ export default defineComponent({
 
     const viewData = reactive({
       registerFrom: new RegisterForm(),
-      rules: {
-        username: [{ validator: checkUsername }],
-        password: [{ validator: checkPassword }],
-        passwordAgen: [{ validator: checkPassword_agen }],
-      },
       hideRequiredAsterisk: false,
       codeButton: {
         disabled: false,
@@ -125,6 +120,12 @@ export default defineComponent({
         duration: 60,
       },
     });
+
+    const rules = {
+      username: [{ validator: checkUsername }],
+      password: [{ validator: checkPassword }],
+      passwordAgen: [{ validator: checkPassword_agen }],
+    };
 
     /**
      * 用以获取验证码
@@ -176,7 +177,13 @@ export default defineComponent({
 
     const registerFormRef = ref();
 
-    return { ...toRefs(viewData), register, registerFormRef, getSecurityCode };
+    return {
+      ...toRefs(viewData),
+      rules,
+      register,
+      registerFormRef,
+      getSecurityCode,
+    };
   },
   components: { Menu },
 });

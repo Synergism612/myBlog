@@ -1,6 +1,5 @@
 <template>
   <div class="contentBox">
-    <div id="content_shade" v-if="pageFullScreen"></div>
     <Menu></Menu>
     <div class="container">
       <el-container>
@@ -48,6 +47,7 @@
                     v-model="article.body"
                     preview-only
                     v-model:pageFullScreen="pageFullScreen"
+                    :showCodeRowNumber="true"
                   />
                 </el-row>
 

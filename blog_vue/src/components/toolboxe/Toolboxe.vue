@@ -106,25 +106,30 @@ export default defineComponent({
 
     onMounted(() => {
       switch (props.pageName) {
-        case "index":
-          {
-            viewData.top = true;
-            showInit();
-          }
+        case "index": {
+          viewData.top = true;
+          showInit();
           break;
-        case "content":
-          {
-            viewData.show = true;
-            viewData.full = true;
-            viewData.catalog = true;
-            viewData.forum = true;
-            viewData.index = true;
-            viewData.top = true;
-          }
+        }
+        case "content": {
+          viewData.show = true;
+          viewData.full = true;
+          viewData.catalog = true;
+          viewData.forum = true;
+          viewData.index = true;
+          viewData.top = true;
           break;
-
-        default:
+        }
+        case "pandect": {
+          viewData.top = true;
+          showInit();
           break;
+        }
+        default: {
+          viewData.top = true;
+          showInit();
+          break;
+        }
       }
     });
 

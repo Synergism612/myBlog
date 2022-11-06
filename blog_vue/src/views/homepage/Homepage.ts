@@ -19,7 +19,7 @@ export default class Homepage {
 
   tabsName: string;
 
-  collapseName: number;
+  collapseName: string;
 
   favoriteInformationList: Array<FavoriteInformation>;
   myFavoriteShow: boolean;
@@ -40,7 +40,7 @@ export default class Homepage {
     this.userInformationForm = new UserInformationForm();
 
     this.tabsName = "first";
-    this.collapseName = 0;
+    this.collapseName = "";
 
     this.favoriteInformationList = [new FavoriteInformation()];
     this.myFavoriteShow = true;
@@ -68,6 +68,7 @@ export default class Homepage {
           }
         }
       );
+      this.collapseName = this.favoriteInformationList[0].name;
     });
   }
 

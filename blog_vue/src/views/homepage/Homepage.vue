@@ -128,7 +128,7 @@
                             <el-collapse-item
                               v-for="favoriteInformation in favoriteInformationList"
                               :key="favoriteInformation.id"
-                              :name="favoriteInformation.id"
+                              :name="favoriteInformation.name"
                             >
                               <template #title>
                                 <span
