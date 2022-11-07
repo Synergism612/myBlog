@@ -36,6 +36,7 @@ export default class Message {
       message: "<string>" + message + "</string>",
       type: type,
       offset: 100,
+      showClose: false,
     });
   }
 
