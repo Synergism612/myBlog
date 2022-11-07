@@ -545,9 +545,7 @@ export class api {
     return axios({
       url: "/api/blog/write/article",
       method: "post",
-      params: {
-        articleForm: articleForm,
-      },
+      data: articleForm,
     });
   }
 }

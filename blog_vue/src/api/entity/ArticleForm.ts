@@ -3,10 +3,10 @@ export default class ArticleForm {
   username: string;
   /**主键 */
   id: number;
-  /**标题 */
-  title: string;
   /**头像 */
   icon: string;
+  /**标题 */
+  title: string;
   /**内容 */
   body: string;
   /**简介 */

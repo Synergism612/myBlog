@@ -97,6 +97,7 @@ export default defineComponent({
           viewData.articleInformationList = data.articleInformationList;
           viewData.total = data.total;
           viewData.refresh = true;
+          Message.successMessage("查询到" + viewData.total + "条数据");
         });
     };
 

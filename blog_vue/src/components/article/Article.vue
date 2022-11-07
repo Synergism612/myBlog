@@ -28,7 +28,9 @@
                 </el-row>
                 <el-row class="synopsis">
                   <el-col :span="24">
-                    <span>{{ article.synopsis }}</span>
+                    <span class="click" @click="toContent(article.id)">
+                      {{ article.synopsis }}
+                    </span>
                   </el-col>
                 </el-row>
                 <el-row class="label">
