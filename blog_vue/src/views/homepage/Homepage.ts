@@ -1,10 +1,10 @@
-import { api } from "@/api/api";
-import FavoriteForm from "@/api/entity/FavoriteForm";
-import UserInformationForm from "@/api/entity/UserInformationForm";
-import Collection from "@/model/favorite/Collection";
-import FavoriteInformation from "@/model/favorite/FavoriteInformation";
-import Author from "@/model/user/Author";
-import { store } from "@/store";
+import { api } from "src/api/api";
+import FavoriteForm from "src/api/entity/FavoriteForm";
+import UserInformationForm from "src/api/entity/UserInformationForm";
+import Collection from "src/model/favorite/Collection";
+import FavoriteInformation from "src/model/favorite/FavoriteInformation";
+import Author from "src/model/user/Author";
+import { store } from "src/store";
 
 export default class Homepage {
   author: Author;

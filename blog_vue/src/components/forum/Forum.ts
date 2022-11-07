@@ -1,11 +1,11 @@
-import { api } from "@/api/api";
-import CommentForm from "@/api/entity/CommentForm";
-import CommentChild from "@/model/comment/CommentChild";
-import CommentParent from "@/model/comment/CommentParent";
-import UserInformation from "@/model/user/UserInformation";
-import { store } from "@/store";
-import Message from "@/utils/MessageUtil";
-import StringUtil from "@/utils/StringUtil";
+import { api } from "src/api/api";
+import CommentForm from "src/api/entity/CommentForm";
+import CommentChild from "src/model/comment/CommentChild";
+import CommentParent from "src/model/comment/CommentParent";
+import UserInformation from "src/model/user/UserInformation";
+import { store } from "src/store";
+import Message from "src/utils/MessageUtil";
+import StringUtil from "src/utils/StringUtil";
 
 export default class Forum {
   articleID: number;

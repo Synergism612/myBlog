@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Write from "@/views/write/Write.vue";
-import Homepage from "@/views/homepage/Homepage.vue";
-import Pandect from "@/views/pandect/Pandect.vue";
-import Content from "@/views/content/Content.vue";
-import Index from "@/views/index/Index.vue";
-import Login from "@/views/login/Login.vue";
-import Register from "@/views/register/Register.vue";
+import Write from "src/views/write/Write.vue";
+import Homepage from "src/views/homepage/Homepage.vue";
+import Pandect from "src/views/pandect/Pandect.vue";
+import Content from "src/views/content/Content.vue";
+import Index from "src/views/index/Index.vue";
+import Login from "src/views/login/Login.vue";
+import Register from "src/views/register/Register.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {

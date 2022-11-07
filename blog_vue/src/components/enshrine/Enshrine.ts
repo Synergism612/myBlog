@@ -1,6 +1,6 @@
-import { api } from "@/api/api";
-import CollectionForm from "@/api/entity/CollectionForm";
-import Favorite from "@/model/favorite/Favorite";
+import { api } from "src/api/api";
+import CollectionForm from "src/api/entity/CollectionForm";
+import Favorite from "src/model/favorite/Favorite";
 
 export default class Enshrine {
   collectionForm: CollectionForm;

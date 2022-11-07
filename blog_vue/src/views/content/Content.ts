@@ -1,11 +1,11 @@
-import { api } from "@/api/api";
-import Article from "@/model/article/Article";
-import ArticleTagNominate from "@/model/article/ArticleTagNominate";
-import Classify from "@/model/classify/Classify";
-import Tag from "@/model/tag/Tag";
-import Author from "@/model/user/Author";
-import { store } from "@/store";
-import StringUtil from "@/utils/StringUtil";
+import { api } from "src/api/api";
+import Article from "src/model/article/Article";
+import ArticleTagNominate from "src/model/article/ArticleTagNominate";
+import Classify from "src/model/classify/Classify";
+import Tag from "src/model/tag/Tag";
+import Author from "src/model/user/Author";
+import { store } from "src/store";
+import StringUtil from "src/utils/StringUtil";
 
 export default class Content {
   article: Article;

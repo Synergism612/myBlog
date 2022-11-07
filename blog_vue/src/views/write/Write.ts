@@ -1,9 +1,9 @@
-import { api } from "@/api/api";
-import ArticleForm from "@/api/entity/ArticleForm";
-import ClassifyInformation from "@/model/classify/ClassifyInformation";
-import TagInformation from "@/model/tag/TagInformation";
-import { store } from "@/store";
-import StringUtil from "@/utils/StringUtil";
+import { api } from "src/api/api";
+import ArticleForm from "src/api/entity/ArticleForm";
+import ClassifyInformation from "src/model/classify/ClassifyInformation";
+import TagInformation from "src/model/tag/TagInformation";
+import { store } from "src/store";
+import StringUtil from "src/utils/StringUtil";
 import { ToolbarNames } from "md-editor-v3";
 
 export default class Write {

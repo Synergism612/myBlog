@@ -149,11 +149,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Write from "./Write";
-import Menu from "@/components/menu/Menu.vue";
+import Menu from "src/components/menu/Menu.vue";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
-import { api } from "@/api/api";
-import Message from "@/utils/MessageUtil";
+import { api } from "src/api/api";
+import Message from "src/utils/MessageUtil";
 import { UploadProps } from "element-plus";
 import { useRouter } from "vue-router";
 

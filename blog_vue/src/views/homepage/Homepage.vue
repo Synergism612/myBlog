@@ -321,13 +321,13 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
-import Menu from "@/components/menu/Menu.vue";
+import Menu from "src/components/menu/Menu.vue";
 import Homepage from "./Homepage";
-import Enshrine from "@/components/enshrine/Enshrine.vue";
-import Message from "@/utils/MessageUtil";
-import { api } from "@/api/api";
-import FavoriteInformation from "@/model/favorite/FavoriteInformation";
-import UserInformationForm from "@/api/entity/UserInformationForm";
+import Enshrine from "src/components/enshrine/Enshrine.vue";
+import Message from "src/utils/MessageUtil";
+import { api } from "src/api/api";
+import FavoriteInformation from "src/model/favorite/FavoriteInformation";
+import UserInformationForm from "src/api/entity/UserInformationForm";
 
 export default defineComponent({
   setup() {

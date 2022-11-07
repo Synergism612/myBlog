@@ -42,14 +42,14 @@
 </template>
 
 <script lang="ts">
-import { api } from "@/api/api";
-import { store } from "@/store";
-import StringUtil from "@/utils/StringUtil";
+import { api } from "src/api/api";
+import { store } from "src/store";
+import StringUtil from "src/utils/StringUtil";
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Message from "@/utils/MessageUtil";
-import Menu from "@/components/menu/Menu.vue";
+import Message from "src/utils/MessageUtil";
+import Menu from "src/components/menu/Menu.vue";
 import { useRouter } from "vue-router";
-import UserInformation from "@/model/user/UserInformation";
+import UserInformation from "src/model/user/UserInformation";
 
 export default defineComponent({
   /**

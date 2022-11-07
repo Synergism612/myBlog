@@ -1,7 +1,7 @@
-import { api } from "@/api/api";
-import ClassifyInformation from "@/model/classify/ClassifyInformation";
-import TagInformation from "@/model/tag/TagInformation";
-import { store } from "@/store";
+import { api } from "src/api/api";
+import ClassifyInformation from "src/model/classify/ClassifyInformation";
+import TagInformation from "src/model/tag/TagInformation";
+import { store } from "src/store";
 
 export default class Pandect {
   keyword: string;

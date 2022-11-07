@@ -111,8 +111,8 @@
 </template>
 
 <script lang="ts">
-import { api } from "@/api/api";
-import Message from "@/utils/MessageUtil";
+import { api } from "src/api/api";
+import Message from "src/utils/MessageUtil";
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Forum from "./Forum";
 

@@ -96,12 +96,12 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
-import Menu from "@/components/menu/Menu.vue";
-import Screen from "@/components/screen/Screen.vue";
+import Menu from "src/components/menu/Menu.vue";
+import Screen from "src/components/screen/Screen.vue";
 import Index from "./Index";
-import Cloud from "@/components/cloud/Cloud.vue";
-import IndexArticle from "@/components/article/indexArticle/IndexArticle.vue";
-import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
+import Cloud from "src/components/cloud/Cloud.vue";
+import IndexArticle from "src/components/article/indexArticle/IndexArticle.vue";
+import Toolboxe from "src/components/toolboxe/Toolboxe.vue";
 import { useRouter } from "vue-router";
 
 export default defineComponent({

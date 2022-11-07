@@ -1,9 +1,9 @@
-import { api } from "@/api/api";
-import ClassifyInformation from "@/model/classify/ClassifyInformation";
-import TagInformation from "@/model/tag/TagInformation";
-import UserInformation from "@/model/user/UserInformation";
-import { store } from "@/store";
-import StringUtil from "@/utils/StringUtil";
+import { api } from "src/api/api";
+import ClassifyInformation from "src/model/classify/ClassifyInformation";
+import TagInformation from "src/model/tag/TagInformation";
+import UserInformation from "src/model/user/UserInformation";
+import { store } from "src/store";
+import StringUtil from "src/utils/StringUtil";
 
 export default class Index {
   /**是否已经登录*/

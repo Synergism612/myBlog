@@ -116,7 +116,7 @@ import {
   watchEffect,
 } from "vue";
 import Article from "./Article";
-import ArticleInformation from "@/model/article/ArticleInformation";
+import ArticleInformation from "src/model/article/ArticleInformation";
 import { useRouter } from "vue-router";
 export default defineComponent({
   props: {

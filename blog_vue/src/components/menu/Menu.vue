@@ -23,10 +23,10 @@
 </template>
 
 <script lang="ts">
-import { api } from "@/api/api";
-import { store } from "@/store";
-import Message from "@/utils/MessageUtil";
-import StringUtil from "@/utils/StringUtil";
+import { api } from "src/api/api";
+import { store } from "src/store";
+import Message from "src/utils/MessageUtil";
+import StringUtil from "src/utils/StringUtil";
 import { computed, defineComponent, reactive, toRefs, watch } from "vue";
 
 export default defineComponent({

@@ -206,17 +206,17 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
-import Menu from "@/components/menu/Menu.vue";
+import Menu from "src/components/menu/Menu.vue";
 import Content from "./Content";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 const MdCatalog = MdEditor.MdCatalog;
 
 import { useRoute, useRouter } from "vue-router";
-import Forum from "@/components/forum/Forum.vue";
-import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
-import Enshrine from "@/components/enshrine/Enshrine.vue";
-import Message from "@/utils/MessageUtil";
+import Forum from "src/components/forum/Forum.vue";
+import Toolboxe from "src/components/toolboxe/Toolboxe.vue";
+import Enshrine from "src/components/enshrine/Enshrine.vue";
+import Message from "src/utils/MessageUtil";
 
 export default defineComponent({
   setup() {

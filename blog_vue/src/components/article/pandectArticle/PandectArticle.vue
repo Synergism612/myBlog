@@ -45,10 +45,10 @@ import {
   watchEffect,
 } from "vue";
 import PandectArticle from "./PandectArticle";
-import Article from "@/components/article/Article.vue";
-import StringUtil from "@/utils/StringUtil";
-import Message from "@/utils/MessageUtil";
-import { api } from "@/api/api";
+import Article from "src/components/article/Article.vue";
+import StringUtil from "src/utils/StringUtil";
+import Message from "src/utils/MessageUtil";
+import { api } from "src/api/api";
 export default defineComponent({
   emits: {
     classifyClick: null,

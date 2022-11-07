@@ -60,11 +60,11 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import Menu from "@/components/menu/Menu.vue";
-import StringUtil from "@/utils/StringUtil";
-import Message from "@/utils/MessageUtil";
-import { api } from "@/api/api";
-import RegisterForm from "@/api/entity/RegisterForm";
+import Menu from "src/components/menu/Menu.vue";
+import StringUtil from "src/utils/StringUtil";
+import Message from "src/utils/MessageUtil";
+import { api } from "src/api/api";
+import RegisterForm from "src/api/entity/RegisterForm";
 
 export default defineComponent({
   setup() {

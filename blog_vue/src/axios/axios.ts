@@ -1,10 +1,10 @@
-import { apiEnum } from "@/enum/apiEnum";
+import { apiEnum } from "src/enum/apiEnum";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import Result from "@/model/result/Result";
-import { store } from "@/store";
-import AESUtil from "@/utils/AESUtil";
-import StringUtil from "@/utils/StringUtil";
-import Message from "@/utils/MessageUtil";
+import Result from "src/model/result/Result";
+import { store } from "src/store";
+import AESUtil from "src/utils/AESUtil";
+import StringUtil from "src/utils/StringUtil";
+import Message from "src/utils/MessageUtil";
 
 //请求根路径
 const baseURL = "http://localhost:8088";

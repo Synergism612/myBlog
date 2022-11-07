@@ -117,10 +117,10 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
 import Pandect from "./Pandect";
-import Menu from "@/components/menu/Menu.vue";
-import PandectArticle from "@/components/article/pandectArticle/PandectArticle.vue";
+import Menu from "src/components/menu/Menu.vue";
+import PandectArticle from "src/components/article/pandectArticle/PandectArticle.vue";
 import { useRoute } from "vue-router";
-import Toolboxe from "@/components/toolboxe/Toolboxe.vue";
+import Toolboxe from "src/components/toolboxe/Toolboxe.vue";
 
 export default defineComponent({
   setup() {

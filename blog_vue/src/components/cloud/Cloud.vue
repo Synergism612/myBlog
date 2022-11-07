@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts">
-import ClassifyInformation from "@/model/classify/ClassifyInformation";
-import TagInformation from "@/model/tag/TagInformation";
+import ClassifyInformation from "src/model/classify/ClassifyInformation";
+import TagInformation from "src/model/tag/TagInformation";
 import {
   defineComponent,
   onMounted,

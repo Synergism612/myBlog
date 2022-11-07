@@ -38,9 +38,9 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import IndexArticle from "./IndexArticle";
-import Article from "@/components/article/Article.vue";
-import StringUtil from "@/utils/StringUtil";
-import Message from "@/utils/MessageUtil";
+import Article from "src/components/article/Article.vue";
+import StringUtil from "src/utils/StringUtil";
+import Message from "src/utils/MessageUtil";
 import { useRouter } from "vue-router";
 export default defineComponent({
   setup() {

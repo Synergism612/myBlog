@@ -1,4 +1,4 @@
-import ArticleInformation from "@/model/article/ArticleInformation";
+import ArticleInformation from "src/model/article/ArticleInformation";
 
 export default class Article {
   /**分页页数*/

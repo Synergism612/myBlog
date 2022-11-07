@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
-import StoreUtil from "@/utils/StoreUtil";
-import UserInformation from "@/model/user/UserInformation";
+import StoreUtil from "src/utils/StoreUtil";
+import UserInformation from "src/model/user/UserInformation";
 
 /**
  * 数据仓库

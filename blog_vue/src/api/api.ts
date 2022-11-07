@@ -1,9 +1,9 @@
-import FavoriteForm from "@/api/entity/FavoriteForm";
-import axios from "@/axios/axios";
-import { store } from "@/store";
-import AESUtil from "@/utils/AESUtil";
-import RSAUtil from "@/utils/RSAUtil";
-import StringUtil from "@/utils/StringUtil";
+import FavoriteForm from "src/api/entity/FavoriteForm";
+import axios from "src/axios/axios";
+import { store } from "src/store";
+import AESUtil from "src/utils/AESUtil";
+import RSAUtil from "src/utils/RSAUtil";
+import StringUtil from "src/utils/StringUtil";
 import { AxiosResponse } from "axios";
 import UserInformationForm from "./entity/UserInformationForm";
 import CollectionForm from "./entity/CollectionForm";

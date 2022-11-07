@@ -1,7 +1,7 @@
-import ArticleInformation from "@/model/article/ArticleInformation";
-import ArticleSort from "@/model/article/ArticleSort";
-import { store } from "@/store";
-import StringUtil from "@/utils/StringUtil";
+import ArticleInformation from "src/model/article/ArticleInformation";
+import ArticleSort from "src/model/article/ArticleSort";
+import { store } from "src/store";
+import StringUtil from "src/utils/StringUtil";
 
 export default class pandectArticle {
   /**文章排序列表*/
