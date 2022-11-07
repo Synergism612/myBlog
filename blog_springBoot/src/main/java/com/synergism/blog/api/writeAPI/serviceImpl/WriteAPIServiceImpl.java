@@ -44,12 +44,12 @@ public class WriteAPIServiceImpl implements writeAPIService {
 
     @Override
     public Result<String> saveArticle(ArticleForm articleForm) {
-//        long userID = userService.getID(articleForm.getUsername());
-//        if (userID!=-1){
-//            return articleService.save(userID)
-//                    ?Result.success()
-//                    :Result.error(CodeMsg.MESSAGE.fillArgs("添加失败"));
-//        }
+        long userID = userService.getID(articleForm.getUsername());
+        if (userID != -1) {
+            return articleService.save(userID, articleForm.getIcon(), articleForm.getTitle(), articleForm.getBody(), articleForm.getSynopsis(), articleForm.getIfPrivate(), articleForm.getClassifyID(), articleForm.getTagIDList())
+                    ? Result.success()
+                    : Result.error(CodeMsg.MESSAGE.fillArgs("添加失败"));
+        }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
     }
 }

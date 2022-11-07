@@ -103,5 +103,30 @@ public interface ArticleService extends IService<Article> {
      */
     Pagination Pagination(List<ArticleInformation> articleInformationList, int currentPage, int pageSize);
 
+    /**
+     * 获取分页信息
+     * @param currentPage 页数
+     * @param pageSize 页容
+     * @param articleSort 排序
+     * @param username 账号
+     * @param keyword 关键字
+     * @param classifyIDList 分类id列表
+     * @param tagIDList 标签id列表
+     * @return 分页信息
+     */
     Pagination getPagination(int currentPage, int pageSize, ArticleSort articleSort, String username, String keyword, List<Long> classifyIDList, List<Long> tagIDList);
+
+    /**
+     * 保存新的文章
+     * @param userID 用户id
+     * @param icon 文章id
+     * @param title 文章标题
+     * @param body 文章内容
+     * @param synopsis 文章摘要
+     * @param ifPrivate 文章隐私设置
+     * @param classifyID 分类id
+     * @param tagIDList 标签id列表
+     * @return 成功为真，反之为否
+     */
+    boolean save(long userID,String icon,String title,String body,String synopsis,int ifPrivate,Long classifyID,List<Long> tagIDList);
 }

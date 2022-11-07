@@ -48,4 +48,10 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     List<ArticleTagNominate> selectMoreTagArticleList(long id);
 
+    /**
+     * 绑定新的文章
+     * @param articleID 文章id
+     * @param userID 用户id
+     */
+    void bundle(long articleID, long userID, long classifyID, List<Long> tagIDList);
 }

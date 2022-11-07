@@ -159,4 +159,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return this.Pagination(result, currentPage, pageSize);
     }
 
+    @Override
+    public boolean save(long userID, String icon, String title, String body, String synopsis, int ifPrivate, Long classifyID, List<Long> tagIDList) {
+        Article article = new Article(null,icon,title,body,synopsis,0L,0L,ifPrivate);
+        mapper.insert(article);
+        if (article.getId() == null) return false;
+        long articleID = article.getId();
+        try {
+            mapper.bundle(articleID,userID, classifyID,tagIDList);
+            return true;
+        } catch (Exception e) {
+            mapper.delete(new LambdaQueryWrapper<Article>().eq(Article::getId, articleID));
+        }
+        return false;
+    }
+
 }
