@@ -56,14 +56,16 @@
                 <el-row class="more">
                   <el-col :span="24">
                     文章所属分类:
-                    <span class="click element">
+                    <span class="element" @click="classifyClick(classify.id)">
                       {{ classify.name }}
                     </span>
                   </el-col>
                   <el-col :span="24">
                     文章所属标签:
                     <span v-for="tag in tagList" :key="tag.id">
-                      <span class="click element">{{ tag.name }}</span>
+                      <span class="element" @click="tagClick(tag.id)">{{
+                        tag.name
+                      }}</span>
                     </span>
                   </el-col>
                   <el-col :span="24">
@@ -313,6 +315,25 @@ export default defineComponent({
       });
       window.open(open.href, "_blank");
     };
+    const classifyClick = (id: number): void => {
+      router.push({
+        name: "Pandect",
+        params: {
+          type: "classify",
+          id: id,
+        },
+      });
+    };
+
+    const tagClick = (id: number): void => {
+      router.push({
+        name: "Pandect",
+        params: {
+          type: "tag",
+          id: id,
+        },
+      });
+    };
 
     const href = window.location.href;
 
@@ -338,6 +359,8 @@ export default defineComponent({
       toArticle,
       myfavorite,
       href,
+      classifyClick,
+      tagClick,
     };
   },
   components: { Menu, MdEditor, MdCatalog, Forum, Toolboxe, Enshrine },
