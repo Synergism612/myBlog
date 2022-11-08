@@ -65,6 +65,13 @@ public interface ArticleService extends IService<Article> {
     boolean isExist(Long articleID);
 
     /**
+     * 根据文章id列表判断是否都存在
+     * @param articleIDList 文章id列表
+     * @return 都存在为真，反之为假
+     */
+    boolean isExist(List<Long> articleIDList);
+
+    /**
      * 根据关键字从文章列表中筛选
      * 该方法要求传入的文章列表不可为null
      * 文章列表size为0时返回null
@@ -126,7 +133,22 @@ public interface ArticleService extends IService<Article> {
      * @param ifPrivate 文章隐私设置
      * @param classifyID 分类id
      * @param tagIDList 标签id列表
-     * @return 成功为真，反之为否
+     * @return 成功为真，反之为假
      */
     boolean save(long userID,String icon,String title,String body,String synopsis,int ifPrivate,Long classifyID,List<Long> tagIDList);
+
+    /**
+     * 删除文章列表
+     * @param articleIDList 文章id列表
+     * @param userID 用户id
+     * @return 成功为真，反之为假
+     */
+    boolean remove(List<Long> articleIDList, long userID);
+
+    /**
+     * 查询对应文章信息
+     * @param articleID 文章id
+     * @return 文章信息
+     */
+    ArticleInformation getArticleInformationByID(long articleID);
 }

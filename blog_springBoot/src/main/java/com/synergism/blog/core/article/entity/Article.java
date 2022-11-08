@@ -81,4 +81,12 @@ public class Article {
         this.likeCount = likeCount;
         this.ifPrivate = ifPrivate;
     }
+
+    public void update(String icon, String title, String body, String synopsis, int ifPrivate) {
+        this.icon = icon;
+        this.title = title;
+        this.body = body;
+        this.synopsis = synopsis;
+        this.ifPrivate = ifPrivate;
+    }
 }

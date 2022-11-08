@@ -39,7 +39,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public List<ArticleInformation> getArticleInformationListByUsername(String username) {
-        List<ArticleInformation> result = mapper.selectArticleInformationByUsername(username);
+        List<ArticleInformation> result = mapper.selectArticleInformationListByUsername(username);
         return result.size() == 0 ? null : result;
     }
 
@@ -85,11 +85,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    public boolean isExist(List<Long> articleIDList) {
+        List<Article> articleList = mapper.selectList(new LambdaQueryWrapper<Article>().in(Article::getId, articleIDList));
+        return articleList.size() != 0;
+    }
+
+    @Override
     public List<ArticleInformation> getArticleInformationListByKeyword(List<ArticleInformation> articleInformationList, String keyword) {
         if (articleInformationList.size() == 0) return null;
         //筛选方法，在文章的作者昵称、标题、摘要中存在关键字
         return articleInformationList.stream().filter(articleInformation ->
-                        articleInformation.getNickname().contains(keyword) ||
+                articleInformation.getNickname().contains(keyword) ||
                         articleInformation.getTitle().contains(keyword) ||
                         articleInformation.getSynopsis().contains(keyword)
         ).collect(Collectors.toList());
@@ -114,7 +120,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public Pagination Pagination(List<ArticleInformation> articleInformationList, int currentPage, int pageSize) {
-        if(TypeUtil.isNull(articleInformationList)){
+        if (TypeUtil.isNull(articleInformationList)) {
             return new Pagination(null, 0);
         }
         int startIndex = (currentPage - 1) * pageSize;
@@ -136,22 +142,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             result = this.getArticleInformationListByUsername(username);
         }
         //传入关键字不为空且暂存结果不为空
-        if (!keyword.isEmpty() && result!=null) {
+        if (!keyword.isEmpty() && result != null) {
             //根据关键字获取文章列表
             result = this.getArticleInformationListByKeyword(result, keyword);
         }
         //传入分类id列表不为空且暂存结果不为空
-        if (classifyIDList!=null && result!=null) {
+        if (classifyIDList != null && result != null) {
             //根据分类id列表获取文章列表
             result = this.getArticleInformationListByClassifyList(result, classifyIDList);
         }
         //传入标签id列表不为空且暂存结果不为空
-        if (tagIDList!=null && result!=null) {
+        if (tagIDList != null && result != null) {
             //根据标签id列表获取文章列表
             result = this.getArticleInformationListByTagList(result, tagIDList);
         }
         //暂存结果不为空
-        if (result!=null) {
+        if (result != null) {
             //排序
             result = this.sortArticleInformationList(result, articleSort);
         }
@@ -161,17 +167,33 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public boolean save(long userID, String icon, String title, String body, String synopsis, int ifPrivate, Long classifyID, List<Long> tagIDList) {
-        Article article = new Article(null,icon,title,body,synopsis,0L,0L,ifPrivate);
+        Article article = new Article(null, icon, title, body, synopsis, 0L, 0L, ifPrivate);
         mapper.insert(article);
         if (article.getId() == null) return false;
         long articleID = article.getId();
         try {
-            mapper.bundle(articleID,userID, classifyID,tagIDList);
+            mapper.bundle(articleID, userID, classifyID, tagIDList);
             return true;
         } catch (Exception e) {
-            mapper.delete(new LambdaQueryWrapper<Article>().eq(Article::getId, articleID));
+            mapper.deleteById(articleID);
         }
         return false;
+    }
+
+    @Override
+    public boolean remove(List<Long> articleIDList, long userID) {
+        try {
+            mapper.unbundled(articleIDList, userID);
+            mapper.deleteBatchIds(articleIDList);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public ArticleInformation getArticleInformationByID(long articleID) {
+        return mapper.selectArticleInformationByArticleID(articleID);
     }
 
 }

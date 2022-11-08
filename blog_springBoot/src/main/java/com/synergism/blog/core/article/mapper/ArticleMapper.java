@@ -31,7 +31,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param username 账号
      * @return 文章信息列表
      */
-    List<ArticleInformation> selectArticleInformationByUsername(String username);
+    List<ArticleInformation> selectArticleInformationListByUsername(String username);
 
 
     /**
@@ -54,4 +54,19 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param userID 用户id
      */
     void bundle(long articleID, long userID, long classifyID, List<Long> tagIDList);
+
+    /**
+     * 解绑文章
+     * @param articleIDList 文章id列表
+     * @param userID 用户id
+     */
+    void unbundled(List<Long> articleIDList, long userID);
+
+    /**
+     * 查询对应的文章信息
+     * 具有唯一性
+     * @param articleID 文章id
+     * @return 文章信息
+     */
+    ArticleInformation selectArticleInformationByArticleID(long articleID);
 }
