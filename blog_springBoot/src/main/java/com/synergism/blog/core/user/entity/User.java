@@ -99,4 +99,12 @@ public class User {
         Date now = new Date();
         return new User(null, "", register.getUsername(), register.getUsername(), register.getPassword(), null, 0, null, now, now);
     }
+
+    public void update(String icon, String nickname, Date birthday, Integer sex, String intro) {
+        this.icon = icon;
+        this.nickname = nickname;
+        this.birthday = birthday;
+        this.sex = sex;
+        this.intro = intro;
+    }
 }
