@@ -2,6 +2,7 @@ package com.synergism.blog.api.writeAPI.controller;
 
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
 import com.synergism.blog.api.writeAPI.service.writeAPIService;
+import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.result.CodeMsg;
@@ -26,7 +27,7 @@ public class WriteAPIController {
     }
 
     /**
-     * 创作页面获取分类
+     * 创作页面获取分类接口
      * @param username 账号
      * @return 分类列表
      */
@@ -39,16 +40,29 @@ public class WriteAPIController {
     }
 
     /**
-     * 创作页面获取标签
+     * 创作页面获取标签接口
      * @param username 账号
      * @return 标签列表
      */
     @GetMapping("tag")
     public Result<List<TagInformation>> getTag(@RequestParam String username){
         if (username.isEmpty()){
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户名不能为空"));
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
         }
         return service.getTagList(username);
+    }
+
+    /**
+     * 创作页面获取文章接口
+     * @param articleID 文章id
+     * @return 标签列表
+     */
+    @GetMapping("article")
+    public Result<ArticleInformation> getArticle(@RequestParam Long articleID){
+        if (articleID==null){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        }
+        return service.getArticle(articleID);
     }
 
     /**
@@ -59,5 +73,15 @@ public class WriteAPIController {
     @PostMapping("article")
     public Result<String> saveArticle(@RequestBody ArticleForm articleForm){
         return service.saveArticle(articleForm);
+    }
+
+    /**
+     * 创作页面更新文章接口
+     * @param articleForm 文章信息表单
+     * @return 成功
+     */
+    @PutMapping("article")
+    public Result<String> updateArticle(@RequestBody ArticleForm articleForm){
+        return service.updateArticle(articleForm);
     }
 }

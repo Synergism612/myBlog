@@ -2,6 +2,8 @@ package com.synergism.blog.api.writeAPI.serviceImpl;
 
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
 import com.synergism.blog.api.writeAPI.service.writeAPIService;
+import com.synergism.blog.core.article.entity.Article;
+import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.classify.service.ClassifyService;
@@ -43,6 +45,15 @@ public class WriteAPIServiceImpl implements writeAPIService {
     }
 
     @Override
+    public Result<ArticleInformation> getArticle(Long articleID) {
+        if (articleService.isExist(articleID)) {
+            return Result.success(articleService.getArticleInformationByID(articleID));
+        }
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+
+    }
+
+    @Override
     public Result<String> saveArticle(ArticleForm articleForm) {
         long userID = userService.getID(articleForm.getUsername());
         if (userID != -1) {
@@ -51,5 +62,21 @@ public class WriteAPIServiceImpl implements writeAPIService {
                     : Result.error(CodeMsg.MESSAGE.fillArgs("添加失败"));
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+    }
+
+    @Override
+    public Result<String> updateArticle(ArticleForm articleForm) {
+        Article article = articleService.getById(articleForm.getId());
+        if (article != null) {
+            article.update(article.getIcon(),
+                    article.getTitle(),
+                    article.getBody(),
+                    article.getSynopsis(),
+                    article.getIfPrivate());
+            return articleService.updateById(article)
+                    ? Result.success()
+                    : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
+        }
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
     }
 }

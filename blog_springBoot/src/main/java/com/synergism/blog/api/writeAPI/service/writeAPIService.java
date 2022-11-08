@@ -2,6 +2,7 @@ package com.synergism.blog.api.writeAPI.service;
 
 
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
+import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.result.Result;
@@ -25,9 +26,23 @@ public interface writeAPIService {
     Result<List<TagInformation>> getTagList(String username);
 
     /**
+     * 获取文章
+     * @param articleID 文章id
+     * @return 文章信息
+     */
+    Result<ArticleInformation> getArticle(Long articleID);
+
+    /**
      * 保存文章
      * @param articleForm 文章信息表单
      * @return 成功
      */
     Result<String> saveArticle(ArticleForm articleForm);
+
+    /**
+     * 更新文章
+     * @param articleForm 文章信息表单
+     * @return 成功
+     */
+    Result<String> updateArticle(ArticleForm articleForm);
 }
