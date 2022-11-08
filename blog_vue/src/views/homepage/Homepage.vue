@@ -356,7 +356,7 @@ export default defineComponent({
       favoriteID: number,
       collectionIDList: Array<number>
     ) => {
-      api.deleteHomepageCollection(favoriteID, collectionIDList).then(() => {
+      api.removeHomepageCollection(favoriteID, collectionIDList).then(() => {
         saveCollectionSucceed();
         Message.successMessage("删除成功");
       });
@@ -392,7 +392,7 @@ export default defineComponent({
 
     const deleteFavorite = (favoriteID: number) => {
       api
-        .deleteHomepageFavorite(viewData.username, favoriteID)
+        .removeHomepageFavorite(viewData.username, favoriteID)
         .then((): void => {
           Message.successMessage("删除成功");
           viewData.init();
