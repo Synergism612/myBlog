@@ -47,4 +47,12 @@ public interface IndexAPIService {
      * @return 分页后的文章信息
      */
     Result<Pagination> getArticle(int currentPage, int pageSize, ArticleSort articleSort, String username);
+
+    /**
+     * 删除文章
+     * @param username 账号
+     * @param articleIDList 文章id列表
+     * @return 成功
+     */
+    Result<String> removeArticle(String username,List<Long> articleIDList);
 }

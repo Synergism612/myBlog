@@ -10,10 +10,7 @@ import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -73,5 +70,13 @@ public class IndexAPIController {
     @GetMapping("/classify")
     public Result<List<ClassifyInformation>> classify(@RequestParam String username) {
         return service.getIndexClassify(username);
+    }
+
+
+    @DeleteMapping("/article")
+    public Result<String> removeArticle(@RequestParam String username,@RequestParam List<Long> articleIDList){
+        if (articleIDList.size()==0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        if (username.isEmpty()) return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+        return service.removeArticle(username,articleIDList);
     }
 }

@@ -10,6 +10,7 @@ import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.core.user.service.UserService;
+import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,5 +67,17 @@ public class IndexAPIServiceImpl implements IndexAPIService {
     @Override
     public Result<Pagination> getArticle(int currentPage, int pageSize, ArticleSort articleSort, String username) {
         return Result.success(articleService.getPagination(currentPage,pageSize,articleSort,username,"",null,null));
+    }
+
+    @Override
+    public Result<String> removeArticle(String username,List<Long> articleIDList) {
+        long userID = userService.getID(username);
+        if (!articleService.isExist(articleIDList)) return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        if (userID != -1) {
+            return articleService.remove(articleIDList, userID)
+                    ? Result.success()
+                    : Result.error(CodeMsg.MESSAGE.fillArgs("删除失败"));
+        }
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
     }
 }
