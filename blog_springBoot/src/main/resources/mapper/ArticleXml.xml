@@ -42,71 +42,25 @@
         </foreach>
         ;
     </insert>
+    <delete id="unbundled">
+        delete from user_article where user_id = #{userID} and article_id in
+        <foreach collection="articleIDList" item="articleID" open="(" separator="," close=")">
+            #{articleID}
+        </foreach>;
+        delete from article_tag where article_id in
+        <foreach collection="articleIDList" item="articleID" open="(" separator="," close=")">
+            #{articleID}
+        </foreach>;
+        delete from article_classify where article_id in
+        <foreach collection="articleIDList" item="articleID" open="(" separator="," close=")">
+            #{articleID}
+        </foreach>;
+        delete from article_comment where article_id in
+        <foreach collection="articleIDList" item="articleID" open="(" separator="," close=")">
+            #{articleID}
+        </foreach>;
+    </delete>
 
-    <select id="selectAllArticleInformationList" resultMap="ArticleInformationMap">
-        select a.id,
-               a.icon,
-               a.title,
-               a.body,
-               a.synopsis,
-               a.views,
-               a.like_count,
-               a.creation_time,
-               a.modify_time,
-               a.if_private,
-               u.nickname,
-               u.username,
-               cy.id         as classify_id,
-               cy.name       as classify_name,
-               cy.annotation as classify_annotation,
-               t.id          as tag_id,
-               t.name        as tag_name,
-               t.annotation  as tag_annotation,
-               count(ac.id)  as comment_count
-        from user_article ua
-                 left join(
-            `user` u ,
-                article a ,
-                article_classify acy ,
-                classify cy ,
-                article_tag atg ,
-                tag t
-            )
-                          on
-                                  ua.user_id = u.id
-                                  and
-                                  ua.article_id = a.id
-                                  and
-                                  acy.article_id = a.id
-                                  and
-                                  cy.id = acy.classify_id
-                                  and
-                                  atg.article_id = a.id
-                                  and
-                                  t.id = atg.tag_id
-                 left join
-             article_comment ac
-             on
-                 ac.article_id = a.id
-        group by a.id,
-                 a.icon,
-                 a.title,
-                 a.body,
-                 a.synopsis,
-                 a.views,
-                 a.like_count,
-                 a.creation_time,
-                 a.modify_time,
-                 a.if_private,
-                 u.nickname,
-                 u.username,
-                 cy.id,
-                 cy.name,
-                 cy.annotation,
-                 t.id,
-                 t.name,
-                 t.annotation
-    </select>
     <select id="selectSameClassifyArticleList" resultMap="ArticleInformationMap">
         select a.id,
                a.icon,
@@ -200,8 +154,6 @@
              on
                  ac.article_id = a.id
         where a.if_private = 0
-
-
         group by a.id,
                  a.icon,
                  a.title,
@@ -221,7 +173,7 @@
                  t.name,
                  t.annotation
     </select>
-    <select id="selectArticleInformationByUsername"
+    <select id="selectArticleInformationListByUsername"
             resultMap="ArticleInformationMap">
         select a.id,
                a.icon,
@@ -269,7 +221,72 @@
                  ac.article_id = a.id
         where u.username =
               #{username}
-
+        group by a.id,
+                 a.icon,
+                 a.title,
+                 a.body,
+                 a.synopsis,
+                 a.views,
+                 a.like_count,
+                 a.creation_time,
+                 a.modify_time,
+                 a.if_private,
+                 u.nickname,
+                 u.username,
+                 cy.id,
+                 cy.name,
+                 cy.annotation,
+                 t.id,
+                 t.name,
+                 t.annotation
+    </select>
+    <select id="selectArticleInformationByArticleID"
+            resultMap="ArticleInformationMap">
+        select a.id,
+               a.icon,
+               a.title,
+               a.body,
+               a.synopsis,
+               a.views,
+               a.like_count,
+               a.creation_time,
+               a.modify_time,
+               a.if_private,
+               u.nickname,
+               u.username,
+               cy.id         as classify_id,
+               cy.name       as classify_name,
+               cy.annotation as classify_annotation,
+               t.id          as tag_id,
+               t.name        as tag_name,
+               t.annotation  as tag_annotation,
+               count(ac.id)  as comment_count
+        from user_article ua
+                 left join(
+            `user` u ,
+                article a ,
+                article_classify acy ,
+                classify cy ,
+                article_tag atg ,
+                tag t
+            )
+                          on
+                                  ua.user_id = u.id
+                                  and
+                                  ua.article_id = a.id
+                                  and
+                                  acy.article_id = a.id
+                                  and
+                                  cy.id = acy.classify_id
+                                  and
+                                  atg.article_id = a.id
+                                  and
+                                  t.id = atg.tag_id
+                 left join
+             article_comment ac
+             on
+                 ac.article_id = a.id
+        where a.id = #{articleID}
         group by a.id,
                  a.icon,
                  a.title,
