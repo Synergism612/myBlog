@@ -16,7 +16,7 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/blog/write",
+    path: "/blog/write/:id?",
     name: "Write",
     component: Write,
   },
