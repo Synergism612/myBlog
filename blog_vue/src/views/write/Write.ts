@@ -5,6 +5,8 @@ import TagInformation from "src/model/tag/TagInformation";
 import { store } from "src/store";
 import StringUtil from "src/utils/StringUtil";
 import { ToolbarNames } from "md-editor-v3";
+import ArticleInformation from "src/model/article/ArticleInformation";
+import Tag from "src/model/tag/Tag";
 
 export default class Write {
   username: string;
@@ -14,6 +16,8 @@ export default class Write {
   articleForm: ArticleForm;
 
   toolbars: Array<ToolbarNames>;
+
+  articleInformation: ArticleInformation;
 
   /**分类列表 */
   classifyInformationList: Array<ClassifyInformation>;
@@ -27,6 +31,7 @@ export default class Write {
     this.toolbars = toolbars as Array<ToolbarNames>;
     this.classifyInformationList = [new ClassifyInformation()];
     this.tagInformationList = [new TagInformation()];
+    this.articleInformation = new ArticleInformation();
   }
 
   public init(): void {
@@ -42,6 +47,24 @@ export default class Write {
     };
     classify();
     tag();
+  }
+
+  public articleFormInit(articleID: number): void {
+    api.getWriteArticle(articleID).then(({ data }): void => {
+      this.articleInformation = data;
+      this.articleForm.id = this.articleInformation.id;
+      this.articleForm.icon = this.articleInformation.icon;
+      this.articleForm.title = this.articleInformation.title;
+      this.articleForm.body = this.articleInformation.body;
+      this.articleForm.synopsis = this.articleInformation.synopsis;
+      this.articleForm.ifPrivate = this.articleInformation.ifPrivate;
+      this.articleForm.classifyID = this.articleInformation.classify.id;
+      this.articleForm.tagIDList = this.articleInformation.tagList.map(
+        (tag: Tag) => {
+          return tag.id;
+        }
+      );
+    });
   }
 }
 

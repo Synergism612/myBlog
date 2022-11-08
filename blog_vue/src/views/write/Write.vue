@@ -155,7 +155,7 @@ import "md-editor-v3/lib/style.css";
 import { api } from "src/api/api";
 import Message from "src/utils/MessageUtil";
 import { UploadProps } from "element-plus";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
@@ -163,6 +163,10 @@ export default defineComponent({
     const viewData = reactive(new Write());
 
     const router = useRouter();
+
+    const route = useRoute();
+
+    const id = Number(route.params.id); //字符串读取为数字
 
     const save = (): void => {
       viewData.articleForm.username = viewData.username;
@@ -194,6 +198,9 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      if (id > 0) {
+        viewData.articleFormInit(id);
+      }
       viewData.init();
     });
 
