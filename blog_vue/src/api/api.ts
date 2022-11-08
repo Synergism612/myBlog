@@ -15,7 +15,7 @@ export class api {
    * 获取公钥接口
    * @returns Result[String]
    */
-  public static async getPublicKey(): Promise<void> {
+  static async getPublicKey(): Promise<void> {
     //开启请求
     try {
       const { data } = await axios({
@@ -46,40 +46,14 @@ export class api {
       console.log("err:\n" + err);
     }
   }
-
-  /**
-   * 测试函数
-   * @returns 空
-   */
-  public static getTest(): string {
-    axios({
-      url: "/api/public/test",
-      method: "post",
-      data: {
-        username: "152",
-        password: "123456",
-      },
-    })
-      .then(({ data }) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log("err:\n" + err);
-        return false;
-      });
-    return "";
-  }
-
+  
   /**
    * 登录接口
    * @param username 用户名
    * @param password 密码
    * @returns Result[String]
    */
-  public static login(
-    username: string,
-    password: string
-  ): Promise<AxiosResponse> {
+  static login(username: string, password: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/user/login",
       method: "post",
@@ -95,10 +69,7 @@ export class api {
    * @param mail 邮箱
    * @returns Result[String]
    */
-  public static getSecurityCode(
-    mail: string,
-    key: string
-  ): Promise<AxiosResponse> {
+  static getSecurityCode(mail: string, key: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/mail/register/code",
       method: "get",
@@ -117,7 +88,7 @@ export class api {
    * @param key 验证码密钥
    * @returns Result[String]
    */
-  public static register(registerForm: RegisterForm): Promise<AxiosResponse> {
+  static register(registerForm: RegisterForm): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/user/register",
       method: "post",
@@ -132,7 +103,7 @@ export class api {
    * @param username 账号
    * @returns Result[String]
    */
-  public static logout(
+  static logout(
     loginID: string,
     nickname: string,
     username: string
@@ -156,7 +127,7 @@ export class api {
    * @param username 用户名
    * @returns Result[分页信息]
    */
-  public static getIndexArticle(
+  static getIndexArticle(
     currentPage: number,
     pageSize: number,
     articleSort: string,
@@ -178,7 +149,7 @@ export class api {
    * 首页用户信息接口
    * @returns Result[用户信息]
    */
-  public static getIndexUserInformation(): Promise<AxiosResponse> {
+  static getIndexUserInformation(): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/index/userInfo",
       method: "get",
@@ -190,7 +161,7 @@ export class api {
    * @param username 用户名
    * @returns Result[标签列表]
    */
-  public static getIndexTag(username: string): Promise<AxiosResponse> {
+  static getIndexTag(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/index/tag",
       method: "get",
@@ -203,7 +174,7 @@ export class api {
    * @param username 用户名
    * @returns Result[分类列表]
    */
-  public static getIndexClassify(username: string): Promise<AxiosResponse> {
+  static getIndexClassify(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/index/classify",
       method: "get",
@@ -212,11 +183,30 @@ export class api {
   }
 
   /**
+   * 首页删除文章接口
+   * @param username 账号
+   * @param articleIDList 文章id列表
+   */
+  static removeIndexArticle(
+    username: string,
+    articleIDList: Array<number>
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/index/article",
+      method: "delete",
+      params: {
+        username: username,
+        articleIDList: articleIDList.toString(),
+      },
+    });
+  }
+
+  /**
    * 内容页评文章接口
    * @param articleID 文章id
    * @returns Result[文章内容]
    */
-  public static getContentArticle(articleID: number): Promise<AxiosResponse> {
+  static getContentArticle(articleID: number): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/content/article",
       method: "get",
@@ -229,7 +219,7 @@ export class api {
    * @param articleID 文章id
    * @returns Result[作者信息]
    */
-  public static getContentAuthor(articleID: number): Promise<AxiosResponse> {
+  static getContentAuthor(articleID: number): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/content/author",
       method: "get",
@@ -242,7 +232,7 @@ export class api {
    * @param articleID 文章id
    * @returns Result[分类]
    */
-  public static getContentClassify(articleID: number): Promise<AxiosResponse> {
+  static getContentClassify(articleID: number): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/content/classify",
       method: "get",
@@ -255,7 +245,7 @@ export class api {
    * @param articleID 文章id
    * @returns Result[标签列表]
    */
-  public static getContentTagList(articleID: number): Promise<AxiosResponse> {
+  static getContentTagList(articleID: number): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/content/tagList",
       method: "get",
@@ -268,9 +258,7 @@ export class api {
    * @param articleID 文章id
    * @returns Result[评论列表]
    */
-  public static getContentCommentList(
-    articleID: number
-  ): Promise<AxiosResponse> {
+  static getContentCommentList(articleID: number): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/content/commentList",
       method: "get",
@@ -283,9 +271,7 @@ export class api {
    * @param articleID 文章id
    * @returns Result[评论列表]
    */
-  public static getContentClassifyNominate(
-    articleID: number
-  ): Promise<AxiosResponse> {
+  static getContentClassifyNominate(articleID: number): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/content/nominate/classify",
       method: "get",
@@ -298,9 +284,7 @@ export class api {
    * @param articleID 文章id
    * @returns Result[评论列表]
    */
-  public static getContentTagNominate(
-    articleID: number
-  ): Promise<AxiosResponse> {
+  static getContentTagNominate(articleID: number): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/content/nominate/tag",
       method: "get",
@@ -313,9 +297,7 @@ export class api {
    * @param commentForm 评论信息表单
    * @returns Result[String]
    */
-  public static saveContentComment(
-    commentForm: CommentForm
-  ): Promise<AxiosResponse> {
+  static saveContentComment(commentForm: CommentForm): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/content/comment",
       method: "post",
@@ -327,7 +309,7 @@ export class api {
    * 总览页获取分类接口
    * @returns Result[分类列表]
    */
-  public static getPandectClissify(username?: string): Promise<AxiosResponse> {
+  static getPandectClissify(username?: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/pandect/classify",
       method: "get",
@@ -341,7 +323,7 @@ export class api {
    * 总览页获取标签接口
    * @returns Result[标签列表]
    */
-  public static getPandectTag(username?: string): Promise<AxiosResponse> {
+  static getPandectTag(username?: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/pandect/tag",
       method: "get",
@@ -351,7 +333,7 @@ export class api {
     });
   }
 
-  public static getPandectArticle(
+  static getPandectArticle(
     currentPage: number,
     pageSize: number,
     articleSort: string,
@@ -380,7 +362,7 @@ export class api {
    * @param username 账号
    * @returns 收藏夹列表
    */
-  public static getEnshrineFavorite(username: string): Promise<AxiosResponse> {
+  static getEnshrineFavorite(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/enshrine/favorite",
       method: "get",
@@ -398,7 +380,7 @@ export class api {
    * @param favoriteID 收藏夹id
    * @returns Result[String]
    */
-  public static saveEnshrineCollection(
+  static saveEnshrineCollection(
     collectionForm: CollectionForm
   ): Promise<AxiosResponse> {
     return axios({
@@ -413,7 +395,7 @@ export class api {
    * @param username 账号
    * @returns Result[作者信息]
    */
-  public static getHomepageAuthor(username: string): Promise<AxiosResponse> {
+  static getHomepageAuthor(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/homepage/author",
       method: "get",
@@ -426,7 +408,7 @@ export class api {
    * @param username 账号
    * @returns 我的收藏列表
    */
-  public static getHomepageFavoriteInformationList(
+  static getHomepageFavoriteInformationList(
     username: string
   ): Promise<AxiosResponse> {
     return axios({
@@ -442,7 +424,7 @@ export class api {
    * @param collectionIDList 收藏id列表
    * @returns 成功
    */
-  public static deleteHomepageCollection(
+  static removeHomepageCollection(
     favoriteID: number,
     collectionIDList: Array<number>
   ): Promise<AxiosResponse> {
@@ -462,7 +444,7 @@ export class api {
    * @param favoriteForm 收藏夹信息表单
    * @returns 成功
    */
-  public static saveHomepageFavorite(
+  static saveHomepageFavorite(
     favoriteForm: FavoriteForm
   ): Promise<AxiosResponse> {
     return axios({
@@ -493,7 +475,7 @@ export class api {
    * @param favoriteID 收藏夹id
    * @returns 成功
    */
-  static deleteHomepageFavorite(
+  static removeHomepageFavorite(
     username: string,
     favoriteID: number
   ): Promise<AxiosResponse> {
@@ -521,7 +503,11 @@ export class api {
       data: userInformationForm,
     });
   }
-
+  /**
+   * 创作页面用户分类获取接口
+   * @param username 账号
+   * @returns 分类列表
+   */
   static getWriteClassify(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/write/classify",
@@ -531,7 +517,11 @@ export class api {
       },
     });
   }
-
+  /**
+   * 创作页面用户标签获取接口
+   * @param username 账号
+   * @returns 标签列表
+   */
   static getWriteTag(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/write/tag",
@@ -541,6 +531,27 @@ export class api {
       },
     });
   }
+
+  /**
+   * 创作页面文章获取接口
+   * @param articleID 文章id
+   * @returns 文章信息
+   */
+  static getWriteArticle(articleID: number): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/write/article",
+      method: "get",
+      params: {
+        articleID: articleID,
+      },
+    });
+  }
+
+  /**
+   * 创作页面保存文章接口
+   * @param articleForm 文章信息表单
+   * @returns 成功
+   */
   static saveWriteArticle(articleForm: ArticleForm): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/write/article",
