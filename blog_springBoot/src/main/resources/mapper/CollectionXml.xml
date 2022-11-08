@@ -8,10 +8,7 @@
     </insert>
 
     <delete id="unbundled">
-        delete
-        from
-        favorite_collection
-        where
+        delete from favorite_collection where
         favorite_id = #{favoriteID} and
         collection_id in
         <foreach collection="collectionIDList" item="collectionID" open="(" separator="," close=")">
