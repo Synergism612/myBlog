@@ -102,7 +102,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             mapper.bundle(commentID, articleID, userID);
             return true;
         } catch (Exception e) {
-            mapper.delete(new LambdaQueryWrapper<Comment>().eq(Comment::getId, commentID));
+            mapper.deleteById(commentID);
         }
         return false;
     }
