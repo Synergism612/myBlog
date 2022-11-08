@@ -31,7 +31,7 @@ public interface HomepageAPIService {
      * @param collectionIDList 收藏id列表
      * @return 成功
      */
-    Result<String> deleteCollection(Long favoriteID, List<Long> collectionIDList);
+    Result<String> removeCollection(Long favoriteID, List<Long> collectionIDList);
 
     /**
      * 保存新的收藏夹
@@ -53,7 +53,7 @@ public interface HomepageAPIService {
      * @param favoriteID 收藏夹id
      * @return 成功
      */
-    Result<String> deleteFavorite(String username, Long favoriteID);
+    Result<String> removeFavorite(String username, Long favoriteID);
 
     /**
      * 更新用户信息

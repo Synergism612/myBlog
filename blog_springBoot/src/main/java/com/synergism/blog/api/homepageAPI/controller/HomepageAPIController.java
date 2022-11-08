@@ -9,7 +9,6 @@ import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
 
@@ -48,10 +47,10 @@ public class HomepageAPIController {
      */
     //需要登录验证
     @DeleteMapping("collection")
-    public Result<String> deleteCollection(@RequestParam Long favoriteID, @RequestParam List<Long> collectionIDList) {
+    public Result<String> removeCollection(@RequestParam Long favoriteID, @RequestParam List<Long> collectionIDList) {
         if (collectionIDList.size() == 0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏不存在"));
         if (favoriteID == null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
-        return service.deleteCollection(favoriteID, collectionIDList);
+        return service.removeCollection(favoriteID, collectionIDList);
     }
 
     //需要登录验证
@@ -76,10 +75,10 @@ public class HomepageAPIController {
 
     //需要登录验证
     @DeleteMapping("favorite")
-    public Result<String> deleteFavorite(@RequestParam String username, @RequestParam Long favoriteID) {
+    public Result<String> removeFavorite(@RequestParam String username, @RequestParam Long favoriteID) {
         if (username.isEmpty()) return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
         if (favoriteID == null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
-        return service.deleteFavorite(username, favoriteID);
+        return service.removeFavorite(username, favoriteID);
     }
 
     //需要登录验证
