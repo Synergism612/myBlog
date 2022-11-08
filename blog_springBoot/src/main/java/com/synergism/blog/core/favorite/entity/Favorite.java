@@ -47,4 +47,10 @@ public class Favorite {
         this.annotation = annotation;
         this.ifPrivate = ifPrivate;
     }
+
+    public void update(String name, String annotation, Integer ifPrivate) {
+        this.name = name;
+        this.annotation = annotation;
+        this.ifPrivate = ifPrivate;
+    }
 }

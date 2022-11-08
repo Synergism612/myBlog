@@ -59,7 +59,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
             collectionMapper.bundle(collectionID, favoriteID);
             return true;
         } catch (Exception e) {
-            collectionMapper.delete(new LambdaQueryWrapper<Collection>().eq(Collection::getId, collectionID));
+            collectionMapper.deleteById(collectionID);
         }
         return false;
     }
@@ -73,7 +73,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     public boolean remove(Long favoriteID, List<Long> collectionIDList) {
         try {
             collectionMapper.unbundled(favoriteID, collectionIDList);
-            collectionMapper.delete(new LambdaQueryWrapper<Collection>().in(Collection::getId, collectionIDList));
+            collectionMapper.deleteBatchIds(collectionIDList);
             return true;
         } catch (Exception e) {
             return false;
@@ -96,7 +96,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
             mapper.bundle(favoriteID, userID);
             return true;
         } catch (Exception e) {
-            mapper.delete(new LambdaQueryWrapper<Favorite>().eq(Favorite::getId, favoriteID));
+            mapper.deleteById(favoriteID);
         }
         return false;
     }
@@ -105,7 +105,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     public boolean remove(Long userID, Long favoriteID) {
         try {
             mapper.unbundled(userID,favoriteID);
-            mapper.delete(new LambdaQueryWrapper<Favorite>().eq(Favorite::getId,favoriteID));
+            mapper.deleteById(favoriteID);
             return true;
         } catch (Exception e) {
             return false;
