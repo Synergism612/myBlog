@@ -48,7 +48,7 @@ public class PandectAPIController {
     }
 
     /**
-     * 创作页面获取分类接口
+     * 文章专栏获取分类接口
      * @param username 账号
      * @return 分类列表
      */
@@ -58,7 +58,7 @@ public class PandectAPIController {
     }
 
     /**
-     * 创作页面获取标签接口
+     文章专栏获取标签接口
      * @param username 账号
      * @return 标签列表
      */
