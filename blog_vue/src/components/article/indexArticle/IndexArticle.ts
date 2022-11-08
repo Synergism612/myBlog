@@ -30,6 +30,10 @@ export default class IndexArticle {
   /**文章总数*/
   total: number;
 
+  updateWriteShow: boolean;
+  articleID: number | null;
+  deleteArticleShow: boolean;
+  articleIDList: Array<number>;
   constructor() {
     this.username = store.getters.getUser.username;
     this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
@@ -40,6 +44,10 @@ export default class IndexArticle {
     this.articleOrderBy = this.articleSort[0];
     this.articleInformationList = [new ArticleInformation()];
     this.total = 0;
+    this.updateWriteShow = false;
+    this.articleID = null;
+    this.deleteArticleShow = false;
+    this.articleIDList = [];
   }
 
   /**

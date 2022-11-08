@@ -18,6 +18,29 @@
         </el-col>
       </el-row>
     </transition>
+
+    <transition
+      appear
+      appear-active-class="animate__animated animate__backInLeft"
+    >
+      <el-row class="tool" v-if="isMy === true">
+        <el-col :span="24">
+          <span>文章管理：</span>
+          <span class="click" @click="write">
+            <font-awesome-icon :icon="['fas', 'pen']" />
+            创作
+          </span>
+          <span class="click" @click="updateWriteShow = true">
+            <font-awesome-icon :icon="['fas', 'edit']" />
+            修改
+          </span>
+          <span class="click" @click="deleteArticleShow = true">
+            <font-awesome-icon :icon="['fas', 'trash']" />
+            删除
+          </span>
+        </el-col>
+      </el-row>
+    </transition>
     <div>
       <Article
         v-if="refresh"
@@ -33,6 +56,73 @@
   </div>
 
   <div v-if="total <= 0" style="text-align: center">没有文章</div>
+
+  <el-dialog v-model="updateWriteShow" :show-close="false" destroy-on-close>
+    <template #header>
+      <div class="my-header">
+        <div class="close">
+          <span class="title">要修改的文章</span>
+          <span @click="updateWriteShow = false" class="click rotate">
+            <font-awesome-icon :icon="['fas', 'times']" />
+          </span>
+        </div>
+      </div>
+    </template>
+    <el-row justify="space-around" align="middle">
+      <el-col :span="24">
+        <el-select
+          v-model="articleID"
+          placeholder="您可以输入筛选关键字"
+          filterable
+        >
+          <el-option
+            v-for="article in articleInformationList"
+            :key="article.id"
+            :label="article.title"
+            :value="article.id"
+          />
+        </el-select>
+      </el-col>
+      <el-col :span="24" class="button">
+        <span @click="update" class="click">修改</span>
+        <span @click="updateWriteShow = false" class="click">取消</span>
+      </el-col>
+    </el-row>
+  </el-dialog>
+
+  <el-dialog v-model="deleteArticleShow" :show-close="false" destroy-on-close>
+    <template #header>
+      <div class="my-header">
+        <div class="close">
+          <span class="title">要删除的文章</span>
+          <span @click="deleteArticleShow = false" class="click rotate">
+            <font-awesome-icon :icon="['fas', 'times']" />
+          </span>
+        </div>
+      </div>
+    </template>
+    <el-row justify="space-around" align="middle">
+      <el-col :span="24">
+        <el-select
+          v-model="articleIDList"
+          placeholder="您可以输入筛选关键字"
+          filterable
+          :multiple="true"
+        >
+          <el-option
+            v-for="article in articleInformationList"
+            :key="article.id"
+            :label="article.title"
+            :value="article.id"
+          />
+        </el-select>
+      </el-col>
+      <el-col :span="24" class="button">
+        <span @click="remove" class="click">确定删除</span>
+        <span @click="deleteArticleShow = false" class="click">取消</span>
+      </el-col>
+    </el-row>
+  </el-dialog>
 </template>
 
 <script lang="ts">
@@ -42,6 +132,7 @@ import Article from "src/components/article/Article.vue";
 import StringUtil from "src/utils/StringUtil";
 import Message from "src/utils/MessageUtil";
 import { useRouter } from "vue-router";
+import { api } from "src/api/api";
 export default defineComponent({
   setup() {
     const viewData = reactive(new IndexArticle());
@@ -117,6 +208,35 @@ export default defineComponent({
       });
     };
 
+    const write = (): void => {
+      router.push({
+        name: "Write",
+      });
+    };
+
+    const update = (): void => {
+      if (viewData.articleID || 0 > 0) {
+        router.push({
+          name: "Write",
+          params: {
+            id: viewData.articleID,
+          },
+        });
+      } else {
+        Message.warningMessage("无效的选择");
+      }
+    };
+
+    const remove = (): void => {
+      api
+        .removeIndexArticle(viewData.username, viewData.articleIDList)
+        .then((): void => {
+          Message.successMessage("删除成功");
+          viewData.deleteArticleShow = false;
+          viewData.getPagination();
+        });
+    };
+
     onMounted((): void => {
       viewData.getPagination();
     });
@@ -130,6 +250,9 @@ export default defineComponent({
       pagination,
       classifyClick,
       tagClick,
+      write,
+      update,
+      remove,
     };
   },
   components: {

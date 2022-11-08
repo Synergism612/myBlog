@@ -24,6 +24,14 @@
                     <span class="click" @click="toContent(article.id)">
                       {{ article.title }}
                     </span>
+                    <span class="lock" v-if="article.ifPrivate === 1">
+                      <font-awesome-icon :icon="['fas', 'lock']" />
+                      私密
+                    </span>
+                    <span class="lock" v-if="article.ifPrivate === 0">
+                      <font-awesome-icon :icon="['fas', 'unlock']" />
+                      公开
+                    </span>
                   </el-col>
                 </el-row>
                 <el-row class="synopsis">
