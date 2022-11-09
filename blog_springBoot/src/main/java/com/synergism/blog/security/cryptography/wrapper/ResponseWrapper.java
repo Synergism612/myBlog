@@ -13,7 +13,6 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     private final PrintWriter printWriter = new PrintWriter(outputStream);
 
 
-
     public ResponseWrapper(HttpServletResponse response) {
         super(response);
     }
@@ -55,7 +54,12 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     }
 
     public String getTextContent() {
-        flush();
-        return outputStream.toString();
+        try {
+            flush();
+            //解决打包后输出乱码问题
+            return outputStream.toString("UTF-8");
+        }catch (Exception e){
+            return "响应输出流解码失败";
+        }
     }
 }
