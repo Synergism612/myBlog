@@ -1,5 +1,5 @@
 <template>
-  <div v-if="total > 0" class="pandectArticleBox">
+  <div class="pandectArticleBox">
     <!-- 文章排序 -->
     <transition
       appear
@@ -18,7 +18,7 @@
         </el-col>
       </el-row>
     </transition>
-    <div>
+    <div v-if="total > 0">
       <Article
         v-if="refresh"
         v-model:dataList="articleInformationList"
@@ -36,14 +36,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  PropType,
-  reactive,
-  toRefs,
-  watchEffect,
-} from "vue";
+import { defineComponent, PropType, reactive, toRefs, watchEffect } from "vue";
 import PandectArticle from "./PandectArticle";
 import Article from "src/components/article/Article.vue";
 import StringUtil from "src/utils/StringUtil";
