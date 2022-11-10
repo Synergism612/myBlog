@@ -3,7 +3,9 @@ package com.synergism.blog.api.writeAPI.service;
 
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
 import com.synergism.blog.core.article.entity.ArticleInformation;
+import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
+import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.result.Result;
 
@@ -13,17 +15,15 @@ public interface writeAPIService {
 
     /**
      * 获取分类
-     * @param username 账号
      * @return 分类列表
      */
-    Result<List<ClassifyInformation>> getClassifyList(String username);
+    Result<List<Classify>> getClassifyList();
 
     /**
      * 获取标签
-     * @param username 账号
      * @return 标签列表
      */
-    Result<List<TagInformation>> getTagList(String username);
+    Result<List<Tag>> getTagList();
 
     /**
      * 获取文章

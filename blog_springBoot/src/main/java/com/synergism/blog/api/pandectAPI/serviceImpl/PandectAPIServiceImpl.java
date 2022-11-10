@@ -4,8 +4,9 @@ import com.synergism.blog.api.pandectAPI.service.PandectAPIService;
 import com.synergism.blog.core.article.entity.Pagination;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.core.article.service.ArticleService;
-import com.synergism.blog.core.classify.entity.ClassifyInformation;
+import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.service.ClassifyService;
+import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.result.Result;
@@ -29,24 +30,24 @@ public class PandectAPIServiceImpl implements PandectAPIService {
     }
 
     @Override
-    public Result<List<ClassifyInformation>> getClassifyList(String username) {
-        List<ClassifyInformation> result;
+    public Result<List<Classify>> getClassifyList(String username) {
+        List<Classify> result;
         if (username.isEmpty()){
-            result = classifyService.getAllClassifyInformationList();
+            result = classifyService.list();
 
         }else{
-            result = classifyService.getClassifyInformationListByUsername(username);
+            result = classifyService.getUsedListByUsername(username);
         }
         return Result.success(result.size()==0?null:result);
     }
 
     @Override
-    public Result<List<TagInformation>> getTagList(String username) {
-        List<TagInformation> result;
+    public Result<List<Tag>> getTagList(String username) {
+        List<Tag> result;
         if (username.isEmpty()){
-            result = tagService.getAllTagInformationList();
+            result = tagService.list();
         }else{
-            result = tagService.getTagInformationListByUsername(username);
+            result = tagService.getUsedListByUsername(username);
         }
         return Result.success(result.size()==0?null:result);
     }

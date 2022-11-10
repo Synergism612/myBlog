@@ -39,38 +39,32 @@ public class IndexAPIServiceImpl implements IndexAPIService {
     }
 
     @Override
-    public Result<List<TagInformation>> getIndexTag(String username) {
+    public Result<List<TagInformation>> getIndexTag() {
         List<TagInformation> result;
-        if (username.isEmpty())
-            result = tagService.getAllTagInformationList();
-        else
-            result = tagService.getTagInformationListByUsername(username);
-        if (result!=null){
+        result = tagService.getAllTagInformationList();
+        if (result != null) {
             result = result.subList(0, Math.min(20, result.size()));
         }
         return Result.success(result);
     }
 
     @Override
-    public Result<List<ClassifyInformation>> getIndexClassify(String username) {
+    public Result<List<ClassifyInformation>> getIndexClassify() {
         List<ClassifyInformation> result;
-        if (username.isEmpty())
-            result = classifyService.getAllClassifyInformationList();
-        else
-            result = classifyService.getClassifyInformationListByUsername(username);
-        if (result != null){
-            result = result.subList(0,Math.min(20,result.size()));
+        result = classifyService.getAllClassifyInformationList();
+        if (result != null) {
+            result = result.subList(0, Math.min(20, result.size()));
         }
         return Result.success(result);
     }
 
     @Override
     public Result<Pagination> getArticle(int currentPage, int pageSize, ArticleSort articleSort, String username) {
-        return Result.success(articleService.getPagination(currentPage,pageSize,articleSort,username,"",null,null));
+        return Result.success(articleService.getPagination(currentPage, pageSize, articleSort, username, "", null, null));
     }
 
     @Override
-    public Result<String> removeArticle(String username,List<Long> articleIDList) {
+    public Result<String> removeArticle(String username, List<Long> articleIDList) {
         long userID = userService.getID(username);
         if (!articleService.isExist(articleIDList)) return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         if (userID != -1) {

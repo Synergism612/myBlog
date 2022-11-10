@@ -19,24 +19,16 @@ public interface IndexAPIService {
     Result<UserInformation> getIndexUserInfo();
 
     /**
-     * 首页显示的标签云
-     * 通过判断传入的用户名是否为空
-     * 为空返回全部列表前20个
-     * 反之返回用户名下的标签列表前20个
-     * @param username 用户名
+     * 首页显示的标签云、
      * @return 标签列表
      */
-    Result<List<TagInformation>> getIndexTag(String username);
+    Result<List<TagInformation>> getIndexTag();
 
     /**
      * 首页显示的分类云
-     * 与标签云一致，判断用户名传入是否为空
-     * 为空返回全部列表前20个
-     * 反之返回用户名下的分类列表前20个
-     * @param username 用户名
      * @return 分类列表
      */
-    Result<List<ClassifyInformation>> getIndexClassify(String username);
+    Result<List<ClassifyInformation>> getIndexClassify();
 
     /**
      * 首页文章获取接口

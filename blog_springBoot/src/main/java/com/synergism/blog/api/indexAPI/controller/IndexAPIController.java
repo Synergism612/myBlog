@@ -58,8 +58,8 @@ public class IndexAPIController {
      * @return 结果[标签列表]
      */
     @GetMapping("/tag")
-    public Result<List<TagInformation>> tag(@RequestParam String username) {
-        return service.getIndexTag(username);
+    public Result<List<TagInformation>> tag() {
+        return service.getIndexTag();
     }
 
     /**
@@ -68,8 +68,8 @@ public class IndexAPIController {
      * @return 结果[分类列表]
      */
     @GetMapping("/classify")
-    public Result<List<ClassifyInformation>> classify(@RequestParam String username) {
-        return service.getIndexClassify(username);
+    public Result<List<ClassifyInformation>> classify() {
+        return service.getIndexClassify();
     }
 
 

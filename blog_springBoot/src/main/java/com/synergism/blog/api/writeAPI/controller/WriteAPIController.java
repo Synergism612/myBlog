@@ -3,7 +3,9 @@ package com.synergism.blog.api.writeAPI.controller;
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
 import com.synergism.blog.api.writeAPI.service.writeAPIService;
 import com.synergism.blog.core.article.entity.ArticleInformation;
+import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
+import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
@@ -28,28 +30,20 @@ public class WriteAPIController {
 
     /**
      * 创作页面获取分类接口
-     * @param username 账号
      * @return 分类列表
      */
     @GetMapping("classify")
-    public Result<List<ClassifyInformation>> getClassifyList(@RequestParam String username){
-        if (username.isEmpty()){
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户名不能为空"));
-        }
-        return service.getClassifyList(username);
+    public Result<List<Classify>> getClassifyList(){
+        return service.getClassifyList();
     }
 
     /**
      * 创作页面获取标签接口
-     * @param username 账号
      * @return 标签列表
      */
     @GetMapping("tag")
-    public Result<List<TagInformation>> getTag(@RequestParam String username){
-        if (username.isEmpty()){
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
-        }
-        return service.getTagList(username);
+    public Result<List<Tag>> getTag(){
+        return service.getTagList();
     }
 
     /**

@@ -5,8 +5,10 @@ import com.synergism.blog.api.writeAPI.service.writeAPIService;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.article.service.ArticleService;
+import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.classify.service.ClassifyService;
+import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.core.user.service.UserService;
@@ -35,13 +37,13 @@ public class WriteAPIServiceImpl implements writeAPIService {
     }
 
     @Override
-    public Result<List<ClassifyInformation>> getClassifyList(String username) {
-        return Result.success(classifyService.getClassifyInformationListByUsername(username));
+    public Result<List<Classify>> getClassifyList() {
+        return Result.success(classifyService.list());
     }
 
     @Override
-    public Result<List<TagInformation>> getTagList(String username) {
-        return Result.success(tagService.getTagInformationListByUsername(username));
+    public Result<List<Tag>> getTagList() {
+        return Result.success(tagService.list());
     }
 
     @Override

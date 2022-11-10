@@ -4,8 +4,8 @@ package com.synergism.blog.api.pandectAPI.controller;
 import com.synergism.blog.api.pandectAPI.service.PandectAPIService;
 import com.synergism.blog.core.article.entity.Pagination;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
-import com.synergism.blog.core.classify.entity.ClassifyInformation;
-import com.synergism.blog.core.tag.entity.TagInformation;
+import com.synergism.blog.core.classify.entity.Classify;
+import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.apache.commons.lang3.EnumUtils;
@@ -53,7 +53,7 @@ public class PandectAPIController {
      * @return 分类列表
      */
     @GetMapping("classify")
-    public Result<List<ClassifyInformation>> getClassifyList(@RequestParam String username){
+    public Result<List<Classify>> getClassifyList(@RequestParam String username){
         return service.getClassifyList(username);
     }
 
@@ -63,7 +63,7 @@ public class PandectAPIController {
      * @return 标签列表
      */
     @GetMapping("tag")
-    public Result<List<TagInformation>> getTag(@RequestParam String username){
+    public Result<List<Tag>> getTag(@RequestParam String username){
         return service.getTagList(username);
     }
 }
