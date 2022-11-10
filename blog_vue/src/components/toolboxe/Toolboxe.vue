@@ -97,7 +97,6 @@ export default defineComponent({
       viewData.show = false;
       var timer = setInterval(() => {
         if (html.scrollTop <= 0) {
-          viewData.show = true;
           clearInterval(timer);
         }
         html.scrollTop = html.scrollTop - screen / 2;
