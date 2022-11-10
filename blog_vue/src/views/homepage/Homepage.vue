@@ -245,7 +245,7 @@
                             </el-collapse-item>
                           </el-collapse>
                         </el-tab-pane>
-                        <el-tab-pane label="我的关注" name="second">
+                        <el-tab-pane label="我的分类与标签" name="second">
                           Config
                         </el-tab-pane>
                         <el-tab-pane label="我的粉丝" name="third">
@@ -302,7 +302,7 @@
               <el-form-item label="注释">
                 <el-input clearable v-model="favoriteForm.annotation" />
               </el-form-item>
-              <el-form-item label="">
+              <el-form-item label="隐私设置">
                 <el-radio-group v-model="favoriteForm.ifPrivate">
                   <el-radio :label="0">公开</el-radio>
                   <el-radio :label="1">私密</el-radio>
@@ -327,7 +327,6 @@ import Enshrine from "src/components/enshrine/Enshrine.vue";
 import Message from "src/utils/MessageUtil";
 import { api } from "src/api/api";
 import FavoriteInformation from "src/model/favorite/FavoriteInformation";
-import UserInformationForm from "src/api/entity/UserInformationForm";
 
 export default defineComponent({
   setup() {
