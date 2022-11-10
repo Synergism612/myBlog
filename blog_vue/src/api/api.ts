@@ -158,27 +158,23 @@ export class api {
 
   /**
    * 首页标签接口
-   * @param username 用户名
    * @returns Result[标签列表]
    */
-  static getIndexTag(username: string): Promise<AxiosResponse> {
+  static getIndexTag(): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/index/tag",
       method: "get",
-      params: { username: username || "" },
     });
   }
 
   /**
    * 首页分类接口
-   * @param username 用户名
    * @returns Result[分类列表]
    */
-  static getIndexClassify(username: string): Promise<AxiosResponse> {
+  static getIndexClassify(): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/index/classify",
       method: "get",
-      params: { username: username || "" },
     });
   }
 
@@ -505,30 +501,22 @@ export class api {
   }
   /**
    * 创作页面用户分类获取接口
-   * @param username 账号
    * @returns 分类列表
    */
-  static getWriteClassify(username: string): Promise<AxiosResponse> {
+  static getWriteClassify(): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/write/classify",
       method: "get",
-      params: {
-        username: username,
-      },
     });
   }
   /**
    * 创作页面用户标签获取接口
-   * @param username 账号
    * @returns 标签列表
    */
-  static getWriteTag(username: string): Promise<AxiosResponse> {
+  static getWriteTag(): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/write/tag",
       method: "get",
-      params: {
-        username: username,
-      },
     });
   }
 
