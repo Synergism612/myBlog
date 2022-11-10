@@ -1,13 +1,13 @@
+import Classify from "src/model/classify/Classify";
 import { api } from "src/api/api";
-import ClassifyInformation from "src/model/classify/ClassifyInformation";
-import TagInformation from "src/model/tag/TagInformation";
+import Tag from "src/model/tag/Tag";
 import { store } from "src/store";
 
 export default class Pandect {
   keyword: string;
 
-  classifyList: Array<ClassifyInformation>;
-  tagList: Array<TagInformation>;
+  classifyList: Array<Classify>;
+  tagList: Array<Tag>;
 
   classifyIDList: Array<number>;
   tagIDList: Array<number>;
@@ -15,8 +15,8 @@ export default class Pandect {
   constructor() {
     this.keyword = "";
 
-    this.classifyList = [new ClassifyInformation()];
-    this.tagList = [new TagInformation()];
+    this.classifyList = [new Classify()];
+    this.tagList = [new Tag()];
 
     this.classifyIDList = [-1];
     this.tagIDList = [-1];

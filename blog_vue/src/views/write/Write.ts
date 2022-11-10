@@ -1,12 +1,11 @@
 import { api } from "src/api/api";
 import ArticleForm from "src/api/entity/ArticleForm";
-import ClassifyInformation from "src/model/classify/ClassifyInformation";
-import TagInformation from "src/model/tag/TagInformation";
+import Classify from "src/model/classify/Classify";
+import Tag from "src/model/tag/Tag";
 import { store } from "src/store";
 import StringUtil from "src/utils/StringUtil";
 import { ToolbarNames } from "md-editor-v3";
 import ArticleInformation from "src/model/article/ArticleInformation";
-import Tag from "src/model/tag/Tag";
 
 export default class Write {
   username: string;
@@ -20,28 +19,28 @@ export default class Write {
   articleInformation: ArticleInformation;
 
   /**分类列表 */
-  classifyInformationList: Array<ClassifyInformation>;
+  classifyInformationList: Array<Classify>;
   /**标签列表*/
-  tagInformationList: Array<TagInformation>;
+  tagInformationList: Array<Tag>;
 
   constructor() {
     this.username = store.getters.getUser.username;
     this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
     this.articleForm = new ArticleForm();
     this.toolbars = toolbars as Array<ToolbarNames>;
-    this.classifyInformationList = [new ClassifyInformation()];
-    this.tagInformationList = [new TagInformation()];
+    this.classifyInformationList = [new Classify()];
+    this.tagInformationList = [new Tag()];
     this.articleInformation = new ArticleInformation();
   }
 
   public init(): void {
     const classify = () => {
-      api.getWriteClassify(this.username).then(({ data }) => {
+      api.getWriteClassify().then(({ data }) => {
         this.classifyInformationList = data;
       });
     };
     const tag = () => {
-      api.getWriteTag(this.username).then(({ data }) => {
+      api.getWriteTag().then(({ data }) => {
         this.tagInformationList = data;
       });
     };

@@ -37,13 +37,13 @@ export default class Index {
     };
 
     const tags = (): void => {
-      api.getIndexTag(this.userInfo.username).then(({ data }): void => {
+      api.getIndexTag().then(({ data }): void => {
         this.tagInformationList = data;
       });
     };
 
     const classify = (): void => {
-      api.getIndexClassify(this.userInfo.username).then(({ data }): void => {
+      api.getIndexClassify().then(({ data }): void => {
         this.classifyInformationList = data;
       });
     };
