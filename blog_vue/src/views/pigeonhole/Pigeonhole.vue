@@ -34,30 +34,58 @@
                 <el-col :xs="24" :sm="18" :md="18" :span="18">
                   <div class="left">
                     <el-timeline>
-                      <el-timeline-item timestamp="2018/4/12" placement="top">
-                        <el-card>
-                          <h4>更新 Github 模板</h4>
-                          <p>王小虎 提交于 2018/4/12 20:46</p>
-                        </el-card>
+                      <el-timeline-item
+                        v-for="archive in archiveList"
+                        :key="archive.month"
+                        :timestamp="archive.month"
+                        placement="top"
+                      >
+                        <el-timeline :id="'archive_' + archive.month">
+                          <el-timeline-item
+                            class="article"
+                            v-for="article in archive.articleList"
+                            :key="article.id"
+                            :timestamp="article.creationTime"
+                            placement="top"
+                          >
+                            <div class="frame">
+                              <span>{{ article.title }}</span>
+                              <p>{{ article.synopsis }}</p>
+                            </div>
+                          </el-timeline-item>
+                          <el-timeline-item
+                            timestamp="本月没有更多了"
+                            placement="top"
+                          />
+                        </el-timeline>
                       </el-timeline-item>
-                      <el-timeline-item timestamp="2018/4/3" placement="top">
-                        <el-card>
-                          <h4>更新 Github 模板</h4>
-                          <p>王小虎 提交于 2018/4/3 20:46</p>
-                        </el-card>
-                      </el-timeline-item>
-                      <el-timeline-item timestamp="2018/4/2" placement="top">
-                        <el-card>
-                          <h4>更新 Github 模板</h4>
-                          <p>王小虎 提交于 2018/4/2 20:46</p>
-                        </el-card>
-                      </el-timeline-item>
+                      <el-timeline-item
+                        timestamp="没有更多了"
+                        placement="top"
+                      />
                     </el-timeline>
                   </div>
                 </el-col>
                 <!-- 右侧 -->
                 <el-col :xs="0" :sm="6" :md="6" :span="6">
-                  <div class="right">右侧</div>
+                  <div class="right">
+                    <el-timeline>
+                      <el-timeline-item
+                        v-for="month in monthList"
+                        :key="month"
+                        placement="top"
+                        center
+                      >
+                        <span @click="toDate(month)" class="click">{{
+                          month
+                        }}</span>
+                      </el-timeline-item>
+                      <el-timeline-item
+                        timestamp="没有更多了"
+                        placement="top"
+                      />
+                    </el-timeline>
+                  </div>
                 </el-col>
               </el-row>
             </el-col>
@@ -77,12 +105,20 @@ export default defineComponent({
     /**数据仓 */
     const viewData = reactive(new Pigeonhole());
 
+    const toDate = (month: string): void => {
+      const scrollDom = document.getElementById("archive_" + month);
+      if (scrollDom !== null) {
+        scrollDom.scrollIntoView();
+      }
+    };
+
     onMounted(() => {
       viewData.init();
     });
 
     return {
       ...toRefs(viewData),
+      toDate,
     };
   },
   components: { Menu },
