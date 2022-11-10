@@ -6,7 +6,7 @@ import Content from "src/views/content/Content.vue";
 import Index from "src/views/index/Index.vue";
 import Login from "src/views/login/Login.vue";
 import Register from "src/views/register/Register.vue";
-import Archive from "src/views/archive/Archive.vue";
+import Pigeonhole from "src/views/pigeonhole/Pigeonhole.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -17,9 +17,9 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/blog/archive",
-    name: "Archive",
-    component: Archive,
+    path: "/blog/pigeonhole",
+    name: "Pigeonhole",
+    component: Pigeonhole,
   },
   {
     path: "/blog/write/:id?",

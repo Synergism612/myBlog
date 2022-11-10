@@ -1,5 +1,5 @@
 <template>
-  <div class="archiveBox">
+  <div class="pigeonholeBox">
     <Menu></Menu>
     <div class="container">
       <el-container>
@@ -34,21 +34,13 @@
                 <el-col :xs="24" :sm="18" :md="18" :span="18">
                   <div class="left">
                     <el-timeline>
-                      <el-timeline-item
-                        color="red"
-                        timestamp="2018/4/12"
-                        placement="top"
-                      >
+                      <el-timeline-item timestamp="2018/4/12" placement="top">
                         <el-card>
                           <h4>更新 Github 模板</h4>
                           <p>王小虎 提交于 2018/4/12 20:46</p>
                         </el-card>
                       </el-timeline-item>
-                      <el-timeline-item
-                        color="red"
-                        timestamp="2018/4/3"
-                        placement="top"
-                      >
+                      <el-timeline-item timestamp="2018/4/3" placement="top">
                         <el-card>
                           <h4>更新 Github 模板</h4>
                           <p>王小虎 提交于 2018/4/3 20:46</p>
@@ -78,12 +70,12 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Menu from "src/components/menu/Menu.vue";
-import Archive from "./Archive";
+import Pigeonhole from "./Pigeonhole";
 
 export default defineComponent({
   setup() {
     /**数据仓 */
-    const viewData = reactive(new Archive());
+    const viewData = reactive(new Pigeonhole());
 
     onMounted(() => {
       viewData.init();
@@ -97,5 +89,5 @@ export default defineComponent({
 });
 </script>
 <style lang="less">
-@import url("./Archive.less");
+@import url("./Pigeonhole.less");
 </style>
