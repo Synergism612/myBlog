@@ -6,6 +6,7 @@ import Content from "src/views/content/Content.vue";
 import Index from "src/views/index/Index.vue";
 import Login from "src/views/login/Login.vue";
 import Register from "src/views/register/Register.vue";
+import Archive from "src/views/archive/Archive.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,6 +15,11 @@ const routes: Array<RouteRecordRaw> = [
     redirect: {
       name: "Index",
     },
+  },
+  {
+    path: "/blog/archive",
+    name: "Archive",
+    component: Archive,
   },
   {
     path: "/blog/write/:id?",
