@@ -36,4 +36,11 @@ public interface TagService extends IService<Tag> {
      */
     List<Tag> getListByArticleID(long articleID);
 
+    /**
+     * 获取该用户使用过的标签
+     * @param username 账号
+     * @return 标签列表
+     */
+    List<Tag> getUsedListByUsername(String username);
+
 }

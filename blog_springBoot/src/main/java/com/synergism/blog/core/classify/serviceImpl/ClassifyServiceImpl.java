@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -44,5 +43,11 @@ public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify> i
     @Override
     public Classify getOneByArticleID(long articleID) {
         return mapper.selectOneByArticleID(articleID);
+    }
+
+    @Override
+    public List<Classify> getUsedListByUsername(String username) {
+        List<Classify> result = mapper.selectUsedListByUsername(username);
+        return result.size()==0?null:result;
     }
 }

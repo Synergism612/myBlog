@@ -34,4 +34,11 @@ public interface ClassifyService extends IService<Classify> {
      * @return 分类
      */
     Classify getOneByArticleID(long articleID);
+
+    /**
+     * 获取该用户使用过的分类
+     * @param username 账号
+     * @return 分类列表
+     */
+    List<Classify> getUsedListByUsername(String username);
 }

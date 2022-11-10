@@ -74,4 +74,24 @@
                  u.nickname
         order by article_count desc
     </select>
+    <select id="selectUsedListByUsername" resultType="com.synergism.blog.core.classify.entity.Classify">
+        select c.id,
+               c.name,
+               c.annotation,
+               c.creation_time,
+               c.modify_time
+        from classify c
+                 left join
+             article_classify ac
+             on
+                 c.id = ac.classify_id
+                 left join
+             user_article ua
+             on
+                 ac.article_id = ua.article_id
+                 join `user` u
+                      on
+                          ua.user_id = u.id
+        where u.username = #{username}
+    </select>
 </mapper>

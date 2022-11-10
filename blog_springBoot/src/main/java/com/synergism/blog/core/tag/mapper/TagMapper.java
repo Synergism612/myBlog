@@ -38,4 +38,10 @@ public interface TagMapper extends BaseMapper<Tag> {
      */
     List<Tag> selectListByArticleID(long articleID);
 
+    /**
+     * 查询该用户使用过的标签
+     * @param username 账号
+     * @return 标签列表
+     */
+    List<Tag> selectUsedListByUsername(String username);
 }

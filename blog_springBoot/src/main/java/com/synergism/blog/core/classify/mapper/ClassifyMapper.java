@@ -37,4 +37,11 @@ public interface ClassifyMapper extends BaseMapper<Classify> {
      * @return 分类
      */
     Classify selectOneByArticleID(long articleID);
+
+    /**
+     * 查询该用户使用过的分类
+     * @param username 账号
+     * @return 分类列表
+     */
+    List<Classify> selectUsedListByUsername(String username);
 }

@@ -46,4 +46,10 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         List<Tag> result = mapper.selectListByArticleID(articleID);
         return result.size()==0?null:result;
     }
+
+    @Override
+    public List<Tag> getUsedListByUsername(String username) {
+        List<Tag> result = mapper.selectUsedListByUsername(username);
+        return result.size()==0?null:result;
+    }
 }

@@ -24,22 +24,19 @@
                  t.modify_time,
                  u.username,
                  u.nickname
-                order by article_count desc
+        order by article_count desc
     </select>
     <select id="selectListByArticleID" resultType="com.synergism.blog.core.tag.entity.Tag">
-        select
-            t.id ,
-            t.name ,
-            t.annotation ,
-            t.creation_time ,
-            t.modify_time
-        from
-            article_tag atg
-                join
-            tag t
-            on atg .tag_id = t.id
-        where
-            atg.article_id  = #{articleID}
+        select t.id,
+               t.name,
+               t.annotation,
+               t.creation_time,
+               t.modify_time
+        from article_tag atg
+                 join
+             tag t
+             on atg.tag_id = t.id
+        where atg.article_id = #{articleID}
     </select>
     <select id="selectTagInformationListByUsername"
             resultType="com.synergism.blog.core.tag.entity.TagInformation">
@@ -65,7 +62,26 @@
                  t.modify_time,
                  u.username,
                  u.nickname
-        order by
-            article_count desc
+        order by article_count desc
+    </select>
+    <select id="selectUsedListByUsername" resultType="com.synergism.blog.core.tag.entity.Tag">
+        select t.id,
+               t.name,
+               t.annotation,
+               t.creation_time,
+               t.modify_time
+        from tag t
+                 left join
+             article_tag atg
+             on
+                 t.id = atg.tag_id
+                 left join
+             user_article ua
+             on
+                 atg.article_id = ua.article_id
+                 join `user` u
+                      on
+                          ua.user_id = u.id
+        where u.username = #{username}
     </select>
 </mapper>
