@@ -46,7 +46,7 @@ export class api {
       console.log("err:\n" + err);
     }
   }
-  
+
   /**
    * 登录接口
    * @param username 用户名
@@ -557,6 +557,16 @@ export class api {
       url: "/api/blog/write/article",
       method: "post",
       data: articleForm,
+    });
+  }
+
+  static getPifeonholeArchive(username: string): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/pigeonhole/archive",
+      method: "get",
+      params: {
+        username: username || "",
+      },
     });
   }
 }
