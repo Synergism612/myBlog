@@ -1,5 +1,6 @@
 package com.synergism.blog.core.article.mapper;
 
+import com.synergism.blog.core.article.entity.Archive;
 import com.synergism.blog.core.article.entity.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.synergism.blog.core.article.entity.ArticleInformation;
@@ -69,4 +70,8 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @return 文章信息
      */
     ArticleInformation selectArticleInformationByArticleID(long articleID);
+
+    List<Archive> selectArchiveByUserID(long userID);
+
+    List<Archive> selectPublicArchive();
 }

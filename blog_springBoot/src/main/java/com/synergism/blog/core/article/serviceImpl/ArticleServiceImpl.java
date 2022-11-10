@@ -1,10 +1,7 @@
 package com.synergism.blog.core.article.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.synergism.blog.core.article.entity.Article;
-import com.synergism.blog.core.article.entity.ArticleInformation;
-import com.synergism.blog.core.article.entity.ArticleTagNominate;
-import com.synergism.blog.core.article.entity.Pagination;
+import com.synergism.blog.core.article.entity.*;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.core.article.mapper.ArticleMapper;
 import com.synergism.blog.core.article.service.ArticleService;
@@ -194,6 +191,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public ArticleInformation getArticleInformationByID(long articleID) {
         return mapper.selectArticleInformationByArticleID(articleID);
+    }
+
+    @Override
+    public List<Archive> getPublicArchive() {
+        List<Archive> result = mapper.selectPublicArchive();
+        return result.size()==0?null:result;
+    }
+
+    @Override
+    public List<Archive> getArchiveByUserID(long userID) {
+        List<Archive> result = mapper.selectArchiveByUserID(userID);
+        return result.size()==0?null:result;
     }
 
 }

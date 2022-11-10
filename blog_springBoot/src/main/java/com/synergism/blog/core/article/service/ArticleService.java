@@ -1,10 +1,7 @@
 package com.synergism.blog.core.article.service;
 
-import com.synergism.blog.core.article.entity.Article;
+import com.synergism.blog.core.article.entity.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.synergism.blog.core.article.entity.ArticleInformation;
-import com.synergism.blog.core.article.entity.ArticleTagNominate;
-import com.synergism.blog.core.article.entity.Pagination;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
 
 import java.util.List;
@@ -151,4 +148,16 @@ public interface ArticleService extends IService<Article> {
      * @return 文章信息
      */
     ArticleInformation getArticleInformationByID(long articleID);
+
+    /**
+     * 查询公开的归档信息
+     * @return 归档信息列表
+     */
+    List<Archive> getPublicArchive();
+    /**
+     * 查询用户下的归档信息
+     * @param userID 用户id
+     * @return 归档信息列表
+     */
+    List<Archive> getArchiveByUserID(long userID);
 }
