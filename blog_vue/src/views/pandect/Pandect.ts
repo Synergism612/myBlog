@@ -1,3 +1,5 @@
+import Message from "src/utils/MessageUtil";
+import StringUtil from "src/utils/StringUtil";
 import Classify from "src/model/classify/Classify";
 import { api } from "src/api/api";
 import Tag from "src/model/tag/Tag";
@@ -55,4 +57,22 @@ export default class Pandect {
     classify();
     tag();
   }
+
+  public checkKeyword = (): boolean => {
+    if (StringUtil.checkStringIfEmpty(this.keyword)) {
+      return true;
+    } else {
+      if (StringUtil.checkStringIfUnsafe(this.keyword)) {
+        Message.warningMessage("请键入合法字符");
+        return false;
+      } else {
+        if (this.keyword.length <= 30) {
+          return true;
+        } else {
+          Message.warningMessage("查询字段不能超过30字");
+          return false;
+        }
+      }
+    }
+  };
 }

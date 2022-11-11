@@ -130,7 +130,9 @@ export default defineComponent({
     const pandectArticle = ref();
 
     const search = (): void => {
-      pandectArticle.value.getPagination();
+      if (viewData.checkKeyword()) {
+        pandectArticle.value.getPagination();
+      }
     };
 
     const classifyClick = (id: number): void => {
