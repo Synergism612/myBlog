@@ -8,6 +8,7 @@ import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
+import com.synergism.blog.utils.StringUtil;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,15 @@ public class PandectAPIController {
     public Result<Pagination> getArticle(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam String articleSort, @RequestParam String username, @RequestParam String keyword, @RequestParam List<Long> classifyIDList, @RequestParam List<Long> tagIDList){
         if (!EnumUtils.isValidEnum(ArticleSort.class, articleSort)) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("排序字段错误"));
+        }
+        if (!keyword.isEmpty()){
+            if (StringUtil.checkStringIsUnsafe(keyword)){
+                return Result.error(CodeMsg.MESSAGE.fillArgs("请键入合法字符"));
+            }else{
+                if (keyword.length()>=30){
+                    return Result.error(CodeMsg.MESSAGE.fillArgs("查询字段不能超过30字"));
+                }
+            }
         }
         if (classifyIDList.get(0)==-1) classifyIDList = null;
         if (tagIDList.get(0)==-1) tagIDList = null;
