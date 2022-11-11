@@ -32,8 +32,8 @@ export default class StringUtil {
 
   /**
    * 检查传入的字符串是否存在不安全字符
-   *
    * @param str 字符串或者其它
+   * @returns 存在为真，反之为假
    */
   public static checkStringIfUnsafe(str: string): boolean {
     let count = 0;
