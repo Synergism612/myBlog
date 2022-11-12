@@ -294,7 +294,6 @@
               label-position="top"
               label-width="100px"
               :model="favoriteForm"
-              style="max-width: 460px"
             >
               <el-form-item label="名称">
                 <el-input clearable v-model="favoriteForm.name" />

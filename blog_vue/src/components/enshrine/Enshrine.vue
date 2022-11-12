@@ -23,7 +23,6 @@
             label-position="top"
             label-width="100px"
             :model="collectionForm"
-            style="max-width: 460px"
           >
             <el-form-item label="标题">
               <el-input v-model="collectionForm.title" />
