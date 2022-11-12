@@ -95,13 +95,14 @@ export default defineComponent({
         password: "",
       },
       // 校验规则设置
-      rules: {
-        username: [{ validator: checkUsername }],
-        password: [{ validator: checkPassword }],
-      },
       //去除红色星号
       hideRequiredAsterisk: false,
     });
+
+    const rules = {
+      username: [{ validator: checkUsername }],
+      password: [{ validator: checkPassword }],
+    };
 
     // 获得dom对象
     const loginFormRef = ref();
@@ -136,7 +137,7 @@ export default defineComponent({
     };
 
     // 返回页面所需
-    return { ...toRefs(viewData), login, loginFormRef, goRegister };
+    return { ...toRefs(viewData), login, loginFormRef, goRegister, rules };
   },
 
   // 组件导入
