@@ -28,52 +28,51 @@ public class PandectAPIController {
 
     /**
      * 文章专栏搜索文章获取接口
-     * @param currentPage 页数
-     * @param pageSize 页容
-     * @param articleSort 排序
-     * @param username 账号
-     * @param keyword 关键字
+     *
+     * @param currentPage    页数
+     * @param pageSize       页容
+     * @param articleSort    排序
+     * @param username       账号
+     * @param keyword        关键字
      * @param classifyIDList 分类列表
-     * @param tagIDList 标签列表
+     * @param tagIDList      标签列表
      * @return 分页后的文章信息
      */
     @GetMapping("article")
-    public Result<Pagination> getArticle(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam String articleSort, @RequestParam String username, @RequestParam String keyword, @RequestParam List<Long> classifyIDList, @RequestParam List<Long> tagIDList){
+    public Result<Pagination> getArticle(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam String articleSort, @RequestParam String username, @RequestParam String keyword, @RequestParam List<Long> classifyIDList, @RequestParam List<Long> tagIDList) {
         if (!EnumUtils.isValidEnum(ArticleSort.class, articleSort)) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("排序字段错误"));
         }
-        if (!keyword.isEmpty()){
-            if (StringUtil.checkStringIsUnsafe(keyword)){
-                return Result.error(CodeMsg.MESSAGE.fillArgs("请键入合法字符"));
-            }else{
-                if (keyword.length()>=30){
-                    return Result.error(CodeMsg.MESSAGE.fillArgs("查询字段不能超过30字"));
-                }
+        if (!keyword.isEmpty()) {
+            if (keyword.length() >= 30) {
+                return Result.error(CodeMsg.MESSAGE.fillArgs("查询字段不能超过30字"));
             }
         }
-        if (classifyIDList.get(0)==-1) classifyIDList = null;
-        if (tagIDList.get(0)==-1) tagIDList = null;
+        if (classifyIDList.get(0) == -1) classifyIDList = null;
+        if (tagIDList.get(0) == -1) tagIDList = null;
 
-        return service.getArticle(currentPage, pageSize, ArticleSort.valueOf(articleSort),username, keyword,classifyIDList,tagIDList);
+        return service.getArticle(currentPage, pageSize, ArticleSort.valueOf(articleSort), username, keyword, classifyIDList, tagIDList);
     }
 
     /**
      * 文章专栏获取分类接口
+     *
      * @param username 账号
      * @return 分类列表
      */
     @GetMapping("classify")
-    public Result<List<Classify>> getClassifyList(@RequestParam String username){
+    public Result<List<Classify>> getClassifyList(@RequestParam String username) {
         return service.getClassifyList(username);
     }
 
     /**
-     文章专栏获取标签接口
+     * 文章专栏获取标签接口
+     *
      * @param username 账号
      * @return 标签列表
      */
     @GetMapping("tag")
-    public Result<List<Tag>> getTag(@RequestParam String username){
+    public Result<List<Tag>> getTag(@RequestParam String username) {
         return service.getTagList(username);
     }
 }
