@@ -9,6 +9,7 @@ import com.synergism.blog.core.comment.mapper.CommentMapper;
 import com.synergism.blog.core.comment.service.CommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -93,18 +94,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public boolean save(String body, Long rootId, Long parentId, long articleID, long userID) {
+    @Transactional
+    public void save(String body, Long rootId, Long parentId, long articleID, long userID) {
         Comment comment = new Comment(body, rootId, parentId);
         mapper.insert(comment);
-        if (comment.getId() == null) return false;
-        long commentID = comment.getId();
-        try {
-            mapper.bundle(commentID, articleID, userID);
-            return true;
-        } catch (Exception e) {
-            mapper.deleteById(commentID);
-        }
-        return false;
+        mapper.bundle(comment.getId(), articleID, userID);
     }
 
     @Override

@@ -46,9 +46,8 @@ public interface CommentService extends IService<Comment> {
      * @param parentId 父评论id
      * @param articleID 文章id
      * @param userID 用户id
-     * @return 成功为真，反之为假
      */
-    boolean save(String body,Long rootId,Long parentId,long articleID,long userID);
+    void save(String body,Long rootId,Long parentId,long articleID,long userID);
 
     /**
      * 根据评论id判断是否存在
