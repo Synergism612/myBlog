@@ -3,6 +3,7 @@ package com.synergism.blog.exception;
 import com.synergism.blog.exception.custom.*;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +22,7 @@ public class GlobalException extends RuntimeException{
      */
     @ExceptionHandler(value =IllegalArgumentException.class)
     @ResponseBody
-    public Result<Object> IllegalArgumentException(IllegalArgumentException e){
+    public Result<String> IllegalArgumentException(IllegalArgumentException e){
         return Result.error(CodeMsg.BIND_ERROR.fillArgs(e.getMessage()));
     }
 
@@ -33,7 +34,7 @@ public class GlobalException extends RuntimeException{
      */
     @ExceptionHandler(value = IllegalRequestException.class)
     @ResponseBody
-    public Result<Object> IllegalArgumentException(IllegalRequestException e){
+    public Result<String> IllegalArgumentException(IllegalRequestException e){
         return Result.error(CodeMsg.REQUEST_ILLEGAL.fillArgs(e.getMessage()));
     }
 
@@ -45,7 +46,7 @@ public class GlobalException extends RuntimeException{
      */
     @ExceptionHandler(value = KeyFailureException.class)
     @ResponseBody
-    public Result<Object> KeyFailureException(KeyFailureException e){
+    public Result<String> KeyFailureException(KeyFailureException e){
         return Result.error(CodeMsg.KEY_FAILURE.fillArgs(e.getMessage()));
     }
 
@@ -57,7 +58,7 @@ public class GlobalException extends RuntimeException{
      */
     @ExceptionHandler(value = PermissionFailureException.class)
     @ResponseBody
-    public Result<Object> PermissionFailureException(PermissionFailureException e){
+    public Result<String> PermissionFailureException(PermissionFailureException e){
         return Result.error(CodeMsg.PERMISSION_FAILURE.fillArgs(e.getMessage()));
     }
 
@@ -69,7 +70,7 @@ public class GlobalException extends RuntimeException{
      */
     @ExceptionHandler(value = SnowFailException.class)
     @ResponseBody
-    public Result<Object> SnowFailException(SnowFailException e){
+    public Result<String> SnowFailException(SnowFailException e){
         return Result.error(CodeMsg.SERVER_ERROR);
     }
 
@@ -81,7 +82,18 @@ public class GlobalException extends RuntimeException{
      */
     @ExceptionHandler(value = MailErrorException.class)
     @ResponseBody
-    public Result<Object> MailErrorException(MailErrorException e){
+    public Result<String> MailErrorException(MailErrorException e){
         return Result.error(CodeMsg.MAIL_ERROR.fillArgs(e.getMessage()));
+    }
+
+    /**
+     * 拦截MethodArgumentNotValidException异常
+     * 邮箱发送失败异常
+     * @param e 异常
+     * @return 结果[null]
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<String> jsonParamsException(MethodArgumentNotValidException e) {
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs(e.getMessage()));
     }
 }
