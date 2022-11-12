@@ -131,8 +131,7 @@ export default defineComponent({
     /**新的评论函数 */
     const saveComment = (): void => {
       if (viewData.isLogin) {
-        if (viewData.checkInput()) {
-          Message.warningMessage("评论校验未通过");
+        if (!viewData.checkCommentInput()) {
           return;
         }
         api.saveContentComment(viewData.getCommentForm()).then((): void => {

@@ -39,14 +39,6 @@ export default class Forum {
 
     this.commentForm = new CommentForm();
   }
-
-  public checkInput(): boolean {
-    return (
-      StringUtil.checkStringIfEmpty(this.commentInput) ||
-      StringUtil.checkStringIfUnsafe(this.commentInput)
-    );
-  }
-
   public getCommentForm(): CommentForm {
     this.commentForm.username = this.userInfo.username;
     this.commentForm.comment = this.commentInput;
@@ -67,5 +59,19 @@ export default class Forum {
       });
     };
     commentList();
+  }
+
+  public checkCommentInput(): boolean {
+    if (StringUtil.checkStringIfEmpty(this.commentInput)) {
+      Message.warningMessage("评论不能为空");
+      return false;
+    } else {
+      if (this.commentInput.length <= 200) {
+        return true;
+      } else {
+        Message.warningMessage("评论字数不能超过200");
+        return false;
+      }
+    }
   }
 }
