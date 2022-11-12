@@ -21,7 +21,7 @@ public class Logout {
 
     Logout(String loginID, String nickname, String username) {
         //判空
-        ifEmpty(asArray(loginID, nickname,username),asArray("登录信息密钥","账号"));
+        ifEmpty(asArray(loginID, nickname,username),asArray("登录信息密钥","昵称","账号"));
         //合法性检查
         checkStringIsUnsafe(loginID, nickname,username);
         this.loginID = loginID;
