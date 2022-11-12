@@ -28,15 +28,15 @@
         from user_favorite
         where user_id = #{userID}
           and favorite_id = #{favoriteID};
-        # 删除收藏夹内的收藏信息
-        delete c
-        from collection c
-                 join favorite_collection fc on fc.collection_id = c.id
-        where favorite_id = #{favoriteID};
         # 删除收藏夹收藏对照信息
         delete
         from favorite_collection
         where favorite_id = #{favoriteID};
+        # 删除收藏表中没有绑定收藏夹的信息
+        delete c
+        from collection c
+                 join favorite_collection fc on fc.collection_id = c.id
+        where fc.id is null;
     </delete>
 
     <select id="selectAllFavoriteInformationList"
