@@ -66,10 +66,10 @@ export default class Forum {
       Message.warningMessage("评论不能为空");
       return false;
     } else {
-      if (this.commentInput.length <= 200) {
+      if (this.commentInput.length <= 1000) {
         return true;
       } else {
-        Message.warningMessage("评论字数不能超过200");
+        Message.warningMessage("评论字数不能超过1000");
         return false;
       }
     }
