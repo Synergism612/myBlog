@@ -15,7 +15,6 @@ import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
-import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -77,7 +76,7 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     @Override
     public Result<String> saveComment(CommentForm commentForm) {
         long userID = userService.getID(commentForm.getUsername());
-        if (userID==-1){
+        if (userID == -1) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到用户"));
         }
         if (!articleService.isExist(commentForm.getArticleID())) {
@@ -85,9 +84,8 @@ public class ContentAPIServiceImpl implements ContentAPIService {
         }
         if (commentForm.getRootID() == null || commentService.isExist(commentForm.getRootID())) {
             if (commentForm.getParentID() == null || commentService.isExist(commentForm.getParentID())) {
-                return commentService.save(commentForm.getComment(), commentForm.getRootID(), commentForm.getParentID(), commentForm.getArticleID(),userID)
-                        ?Result.success()
-                        :Result.error(CodeMsg.BIND_ERROR.fillArgs("评论失败"));
+                commentService.save(commentForm.getComment(), commentForm.getRootID(), commentForm.getParentID(), commentForm.getArticleID(), userID);
+                return Result.success();
             }
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论失败"));
