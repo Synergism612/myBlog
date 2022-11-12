@@ -105,6 +105,10 @@ public class ContentAPIController {
     public Result<String> saveComment(@RequestBody CommentForm commentForm){
         if (commentForm.getComment().isEmpty()){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论不能为空"));
+        }else{
+            if (commentForm.getComment().length()>1000){
+                return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论字数不能超过1000"));
+            }
         }
         if (commentForm.getArticleID()<=0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到文章"));
         if (commentForm.getRootID()==-1) commentForm.setRootID(null);
