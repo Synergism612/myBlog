@@ -38,7 +38,7 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
 
     @Override
     public Result<List<FavoriteInformation>> getMyFavoriteList(String username) {
-        if (!userService.isExist(username)){
+        if (!userService.isExist(username)) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("账号错误"));
         }
         return Result.success(favoriteService.getFavoriteInformationListByUsername(username));
@@ -46,16 +46,16 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
 
     @Override
     public Result<String> removeCollection(Long favoriteID, List<Long> collectionIDList) {
-        return favoriteService.remove(favoriteID, collectionIDList) ? Result.success() : Result.error(CodeMsg.MESSAGE.fillArgs("删除失败"));
+        favoriteService.remove(favoriteID, collectionIDList);
+        return Result.success();
     }
 
     @Override
     public Result<String> saveFavorite(FavoriteForm favoriteForm) {
         long userID = userService.getID(favoriteForm.getUsername());
-        if (userID!=-1){
-            return favoriteService.save(favoriteForm.getName(),favoriteForm.getAnnotation(),favoriteForm.getIfPrivate(),userID)
-                    ?Result.success()
-                    :Result.error(CodeMsg.MESSAGE.fillArgs("添加失败"));
+        if (userID != -1) {
+            favoriteService.save(favoriteForm.getName(), favoriteForm.getAnnotation(), favoriteForm.getIfPrivate(), userID);
+            return Result.success();
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("账号错误"));
     }
@@ -63,13 +63,13 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
     @Override
     public Result<String> updateFavorite(FavoriteForm favoriteForm) {
         Favorite favorite = favoriteService.getById(favoriteForm.getId());
-        if (favorite!=null){
+        if (favorite != null) {
             favorite.update(favoriteForm.getName(),
                     favoriteForm.getAnnotation(),
                     favoriteForm.getIfPrivate());
             return favoriteService.updateById(favorite)
-                    ?Result.success()
-                    :Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
+                    ? Result.success()
+                    : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
     }
@@ -77,26 +77,25 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
     @Override
     public Result<String> removeFavorite(String username, Long favoriteID) {
         long userID = userService.getID(username);
-        if (userID!=-1){
-            return favoriteService.remove(userID,favoriteID)
-                    ?Result.success()
-                    :Result.error(CodeMsg.MESSAGE.fillArgs("删除失败"));
+        if (userID != -1) {
+            favoriteService.remove(userID, favoriteID);
+            return Result.success();
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
     }
 
     @Override
     public Result<String> updateUserInformation(UserInformationForm userInformationForm) {
-        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername,userInformationForm.getUsername()));
-        if (user!=null){
+        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, userInformationForm.getUsername()));
+        if (user != null) {
             user.update(user.getIcon(),
                     user.getNickname(),
                     TimeUtil.toDate(userInformationForm.getBirthday()),
                     user.getSex(),
                     user.getIntro());
             return userService.updateById(user)
-                    ?Result.success()
-                    :Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
+                    ? Result.success()
+                    : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
     }
