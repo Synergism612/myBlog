@@ -11,6 +11,7 @@ import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
+import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -102,7 +103,10 @@ public class ContentAPIController {
     //需要登录验证
     @PostMapping("comment")
     public Result<String> saveComment(@RequestBody CommentForm commentForm){
-        if (commentForm.getArticleID()<=0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论错误"));
+        if (commentForm.getComment().isEmpty()){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论不能为空"));
+        }
+        if (commentForm.getArticleID()<=0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到文章"));
         if (commentForm.getRootID()==-1) commentForm.setRootID(null);
         if (commentForm.getParentID()==-1) commentForm.setParentID(null);
         return service.saveComment(commentForm);

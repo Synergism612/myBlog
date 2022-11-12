@@ -76,9 +76,6 @@ public class ContentAPIServiceImpl implements ContentAPIService {
 
     @Override
     public Result<String> saveComment(CommentForm commentForm) {
-        if (StringUtil.isEmpty(commentForm.getComment())){
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论不能为空"));
-        }
         long userID = userService.getID(commentForm.getUsername());
         if (userID==-1){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到用户"));
