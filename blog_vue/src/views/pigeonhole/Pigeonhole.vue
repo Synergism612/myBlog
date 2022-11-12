@@ -47,6 +47,7 @@
                             :key="article.id"
                             :timestamp="article.creationTime"
                             placement="top"
+                            @click="toContent(article.id)"
                           >
                             <div class="frame">
                               <span>{{ article.title }}</span>
@@ -99,6 +100,7 @@
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import Menu from "src/components/menu/Menu.vue";
 import Pigeonhole from "./Pigeonhole";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
@@ -112,6 +114,17 @@ export default defineComponent({
       }
     };
 
+    const router = useRouter();
+
+    const toContent = (id: number): void => {
+      router.push({
+        name: "Content",
+        params: {
+          id: id,
+        },
+      });
+    };
+
     onMounted(() => {
       viewData.init();
     });
@@ -119,6 +132,7 @@ export default defineComponent({
     return {
       ...toRefs(viewData),
       toDate,
+      toContent,
     };
   },
   components: { Menu },
