@@ -111,7 +111,7 @@
         </el-main>
       </el-container>
     </div>
-    <Toolboxe page-name="pandect"></Toolboxe>
+    <Toolboxe/>
   </div>
 </template>
 <script lang="ts">

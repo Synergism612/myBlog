@@ -1,11 +1,13 @@
 export default class Toolboxe {
   show: boolean;
-  lessen:boolean;
-  full:boolean;
-  catalog:boolean;
-  forum:boolean;
+  lessen: boolean;
+  full: boolean;
+  catalog: boolean;
+  forum: boolean;
   index: boolean;
   top: boolean;
+
+  topShow: boolean;
 
   constructor() {
     this.show = false;
@@ -15,5 +17,7 @@ export default class Toolboxe {
     this.forum = false;
     this.index = false;
     this.top = false;
+
+    this.topShow = false;
   }
 }

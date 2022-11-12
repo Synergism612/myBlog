@@ -90,7 +90,7 @@
           </el-row>
         </el-main>
       </el-container>
-      <Toolboxe page-name="index"></Toolboxe>
+      <Toolboxe/>
     </div>
   </div>
 </template>

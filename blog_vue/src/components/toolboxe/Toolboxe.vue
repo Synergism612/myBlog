@@ -30,7 +30,7 @@ import Toolboxe from "./Toolboxe";
 
 export default defineComponent({
   props: {
-    pageName: { type: String, required: true },
+    pageName: { type: String, required: false },
   },
   emits: {
     toFull: null,
@@ -98,6 +98,9 @@ export default defineComponent({
       var timer = setInterval(() => {
         if (html.scrollTop <= 0) {
           clearInterval(timer);
+          if (viewData.topShow) {
+            viewData.show = true;
+          }
         }
         html.scrollTop = html.scrollTop - screen / 2;
       }, 10);
@@ -105,11 +108,6 @@ export default defineComponent({
 
     onMounted(() => {
       switch (props.pageName) {
-        case "index": {
-          viewData.top = true;
-          showInit();
-          break;
-        }
         case "content": {
           viewData.show = true;
           viewData.full = true;
@@ -117,11 +115,7 @@ export default defineComponent({
           viewData.forum = true;
           viewData.index = true;
           viewData.top = true;
-          break;
-        }
-        case "pandect": {
-          viewData.top = true;
-          showInit();
+          viewData.topShow = true;
           break;
         }
         default: {
