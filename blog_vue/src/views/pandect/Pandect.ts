@@ -62,16 +62,11 @@ export default class Pandect {
     if (StringUtil.checkStringIfEmpty(this.keyword)) {
       return true;
     } else {
-      if (StringUtil.checkStringIfUnsafe(this.keyword)) {
-        Message.warningMessage("请键入合法字符");
-        return false;
+      if (this.keyword.length <= 30) {
+        return true;
       } else {
-        if (this.keyword.length <= 30) {
-          return true;
-        } else {
-          Message.warningMessage("查询字段不能超过30字");
-          return false;
-        }
+        Message.warningMessage("查询字段不能超过30字");
+        return false;
       }
     }
   };
