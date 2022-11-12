@@ -73,16 +73,13 @@
         <foreach collection="articleIDList" item="articleID" open="(" separator="," close=")">
             #{articleID}
         </foreach>;
-        # 删除文章内的评论
-        delete c from comment c join article_comment ac on ac.comment_id = c.id where ac.article_id in
-        <foreach collection="articleIDList" item="articleID" open="(" separator="," close=")">
-            #{articleID}
-        </foreach>;
         # 删除文章评论对照表信息
         delete from article_comment where article_id in
         <foreach collection="articleIDList" item="articleID" open="(" separator="," close=")">
             #{articleID}
         </foreach>;
+        # 删除文章内的评论
+        delete c from comment c join article_comment ac on ac.comment_id = c.id where ac.id is null;
     </delete>
 
     <select id="selectSameClassifyArticleList" resultMap="ArticleInformationMap">
