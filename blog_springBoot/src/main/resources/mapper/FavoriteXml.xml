@@ -23,10 +23,8 @@
     </insert>
 
     <delete id="unbundled">
-        delete
-        from user_favorite
-        where user_id = #{userID}
-          and favorite_id = #{favoriteID}
+        delete from user_favorite where user_id = #{userID} and favorite_id = #{favoriteID};
+        delete from favorite_collection where favorite_id = #{favoriteID};
     </delete>
 
     <select id="selectAllFavoriteInformationList"

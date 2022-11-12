@@ -10,6 +10,7 @@ import com.synergism.blog.core.favorite.service.FavoriteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -50,18 +51,11 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     }
 
     @Override
-    public boolean save(String title, String href, String synopsis, Long favoriteID) {
+    @Transactional
+    public void save(String title, String href, String synopsis, Long favoriteID) {
         Collection collection = new Collection(title, href, synopsis);
         collectionMapper.insert(collection);
-        if (collection.getId()==null) return false;
-        long collectionID = collection.getId();
-        try {
-            collectionMapper.bundle(collectionID, favoriteID);
-            return true;
-        } catch (Exception e) {
-            collectionMapper.deleteById(collectionID);
-        }
-        return false;
+        collectionMapper.bundle(collection.getId(), favoriteID);
     }
 
     @Override
@@ -70,14 +64,10 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     }
 
     @Override
-    public boolean remove(Long favoriteID, List<Long> collectionIDList) {
-        try {
-            collectionMapper.unbundled(favoriteID, collectionIDList);
-            collectionMapper.deleteBatchIds(collectionIDList);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    @Transactional
+    public void remove(Long favoriteID, List<Long> collectionIDList) {
+        collectionMapper.unbundled(favoriteID, collectionIDList);
+        collectionMapper.deleteBatchIds(collectionIDList);
     }
 
     @Override
@@ -87,29 +77,19 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     }
 
     @Override
-    public boolean save(String name, String annotation, Integer ifPrivate, Long userID) {
-        Favorite favorite = new Favorite(null,name,annotation,ifPrivate);
+    @Transactional
+    public void save(String name, String annotation, Integer ifPrivate, Long userID) {
+        Favorite favorite = new Favorite(null, name, annotation, ifPrivate);
         mapper.insert(favorite);
-        if (favorite.getId()==null) return false;
         long favoriteID = favorite.getId();
-        try {
             mapper.bundle(favoriteID, userID);
-            return true;
-        } catch (Exception e) {
-            mapper.deleteById(favoriteID);
-        }
-        return false;
     }
 
     @Override
-    public boolean remove(Long userID, Long favoriteID) {
-        try {
-            mapper.unbundled(userID,favoriteID);
-            mapper.deleteById(favoriteID);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    @Transactional
+    public void remove(Long userID, Long favoriteID) {
+        mapper.unbundled(userID, favoriteID);
+        mapper.deleteById(favoriteID);
     }
 
 }

@@ -43,9 +43,8 @@ public interface FavoriteService extends IService<Favorite> {
      * @param href 链接
      * @param synopsis 摘要
      * @param favoriteID 收藏夹id
-     * @return 成功为真，反之为假
      */
-    boolean save(String title, String href, String synopsis, Long favoriteID);
+    void save(String title, String href, String synopsis, Long favoriteID);
 
     /**
      * 收藏夹中是否存在该收藏
@@ -59,9 +58,8 @@ public interface FavoriteService extends IService<Favorite> {
      * 删除收藏
      * @param favoriteID 收藏夹id
      * @param collectionIDList 收藏id列表
-     * @return 成功为真，反之为假
      */
-    boolean remove(Long favoriteID, List<Long> collectionIDList);
+    void remove(Long favoriteID, List<Long> collectionIDList);
 
     /**
      * 获取用户的收藏夹信息
@@ -76,15 +74,13 @@ public interface FavoriteService extends IService<Favorite> {
      * @param annotation 注释
      * @param ifPrivate 公开/私密
      * @param userID 用户id
-     * @return 成功为真，反之为假
      */
-    boolean save(String name, String annotation, Integer ifPrivate, Long userID);
+    void save(String name, String annotation, Integer ifPrivate, Long userID);
 
     /**
      * 删除收藏夹
      * @param userID 用户id
      * @param favoriteID 收藏夹id
-     * @return 成功为真，反之为假
      */
-    boolean remove(Long userID,Long favoriteID);
+    void remove(Long userID,Long favoriteID);
 }
