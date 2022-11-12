@@ -23,8 +23,20 @@
     </insert>
 
     <delete id="unbundled">
-        delete from user_favorite where user_id = #{userID} and favorite_id = #{favoriteID};
-        delete from favorite_collection where favorite_id = #{favoriteID};
+        # 删除用户收藏夹对照信息
+        delete
+        from user_favorite
+        where user_id = #{userID}
+          and favorite_id = #{favoriteID};
+        # 删除收藏夹内的收藏信息
+        delete c
+        from collection c
+                 join favorite_collection fc on fc.collection_id = c.id
+        where favorite_id = #{favoriteID};
+        # 删除收藏夹收藏对照信息
+        delete
+        from favorite_collection
+        where favorite_id = #{favoriteID};
     </delete>
 
     <select id="selectAllFavoriteInformationList"
