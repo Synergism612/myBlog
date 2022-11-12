@@ -130,17 +130,15 @@ public interface ArticleService extends IService<Article> {
      * @param ifPrivate 文章隐私设置
      * @param classifyID 分类id
      * @param tagIDList 标签id列表
-     * @return 成功为真，反之为假
      */
-    boolean save(long userID,String icon,String title,String body,String synopsis,int ifPrivate,Long classifyID,List<Long> tagIDList);
+    void save(long userID,String icon,String title,String body,String synopsis,int ifPrivate,Long classifyID,List<Long> tagIDList);
 
     /**
      * 删除文章列表
      * @param articleIDList 文章id列表
      * @param userID 用户id
-     * @return 成功为真，反之为假
      */
-    boolean remove(List<Long> articleIDList, long userID);
+    void remove(List<Long> articleIDList, long userID);
 
     /**
      * 查询对应文章信息

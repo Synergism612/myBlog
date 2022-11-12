@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -163,29 +164,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public boolean save(long userID, String icon, String title, String body, String synopsis, int ifPrivate, Long classifyID, List<Long> tagIDList) {
+    @Transactional
+    public void save(long userID, String icon, String title, String body, String synopsis, int ifPrivate, Long classifyID, List<Long> tagIDList) {
         Article article = new Article(null, icon, title, body, synopsis, 0L, 0L, ifPrivate);
         mapper.insert(article);
-        if (article.getId() == null) return false;
-        long articleID = article.getId();
-        try {
-            mapper.bundle(articleID, userID, classifyID, tagIDList);
-            return true;
-        } catch (Exception e) {
-            mapper.deleteById(articleID);
-        }
-        return false;
+        mapper.bundle(article.getId(), userID, classifyID, tagIDList);
     }
 
     @Override
-    public boolean remove(List<Long> articleIDList, long userID) {
-        try {
-            mapper.unbundled(articleIDList, userID);
-            mapper.deleteBatchIds(articleIDList);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+    @Transactional
+    public void remove(List<Long> articleIDList, long userID) {
+        mapper.unbundled(articleIDList, userID);
+        mapper.deleteBatchIds(articleIDList);
     }
 
     @Override
@@ -196,13 +186,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<Archive> getPublicArchive() {
         List<Archive> result = mapper.selectPublicArchive();
-        return result.size()==0?null:result;
+        return result.size() == 0 ? null : result;
     }
 
     @Override
     public List<Archive> getArchiveByUserID(long userID) {
         List<Archive> result = mapper.selectArchiveByUserID(userID);
-        return result.size()==0?null:result;
+        return result.size() == 0 ? null : result;
     }
 
 }
