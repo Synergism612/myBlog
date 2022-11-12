@@ -44,17 +44,28 @@
     }
     .bottom {
       width: 100%;
-      .myFavorite {
-        --el-collapse-header-bg-color: rgba(0, 0, 0, 0);
-        --el-collapse-content-bg-color: rgba(0, 0, 0, 0);
-        .option {
-          text-align: right;
-          span {
-            margin: 0 1em;
+      .tabs {
+        .myFavorite {
+          --el-collapse-header-bg-color: rgba(0, 0, 0, 0);
+          --el-collapse-content-bg-color: rgba(0, 0, 0, 0);
+          .name{
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-right: 0.5em;
           }
-        }
-        .collection {
-          margin-bottom: 1em;
+          .option {
+            text-align: right;
+            span {
+              margin: 0 1em;
+            }
+          }
+          .collection {
+            margin-bottom: 1em;
+            .title{
+              font-size: 1.1em;
+            font-weight: 600;
+            }
+          }
         }
       }
     }

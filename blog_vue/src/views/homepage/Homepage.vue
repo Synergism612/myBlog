@@ -111,7 +111,7 @@
                   </el-row>
                   <el-row class="bottom">
                     <el-col :span="24">
-                      <el-tabs v-model="tabsName" class="demo-tabs">
+                      <el-tabs v-model="tabsName" class="tabs">
                         <el-tab-pane label="我的收藏" name="first">
                           <span
                             @click="saveFavoriteShow = true"
@@ -143,8 +143,11 @@
                                   />
                                   （公开）
                                 </span>
-                                <span>
+                                <span class="name">
                                   {{ favoriteInformation.name }}
+                                </span>
+                                <span>
+                                  {{ favoriteInformation.annotation }}
                                 </span>
                               </template>
                               <div class="option">
@@ -200,7 +203,7 @@
                                     <div>
                                       <span
                                         @click="goCollection(collection.href)"
-                                        class="click"
+                                        class="click title"
                                       >
                                         {{ collection.title }}
                                       </span>
@@ -294,14 +297,16 @@
               label-position="top"
               label-width="100px"
               :model="favoriteForm"
+              :rules="rules"
+              :hide-required-asterisk="true"
             >
-              <el-form-item label="名称">
+              <el-form-item label="名称" prop="name">
                 <el-input clearable v-model="favoriteForm.name" />
               </el-form-item>
-              <el-form-item label="注释">
+              <el-form-item label="备注" prop="annotation">
                 <el-input clearable v-model="favoriteForm.annotation" />
               </el-form-item>
-              <el-form-item label="隐私设置">
+              <el-form-item label="隐私设置" prop="ifPrivate">
                 <el-radio-group v-model="favoriteForm.ifPrivate">
                   <el-radio :label="0">公开</el-radio>
                   <el-radio :label="1">私密</el-radio>
@@ -331,6 +336,25 @@ export default defineComponent({
   setup() {
     /**数据仓 */
     const viewData = reactive(new Homepage());
+
+    const rules = {
+      // name: [
+      //   {
+      //     required: true,
+      //     message: "收藏夹名称不能为空",
+      //     trigger: "blur",
+      //   },
+      //   { max: 10, message: "长度不能超过10", trigger: "blur" },
+      // ],
+      // annotation: [
+      //   {
+      //     required: true,
+      //     message: "收藏夹备注不能为空",
+      //     trigger: "blur",
+      //   },
+      //   { max: 20, message: "长度不能超过20", trigger: "blur" },
+      // ],
+    };
 
     const close = (): void => {
       viewData.changeShow = true;
@@ -423,6 +447,7 @@ export default defineComponent({
       favoriteFormEdit,
       deleteFavorite,
       updateUserInformation,
+      rules,
     };
   },
   components: { Menu, Enshrine },
