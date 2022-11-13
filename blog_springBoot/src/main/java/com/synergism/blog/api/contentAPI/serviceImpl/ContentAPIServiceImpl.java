@@ -77,17 +77,18 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     public Result<String> saveComment(CommentForm commentForm) {
         long userID = userService.getID(commentForm.getUsername());
         if (userID == -1) {
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到用户"));
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
         }
         if (!articleService.isExist(commentForm.getArticleID())) {
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到文章"));
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         }
-        if (commentForm.getRootID() == null || commentService.isExist(commentForm.getRootID())) {
-            if (commentForm.getParentID() == null || commentService.isExist(commentForm.getParentID())) {
-                commentService.save(commentForm.getComment(), commentForm.getRootID(), commentForm.getParentID(), commentForm.getArticleID(), userID);
-                return Result.success();
-            }
+        if (commentForm.getRootID() != null && !commentService.isExist(commentForm.getRootID())) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("根评论不存在"));
         }
-        return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论失败"));
+        if (commentForm.getParentID() != null && !commentService.isExist(commentForm.getParentID())) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("父评论不存在"));
+        }
+        commentService.save(commentForm.getComment(), commentForm.getRootID(), commentForm.getParentID(), commentForm.getArticleID(), userID);
+        return Result.success();
     }
 }

@@ -9,12 +9,14 @@ import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.user.entity.Author;
-import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
-import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -36,8 +38,12 @@ public class ContentAPIController {
      * @param articleID 文章id
      * @return 文章信息
      */
+    @Validated
     @GetMapping("article")
-    public Result<Article> article(@RequestParam long articleID){
+    public Result<Article> article(
+            @RequestParam @NotNull(message = "文章id不能为空")
+            @Min(value = 1,message = "文章不存在") Long articleID
+    ){
         return service.getArticle(articleID);
     }
     /**
@@ -45,8 +51,12 @@ public class ContentAPIController {
      * @param articleID 文章id
      * @return 作者信息
      */
+    @Validated
     @GetMapping("author")
-    public Result<Author> author(@RequestParam long articleID){
+    public Result<Author> author(
+            @RequestParam @NotNull(message = "文章id不能为空")
+            @Min(value = 1,message = "文章不存在") Long articleID
+    ){
         return service.getAuthor(articleID);
     }
     /**
@@ -54,8 +64,12 @@ public class ContentAPIController {
      * @param articleID 文章id
      * @return 分类信息
      */
+    @Validated
     @GetMapping("classify")
-    public Result<Classify> classify(@RequestParam long articleID){
+    public Result<Classify> classify(
+            @RequestParam @NotNull(message = "文章id不能为空")
+            @Min(value = 1,message = "文章不存在") Long articleID
+    ){
         return service.getClassify(articleID);
     }
     /**
@@ -63,8 +77,12 @@ public class ContentAPIController {
      * @param articleID 文章id
      * @return 标签信息
      */
+    @Validated
     @GetMapping("tagList")
-    public Result<List<Tag>> tagList(@RequestParam long articleID){
+    public Result<List<Tag>> tagList(
+            @RequestParam @NotNull(message = "文章id不能为空")
+            @Min(value = 1,message = "文章不存在") Long articleID
+    ){
         return service.getTagList(articleID);
     }
     /**
@@ -72,8 +90,12 @@ public class ContentAPIController {
      * @param articleID 文章id
      * @return 评论信息列表
      */
+    @Validated
     @GetMapping("commentList")
-    public Result<List<CommentParent>> commentList(@RequestParam long articleID){
+    public Result<List<CommentParent>> commentList(
+            @RequestParam @NotNull(message = "文章id不能为空")
+            @Min(value = 1,message = "文章不存在") Long articleID
+    ){
         return service.getCommentList(articleID);
     }
     /**
@@ -81,8 +103,12 @@ public class ContentAPIController {
      * @param articleID 文章id
      * @return 文章信息列表
      */
+    @Validated
     @GetMapping("nominate/classify")
-    public Result<List<Article>> classifyNominate(@RequestParam long articleID){
+    public Result<List<Article>> classifyNominate(
+            @RequestParam @NotNull(message = "文章id不能为空")
+            @Min(value = 1,message = "文章不存在") Long articleID
+    ){
         return service.getClassifyNominate(articleID);
     }
     /**
@@ -90,8 +116,12 @@ public class ContentAPIController {
      * @param articleID 文章id
      * @return 文章信息列表
      */
+    @Validated
     @GetMapping("nominate/tag")
-    public Result<List<ArticleTagNominate>> tagNominate(@RequestParam long articleID){
+    public Result<List<ArticleTagNominate>> tagNominate(
+            @RequestParam @NotNull(message = "文章id不能为空")
+            @Min(value = 1,message = "文章不存在") Long articleID
+    ){
         return service.getTagNominate(articleID);
     }
 
@@ -102,15 +132,7 @@ public class ContentAPIController {
      */
     //需要登录验证
     @PostMapping("comment")
-    public Result<String> saveComment(@RequestBody CommentForm commentForm){
-        if (commentForm.getComment().isEmpty()){
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论不能为空"));
-        }else{
-            if (commentForm.getComment().length()>1000){
-                return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论字数不能超过1000"));
-            }
-        }
-        if (commentForm.getArticleID()<=0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("找不到文章"));
+    public Result<String> saveComment(@RequestBody @Valid CommentForm commentForm){
         if (commentForm.getRootID()==-1) commentForm.setRootID(null);
         if (commentForm.getParentID()==-1) commentForm.setParentID(null);
         return service.saveComment(commentForm);
