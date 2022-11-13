@@ -7,9 +7,7 @@ import com.synergism.blog.core.article.service.ArticleService;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.service.ClassifyService;
 import com.synergism.blog.core.tag.entity.Tag;
-import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.core.tag.service.TagService;
-import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +33,6 @@ public class PandectAPIServiceImpl implements PandectAPIService {
         List<Classify> result;
         if (username.isEmpty()){
             result = classifyService.list();
-
         }else{
             result = classifyService.getUsedListByUsername(username);
         }

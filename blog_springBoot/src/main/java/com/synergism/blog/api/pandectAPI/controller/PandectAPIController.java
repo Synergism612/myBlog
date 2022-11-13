@@ -8,11 +8,11 @@ import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
-import com.synergism.blog.utils.StringUtil;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @RestController
@@ -39,7 +39,14 @@ public class PandectAPIController {
      * @return 分页后的文章信息
      */
     @GetMapping("article")
-    public Result<Pagination> getArticle(@RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam String articleSort, @RequestParam String username, @RequestParam String keyword, @RequestParam List<Long> classifyIDList, @RequestParam List<Long> tagIDList) {
+    public Result<Pagination> getArticle(
+            @RequestParam(defaultValue = "1") int currentPage,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam @NotEmpty(message = "排序字段错误") String articleSort,
+            @RequestParam String username,
+            @RequestParam String keyword,
+            @RequestParam List<Long> classifyIDList,
+            @RequestParam List<Long> tagIDList) {
         if (!EnumUtils.isValidEnum(ArticleSort.class, articleSort)) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("排序字段错误"));
         }
@@ -57,7 +64,7 @@ public class PandectAPIController {
     /**
      * 文章专栏获取分类接口
      *
-     * @param username 账号
+     * @param username 账号 可以为空
      * @return 分类列表
      */
     @GetMapping("classify")
@@ -68,7 +75,7 @@ public class PandectAPIController {
     /**
      * 文章专栏获取标签接口
      *
-     * @param username 账号
+     * @param username 账号 可以为空
      * @return 标签列表
      */
     @GetMapping("tag")
