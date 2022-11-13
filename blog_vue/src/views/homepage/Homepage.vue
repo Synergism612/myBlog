@@ -41,20 +41,30 @@
                       </el-col>
                     </el-col>
                     <el-col :span="12">
-                      <el-col :span="18" class="information nickname">
-                        <span>昵称：</span>
-                        <el-input
-                          v-model="userInformationForm.nickname"
-                          placeholder="请输入昵称"
-                          :disabled="changeShow"
-                          clearable
-                        />
-                        <div class="information username">
-                          账号：
-                          {{ userInformationForm.username }}
-                        </div>
-                        <div class="information birthday">
-                          生日：
+                      <el-form
+                        class="information"
+                        label-position="top"
+                        :model="userInformationForm"
+                        :rules="userInformationFormRules"
+                        :hide-required-asterisk="true"
+                        ref="userInformationFormRef"
+                      >
+                        <el-form-item label="昵称" prop="nickname">
+                          <el-input
+                            v-model="userInformationForm.nickname"
+                            placeholder="请输入昵称"
+                            :disabled="changeShow"
+                            clearable
+                          />
+                        </el-form-item>
+                        <el-form-item label="账号" prop="username">
+                          <el-input
+                            v-model="userInformationForm.username"
+                            :disabled="true"
+                          />
+                        </el-form-item>
+
+                        <el-form-item label="生日" prop="birthday">
                           <el-date-picker
                             v-model="userInformationForm.birthday"
                             type="date"
@@ -63,9 +73,8 @@
                             format="YYYY/MM/DD"
                             value-format="YYYY-MM-DD"
                           />
-                        </div>
-                        <div class="information sex">
-                          性别：
+                        </el-form-item>
+                        <el-form-item label="性别" prop="sex">
                           <el-radio-group
                             v-model="userInformationForm.sex"
                             :disabled="changeShow"
@@ -74,22 +83,22 @@
                             <el-radio :label="1">男</el-radio>
                             <el-radio :label="2">女</el-radio>
                           </el-radio-group>
-                        </div>
-                        <div class="information intro">
-                          个人简介：
+                        </el-form-item>
+                        <el-form-item label="个人简介" prop="intro">
                           <el-input
                             v-model="userInformationForm.intro"
                             :rows="2"
                             type="textarea"
+                            autosize
                             placeholder="请输入简介"
                             :disabled="changeShow"
                           />
-                        </div>
-                        <div class="information upToNow">
-                          园龄：{{ author.upToNow }}
-                        </div>
-                      </el-col>
-                      <el-col :span="24" class="information button">
+                        </el-form-item>
+                      </el-form>
+                      <div class="information upToNow">
+                        园龄：{{ author.upToNow }}
+                      </div>
+                      <el-col :span="24" class="button">
                         <span
                           v-if="changeShow"
                           @click="changeShow = false"
@@ -277,7 +286,7 @@
       <el-dialog
         v-model="saveFavoriteShow"
         :show-close="false"
-        custom-class="favoriteBox"
+        class="favoriteBox"
         destroy-on-close
         @close="favoriteFormClose"
       >
@@ -295,10 +304,10 @@
           <el-col :span="24">
             <el-form
               label-position="top"
-              label-width="100px"
               :model="favoriteForm"
-              :rules="rules"
+              :rules="favoriteFormRules"
               :hide-required-asterisk="true"
+              ref="favoriteFormRef"
             >
               <el-form-item label="名称" prop="name">
                 <el-input clearable v-model="favoriteForm.name" />
@@ -324,7 +333,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs } from "vue";
+import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
 import Menu from "src/components/menu/Menu.vue";
 import Homepage from "./Homepage";
 import Enshrine from "src/components/enshrine/Enshrine.vue";
@@ -337,28 +346,81 @@ export default defineComponent({
     /**数据仓 */
     const viewData = reactive(new Homepage());
 
-    const rules = {
-      // name: [
-      //   {
-      //     required: true,
-      //     message: "收藏夹名称不能为空",
-      //     trigger: "blur",
-      //   },
-      //   { max: 10, message: "长度不能超过10", trigger: "blur" },
-      // ],
-      // annotation: [
-      //   {
-      //     required: true,
-      //     message: "收藏夹备注不能为空",
-      //     trigger: "blur",
-      //   },
-      //   { max: 20, message: "长度不能超过20", trigger: "blur" },
-      // ],
+    const userInformationFormRules = {
+      nickname: [
+        {
+          required: true,
+          message: "昵称不能为空",
+          trigger: "blur",
+        },
+        { max: 8, message: "长度不能超过8", trigger: "blur" },
+      ],
+      birthday: [
+        {
+          required: true,
+          message: "生日不能为空",
+          trigger: "blur",
+        },
+      ],
+      sex: [
+        {
+          pattern: /^(0|[1-9\d?|2])/,
+          message: "性别输入错误",
+          trigger: "blur",
+        },
+      ],
+      intro: [
+        {
+          required: true,
+          message: "个人简介不能为空",
+          trigger: "blur",
+        },
+        { max: 100, message: "长度不能超过100", trigger: "blur" },
+      ],
+    };
+
+    const favoriteFormRules = {
+      name: [
+        {
+          required: true,
+          message: "名称不能为空",
+          trigger: "blur",
+        },
+        { max: 10, message: "长度不能超过10", trigger: "blur" },
+      ],
+      annotation: [
+        {
+          required: true,
+          message: "备注不能为空",
+          trigger: "blur",
+        },
+        { max: 20, message: "长度不能超过20", trigger: "blur" },
+      ],
+    };
+
+    const userInformationFormRef = ref();
+
+    const updateUserInformation = (): void => {
+      userInformationFormRef.value
+        .validate()
+        .then((): void => {
+          api
+            .updateHomepageUserInformation(viewData.userInformationForm)
+            .then((): void => {
+              viewData.changeShow = true;
+              viewData.init();
+              Message.successMessage("修改成功");
+            });
+        })
+        .catch((): void => {
+          Message.warningMessage("校验未通过");
+        });
     };
 
     const close = (): void => {
       viewData.changeShow = true;
       viewData.userInit();
+      userInformationFormRef.value.validate();
     };
 
     const goCollection = (href: string): void => {
@@ -370,35 +432,44 @@ export default defineComponent({
       viewData.saveCollectionfavoriteID = favoriteID;
     };
 
-    const saveCollectionSucceed = () => {
+    const saveCollectionSucceed = (): void => {
       viewData.updateMyFavorite();
     };
 
     const delectCollection = (
       favoriteID: number,
       collectionIDList: Array<number>
-    ) => {
-      api.removeHomepageCollection(favoriteID, collectionIDList).then(() => {
+    ): void => {
+      api.removeHomepageCollection(favoriteID, collectionIDList).then((): void => {
         saveCollectionSucceed();
         Message.successMessage("删除成功");
       });
     };
 
-    const saveFavorite = () => {
-      viewData.favoriteForm.username = viewData.username;
-      if (viewData.isFavoriteFormEdit) {
-        api.updateHomepageFavorite(viewData.favoriteForm).then(() => {
-          Message.successMessage("更新成功");
-          viewData.saveFavoriteShow = false;
-          viewData.init();
+    const favoriteFormRef = ref();
+
+    const saveFavorite = (): void => {
+      favoriteFormRef.value
+        .validate()
+        .then((): void => {
+          viewData.favoriteForm.username = viewData.username;
+          if (viewData.isFavoriteFormEdit) {
+            api.updateHomepageFavorite(viewData.favoriteForm).then((): void => {
+              Message.successMessage("更新成功");
+              viewData.saveFavoriteShow = false;
+              viewData.init();
+            });
+          } else {
+            api.saveHomepageFavorite(viewData.favoriteForm).then((): void => {
+              Message.successMessage("添加成功");
+              viewData.saveFavoriteShow = false;
+              viewData.init();
+            });
+          }
+        })
+        .catch((): void => {
+          Message.warningMessage("校验未通过");
         });
-      } else {
-        api.saveHomepageFavorite(viewData.favoriteForm).then(() => {
-          Message.successMessage("添加成功");
-          viewData.saveFavoriteShow = false;
-          viewData.init();
-        });
-      }
     };
 
     const favoriteFormClose = (): void => {
@@ -412,7 +483,7 @@ export default defineComponent({
       viewData.favoriteFormInit(favoriteInformation);
     };
 
-    const deleteFavorite = (favoriteID: number) => {
+    const deleteFavorite = (favoriteID: number): void => {
       api
         .removeHomepageFavorite(viewData.username, favoriteID)
         .then((): void => {
@@ -421,17 +492,7 @@ export default defineComponent({
         });
     };
 
-    const updateUserInformation = (): void => {
-      api
-        .updateHomepageUserInformation(viewData.userInformationForm)
-        .then((): void => {
-          viewData.changeShow = true;
-          viewData.init();
-          Message.successMessage("修改成功");
-        });
-    };
-
-    onMounted(() => {
+    onMounted((): void => {
       viewData.init();
     });
 
@@ -447,7 +508,10 @@ export default defineComponent({
       favoriteFormEdit,
       deleteFavorite,
       updateUserInformation,
-      rules,
+      favoriteFormRules,
+      userInformationFormRules,
+      userInformationFormRef,
+      favoriteFormRef,
     };
   },
   components: { Menu, Enshrine },

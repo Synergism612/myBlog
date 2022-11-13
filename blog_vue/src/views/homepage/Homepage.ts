@@ -55,14 +55,14 @@ export default class Homepage {
 
   public init(): void {
     if (this.username === "") return;
-    api.getHomepageAuthor(this.username).then(({ data }) => {
+    api.getHomepageAuthor(this.username).then(({ data }): void => {
       this.author = data;
       this.userInit();
     });
-    api.getHomepageFavoriteInformationList(this.username).then(({ data }) => {
+    api.getHomepageFavoriteInformationList(this.username).then(({ data }): void => {
       this.favoriteInformationList = data || [new FavoriteInformation()];
       this.favoriteInformationList.forEach(
-        (favoriteInformation: FavoriteInformation) => {
+        (favoriteInformation: FavoriteInformation): void => {
           if (favoriteInformation.collectionList.length === 0) {
             favoriteInformation.collectionList = [new Collection()];
           }
@@ -73,14 +73,14 @@ export default class Homepage {
   }
 
   public updateAuthor(): void {
-    api.getHomepageAuthor(this.username).then(({ data }) => {
+    api.getHomepageAuthor(this.username).then(({ data }): void => {
       this.author = data;
       this.userInit();
     });
   }
 
   public updateMyFavorite(): void {
-    api.getHomepageFavoriteInformationList(this.username).then(({ data }) => {
+    api.getHomepageFavoriteInformationList(this.username).then(({ data }): void => {
       this.favoriteInformationList = data;
     });
   }
