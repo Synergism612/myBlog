@@ -4,7 +4,7 @@ export default class RegisterForm {
   /**密码 */
   password: string;
   /**二次输入密码 */
-  passwordAgen: string;
+  passwordAgain: string;
   /**验证码 */
   code: string;
   /**验证码密钥 */
@@ -13,7 +13,7 @@ export default class RegisterForm {
   constructor() {
     this.username = "";
     this.password = "";
-    this.passwordAgen = "";
+    this.passwordAgain = "";
     this.code = "";
     this.key = "";
   }
