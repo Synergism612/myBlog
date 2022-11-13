@@ -24,6 +24,7 @@ public interface UserService extends IService<User> {
 
     /**
      * 通过账号获取用户id
+     * 未找到用户返回-1
      * @param username 账号
      * @return 用户id
      */
