@@ -50,7 +50,7 @@ export default defineComponent({
           store.getters.getUser.nickname,
           store.getters.getUser.username
         )
-        .then(({ data }) => {
+        .then(({ data }): void => {
           data;
           store.commit("DELECT_USER_INFO");
           store.commit("DELECT_LOGIN_ID");
@@ -62,7 +62,7 @@ export default defineComponent({
 
     watch(
       getLoginID,
-      (value, oldValue) => {
+      (value, oldValue): void => {
         oldValue;
         if (!StringUtil.checkStringIfEmpty(value)) {
           viewData.userInfo.nickname = store.getters.getUser.nickname;
