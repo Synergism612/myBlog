@@ -101,7 +101,12 @@ public class GlobalException extends RuntimeException{
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Result<String> MethodArgumentNotValidException(MethodArgumentNotValidException e) {
         List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
-        String message = allErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(";"));
+        String message;
+        if (allErrors.size()>1) {
+            message = allErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining("、", "多个条件未达成(", ")"));
+        }else{
+            message = allErrors.get(0).getDefaultMessage();
+        }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs(message));
     }
 }
