@@ -51,7 +51,7 @@ export default defineComponent({
      * 当滚动高度大于某值时出现工具栏
      */
     const showInit = (): void => {
-      window.addEventListener("scroll", () => {
+      window.addEventListener("scroll", (): void => {
         if (html.scrollTop >= screen) {
           viewData.show = true;
         } else {
@@ -95,7 +95,7 @@ export default defineComponent({
     /**回到顶部函数 */
     const top = (): void => {
       viewData.show = false;
-      var timer = setInterval(() => {
+      var timer = setInterval((): void => {
         if (html.scrollTop <= 0) {
           clearInterval(timer);
           if (viewData.topShow) {
@@ -106,7 +106,7 @@ export default defineComponent({
       }, 10);
     };
 
-    onMounted(() => {
+    onMounted((): void => {
       switch (props.pageName) {
         case "content": {
           viewData.show = true;
