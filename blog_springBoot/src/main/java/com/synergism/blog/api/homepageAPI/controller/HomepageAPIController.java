@@ -8,8 +8,14 @@ import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -33,8 +39,11 @@ public class HomepageAPIController {
      * @return 作者信息
      */
     //需要登录验证
+    @Validated
     @GetMapping("author")
-    public Result<Author> getAuthor(@RequestParam String username) {
+    public Result<Author> getAuthor(
+            @RequestParam @NotEmpty(message = "账号不能为空") String username
+    ) {
         return service.getAuthor(username);
     }
 
@@ -46,49 +55,48 @@ public class HomepageAPIController {
      * @return 成功
      */
     //需要登录验证
+    @Validated
     @DeleteMapping("collection")
-    public Result<String> removeCollection(@RequestParam Long favoriteID, @RequestParam List<Long> collectionIDList) {
-        if (collectionIDList.size() == 0) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏不存在"));
-        if (favoriteID == null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
+    public Result<String> removeCollection(
+            @RequestParam @NotNull(message = "收藏夹不存在") @Min(value = 1,message = "收藏夹不存在") Long favoriteID,
+            @RequestParam @Size(min = 1,message = "收藏不存在") List<Long> collectionIDList
+    ) {
         return service.removeCollection(favoriteID, collectionIDList);
     }
 
     //需要登录验证
     @GetMapping("favorite")
-    public Result<List<FavoriteInformation>> getMyFavoriteList(@RequestParam String username) {
+    public Result<List<FavoriteInformation>> getMyFavoriteList(
+            @RequestParam @NotEmpty(message = "账号不能为空") String username
+    ) {
         return service.getMyFavoriteList(username);
     }
 
     //需要登录验证
     @PostMapping("favorite")
-    public Result<String> saveFavorite(@RequestBody FavoriteForm favoriteForm) {
+    public Result<String> saveFavorite(@RequestBody @Valid FavoriteForm favoriteForm) {
         return service.saveFavorite(favoriteForm);
     }
 
     //需要登录验证
     @PutMapping("favorite")
-    public Result<String> updateFavorite(@RequestBody FavoriteForm favoriteForm) {
+    public Result<String> updateFavorite(@RequestBody @Valid FavoriteForm favoriteForm) {
         if (favoriteForm.getId() == null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
         return service.updateFavorite(favoriteForm);
     }
 
-
     //需要登录验证
     @DeleteMapping("favorite")
-    public Result<String> removeFavorite(@RequestParam String username, @RequestParam Long favoriteID) {
-        if (username.isEmpty()) return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
-        if (favoriteID == null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
+    public Result<String> removeFavorite(
+            @RequestParam @NotEmpty(message = "账号不能为空") String username,
+            @RequestParam @Min(value = 1,message = "收藏夹不存在") Long favoriteID
+    ) {
         return service.removeFavorite(username, favoriteID);
     }
 
     //需要登录验证
     @PutMapping("userInformation")
-    public Result<String> updateUserInformation(@RequestBody UserInformationForm userInformationForm) {
-        if (userInformationForm.getUsername().isEmpty()) return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
-        if (userInformationForm.getNickname().isEmpty()) return Result.error(CodeMsg.BIND_ERROR.fillArgs("昵称不能为空"));
-        if (userInformationForm.getSex() == null) return Result.error(CodeMsg.BIND_ERROR.fillArgs("性别代码不能为空"));
-        if (userInformationForm.getSex() < 0 || userInformationForm.getSex() > 1)
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("性别代码错误"));
+    public Result<String> updateUserInformation(@RequestBody @Valid UserInformationForm userInformationForm) {
         return service.updateUserInformation(userInformationForm);
     }
 
