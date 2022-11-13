@@ -25,7 +25,7 @@ export default class Enshrine {
     this.collectionForm.href = href;
     this.collectionForm.synopsis = synopsis;
     this.collectionForm.favoriteID = favoriteID;
-    api.getEnshrineFavorite(username).then(({ data }) => {
+    api.getEnshrineFavorite(username).then(({ data }): void => {
       this.favoriteList = data;
     });
   }

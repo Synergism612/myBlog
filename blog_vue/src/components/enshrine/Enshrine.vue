@@ -3,7 +3,7 @@
     <el-dialog
       v-model="collectionShow"
       :show-close="false"
-      custom-class="collectionBox"
+      class="collectionBox"
       destroy-on-close
       @close="close"
     >
@@ -21,29 +21,31 @@
         <el-col :span="24">
           <el-form
             label-position="top"
-            label-width="100px"
             :model="collectionForm"
+            ref="fromRef"
+            :rules="rules"
+            :hide-required-asterisk="true"
           >
-            <el-form-item label="标题">
+            <el-form-item label="标题" prop="title">
               <el-input v-model="collectionForm.title" />
             </el-form-item>
-            <el-form-item label="地址">
+            <el-form-item label="链接" prop="href">
               <el-input v-model="collectionForm.href" />
             </el-form-item>
-            <el-form-item label="摘要">
+            <el-form-item label="摘要" prop="synopsis">
               <el-input
                 v-model="collectionForm.synopsis"
                 :rows="2"
                 type="textarea"
+                autosize
               />
             </el-form-item>
-            <el-form-item label="收藏夹" prop="region">
+            <el-form-item label="收藏夹" prop="favorite">
               <el-select
                 v-model="collectionForm.favoriteID"
                 placeholder="请选择"
                 filterable
               >
-                <el-option label="请选择" :value="0" />
                 <el-option
                   v-for="favorite in favoriteList"
                   :key="favorite.id"
@@ -65,7 +67,7 @@
 <script lang="ts">
 import { api } from "src/api/api";
 import Message from "src/utils/MessageUtil";
-import { defineComponent, reactive, toRefs, watchEffect } from "vue";
+import { defineComponent, reactive, ref, toRefs, watchEffect } from "vue";
 import Enshrine from "./Enshrine";
 
 export default defineComponent({
@@ -116,24 +118,62 @@ export default defineComponent({
       );
     });
 
+    const rules = {
+      title: [
+        {
+          required: true,
+          message: "标题不能为空",
+          trigger: "blur",
+        },
+        { max: 10, message: "长度不能超过10", trigger: "blur" },
+      ],
+      href: [
+        {
+          required: true,
+          message: "链接不能为空",
+          trigger: "blur",
+        },
+        { max: 200, message: "长度不能超过200", trigger: "blur" },
+      ],
+      synopsis: [
+        {
+          required: true,
+          message: "摘要不能为空",
+          trigger: "blur",
+        },
+        { max: 100, message: "长度不能超过100", trigger: "blur" },
+      ],
+    };
+
     const close = (): void => {
       emit("close", false);
     };
+
+    const fromRef = ref();
 
     const save = (): void => {
       if (viewData.collectionForm.favoriteID === 0) {
         viewData.collectionForm.favoriteID = -1;
       }
-      api.saveEnshrineCollection(viewData.collectionForm).then(() => {
-        emit("close", false);
-        emit("succeed", true);
-        Message.successMessage("成功添加");
-      });
+      fromRef.value
+        .validate()
+        .then((): void => {
+          api.saveEnshrineCollection(viewData.collectionForm).then((): void => {
+            emit("close", false);
+            emit("succeed", true);
+            Message.successMessage("成功添加");
+          });
+        })
+        .catch((): void => {
+          Message.warningMessage("校验未通过");
+        });
     };
     return {
       ...toRefs(viewData),
       close,
       save,
+      rules,
+      fromRef,
     };
   },
   components: {},
