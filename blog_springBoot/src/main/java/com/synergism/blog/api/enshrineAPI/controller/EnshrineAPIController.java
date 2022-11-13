@@ -3,11 +3,13 @@ package com.synergism.blog.api.enshrineAPI.controller;
 import com.synergism.blog.api.enshrineAPI.entity.CollectionForm;
 import com.synergism.blog.api.enshrineAPI.service.EnshrineAPIService;
 import com.synergism.blog.core.favorite.entity.Favorite;
-import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -31,8 +33,9 @@ public class EnshrineAPIController {
      * @return 收藏夹列表
      */
     //需要登录验证
+    @Validated
     @GetMapping("favorite")
-    public Result<List<Favorite>> getFavorite(@RequestParam String username){
+    public Result<List<Favorite>> getFavorite(@RequestParam @NotEmpty(message = "账号不能为空") String username){
         return service.getFavorite(username);
     }
 
@@ -43,10 +46,7 @@ public class EnshrineAPIController {
      */
     //需要登录验证
     @PostMapping("collection")
-    public Result<String> saveCollection(@RequestBody CollectionForm collectionForm){
-        if (collectionForm.getFavoriteID()==-1){
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不能为空"));
-        }
+    public Result<String> saveCollection(@RequestBody @Valid CollectionForm collectionForm){
         return service.saveCollection(collectionForm);
     }
 
