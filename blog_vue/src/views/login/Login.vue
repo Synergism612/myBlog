@@ -12,7 +12,7 @@
         :model="LoginFrom"
         :rules="rules"
         style="max-width: 100%"
-        :hide-required-asterisk="hideRequiredAsterisk"
+        :hide-required-asterisk="true"
       >
         <el-form-item label="账号" prop="username">
           <el-input
@@ -30,8 +30,8 @@
           />
         </el-form-item>
         <el-form-item class="button_float">
-          <el-button type="text">忘记密码</el-button>
-          <el-button type="text" @click="goRegister()">注册账号</el-button>
+          <el-button link>忘记密码</el-button>
+          <el-button link @click="goRegister()">注册账号</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login()">登录</el-button>
@@ -57,51 +57,35 @@ export default defineComponent({
    */
   setup() {
     const router = useRouter();
-    // 账号校验
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const checkUsername = (rule: any, value: string, callback: any) => {
-      if (StringUtil.checkStringIfEmpty(value)) {
-        return callback(new Error("不能为空"));
-      }
-      if (value.indexOf("@") * value.indexOf(".com") < 2) {
-        return callback(new Error("格式不规范"));
-      }
-      if (StringUtil.checkStringIfUnsafe(value)) {
-        return callback(new Error("不合法"));
-      }
-
-      return callback();
-    };
-    // 密码校验
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const checkPassword = (rule: any, value: string, callback: any) => {
-      if (StringUtil.checkStringIfEmpty(value)) {
-        return callback(new Error("不能为空"));
-      }
-      if (value.length < 8) {
-        return callback(new Error("密码长度不足8位"));
-      }
-      if (StringUtil.checkStringIfUnsafe(value)) {
-        return callback(new Error("不合法"));
-      }
-
-      return callback();
-    };
-
     // 数据仓
     const viewData = reactive({
       LoginFrom: {
         username: "",
         password: "",
       },
-      // 校验规则设置
-      //去除红色星号
-      hideRequiredAsterisk: false,
     });
 
     const rules = {
-      username: [{ validator: checkUsername }],
-      password: [{ validator: checkPassword }],
+      username: [
+        {
+          required: true,
+          message: "账号不能为空",
+          trigger: "blur",
+        },
+        {
+          pattern:
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          message: "格式不符合",
+          trigger: "blur",
+        },
+      ],
+      password: [
+        {
+          required: true,
+          message: "密码不能为空",
+          trigger: "blur",
+        },
+      ],
     };
 
     // 获得dom对象
@@ -115,7 +99,7 @@ export default defineComponent({
           .then((): void => {
             api
               .login(viewData.LoginFrom.username, viewData.LoginFrom.password)
-              .then(({ data }) => {
+              .then(({ data }): void => {
                 var loginID = data[0] as string;
                 var userInfo = data[1] as UserInformation;
                 store.commit("SET_LOGIN_ID", loginID);
@@ -125,7 +109,7 @@ export default defineComponent({
               });
           })
           .catch((): void => {
-            Message.errorMessage("校验未通过");
+            Message.warningMessage("校验未通过");
           });
       } else {
         Message.warningMessage("您已登录");
