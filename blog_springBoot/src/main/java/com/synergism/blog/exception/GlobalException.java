@@ -3,22 +3,29 @@ package com.synergism.blog.exception;
 import com.synergism.blog.exception.custom.*;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 全局异常处理
  */
 @ControllerAdvice
+@RestController
 public class GlobalException extends RuntimeException{
 
     /**
      * 拦截IllegalArgumentException异常
      * 参数校验异常
      * @param e 异常
-     * @return 结果[null]
+     * @return 结果[异常信息]
      */
     @ExceptionHandler(value =IllegalArgumentException.class)
     @ResponseBody
@@ -30,7 +37,7 @@ public class GlobalException extends RuntimeException{
      * 拦截IllegalRequestException异常
      * 请求非法异常
      * @param e 异常
-     * @return 结果[null]
+     * @return 结果[异常信息]
      */
     @ExceptionHandler(value = IllegalRequestException.class)
     @ResponseBody
@@ -42,7 +49,7 @@ public class GlobalException extends RuntimeException{
      * 拦截KeyFailureException异常
      * 密钥失效异常
      * @param e 异常
-     * @return 结果[null]
+     * @return 结果[异常信息]
      */
     @ExceptionHandler(value = KeyFailureException.class)
     @ResponseBody
@@ -54,7 +61,7 @@ public class GlobalException extends RuntimeException{
      * 拦截PermissionFailureException异常
      * 鉴权失败异常
      * @param e 异常
-     * @return 结果[null]
+     * @return 结果[异常信息]
      */
     @ExceptionHandler(value = PermissionFailureException.class)
     @ResponseBody
@@ -65,12 +72,11 @@ public class GlobalException extends RuntimeException{
     /**
      * 拦截SnowFailException异常
      * 雪花算法异常
-     * @param e 异常
-     * @return 结果[null]
+     * @return 结果[异常信息]
      */
     @ExceptionHandler(value = SnowFailException.class)
     @ResponseBody
-    public Result<String> SnowFailException(SnowFailException e){
+    public Result<String> SnowFailException(){
         return Result.error(CodeMsg.SERVER_ERROR);
     }
 
@@ -78,7 +84,7 @@ public class GlobalException extends RuntimeException{
      * 拦截MailErrorException异常
      * 邮箱发送失败异常
      * @param e 异常
-     * @return 结果[null]
+     * @return 结果[异常信息]
      */
     @ExceptionHandler(value = MailErrorException.class)
     @ResponseBody
@@ -88,12 +94,14 @@ public class GlobalException extends RuntimeException{
 
     /**
      * 拦截MethodArgumentNotValidException异常
-     * 邮箱发送失败异常
+     * 参数校验失败异常
      * @param e 异常
-     * @return 结果[null]
+     * @return 结果[异常信息]
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result<String> jsonParamsException(MethodArgumentNotValidException e) {
-        return Result.error(CodeMsg.BIND_ERROR.fillArgs(e.getMessage()));
+    public Result<String> MethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
+        String message = allErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(";"));
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs(message));
     }
 }
