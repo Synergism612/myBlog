@@ -39,7 +39,7 @@ export default defineConfig({
               .toString();
           }
         },
-        chunkFileNames: (chunkInfo) => {
+        chunkFileNames: (chunkInfo): string => {
           const facadeModuleId = chunkInfo.facadeModuleId
             ? chunkInfo.facadeModuleId.split("/")
             : [];
