@@ -4,9 +4,7 @@ package com.synergism.blog.api.writeAPI.service;
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.classify.entity.Classify;
-import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.tag.entity.Tag;
-import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.result.Result;
 
 import java.util.List;

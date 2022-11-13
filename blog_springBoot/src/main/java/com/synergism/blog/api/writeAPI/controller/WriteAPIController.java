@@ -4,14 +4,15 @@ import com.synergism.blog.api.writeAPI.entity.ArticleForm;
 import com.synergism.blog.api.writeAPI.service.writeAPIService;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.classify.entity.Classify;
-import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.tag.entity.Tag;
-import com.synergism.blog.core.tag.entity.TagInformation;
-import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -51,11 +52,11 @@ public class WriteAPIController {
      * @param articleID 文章id
      * @return 标签列表
      */
+    @Validated
     @GetMapping("article")
-    public Result<ArticleInformation> getArticle(@RequestParam Long articleID){
-        if (articleID==null){
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
-        }
+    public Result<ArticleInformation> getArticle(
+            @RequestParam @NotNull(message = "文章id不能为空") @Min(value = 1,message = "文章不存在") Long articleID
+    ){
         return service.getArticle(articleID);
     }
 
@@ -65,7 +66,10 @@ public class WriteAPIController {
      * @return 成功
      */
     @PostMapping("article")
-    public Result<String> saveArticle(@RequestBody ArticleForm articleForm){
+    public Result<String> saveArticle(@RequestBody @Valid ArticleForm articleForm){
+        if (articleForm.getSynopsis().isEmpty()){
+            articleForm.setSynopsis(articleForm.getBody().substring(0,20));
+        }
         return service.saveArticle(articleForm);
     }
 
@@ -75,7 +79,10 @@ public class WriteAPIController {
      * @return 成功
      */
     @PutMapping("article")
-    public Result<String> updateArticle(@RequestBody ArticleForm articleForm){
+    public Result<String> updateArticle(@RequestBody @Valid ArticleForm articleForm){
+        if (articleForm.getSynopsis().isEmpty()){
+            articleForm.setSynopsis(articleForm.getBody().substring(0,20));
+        }
         return service.updateArticle(articleForm);
     }
 }
