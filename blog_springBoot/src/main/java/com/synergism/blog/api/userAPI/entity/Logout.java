@@ -3,29 +3,22 @@ package com.synergism.blog.api.userAPI.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.synergism.blog.utils.StringUtil.ifEmpty;
-import static com.synergism.blog.utils.StringUtil.checkStringIsUnsafe;
-import static com.synergism.blog.utils.TypeUtil.asArray;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
 public class Logout {
     //登录信息ID
+    @NotEmpty(message = "登录信息id不能为空")
     private String loginID = "";
     //昵称
+    @NotEmpty(message = "昵称不能为空")
+    @Size(max = 8,message = "昵称长度不能超过8")
     private String nickname = "";
     //账号
+    @NotEmpty(message = "账号不能为空")
+    @Email(message = "账号邮箱格式不正确")
     private String username = "";
-
-    Logout(){}
-
-    Logout(String loginID, String nickname, String username) {
-        //判空
-        ifEmpty(asArray(loginID, nickname,username),asArray("登录信息密钥","昵称","账号"));
-        //合法性检查
-        checkStringIsUnsafe(loginID, nickname,username);
-        this.loginID = loginID;
-        this.nickname = nickname;
-        this.username = username;
-    }
 }
