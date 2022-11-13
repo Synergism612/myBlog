@@ -1,6 +1,5 @@
 package com.synergism.blog.api.publicAPI.controller;
 
-import com.synergism.blog.api.userAPI.entity.Login;
 import com.synergism.blog.api.publicAPI.service.PublicAPIService;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
@@ -28,16 +27,6 @@ public class PublicAPIController {
     @GetMapping("/key")
     public Result<String> getKey() {
         return service.getPublicKey();
-    }
-
-    /**
-     * 测试接口
-     * @param login 登录信息
-     * @return 登录信息
-     */
-    @PostMapping("/test")
-    public Result<String> test(@RequestBody Login login) {
-        return Result.success(login.toString());
     }
 
     /**
