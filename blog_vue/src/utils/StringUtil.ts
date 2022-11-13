@@ -24,7 +24,7 @@ export default class StringUtil {
    */
   public static checkStringsIfEmpty(strs: string[]): boolean {
     let result = 0;
-    strs.forEach((str) => {
+    strs.forEach((str): void => {
       result = result + (this.checkStringIfEmpty(str) ? 1 : 0);
     });
     return result != 0 ? true : false;
