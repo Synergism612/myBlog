@@ -70,6 +70,13 @@
                 <!-- 右侧 -->
                 <el-col :xs="0" :sm="6" :md="6" :span="6">
                   <div class="right">
+                    <span style="margin-right;: 0.5em"> 只显示我的文章 </span>
+                    <el-switch
+                      v-model="isMy"
+                      class="ml-2"
+                      @change="change"
+                      style="--el-switch-on-color: #3fc4c2"
+                    />
                     <el-timeline>
                       <el-timeline-item
                         v-for="month in monthList"
@@ -125,7 +132,11 @@ export default defineComponent({
       });
     };
 
-    onMounted(() => {
+    const change = (): void => {
+      viewData.init();
+    };
+
+    onMounted((): void => {
       viewData.init();
     });
 
@@ -133,6 +144,7 @@ export default defineComponent({
       ...toRefs(viewData),
       toDate,
       toContent,
+      change,
     };
   },
   components: { Menu },
