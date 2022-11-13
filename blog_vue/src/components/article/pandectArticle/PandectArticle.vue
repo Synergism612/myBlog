@@ -86,7 +86,7 @@ export default defineComponent({
           viewData.classifyIDList,
           viewData.tagIDList
         )
-        .then(({ data }) => {
+        .then(({ data }): void => {
           viewData.articleInformationList = data.articleInformationList;
           viewData.total = data.total;
           viewData.refresh = true;

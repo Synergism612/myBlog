@@ -62,7 +62,7 @@ export default class IndexArticle {
         this.articleOrderBy,
         this.isMy === true ? this.username : ""
       )
-      .then(({ data }) => {
+      .then(({ data }): void => {
         this.articleInformationList = data.articleInformationList;
         this.total = data.total;
         this.refresh = true;
