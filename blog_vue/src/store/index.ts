@@ -23,7 +23,7 @@ export const store = createStore({
      * @param state state
      * @param ANOTHER_WORLD_KEY 密钥
      */
-    SET_ANOTHER_WORLD_KEY: (state, ANOTHER_WORLD_KEY: string) => {
+    SET_ANOTHER_WORLD_KEY: (state, ANOTHER_WORLD_KEY: string): void => {
       state.ANOTHER_WORLD_KEY = ANOTHER_WORLD_KEY;
       StoreUtil.save("ANOTHER_WORLD_KEY", ANOTHER_WORLD_KEY);
     },
@@ -33,7 +33,7 @@ export const store = createStore({
      * @param state state
      * @param PUBLIC_KEY 公钥
      */
-    SET_PUBLIC_KEY: (state, PUBLIC_KEY: string) => {
+    SET_PUBLIC_KEY: (state, PUBLIC_KEY: string): void => {
       state.PUBLIC_KEY = PUBLIC_KEY;
       StoreUtil.save("PUBLIC_KEY", PUBLIC_KEY);
     },
@@ -43,7 +43,7 @@ export const store = createStore({
      * @param state state
      * @param KEY 密钥
      */
-    SET_KEY: (state, KEY: string) => {
+    SET_KEY: (state, KEY: string): void => {
       state.KEY = KEY;
       StoreUtil.save("KEY", KEY);
     },
@@ -53,7 +53,7 @@ export const store = createStore({
      * @param state state
      * @param EVIL_EYE 密钥
      */
-    SET_EVIL_EYE: (state, EVIL_EYE: string) => {
+    SET_EVIL_EYE: (state, EVIL_EYE: string): void => {
       state.EVIL_EYE = EVIL_EYE;
       StoreUtil.save("EVIL_EYE", EVIL_EYE);
     },
@@ -63,7 +63,7 @@ export const store = createStore({
      * @param state state
      * @param userInfo 用户信息
      */
-    SET_USER_INFO: (state, userInfo: UserInformation) => {
+    SET_USER_INFO: (state, userInfo: UserInformation): void => {
       state.userInfo = userInfo;
       StoreUtil.save("userInfo", JSON.stringify(userInfo));
     },
@@ -72,7 +72,7 @@ export const store = createStore({
      * @param state state
      * @param loginID 用户信息对应密钥
      */
-    SET_LOGIN_ID: (state, loginID: string) => {
+    SET_LOGIN_ID: (state, loginID: string): void => {
       state.loginID = loginID;
       StoreUtil.save("loginID", loginID);
     },
@@ -81,7 +81,7 @@ export const store = createStore({
      * 删除state中的所有数据
      * @param state state
      */
-    DELECT_ALL_KEY: (state) => {
+    DELECT_ALL_KEY: (state): void => {
       state.KEY = "";
       state.loginID = "";
       state.EVIL_EYE = "";
@@ -96,12 +96,12 @@ export const store = createStore({
       StoreUtil.save("ANOTHER_WORLD_KEY", "");
     },
 
-    DELECT_USER_INFO: (state) => {
+    DELECT_USER_INFO: (state): void => {
       state.userInfo = "";
       StoreUtil.save("userInfo", "");
     },
 
-    DELECT_LOGIN_ID: (state) => {
+    DELECT_LOGIN_ID: (state): void => {
       state.loginID = "";
       StoreUtil.save("loginID", "");
     },
