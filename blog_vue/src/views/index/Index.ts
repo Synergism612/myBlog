@@ -10,7 +10,7 @@ export default class Index {
   ifLogin: boolean;
 
   /**日历日期*/
-  calender: string;
+  calender: Date;
   /**用户信息*/
   userInfo: UserInformation;
   /**标签云列表*/
@@ -21,7 +21,7 @@ export default class Index {
   constructor() {
     this.userInfo = store.getters.getUser;
     this.ifLogin = StringUtil.checkStringIfEmpty(this.userInfo.username);
-    this.calender = "";
+    this.calender = new Date();
     this.tagInformationList = [new TagInformation()];
     this.classifyInformationList = [new ClassifyInformation()];
   }
@@ -29,7 +29,7 @@ export default class Index {
   public init(): void {
     const userInfo = (): void => {
       if (StringUtil.checkStringIfEmpty(this.userInfo.username)) {
-        api.getIndexUserInformation().then(({ data }) => {
+        api.getIndexUserInformation().then(({ data }): void => {
           this.userInfo = data;
           this.ifLogin = false;
         });
