@@ -12,7 +12,7 @@
         :model="registerFrom"
         :rules="rules"
         style="max-width: 100%"
-        :hide-required-asterisk="hideRequiredAsterisk"
+        :hide-required-asterisk="true"
       >
         <el-form-item label="邮箱" prop="username">
           <el-input
@@ -29,9 +29,9 @@
             clearable
           />
         </el-form-item>
-        <el-form-item label="确认密码" prop="passwordAgen">
+        <el-form-item label="确认密码" prop="passwordAgain">
           <el-input
-            v-model="registerFrom.passwordAgen"
+            v-model="registerFrom.passwordAgain"
             type="password"
             placeholder="请确认密码"
             clearable
@@ -70,50 +70,24 @@ export default defineComponent({
   setup() {
     // 账号校验
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const checkUsername = (rule: any, value: string, callback: any) => {
-      if (StringUtil.checkStringIfEmpty(value)) {
-        return callback(new Error("不能为空"));
-      }
-      if (value.indexOf("@") * value.indexOf(".com") < 2) {
-        return callback(new Error("格式不规范"));
-      }
-      if (StringUtil.checkStringIfUnsafe(value)) {
-        return callback(new Error("不合法"));
-      }
-      return callback();
-    };
-    // 密码校验
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const checkPassword = (rule: any, value: string, callback: any) => {
-      if (StringUtil.checkStringIfEmpty(value)) {
-        return callback(new Error("不能为空"));
-      }
-      if (value.length < 8) {
-        return callback(new Error("密码长度不足8位"));
-      }
-      if (StringUtil.checkStringIfUnsafe(value)) {
-        return callback(new Error("不合法"));
-      }
-      return callback();
-    };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const checkPassword_agen = (rule: any, value: string, callback: any) => {
-      if (StringUtil.checkStringIfEmpty(value)) {
-        return callback(new Error("不能为空"));
-      }
+    const checkPassword_agen = (
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      rule: any,
+      value: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      callback: any
+    ): void => {
       if (StringUtil.checkStringIfEmpty(viewData.registerFrom.password)) {
         return callback(new Error("请输入密码"));
       }
       if (value.localeCompare(viewData.registerFrom.password) != 0) {
         return callback(new Error("两次输入不一致"));
       }
-
       return callback();
     };
 
     const viewData = reactive({
       registerFrom: new RegisterForm(),
-      hideRequiredAsterisk: false,
       codeButton: {
         disabled: false,
         text: "获取验证码",
@@ -122,9 +96,44 @@ export default defineComponent({
     });
 
     const rules = {
-      username: [{ validator: checkUsername }],
-      password: [{ validator: checkPassword }],
-      passwordAgen: [{ validator: checkPassword_agen }],
+      username: [
+        {
+          required: true,
+          message: "账号不能为空",
+          trigger: "blur",
+        },
+        {
+          pattern:
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          message: "格式不符合",
+          trigger: "blur",
+        },
+      ],
+      password: [
+        {
+          required: true,
+          message: "密码不能为空",
+          trigger: "blur",
+        },
+        {
+          pattern: /^[a-zA-Z0-9_-]{8,100}$/,
+          message: "应为8到100位的字母、数字、下划线或减号",
+          trigger: "blur",
+        },
+      ],
+      passwordAgain: [
+        {
+          required: true,
+          message: "确认密码不能为空",
+          trigger: "blur",
+        },
+        { validator: checkPassword_agen, trigger: "blur" },
+        {
+          pattern: /^[a-zA-Z0-9_-]{8,100}$/,
+          message: "应为8到100位的字母、数字、下划线或减号",
+          trigger: "blur",
+        },
+      ],
     };
 
     /**
@@ -155,12 +164,12 @@ export default defineComponent({
               viewData.registerFrom.username,
               viewData.registerFrom.key
             )
-            .then(({ data }) => {
+            .then(({ data }): void => {
               viewData.registerFrom.key = data;
             });
         })
         .catch((): void => {
-          Message.errorMessage("校验未通过");
+          Message.warningMessage("校验未通过");
         });
     };
 
@@ -171,7 +180,7 @@ export default defineComponent({
           api.register(viewData.registerFrom);
         })
         .catch((): void => {
-          Message.errorMessage("校验未通过");
+          Message.warningMessage("校验未通过");
         });
     };
 
