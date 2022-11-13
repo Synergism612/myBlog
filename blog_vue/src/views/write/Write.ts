@@ -34,13 +34,13 @@ export default class Write {
   }
 
   public init(): void {
-    const classify = () => {
-      api.getWriteClassify().then(({ data }) => {
+    const classify = (): void => {
+      api.getWriteClassify().then(({ data }): void => {
         this.classifyInformationList = data;
       });
     };
-    const tag = () => {
-      api.getWriteTag().then(({ data }) => {
+    const tag = (): void => {
+      api.getWriteTag().then(({ data }): void => {
         this.tagInformationList = data;
       });
     };
@@ -59,7 +59,7 @@ export default class Write {
       this.articleForm.ifPrivate = this.articleInformation.ifPrivate;
       this.articleForm.classifyID = this.articleInformation.classify.id;
       this.articleForm.tagIDList = this.articleInformation.tagList.map(
-        (tag: Tag) => {
+        (tag: Tag): number => {
           return tag.id;
         }
       );

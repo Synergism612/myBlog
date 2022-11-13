@@ -29,14 +29,16 @@
             <!-- 主体框架 -->
             <el-col :xs="24" :sm="24" :md="24" :lg="20" class="frame">
               <div class="from">
-                <el-form label-position="top" :model="articleForm">
-                  <el-form-item label="内容" v-show="false">
-                    <el-input clearable v-model="articleForm.body" />
-                  </el-form-item>
-
+                <el-form
+                  label-position="top"
+                  :model="articleForm"
+                  :rules="rules"
+                  ref="formRef"
+                  :hide-required-asterisk="true"
+                >
                   <el-row :gutter="20">
                     <el-col :span="6">
-                      <el-form-item label="封面">
+                      <el-form-item label="封面" prop="icon">
                         <el-upload
                           class="avatar-uploader"
                           action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
@@ -54,7 +56,7 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="4">
-                      <el-form-item label="标题">
+                      <el-form-item label="标题" prop="title">
                         <el-input
                           clearable
                           v-model="articleForm.title"
@@ -63,7 +65,7 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="4">
-                      <el-form-item label="分类">
+                      <el-form-item label="分类" prop="classifyID">
                         <el-select
                           v-model="articleForm.classifyID"
                           placeholder="选择一个分类"
@@ -79,7 +81,7 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                      <el-form-item label="标签">
+                      <el-form-item label="标签" prop="tagIDList">
                         <el-select
                           v-model="articleForm.tagIDList"
                           placeholder="选择至少一个标签"
@@ -96,7 +98,7 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="4">
-                      <el-form-item label="隐私设置">
+                      <el-form-item label="隐私设置" prop="ifPrivate">
                         <el-radio-group v-model="articleForm.ifPrivate">
                           <el-radio :label="0">公开</el-radio>
                           <el-radio :label="1">私密</el-radio>
@@ -105,11 +107,12 @@
                     </el-col>
 
                     <el-col :span="20">
-                      <el-form-item label="摘要">
+                      <el-form-item label="摘要" prop="synopsis">
                         <el-input
                           v-model="articleForm.synopsis"
                           :rows="2"
                           type="textarea"
+                          autosize
                           placeholder="为空时将会自动截取正文前20个字"
                         />
                       </el-form-item>
@@ -130,14 +133,16 @@
                       </div>
                     </el-col>
                   </el-row>
+                  <el-form-item label="正文" prop="body">
+                    <div class="mdEditor">
+                      <MdEditor
+                        v-model="articleForm.body"
+                        :showCodeRowNumber="true"
+                        :toolbars="toolbars"
+                      />
+                    </div>
+                  </el-form-item>
                 </el-form>
-              </div>
-              <div class="mdEditor">
-                <MdEditor
-                  v-model="articleForm.body"
-                  :showCodeRowNumber="true"
-                  :toolbars="toolbars"
-                />
               </div>
             </el-col>
           </el-row>
@@ -147,7 +152,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs } from "vue";
+import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
 import Write from "./Write";
 import Menu from "src/components/menu/Menu.vue";
 import MdEditor from "md-editor-v3";
@@ -168,13 +173,70 @@ export default defineComponent({
 
     const id = Number(route.params.id); //字符串读取为数字
 
+    const formRef = ref();
+
+    const rules = {
+      icon: [
+        {
+          required: true,
+          message: "封面不能为空",
+          trigger: "blur",
+        },
+        {
+          pattern:
+            /^https?:\/\/(.+\/)+.+(\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i,
+          message: "必须为图片链接",
+          trigger: "blur",
+        },
+      ],
+      title: [
+        {
+          required: true,
+          message: "标题不能为空",
+          trigger: "blur",
+        },
+        { max: 10, message: "长度不能超过10", trigger: "blur" },
+      ],
+      classifyID: [
+        {
+          required: true,
+          message: "必须选择一个分类",
+          trigger: "blur",
+        },
+      ],
+      tagIDList: [
+        {
+          required: true,
+          message: "至少选择一个分类",
+          trigger: "blur",
+        },
+      ],
+      ifPrivate: [
+        {
+          required: true,
+          message: "隐私设置不能为空",
+          trigger: "blur",
+        },
+      ],
+      synopsis: [{ max: 100, message: "长度不能超过100", trigger: "blur" }],
+      body: [
+        {
+          required: true,
+          message: "正文不能为空",
+          trigger: "blur",
+        },
+      ],
+    };
+
     const save = (): void => {
-      viewData.articleForm.username = viewData.username;
-      api.saveWriteArticle(viewData.articleForm).then(({ data }): void => {
-        data;
-        Message.successMessage("提交成功");
-        router.push({
-          name: "Index",
+      formRef.value.validate().then((): void => {
+        viewData.articleForm.username = viewData.username;
+        api.saveWriteArticle(viewData.articleForm).then(({ data }): void => {
+          data;
+          Message.successMessage("提交成功");
+          router.push({
+            name: "Index",
+          });
         });
       });
     };
@@ -182,22 +244,24 @@ export default defineComponent({
     const handleAvatarSuccess: UploadProps["onSuccess"] = (
       response,
       uploadFile
-    ) => {
+    ): void => {
       viewData.articleForm.icon = URL.createObjectURL(uploadFile.raw!);
     };
 
-    const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
+    const beforeAvatarUpload: UploadProps["beforeUpload"] = (
+      rawFile
+    ): boolean => {
       if (rawFile.type !== "image/jpeg/png") {
-        Message.errorMessage("只能上传图片类型");
+        Message.warningMessage("只能上传图片类型");
         return false;
       } else if (rawFile.size / 1024 / 1024 > 5) {
-        Message.errorMessage("请勿上传超过5MB的图片");
+        Message.warningMessage("请勿上传超过5MB的图片");
         return false;
       }
       return true;
     };
 
-    onMounted(() => {
+    onMounted((): void => {
       if (id > 0) {
         viewData.articleFormInit(id);
       }
@@ -209,6 +273,8 @@ export default defineComponent({
       save,
       handleAvatarSuccess,
       beforeAvatarUpload,
+      formRef,
+      rules,
     };
   },
   components: { Menu, MdEditor },
