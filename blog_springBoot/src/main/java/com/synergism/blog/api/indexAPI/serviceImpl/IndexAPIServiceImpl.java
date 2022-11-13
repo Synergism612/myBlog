@@ -66,7 +66,9 @@ public class IndexAPIServiceImpl implements IndexAPIService {
     @Override
     public Result<String> removeArticle(String username, List<Long> articleIDList) {
         long userID = userService.getID(username);
-        if (!articleService.isExist(articleIDList)) return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        if (!articleService.isExist(articleIDList)) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        }
         if (userID != -1) {
             articleService.remove(articleIDList, userID);
             return Result.success();
