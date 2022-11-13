@@ -161,7 +161,6 @@
                       <br />
                       <span>
                         <span class="click">关注他</span>
-                        <span class="click">加好友</span>
                       </span>
                     </div>
                   </el-col>
@@ -241,7 +240,7 @@ export default defineComponent({
      * 全屏或缩小函数
      * @param pageFullScreen 是否全屏
      */
-    const toFullOrlessen = (pageFullScreen: boolean) => {
+    const toFullOrlessen = (pageFullScreen: boolean): void => {
       if (!pageFullScreen) {
         /**放大后会将原本的body滚动条设置为不显示,所以需要删掉 */
         document.body.style.removeProperty("overflow");
@@ -280,7 +279,7 @@ export default defineComponent({
       }
 
       if (to >= html.scrollTop + html.clientHeight / 2) {
-        var time1 = setInterval(() => {
+        var time1 = setInterval((): void => {
           if (html.scrollTop + html.clientHeight >= to) {
             viewData.toolBoxShow = true;
             clearInterval(time1);
@@ -288,7 +287,7 @@ export default defineComponent({
           html.scrollTop = html.scrollTop + html.clientHeight / 2;
         }, 10);
       } else {
-        var time2 = setInterval(() => {
+        var time2 = setInterval((): void => {
           if (html.scrollTop <= to) {
             viewData.toolBoxShow = true;
             clearInterval(time2);
@@ -345,7 +344,7 @@ export default defineComponent({
       }
     };
 
-    onMounted(() => {
+    onMounted((): void => {
       viewData.init(id);
     });
 

@@ -51,34 +51,34 @@ export default class Content {
 
   public init(articleID: number): void {
     const article = (): void => {
-      api.getContentArticle(articleID).then(({ data }) => {
+      api.getContentArticle(articleID).then(({ data }): void => {
         this.article = data;
       });
     };
     const author = (): void => {
-      api.getContentAuthor(articleID).then(({ data }) => {
+      api.getContentAuthor(articleID).then(({ data }): void => {
         this.author = data;
       });
     };
     const classify = (): void => {
-      api.getContentClassify(articleID).then(({ data }) => {
+      api.getContentClassify(articleID).then(({ data }): void => {
         this.classify = data;
       });
     };
     const tagList = (): void => {
-      api.getContentTagList(articleID).then(({ data }) => {
+      api.getContentTagList(articleID).then(({ data }): void => {
         this.tagList = data;
       });
     };
 
     const classifyNominate = (): void => {
-      api.getContentClassifyNominate(articleID).then(({ data }) => {
+      api.getContentClassifyNominate(articleID).then(({ data }): void => {
         this.classifyNominate = data || [new Article()];
       });
     };
 
     const tagNominate = (): void => {
-      api.getContentTagNominate(articleID).then(({ data }) => {
+      api.getContentTagNominate(articleID).then(({ data }): void => {
         this.tagNominate = data || [new ArticleTagNominate()];
       });
     };
