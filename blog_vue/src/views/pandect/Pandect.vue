@@ -194,7 +194,7 @@ export default defineComponent({
       }
     };
 
-    onMounted(() => {
+    onMounted((): void => {
       viewData.init();
       routeInit();
     });
