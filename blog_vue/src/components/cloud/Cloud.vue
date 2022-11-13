@@ -129,7 +129,7 @@ export default defineComponent({
       let cos = Math.cos(viewData.angleX);
       let sin = Math.sin(viewData.angleX);
 
-      viewData.elementList.forEach((element) => {
+      viewData.elementList.forEach((element): void => {
         let y1 = element.y * cos - element.z * sin;
         let z1 = element.z * cos + element.y * sin;
         element.y = y1;
@@ -140,7 +140,7 @@ export default defineComponent({
     const rotateY = (): void => {
       let cos = Math.cos(viewData.angleY);
       let sin = Math.sin(viewData.angleY);
-      viewData.elementList.forEach((element) => {
+      viewData.elementList.forEach((element): void => {
         let x1 = element.x * cos - element.z * sin;
         let z1 = element.z * cos + element.x * sin;
         element.x = x1;
@@ -179,7 +179,7 @@ export default defineComponent({
     };
 
     /**初始化函数 */
-    const init = () => {
+    const init = (): void => {
       if (paper.value != null) {
         viewData.CX = paper.value.offsetWidth / 2;
         viewData.CY = paper.value.offsetHeight / 2;
@@ -195,7 +195,7 @@ export default defineComponent({
       emit("elementClick", id);
     };
 
-    onMounted(() => {
+    onMounted((): void => {
       init();
       initCustomFormatter();
     });
