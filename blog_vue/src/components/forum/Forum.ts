@@ -49,9 +49,9 @@ export default class Forum {
   }
   public init(): void {
     const commentList = (): void => {
-      api.getContentCommentList(this.articleID).then(({ data }) => {
+      api.getContentCommentList(this.articleID).then(({ data }): void => {
         this.commentList = data || [new CommentParent()];
-        this.commentList.forEach((commentParent: CommentParent) => {
+        this.commentList.forEach((commentParent: CommentParent): void => {
           if (commentParent.childCount === 0) {
             commentParent.commentChildList = [new CommentChild()];
           }
@@ -59,19 +59,5 @@ export default class Forum {
       });
     };
     commentList();
-  }
-
-  public checkCommentInput(): boolean {
-    if (StringUtil.checkStringIfEmpty(this.commentInput)) {
-      Message.warningMessage("评论不能为空");
-      return false;
-    } else {
-      if (this.commentInput.length <= 1000) {
-        return true;
-      } else {
-        Message.warningMessage("评论字数不能超过1000");
-        return false;
-      }
-    }
   }
 }

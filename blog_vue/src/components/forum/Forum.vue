@@ -1,18 +1,25 @@
 <template>
   <div class="forumBox">
     <el-row class="input">
-      <el-col class="left" :span="1">
-        <span>发表评论</span>
+      <el-col :span="22">
+        <el-form
+          label-position="left"
+          ref="formRef"
+          :rules="rules"
+          :hide-required-asterisk="true"
+        >
+          <el-form-item label="发表评论" prop="content">
+            <el-input
+              v-model="commentInput"
+              :rows="2"
+              type="textarea"
+              autosize
+              placeholder="请输入..."
+            />
+          </el-form-item>
+        </el-form>
       </el-col>
-      <el-col class="middle" :span="22">
-        <el-input
-          v-model="commentInput"
-          :rows="2"
-          type="textarea"
-          placeholder="请输入..."
-        />
-      </el-col>
-      <el-col class="right" :span="1">
+      <el-col class="buttom" :span="1" :offset="1">
         <span class="click" @click="saveComment()">提交</span>
       </el-col>
     </el-row>
@@ -113,7 +120,7 @@
 <script lang="ts">
 import { api } from "src/api/api";
 import Message from "src/utils/MessageUtil";
-import { defineComponent, onMounted, reactive, toRefs } from "vue";
+import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
 import Forum from "./Forum";
 
 export default defineComponent({
@@ -128,16 +135,28 @@ export default defineComponent({
     /**数据仓初始化 */
     const viewData = reactive(new Forum(props.articleID));
 
+    const rules = {
+      content: [
+        {
+          required: true,
+          message: "评论不能为空",
+          trigger: "blur",
+        },
+        { max: 500, message: "长度不能超过500", trigger: "blur" },
+      ],
+    };
+
+    const formRef = ref();
+
     /**新的评论函数 */
     const saveComment = (): void => {
       if (viewData.isLogin) {
-        if (!viewData.checkCommentInput()) {
-          return;
-        }
-        api.saveContentComment(viewData.getCommentForm()).then((): void => {
-          viewData.commentInput = "";
-          Message.successMessage("评论成功");
-          viewData.init();
+        formRef.value.validate().then((): void => {
+          api.saveContentComment(viewData.getCommentForm()).then((): void => {
+            viewData.commentInput = "";
+            Message.successMessage("评论成功");
+            viewData.init();
+          });
         });
       } else {
         Message.warningMessage("您未登录");
@@ -156,14 +175,14 @@ export default defineComponent({
       rootID: number,
       parentUsername: string,
       parentID: number
-    ) => {
+    ): void => {
       if (viewData.isLogin) {
         viewData.rootUsername = rootUsername;
         viewData.rootID = rootID;
         viewData.parentUsername = parentUsername;
         viewData.parentID = parentID;
         emit("toForum");
-        Message.successMessage("已为您锁定目标");
+        Message.successMessage("已为您瞄准目标");
       } else {
         Message.warningMessage("您未登录");
       }
@@ -177,7 +196,7 @@ export default defineComponent({
       viewData.parentID = -1;
     };
 
-    onMounted(() => {
+    onMounted((): void => {
       viewData.init();
     });
 
@@ -187,6 +206,8 @@ export default defineComponent({
       saveComment,
       toForum,
       cancel,
+      rules,
+      formRef,
     };
   },
   components: {},
