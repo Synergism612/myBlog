@@ -49,5 +49,10 @@ public class Classify {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
+    public Classify(){}
 
+    public Classify(String name, String annotation) {
+        this.name = name;
+        this.annotation = annotation;
+    }
 }

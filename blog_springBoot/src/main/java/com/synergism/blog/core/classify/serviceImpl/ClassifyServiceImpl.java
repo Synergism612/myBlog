@@ -7,6 +7,7 @@ import com.synergism.blog.core.classify.service.ClassifyService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -49,5 +50,13 @@ public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify> i
     public List<Classify> getUsedListByUsername(String username) {
         List<Classify> result = mapper.selectUsedListByUsername(username);
         return result.size()==0?null:result;
+    }
+
+    @Override
+    @Transactional
+    public void save(long userID, String name, String annotation) {
+        Classify classify = new Classify(name,annotation);
+        mapper.insert(classify);
+        mapper.bundle(classify.getId(),userID);
     }
 }

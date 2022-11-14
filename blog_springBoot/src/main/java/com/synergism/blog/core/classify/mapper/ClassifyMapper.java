@@ -44,4 +44,11 @@ public interface ClassifyMapper extends BaseMapper<Classify> {
      * @return 分类列表
      */
     List<Classify> selectUsedListByUsername(String username);
+
+    /**
+     * 绑定新的分类
+     * @param classifyID 分类id
+     * @param userID 用户id
+     */
+    void bundle(long classifyID, long userID);
 }

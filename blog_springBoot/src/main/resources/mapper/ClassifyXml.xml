@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.classify.mapper.ClassifyMapper">
-
     <select id="selectAllClassifyInformationList"
             resultType="com.synergism.blog.core.classify.entity.ClassifyInformation">
         select c.id,
@@ -94,4 +93,9 @@
                           ua.user_id = u.id
         where u.username = #{username}
     </select>
+
+    <insert id="bundle">
+        insert into user_classify(user_id, classify_id)
+        values (#{userID}, #{classifyID});
+    </insert>
 </mapper>
