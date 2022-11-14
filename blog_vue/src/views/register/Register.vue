@@ -174,6 +174,10 @@ export default defineComponent({
     };
 
     const register = (): void => {
+      if (StringUtil.checkStringIfEmpty(viewData.registerFrom.code)) {
+        Message.warningMessage("验证码不能为空");
+        return;
+      }
       registerFormRef.value
         .validate()
         .then((): void => {
