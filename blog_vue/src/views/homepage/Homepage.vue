@@ -257,11 +257,11 @@
                             </el-collapse-item>
                           </el-collapse>
                         </el-tab-pane>
-                        <el-tab-pane label="我的分类与标签" name="second">
-                          Config
+                        <el-tab-pane label="我的关注" name="second">
+                          正在开发
                         </el-tab-pane>
                         <el-tab-pane label="我的粉丝" name="third">
-                          Config
+                          正在开发
                         </el-tab-pane>
                       </el-tabs>
                     </el-col>
