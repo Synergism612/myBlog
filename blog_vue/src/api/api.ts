@@ -1,4 +1,5 @@
 import FavoriteForm from "src/api/entity/FavoriteForm";
+import { ClassifyForm, TagForm } from "src/api/entity/ElementForm";
 import axios from "src/axios/axios";
 import { store } from "src/store";
 import AESUtil from "src/utils/AESUtil";
@@ -548,6 +549,37 @@ export class api {
     });
   }
 
+  /**
+   * 创作页面保存分类接口
+   * @param classifyForm 分类信息表单
+   * @returns 成功
+   */
+  static saveWriteClassify(classifyForm: ClassifyForm): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/write/classify",
+      method: "post",
+      data: classifyForm,
+    });
+  }
+
+  /**
+   * 创作页面保存标签接口
+   * @param tagForm 标签信息表单
+   * @returns 成功
+   */
+  static saveWriteTag(tagForm: TagForm): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/write/tag",
+      method: "post",
+      data: tagForm,
+    });
+  }
+
+  /**
+   * 归档页面获取档案信息接口
+   * @param username 账号
+   * @returns 档案信息
+   */
   static getPifeonholeArchive(username: string): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/pigeonhole/archive",
