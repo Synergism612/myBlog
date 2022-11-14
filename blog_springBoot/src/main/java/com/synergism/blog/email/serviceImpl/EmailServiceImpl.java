@@ -1,14 +1,11 @@
 package com.synergism.blog.email.serviceImpl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.email.entity.CodeMail;
 import com.synergism.blog.email.service.EmailService;
 import com.synergism.blog.exception.custom.MailErrorException;
 import com.synergism.blog.core.user.entity.User;
 import com.synergism.blog.core.user.mapper.UserMapper;
-import com.synergism.blog.result.CodeMsg;
-import com.synergism.blog.result.Result;
 import com.synergism.blog.security.cacheManager.service.CacheRedisService;
 import com.synergism.blog.utils.StringUtil;
 import com.synergism.blog.utils.TimeUtil;
@@ -123,20 +120,10 @@ public class EmailServiceImpl extends ServiceImpl<UserMapper, User> implements E
     private JavaMailSender javaMailSender;
 
     private final CacheRedisService cacheRedisService;
-    private final UserService userService;
 
     @Autowired
-    EmailServiceImpl(CacheRedisService cacheRedisService, UserService userService) {
+    EmailServiceImpl(CacheRedisService cacheRedisService) {
         this.cacheRedisService = cacheRedisService;
-        this.userService = userService;
-    }
-
-    @Override
-    public Result<String> getRegisterMailCode(String mail, String key) {
-        if (userService.isExist(mail)) {
-            return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
-        } else
-            return Result.success(getMailCode(mail, key));
     }
 
     @Override
