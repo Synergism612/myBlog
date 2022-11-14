@@ -151,13 +151,18 @@ export default defineComponent({
     /**新的评论函数 */
     const saveComment = (): void => {
       if (viewData.isLogin) {
-        formRef.value.validate().then((): void => {
-          api.saveContentComment(viewData.getCommentForm()).then((): void => {
-            viewData.commentInput = "";
-            Message.successMessage("评论成功");
-            viewData.init();
+        formRef.value
+          .validate()
+          .then((): void => {
+            api.saveContentComment(viewData.getCommentForm()).then((): void => {
+              viewData.commentInput = "";
+              Message.successMessage("评论成功");
+              viewData.init();
+            });
+          })
+          .catch((): void => {
+            Message.warningMessage("校验未通过");
           });
-        });
       } else {
         Message.warningMessage("您未登录");
       }
