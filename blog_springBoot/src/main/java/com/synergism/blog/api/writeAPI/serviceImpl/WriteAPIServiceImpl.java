@@ -1,6 +1,8 @@
 package com.synergism.blog.api.writeAPI.serviceImpl;
 
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
+import com.synergism.blog.api.writeAPI.entity.ClassifyForm;
+import com.synergism.blog.api.writeAPI.entity.TagForm;
 import com.synergism.blog.api.writeAPI.service.writeAPIService;
 import com.synergism.blog.core.article.entity.Article;
 import com.synergism.blog.core.article.entity.ArticleInformation;
@@ -77,5 +79,25 @@ public class WriteAPIServiceImpl implements writeAPIService {
                     : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+    }
+
+    @Override
+    public Result<String> saveClassify(ClassifyForm classifyForm) {
+        long userID = userService.getID(classifyForm.getUsername());
+        if (userID != -1) {
+            classifyService.save(userID,classifyForm.getName(),classifyForm.getAnnotation());
+            return Result.success();
+        }
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+    }
+
+    @Override
+    public Result<String> saveTag(TagForm tagForm) {
+        long userID = userService.getID(tagForm.getUsername());
+        if (userID != -1) {
+            tagService.save(userID,tagForm.getName(),tagForm.getAnnotation());
+            return Result.success();
+        }
+        return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
     }
 }

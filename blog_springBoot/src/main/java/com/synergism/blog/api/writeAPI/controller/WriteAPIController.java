@@ -1,6 +1,8 @@
 package com.synergism.blog.api.writeAPI.controller;
 
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
+import com.synergism.blog.api.writeAPI.entity.ClassifyForm;
+import com.synergism.blog.api.writeAPI.entity.TagForm;
 import com.synergism.blog.api.writeAPI.service.writeAPIService;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.classify.entity.Classify;
@@ -84,5 +86,25 @@ public class WriteAPIController {
             articleForm.setSynopsis(articleForm.getBody().substring(0,20));
         }
         return service.updateArticle(articleForm);
+    }
+
+    /**
+     * 创作页面保存分类接口
+     * @param classifyForm 分类信息表单
+     * @return 成功
+     */
+    @PostMapping("classify")
+    public Result<String> saveClassify(@RequestBody @Valid ClassifyForm classifyForm){
+        return service.saveClassify(classifyForm);
+    }
+
+    /**
+     * 创作页面保存标签接口
+     * @param tagForm 标签信息表单
+     * @return 成功
+     */
+    @PostMapping("tag")
+    public Result<String> saveTag(@RequestBody @Valid TagForm tagForm){
+        return service.saveTag(tagForm);
     }
 }

@@ -2,6 +2,8 @@ package com.synergism.blog.api.writeAPI.service;
 
 
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
+import com.synergism.blog.api.writeAPI.entity.ClassifyForm;
+import com.synergism.blog.api.writeAPI.entity.TagForm;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.tag.entity.Tag;
@@ -43,4 +45,18 @@ public interface writeAPIService {
      * @return 成功
      */
     Result<String> updateArticle(ArticleForm articleForm);
+
+    /**
+     * 保存分类
+     * @param classifyForm 分类信息表单
+     * @return 成功
+     */
+    Result<String> saveClassify(ClassifyForm classifyForm);
+
+    /**
+     * 保存标签
+     * @param tagForm 标签信息表单
+     * @return 成功
+     */
+    Result<String> saveTag(TagForm tagForm);
 }
