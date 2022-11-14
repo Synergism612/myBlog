@@ -43,4 +43,11 @@ public interface TagService extends IService<Tag> {
      */
     List<Tag> getUsedListByUsername(String username);
 
+    /**
+     * 保存新的标签
+     * @param userID 用户id
+     * @param name 名称
+     * @param annotation 注释
+     */
+    void save(long userID, String name, String annotation);
 }

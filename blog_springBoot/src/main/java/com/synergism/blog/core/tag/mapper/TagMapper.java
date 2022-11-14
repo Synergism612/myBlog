@@ -44,4 +44,11 @@ public interface TagMapper extends BaseMapper<Tag> {
      * @return 标签列表
      */
     List<Tag> selectUsedListByUsername(String username);
+
+    /**
+     * 绑定新的标签
+     * @param tagID 标签id
+     * @param userID 用户id
+     */
+    void bundle(long tagID, long userID);
 }

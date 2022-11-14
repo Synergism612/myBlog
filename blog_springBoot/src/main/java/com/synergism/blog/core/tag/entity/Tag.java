@@ -49,5 +49,10 @@ public class Tag {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
+    public Tag(){}
 
+    public Tag(String name, String annotation) {
+        this.name = name;
+        this.annotation = annotation;
+    }
 }
