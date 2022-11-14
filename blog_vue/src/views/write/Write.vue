@@ -70,6 +70,7 @@
                           v-model="articleForm.classifyID"
                           placeholder="选择一个分类"
                           filterable
+                          ref="classifySelect"
                         >
                           <el-option
                             v-for="element in classifyInformationList"
@@ -78,6 +79,12 @@
                             :value="element.id"
                           />
                         </el-select>
+                        <div class="button" @click="saveClassifyShow = true">
+                          <span class="click">
+                            <font-awesome-icon :icon="['fas', 'plus']" />
+                            新增分类
+                          </span>
+                        </div>
                       </el-form-item>
                     </el-col>
                     <el-col :span="6">
@@ -95,6 +102,12 @@
                             :value="element.id"
                           />
                         </el-select>
+                        <div class="button" @click="saveTagShow = true">
+                          <span class="click">
+                            <font-awesome-icon :icon="['fas', 'plus']" />
+                            新增标签
+                          </span>
+                        </div>
                       </el-form-item>
                     </el-col>
                     <el-col :span="4">
@@ -149,6 +162,85 @@
         </el-main>
       </el-container>
     </div>
+    <el-dialog
+      v-model="saveClassifyShow"
+      :show-close="false"
+      class="favoriteBox"
+      destroy-on-close
+    >
+      <template #header>
+        <div class="my-header">
+          <div class="close">
+            <span class="title">新建收藏夹</span>
+            <span @click="saveClassifyShow = false" class="click rotate">
+              <font-awesome-icon :icon="['fas', 'times']" />
+            </span>
+          </div>
+        </div>
+      </template>
+      <el-row justify="space-around" align="middle">
+        <el-col :span="24">
+          <el-form
+            label-position="top"
+            :model="classifyForm"
+            :rules="elementFormRules"
+            :hide-required-asterisk="true"
+            ref="classifyFormRef"
+          >
+            <el-form-item label="名称" prop="name">
+              <el-input clearable v-model="classifyForm.name" />
+            </el-form-item>
+            <el-form-item label="备注" prop="annotation">
+              <el-input clearable v-model="classifyForm.annotation" />
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="24" class="button">
+          <span @click="saveClassify" class="click">提交</span>
+          <span @click="saveClassifyShow = false" class="click"> 取消 </span>
+        </el-col>
+      </el-row>
+    </el-dialog>
+
+    <el-dialog
+      v-model="saveTagShow"
+      :show-close="false"
+      class="favoriteBox"
+      destroy-on-close
+    >
+      <template #header>
+        <div class="my-header">
+          <div class="close">
+            <span class="title">新建收藏夹</span>
+            <span @click="saveTagShow = false" class="click rotate">
+              <font-awesome-icon :icon="['fas', 'times']" />
+            </span>
+          </div>
+        </div>
+      </template>
+      <el-row justify="space-around" align="middle">
+        <el-col :span="24">
+          <el-form
+            label-position="top"
+            :model="tagForm"
+            :rules="elementFormRules"
+            :hide-required-asterisk="true"
+            ref="classifyFormRef"
+          >
+            <el-form-item label="名称" prop="name">
+              <el-input clearable v-model="tagForm.name" />
+            </el-form-item>
+            <el-form-item label="备注" prop="annotation">
+              <el-input clearable v-model="tagForm.annotation" />
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="24" class="button">
+          <span @click="saveTag" class="click">提交</span>
+          <span @click="saveTagShow = false" class="click"> 取消 </span>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 <script lang="ts">
@@ -175,6 +267,21 @@ export default defineComponent({
 
     const formRef = ref();
 
+    const checkTagIDList = (
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      rule: any,
+      value: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      callback: any
+    ): void => {
+      viewData.articleForm.tagIDList.forEach((tagID) => {
+        if (tagID < 1) {
+          return callback(new Error("存在错误标签"));
+        }
+      });
+      return callback();
+    };
+
     const rules = {
       icon: [
         {
@@ -199,6 +306,7 @@ export default defineComponent({
       ],
       classifyID: [
         {
+          type: "number",
           required: true,
           message: "必须选择一个分类",
           trigger: "blur",
@@ -207,9 +315,10 @@ export default defineComponent({
       tagIDList: [
         {
           required: true,
-          message: "至少选择一个分类",
+          message: "至少选择一个标签",
           trigger: "blur",
         },
+        { validator: checkTagIDList, trigger: "blur" },
       ],
       ifPrivate: [
         {
@@ -229,16 +338,21 @@ export default defineComponent({
     };
 
     const save = (): void => {
-      formRef.value.validate().then((): void => {
-        viewData.articleForm.username = viewData.username;
-        api.saveWriteArticle(viewData.articleForm).then(({ data }): void => {
-          data;
-          Message.successMessage("提交成功");
-          router.push({
-            name: "Index",
+      formRef.value
+        .validate()
+        .then((): void => {
+          viewData.articleForm.username = viewData.username;
+          api.saveWriteArticle(viewData.articleForm).then(({ data }): void => {
+            data;
+            Message.successMessage("提交成功");
+            router.push({
+              name: "Index",
+            });
           });
+        })
+        .catch((): void => {
+          Message.warningMessage("校验未通过");
         });
-      });
     };
 
     const handleAvatarSuccess: UploadProps["onSuccess"] = (
@@ -260,6 +374,61 @@ export default defineComponent({
       }
       return true;
     };
+    const classifyFormRef = ref();
+    const tagFormRef = ref();
+
+    const elementFormRules = {
+      name: [
+        {
+          required: true,
+          message: "名称不能为空",
+          trigger: "blur",
+        },
+        { max: 10, message: "长度不能超过10", trigger: "blur" },
+      ],
+      annotation: [
+        {
+          required: true,
+          message: "备注不能为空",
+          trigger: "blur",
+        },
+        { max: 20, message: "长度不能超过20", trigger: "blur" },
+      ],
+    };
+
+    const saveClassify = (): void => {
+      classifyFormRef.value
+        .validate()
+        .then((): void => {
+          viewData.classifyForm.username = viewData.username;
+          api.saveWriteClassify(viewData.classifyForm).then((): void => {
+            viewData.init();
+            Message.successMessage("新建成功");
+            viewData.saveClassifyShow = false;
+            viewData.articleForm.classifyID = null;
+          });
+        })
+        .catch((): void => {
+          Message.warningMessage("校验未通过");
+        });
+    };
+
+    const saveTag = (): void => {
+      tagFormRef.value
+        .validate()
+        .then((): void => {
+          viewData.tagForm.username = viewData.username;
+          api.saveWriteTag(viewData.tagForm).then((): void => {
+            viewData.init();
+            Message.successMessage("新建成功");
+            viewData.saveTagShow = false;
+            viewData.articleForm.tagIDList = [];
+          });
+        })
+        .catch((): void => {
+          Message.warningMessage("校验未通过");
+        });
+    };
 
     onMounted((): void => {
       if (id > 0) {
@@ -275,6 +444,11 @@ export default defineComponent({
       beforeAvatarUpload,
       formRef,
       rules,
+      classifyFormRef,
+      tagFormRef,
+      elementFormRules,
+      saveClassify,
+      saveTag,
     };
   },
   components: { Menu, MdEditor },

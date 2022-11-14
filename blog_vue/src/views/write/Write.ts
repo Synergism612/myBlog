@@ -1,3 +1,4 @@
+import { ClassifyForm, TagForm } from "src/api/entity/ElementForm";
 import { api } from "src/api/api";
 import ArticleForm from "src/api/entity/ArticleForm";
 import Classify from "src/model/classify/Classify";
@@ -23,6 +24,14 @@ export default class Write {
   /**标签列表*/
   tagInformationList: Array<Tag>;
 
+  saveClassifyShow: boolean;
+
+  classifyForm: ClassifyForm;
+
+  saveTagShow: boolean;
+
+  tagForm: TagForm;
+
   constructor() {
     this.username = store.getters.getUser.username;
     this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
@@ -31,6 +40,10 @@ export default class Write {
     this.classifyInformationList = [new Classify()];
     this.tagInformationList = [new Tag()];
     this.articleInformation = new ArticleInformation();
+    this.saveClassifyShow = false;
+    this.classifyForm = new ClassifyForm();
+    this.saveTagShow = false;
+    this.tagForm = new TagForm();
   }
 
   public init(): void {
