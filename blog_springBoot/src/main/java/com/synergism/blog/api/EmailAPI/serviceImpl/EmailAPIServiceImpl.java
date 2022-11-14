@@ -2,7 +2,7 @@ package com.synergism.blog.api.EmailAPI.serviceImpl;
 
 import com.synergism.blog.api.EmailAPI.service.EmailAPIService;
 import com.synergism.blog.core.user.service.UserService;
-import com.synergism.blog.email.service.EmailService;
+import com.synergism.blog.core.email.service.EmailService;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;

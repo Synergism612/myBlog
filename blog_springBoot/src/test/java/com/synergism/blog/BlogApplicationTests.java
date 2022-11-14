@@ -1,7 +1,7 @@
 package com.synergism.blog;
 
-import com.synergism.blog.email.entity.CodeMail;
-import com.synergism.blog.email.service.EmailService;
+import com.synergism.blog.core.email.entity.CodeMail;
+import com.synergism.blog.core.email.service.EmailService;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

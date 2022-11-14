@@ -1,6 +1,6 @@
-package com.synergism.blog.email.entity;
+package com.synergism.blog.core.email.entity;
 
-import com.synergism.blog.email.utils.CodeUtil;
+import com.synergism.blog.core.email.utils.CodeUtil;
 import com.synergism.blog.utils.TimeUtil;
 import lombok.Getter;
 import lombok.Setter;

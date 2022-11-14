@@ -1,6 +1,6 @@
-package com.synergism.blog.email.aspect;
+package com.synergism.blog.core.email.aspect;
 
-import com.synergism.blog.email.service.EmailService;
+import com.synergism.blog.core.email.service.EmailService;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import com.synergism.blog.utils.StringUtil;
@@ -24,7 +24,7 @@ public class EmailCodeVerifyAspect {
         this.emailService = emailService;
     }
 
-    @Pointcut("@annotation(com.synergism.blog.email.note.EmailCodeVerifyNote)")
+    @Pointcut("@annotation(com.synergism.blog.core.email.note.EmailCodeVerifyNote)")
     public void EmailVerifyCode() {
     }
 

@@ -1,12 +1,10 @@
-package com.synergism.blog.email.service;
+package com.synergism.blog.core.email.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.user.entity.User;
-import com.synergism.blog.email.entity.CodeMail;
-import com.synergism.blog.result.Result;
+import com.synergism.blog.core.email.entity.CodeMail;
 
 import javax.mail.MessagingException;
-import java.util.Map;
 
 public interface EmailService extends IService<User> {
 

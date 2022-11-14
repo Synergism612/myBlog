@@ -1,4 +1,4 @@
-package com.synergism.blog.email.note;
+package com.synergism.blog.core.email.note;
 
 
 import java.lang.annotation.*;
