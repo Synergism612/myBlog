@@ -1,3 +1,5 @@
+import { store } from "src/store";
+
 export default class RegisterForm {
   /**账号 */
   username: string;
@@ -11,7 +13,7 @@ export default class RegisterForm {
   key: string;
 
   constructor() {
-    this.username = "";
+    this.username = store.getters.getUsername;
     this.password = "";
     this.passwordAgain = "";
     this.code = "";

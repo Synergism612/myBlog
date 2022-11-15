@@ -1,3 +1,5 @@
+import { store } from "src/store";
+
 export default class UserInformationForm {
   /**账号 */
   username: string;
@@ -11,7 +13,7 @@ export default class UserInformationForm {
   intro: string;
 
   constructor() {
-    this.username = "";
+    this.username = store.getters.getUsername;
     this.nickname = "";
     this.birthday = "";
     this.sex = 0;
