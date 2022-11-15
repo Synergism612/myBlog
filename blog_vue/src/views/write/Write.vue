@@ -65,7 +65,11 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="4">
-                      <el-form-item label="分类" prop="classifyID">
+                      <el-form-item
+                        label="分类"
+                        prop="classifyID"
+                        :disabled="isUpdate"
+                      >
                         <el-select
                           v-model="articleForm.classifyID"
                           placeholder="选择一个分类"
@@ -88,7 +92,11 @@
                       </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                      <el-form-item label="标签" prop="tagIDList">
+                      <el-form-item
+                        label="标签"
+                        prop="tagIDList"
+                        :disabled="isUpdate"
+                      >
                         <el-select
                           v-model="articleForm.tagIDList"
                           placeholder="选择至少一个标签"
@@ -132,17 +140,12 @@
                     </el-col>
                     <el-col :span="4">
                       <div class="save">
-                        <el-popconfirm
-                          confirm-button-text="是"
-                          cancel-button-text="否"
-                          icon-color="#3fc4c2"
-                          title="确定要保存吗？"
-                          @confirm="save"
-                        >
-                          <template #reference>
-                            <span class="click">保存</span>
-                          </template>
-                        </el-popconfirm>
+                        <span v-if="!isUpdate" @click="save" class="click">
+                          提交
+                        </span>
+                        <span v-if="isUpdate" @click="update" class="click">
+                          保存
+                        </span>
                       </div>
                     </el-col>
                   </el-row>
@@ -355,6 +358,26 @@ export default defineComponent({
         });
     };
 
+    const update = (): void => {
+      formRef.value
+        .validate()
+        .then((): void => {
+          viewData.articleForm.username = viewData.username;
+          api
+            .updateWriteArticle(viewData.articleForm)
+            .then(({ data }): void => {
+              data;
+              Message.successMessage("保存成功");
+              router.push({
+                name: "Index",
+              });
+            });
+        })
+        .catch((): void => {
+          Message.warningMessage("校验未通过");
+        });
+    };
+
     const handleAvatarSuccess: UploadProps["onSuccess"] = (
       response,
       uploadFile
@@ -432,6 +455,7 @@ export default defineComponent({
 
     onMounted((): void => {
       if (id > 0) {
+        viewData.isUpdate = true;
         viewData.articleFormInit(id);
       }
       viewData.init();
@@ -440,6 +464,7 @@ export default defineComponent({
     return {
       ...toRefs(viewData),
       save,
+      update,
       handleAvatarSuccess,
       beforeAvatarUpload,
       formRef,

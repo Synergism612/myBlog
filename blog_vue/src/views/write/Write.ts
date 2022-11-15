@@ -32,6 +32,8 @@ export default class Write {
 
   tagForm: TagForm;
 
+  isUpdate: boolean;
+
   constructor() {
     this.username = store.getters.getUser.username;
     this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
@@ -44,6 +46,7 @@ export default class Write {
     this.classifyForm = new ClassifyForm();
     this.saveTagShow = false;
     this.tagForm = new TagForm();
+    this.isUpdate = false;
   }
 
   public init(): void {

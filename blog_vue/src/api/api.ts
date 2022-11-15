@@ -550,6 +550,19 @@ export class api {
   }
 
   /**
+   * 创作页面更新文章接口
+   * @param articleForm 文章信息表单
+   * @returns 成功
+   */
+  static updateWriteArticle(articleForm: ArticleForm): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/write/article",
+      method: "put",
+      data: articleForm,
+    });
+  }
+
+  /**
    * 创作页面保存分类接口
    * @param classifyForm 分类信息表单
    * @returns 成功
