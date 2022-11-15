@@ -8,8 +8,6 @@ import { ToolbarNames } from "md-editor-v3";
 import ArticleInformation from "src/model/article/ArticleInformation";
 
 export default class Write {
-  username: string;
-
   isLogin: boolean;
 
   articleForm: ArticleForm;
@@ -34,7 +32,6 @@ export default class Write {
   isUpdate: boolean;
 
   constructor() {
-    this.username = store.getters.getUsername;
     this.isLogin = store.getters.getIsLogin;
     this.articleForm = new ArticleForm();
     this.toolbars = toolbars as Array<ToolbarNames>;
