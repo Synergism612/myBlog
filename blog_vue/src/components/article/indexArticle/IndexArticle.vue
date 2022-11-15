@@ -129,7 +129,6 @@
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import IndexArticle from "./IndexArticle";
 import Article from "src/components/article/Article.vue";
-import StringUtil from "src/utils/StringUtil";
 import Message from "src/utils/MessageUtil";
 import { useRouter } from "vue-router";
 import { api } from "src/api/api";
@@ -142,10 +141,7 @@ export default defineComponent({
      * 选择我的文章时触发函数
      */
     const myArticle = (): void => {
-      if (
-        viewData.isLogin &&
-        !StringUtil.checkStringIfEmpty(viewData.username)
-      ) {
+      if (viewData.isLogin) {
         viewData.isMy = !viewData.isMy;
         viewData.getPagination();
       } else {
@@ -228,13 +224,11 @@ export default defineComponent({
     };
 
     const remove = (): void => {
-      api
-        .removeIndexArticle(viewData.username, viewData.articleIDList)
-        .then((): void => {
-          Message.successMessage("删除成功");
-          viewData.deleteArticleShow = false;
-          viewData.getPagination();
-        });
+      api.removeIndexArticle(viewData.articleIDList).then((): void => {
+        Message.successMessage("删除成功");
+        viewData.deleteArticleShow = false;
+        viewData.getPagination();
+      });
     };
 
     onMounted((): void => {

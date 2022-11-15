@@ -25,7 +25,6 @@ export default class Content {
   collectionShow: boolean;
 
   isLogin: boolean;
-  username: string;
 
   constructor() {
     this.article = new Article();
@@ -44,7 +43,6 @@ export default class Content {
     this.toolBoxShow = true;
     this.collectionShow = false;
 
-    this.username = store.getters.getUsername;
     this.isLogin = store.getters.getIsLogin;
   }
 

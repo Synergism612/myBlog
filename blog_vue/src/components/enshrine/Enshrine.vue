@@ -92,10 +92,6 @@ export default defineComponent({
       type: Number,
       required: false,
     },
-    username: {
-      type: String,
-      required: true,
-    },
     show: {
       type: Boolean,
       required: true,
@@ -113,8 +109,7 @@ export default defineComponent({
         props.title || "",
         props.href || "",
         props.synopsis || "",
-        props.favoriteID || 0,
-        props.username
+        props.favoriteID || 0
       );
     });
 

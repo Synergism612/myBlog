@@ -199,7 +199,6 @@
       :title="article.title"
       :href="href"
       :synopsis="article.synopsis"
-      :username="username"
     ></Enshrine>
   </div>
 </template>

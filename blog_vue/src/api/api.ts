@@ -125,7 +125,7 @@ export class api {
    * @param currentPage 第几页
    * @param pageSize 一页几条
    * @param articleSort 排序
-   * @param username 用户名
+   * @param username 用户名 可为空
    * @returns Result[分页信息]
    */
   static getIndexArticle(
@@ -185,14 +185,13 @@ export class api {
    * @param articleIDList 文章id列表
    */
   static removeIndexArticle(
-    username: string,
     articleIDList: Array<number>
   ): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/index/article",
       method: "delete",
       params: {
-        username: username,
+        username: store.getters.getUsername,
         articleIDList: articleIDList.toString(),
       },
     });
@@ -304,6 +303,7 @@ export class api {
 
   /**
    * 总览页获取分类接口
+   * @param username 账号 可为空
    * @returns Result[分类列表]
    */
   static getPandectClissify(username?: string): Promise<AxiosResponse> {
@@ -318,6 +318,7 @@ export class api {
 
   /**
    * 总览页获取标签接口
+   * @param username 账号 可为空
    * @returns Result[标签列表]
    */
   static getPandectTag(username?: string): Promise<AxiosResponse> {
@@ -330,6 +331,17 @@ export class api {
     });
   }
 
+  /**
+   * 总览页面获取文章接口
+   * @param currentPage 页数
+   * @param pageSize 页容
+   * @param articleSort 排序字段
+   * @param username 账号 可为空
+   * @param keyword 查询关键字
+   * @param classifyIDList 分类id列表
+   * @param tagIDList 标签id列表
+   * @returns 分页信息
+   */
   static getPandectArticle(
     currentPage: number,
     pageSize: number,
@@ -356,15 +368,14 @@ export class api {
 
   /**
    * 收藏获取收藏夹接口
-   * @param username 账号
    * @returns 收藏夹列表
    */
-  static getEnshrineFavorite(username: string): Promise<AxiosResponse> {
+  static getEnshrineFavorite(): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/enshrine/favorite",
       method: "get",
       params: {
-        username: username,
+        username: store.getters.getUsername,
       },
     });
   }
@@ -389,29 +400,25 @@ export class api {
 
   /**
    * 个人信息页作者接口
-   * @param username 账号
    * @returns Result[作者信息]
    */
-  static getHomepageAuthor(username: string): Promise<AxiosResponse> {
+  static getHomepageAuthor(): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/homepage/author",
       method: "get",
-      params: { username: username },
+      params: { username: store.getters.getUsername },
     });
   }
 
   /**
    * 个人信息页我的收藏接口
-   * @param username 账号
    * @returns 我的收藏列表
    */
-  static getHomepageFavoriteInformationList(
-    username: string
-  ): Promise<AxiosResponse> {
+  static getHomepageFavoriteInformationList(): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "get",
-      params: { username: username },
+      params: { username: store.getters.getUsername },
     });
   }
 
@@ -430,6 +437,7 @@ export class api {
       url: "/api/blog/homepage/collection",
       method: "delete",
       params: {
+        username: store.getters.getUsername,
         favoriteID: favoriteID,
         collectionIDList: collectionIDList.toString(),
       },
@@ -468,19 +476,15 @@ export class api {
 
   /**
    * 个人信息页删除收藏夹接口
-   * @param username 用户名
    * @param favoriteID 收藏夹id
    * @returns 成功
    */
-  static removeHomepageFavorite(
-    username: string,
-    favoriteID: number
-  ): Promise<AxiosResponse> {
+  static removeHomepageFavorite(favoriteID: number): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "delete",
       params: {
-        username: username,
+        username: store.getters.getUsername,
         favoriteID: favoriteID,
       },
     });
@@ -531,6 +535,7 @@ export class api {
       url: "/api/blog/write/article",
       method: "get",
       params: {
+        username: store.getters.getUsername,
         articleID: articleID,
       },
     });
@@ -590,7 +595,7 @@ export class api {
 
   /**
    * 归档页面获取档案信息接口
-   * @param username 账号
+   * @param username 账号 可为空
    * @returns 档案信息
    */
   static getPifeonholeArchive(username: string): Promise<AxiosResponse> {

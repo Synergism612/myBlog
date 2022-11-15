@@ -279,7 +279,6 @@
         @succeed="saveCollectionSucceed"
         v-model:show="saveCollectionShow"
         v-model:favoriteID="saveCollectionfavoriteID"
-        :username="username"
       ></Enshrine>
     </div>
     <div>
@@ -485,12 +484,10 @@ export default defineComponent({
     };
 
     const deleteFavorite = (favoriteID: number): void => {
-      api
-        .removeHomepageFavorite(viewData.username, favoriteID)
-        .then((): void => {
-          Message.successMessage("删除成功");
-          viewData.init();
-        });
+      api.removeHomepageFavorite(favoriteID).then((): void => {
+        Message.successMessage("删除成功");
+        viewData.init();
+      });
     };
 
     onMounted((): void => {

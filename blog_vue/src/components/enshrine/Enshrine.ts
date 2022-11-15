@@ -19,13 +19,12 @@ export default class Enshrine {
     href: string,
     synopsis: string,
     favoriteID: number,
-    username: string
   ): void {
     this.collectionForm.title = title;
     this.collectionForm.href = href;
     this.collectionForm.synopsis = synopsis;
     this.collectionForm.favoriteID = favoriteID;
-    api.getEnshrineFavorite(username).then(({ data }): void => {
+    api.getEnshrineFavorite().then(({ data }): void => {
       this.favoriteList = data;
     });
   }

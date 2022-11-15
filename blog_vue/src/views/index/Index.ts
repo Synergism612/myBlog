@@ -7,7 +7,7 @@ import StringUtil from "src/utils/StringUtil";
 
 export default class Index {
   /**是否已经登录*/
-  ifLogin: boolean;
+  isLogin: boolean;
 
   /**日历日期*/
   calender: Date;
@@ -20,7 +20,7 @@ export default class Index {
 
   constructor() {
     this.userInfo = store.getters.getUser;
-    this.ifLogin = StringUtil.checkStringIfEmpty(this.userInfo.username);
+    this.isLogin = store.getters.getIsLogin;
     this.calender = new Date();
     this.tagInformationList = [new TagInformation()];
     this.classifyInformationList = [new ClassifyInformation()];
@@ -28,10 +28,10 @@ export default class Index {
 
   public init(): void {
     const userInfo = (): void => {
-      if (StringUtil.checkStringIfEmpty(this.userInfo.username)) {
+      if (!this.isLogin) {
         api.getIndexUserInformation().then(({ data }): void => {
           this.userInfo = data;
-          this.ifLogin = false;
+          this.isLogin = false;
         });
       }
     };
