@@ -15,8 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.synergism.blog.utils.StringUtil.isEmpty;
-
 /**
  * 鉴权拦截器
  */
@@ -54,12 +52,11 @@ public class GlobalInterceptor implements HandlerInterceptor {
         String EVIL_EYE = request.getHeader(KeyManagementService.EVIL_EYE());
 
         //检查是否需要跳过
-        if (URLUtil.checkURLIfToError(uri) || method.equals("OPTIONS")) return true;
-
+        if (URLUtil.checkURLIfToError(uri) || method.equals("OPTIONS")) {return true;}
 
         //检查密钥是否为空
-        if (isEmpty(ANOTHER_WORLD_KEY)) {
-            if (URLUtil.checkURLIfToPublic(uri) && isEmpty(EVIL_EYE)) {
+        if (ANOTHER_WORLD_KEY.isEmpty()) {
+            if (URLUtil.checkURLIfToPublic(uri) && EVIL_EYE.isEmpty()) {
                 //分配新的会话
                 sessionService.newSession(sessionID, response);
                 return true;
@@ -71,14 +68,14 @@ public class GlobalInterceptor implements HandlerInterceptor {
         }
 
         //检查权限ID是否为空
-        if (!isEmpty(EVIL_EYE)) {
+        if (!EVIL_EYE.isEmpty()) {
             //获取权限
             Session session = sessionService.getSession(EVIL_EYE);
             if (TypeUtil.isNull(session)) {
                 //为null则重新分配一个新的会话
                 session = sessionService.newSession(request, response);
             }
-            if (isEmpty(session.getUserKey()))
+            if (session.getUserKey().isEmpty())
                 //用户密钥为空则写入用户密钥
                 session.setUserKey(cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY));
             if (!session.getSessionID().equals(sessionID)) {
@@ -88,7 +85,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
             //鉴权
 //            URLUtil.checkURLIsPower(uri, session.getPower());
             //更新最新的会话信息
-            sessionService.updateSession(EVIL_EYE, session, response);
+            sessionService.update(EVIL_EYE, session, response);
             return true;
         }
         return false;

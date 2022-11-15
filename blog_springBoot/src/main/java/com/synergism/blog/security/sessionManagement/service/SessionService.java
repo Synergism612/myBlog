@@ -57,7 +57,7 @@ public interface SessionService {
      * @param loginID  用户信息缓存对应主键
      * @param response        响应
      */
-    void updateSession(HttpServletRequest request, String loginID, HttpServletResponse response);
+    void update(HttpServletRequest request, String loginID, HttpServletResponse response);
 
     /**
      * 更新会话数据
@@ -66,7 +66,7 @@ public interface SessionService {
      * @param session  会话
      * @param response 响应
      */
-    void updateSession(String EVIL_EYE, Session session, HttpServletResponse response);
+    void update(String EVIL_EYE, Session session, HttpServletResponse response);
 
     /**
      * 检查会话中是否存在登录信息ID
@@ -81,4 +81,10 @@ public interface SessionService {
      * @return 成功为真，反之为假
      */
     boolean removeLoginIDElement(HttpServletRequest request,String loginID, HttpServletResponse response );
+
+    /**
+     * 删除session
+     * @param key 密钥
+     */
+    void remove(String key);
 }

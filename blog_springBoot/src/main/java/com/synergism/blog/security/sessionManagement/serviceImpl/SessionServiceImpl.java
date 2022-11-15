@@ -6,15 +6,12 @@ import com.synergism.blog.security.entity.Power;
 import com.synergism.blog.security.keyManagement.service.KeyManagementService;
 import com.synergism.blog.security.sessionManagement.entity.Session;
 import com.synergism.blog.security.sessionManagement.service.SessionService;
-import com.synergism.blog.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.synergism.blog.utils.StringUtil.isEmpty;
-import static com.synergism.blog.utils.StringUtil.ifEmpty;
 import static com.synergism.blog.utils.TimeUtil.weeks;
 
 @Service
@@ -59,21 +56,16 @@ public class SessionServiceImpl implements SessionService {
         String sessionID = request.getRequestedSessionId();
         String ANOTHER_WORLD_KEY = request.getHeader(KeyManagementService.ANOTHER_WORLD_KEY());
         String userKey = "";
-        if (!isEmpty(ANOTHER_WORLD_KEY))
+        if (!ANOTHER_WORLD_KEY.isEmpty()) {
             cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY);
-
+        }
         //创建基本权限会话
-        Session session = new Session(sessionID, userKey, "", Power.NOT_LOG_IN.getPower());
-        //写入redis
-        String EVIL_EYE = cacheRedisService.put(session, weeks(1));
-        //写入响应头部
-        response.setHeader("EVIL_EYE", EVIL_EYE);
-
-        return session;
+        return new Session(sessionID, userKey, "", Power.NOT_LOG_IN.getPower());
     }
 
     /**
      * 从请求中获取缓存密钥
+     *
      * @param request 请求
      * @return EVIL_EYE
      */
@@ -89,7 +81,9 @@ public class SessionServiceImpl implements SessionService {
      * @return 会话
      */
     public Session getSession(String EVIL_EYE) {
-        StringUtil.ifEmpty(EVIL_EYE, "邪王真眼");
+        if(EVIL_EYE.isEmpty()){
+            throw new IllegalArgumentException("邪王真眼不可为空");
+        };
         return (Session) cacheRedisService.get(EVIL_EYE);
     }
 
@@ -110,12 +104,12 @@ public class SessionServiceImpl implements SessionService {
      * @param loginID  用户信息缓存对应主键
      * @param response 响应
      */
-    public void updateSession(HttpServletRequest request, String loginID, HttpServletResponse response) {
+    public void update(HttpServletRequest request, String loginID, HttpServletResponse response) {
         String EVIL_EYE = this.getEVIL_EYE(request);
         Session session = this.getSession(EVIL_EYE);
         //更新数据
         session.setLoginID(loginID);
-        this.updateSession(EVIL_EYE, session, response);
+        this.update(EVIL_EYE, session, response);
     }
 
     /**
@@ -125,7 +119,7 @@ public class SessionServiceImpl implements SessionService {
      * @param session  会话
      * @param response 响应
      */
-    public void updateSession(String EVIL_EYE, Session session, HttpServletResponse response) {
+    public void update(String EVIL_EYE, Session session, HttpServletResponse response) {
         cacheRedisService.update(EVIL_EYE, session, weeks(1));
         //写入响应头部
         response.setHeader("EVIL_EYE", EVIL_EYE);
@@ -134,22 +128,27 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public boolean checkSessionExistLoginID(HttpServletRequest request) {
         Session session = this.getSession(request);
-        return !StringUtil.isEmpty(session.getLoginID());
+        return !session.getLoginID().isEmpty();
     }
 
     @Override
-    public boolean removeLoginIDElement(HttpServletRequest request,String loginID,HttpServletResponse response) {
+    public boolean removeLoginIDElement(HttpServletRequest request, String loginID, HttpServletResponse response) {
         String EVIL_EYE = this.getEVIL_EYE(request);
         Session session = this.getSession(EVIL_EYE);
-        if (StringUtil.isEmpty(session.getLoginID())){
+        if (session.getLoginID().isEmpty()) {
             return true;
         }
-        if (loginID.equals(session.getLoginID())){
+        if (loginID.equals(session.getLoginID())) {
             cacheRedisService.remove(session.getLoginID());
             session.setLoginID("");
-            this.updateSession(EVIL_EYE,session,response);
+            this.update(EVIL_EYE, session, response);
             return true;
-        }else
+        } else
             return false;
+    }
+
+    @Override
+    public void remove(String key) {
+        cacheRedisService.remove(key);
     }
 }
