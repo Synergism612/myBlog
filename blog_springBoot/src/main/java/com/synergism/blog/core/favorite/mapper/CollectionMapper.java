@@ -21,12 +21,12 @@ public interface CollectionMapper extends BaseMapper<Collection> {
      * @param collectionID 收藏id
      * @param favoriteID 收藏夹id
      */
-    void bundle( Long collectionID,Long favoriteID);
+    void bundle( long collectionID,long favoriteID);
 
     /**
      * 解绑收藏
      * @param favoriteID 收藏夹id
      * @param collectionIDList 收藏id列表
      */
-    void unbundled(Long favoriteID, List<Long> collectionIDList);
+    void unbundled(long favoriteID, List<Long> collectionIDList);
 }

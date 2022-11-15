@@ -52,20 +52,20 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 
     @Override
     @Transactional
-    public void save(String title, String href, String synopsis, Long favoriteID) {
+    public void save(String title, String href, String synopsis, long favoriteID) {
         Collection collection = new Collection(title, href, synopsis);
         collectionMapper.insert(collection);
         collectionMapper.bundle(collection.getId(), favoriteID);
     }
 
     @Override
-    public boolean isExist(Long favoriteID, String href) {
+    public boolean isExist(long favoriteID, String href) {
         return mapper.selectCollectionInFavoriteHref(favoriteID, href) != null;
     }
 
     @Override
     @Transactional
-    public void remove(Long favoriteID, List<Long> collectionIDList) {
+    public void remove(long favoriteID, List<Long> collectionIDList) {
         collectionMapper.unbundled(favoriteID, collectionIDList);
         collectionMapper.deleteBatchIds(collectionIDList);
     }
