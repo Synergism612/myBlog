@@ -1,3 +1,5 @@
+import { store } from "src/store";
+
 export default class CommentForm {
   /**账号 */
   username: string;
@@ -11,7 +13,7 @@ export default class CommentForm {
   parentID: number;
 
   constructor() {
-    this.username = "";
+    this.username = store.getters.getUsername;
     this.comment = "";
     this.articleID = -1;
     this.rootID = -1;

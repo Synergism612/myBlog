@@ -2,7 +2,6 @@ import { api } from "src/api/api";
 import CommentForm from "src/api/entity/CommentForm";
 import CommentChild from "src/model/comment/CommentChild";
 import CommentParent from "src/model/comment/CommentParent";
-import UserInformation from "src/model/user/UserInformation";
 import { store } from "src/store";
 
 export default class Forum {
@@ -11,7 +10,6 @@ export default class Forum {
   commentList: Array<CommentParent>;
 
   commentInput: string;
-  userInfo: UserInformation;
   isLogin: boolean;
 
   rootID: number;
@@ -27,7 +25,6 @@ export default class Forum {
     this.commentList = [new CommentParent()];
 
     this.commentInput = "";
-    this.userInfo = store.getters.getUser;
     this.isLogin = store.getters.getIsLogin;
 
     this.rootID = -1;
@@ -38,7 +35,6 @@ export default class Forum {
     this.commentForm = new CommentForm();
   }
   public getCommentForm(): CommentForm {
-    this.commentForm.username = this.userInfo.username;
     this.commentForm.comment = this.commentInput;
     this.commentForm.articleID = this.articleID;
     this.commentForm.rootID = this.rootID;
