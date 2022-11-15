@@ -1,5 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.file.mapper.FileMapper">
-
+    <select id="selectListByRepositoryID" resultType="com.synergism.blog.core.file.entity.File">
+        select f.id,
+               f.name,
+               f.suffix,
+               f.`type`,
+               f.`size`,
+               f.`path`,
+               f.href,
+               f.creation_time,
+               f.modify_time
+        from repository_file rf
+                 join
+             file f
+             on
+                 rf.file_id = f.id
+        where rf.repository_id = #{repositoryID}
+    </select>
+    <select id="selectListByFolderID" resultType="com.synergism.blog.core.file.entity.File">
+        select
+            f.id ,
+            f.name ,
+            f.suffix ,
+            f.`type` ,
+            f.`size` ,
+            f.`path` ,
+            f.href ,
+            f.creation_time ,
+            f.modify_time
+        from
+            folder_file ff
+                join
+            file f
+            on
+                ff.file_id = f.id
+        where ff.folder_id = #{folderID}
+    </select>
+    <insert id="bundleToRepository">
+        INSERT INTO repository_file(repository_id, file_id)
+        values (#{repositoryID}, #{fileID});
+    </insert>
+    <insert id="bundleToFolder">
+        INSERT INTO folder_file(folder_id, file_id)
+        values (#{folderID}, #{fileID});
+    </insert>
+    <delete id="unbundled">
+        delete repository_file where file_id in
+        <foreach collection="fileIDList" item="fileID" open="(" separator="," close=")">
+            fileID
+        </foreach>
+        delete folder_file where file_id in
+        <foreach collection="fileIDList" item="fileID" open="(" separator="," close=")">
+            fileID
+        </foreach>
+    </delete>
 </mapper>

@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.folder.mapper.FolderMapper">
-
+    <select id="selectListByRepositoryID" resultType="com.synergism.blog.core.folder.entity.Folder">
+        select f.id,
+               f.`path`,
+               f.name,
+               f.parent_id,
+               f.creation_time,
+               f.modify_time
+        from repository_folder rf
+                 join
+             folder f
+             on
+                 rf.folder_id = f.id
+        where rf.repository_id
+    </select>
+    <select id="selectListByFolderID" resultType="com.synergism.blog.core.folder.entity.Folder">
+        select f.id,
+               f.`path`,
+               f.name,
+               f.parent_id,
+               f.creation_time,
+               f.modify_time
+        from folder f
+                 join
+             folder f2
+             on
+                 f.parent_id = f2.id
+        where f2.id = #{folderID}
+    </select>
+    <insert id="bundle">
+        INSERT INTO repository_folder(repository_id, folder_id)
+        values (#{repositoryID}, #{folderID});
+    </insert>
+    <delete id="unbundled">
+        delete repository_folder
+        where folder_id = #{folderID}
+    </delete>
 </mapper>
