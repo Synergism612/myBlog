@@ -12,7 +12,7 @@ export default class Pigeonhole {
   monthList: Array<string>;
   constructor() {
     this.isMy = true;
-    this.username = store.getters.getUser.username;
+    this.username = store.getters.getUsername;
     this.archiveList = [new Archive()];
     this.monthList = ["空"];
   }

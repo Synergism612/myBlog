@@ -35,7 +35,7 @@ export default class Write {
   isUpdate: boolean;
 
   constructor() {
-    this.username = store.getters.getUser.username;
+    this.username = store.getters.getUsername;
     this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
     this.articleForm = new ArticleForm();
     this.toolbars = toolbars as Array<ToolbarNames>;

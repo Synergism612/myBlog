@@ -41,7 +41,7 @@ export default class Pandect {
   }
 
   public isMyInit(): void {
-    const username = store.getters.getUser.username;
+    const username = store.getters.getUsername;
 
     const classify = (): void => {
       api.getPandectClissify(username).then(({ data }): void => {

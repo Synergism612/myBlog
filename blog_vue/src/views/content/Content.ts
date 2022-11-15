@@ -45,7 +45,7 @@ export default class Content {
     this.toolBoxShow = true;
     this.collectionShow = false;
 
-    this.username = store.getters.getUser.username;
+    this.username = store.getters.getUsername;
     this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
   }
 

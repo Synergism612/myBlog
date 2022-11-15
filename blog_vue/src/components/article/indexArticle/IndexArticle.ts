@@ -35,7 +35,7 @@ export default class IndexArticle {
   deleteArticleShow: boolean;
   articleIDList: Array<number>;
   constructor() {
-    this.username = store.getters.getUser.username;
+    this.username = store.getters.getUsername;
     this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
     this.isMy = false;
     this.refresh = true;

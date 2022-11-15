@@ -112,6 +112,10 @@ export const store = createStore({
     getUser: (state): UserInformation => {
       return state.userInfo as UserInformation;
     },
+    //get方法，也可以不写
+    getUsername: (state): string => {
+      return state.userInfo.username as string;
+    },
   },
   //异步函数
   actions: {},

@@ -33,7 +33,7 @@ export default class Homepage {
 
   constructor() {
     this.author = new Author();
-    this.username = store.getters.getUser.username;
+    this.username = store.getters.getUsername;
     this.changeShow = true;
     this.icon = "";
 
