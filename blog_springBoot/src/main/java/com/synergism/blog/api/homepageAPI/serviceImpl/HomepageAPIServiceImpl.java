@@ -45,7 +45,7 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
     }
 
     @Override
-    public Result<String> removeCollection(Long favoriteID, List<Long> collectionIDList) {
+    public Result<String> removeCollection(long favoriteID, List<Long> collectionIDList) {
         favoriteService.remove(favoriteID, collectionIDList);
         return Result.success();
     }
@@ -75,7 +75,7 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
     }
 
     @Override
-    public Result<String> removeFavorite(String username, Long favoriteID) {
+    public Result<String> removeFavorite(String username, long favoriteID) {
         long userID = userService.getID(username);
         if (userID != -1) {
             favoriteService.remove(userID, favoriteID);
