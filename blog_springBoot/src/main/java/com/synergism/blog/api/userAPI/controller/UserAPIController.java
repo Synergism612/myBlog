@@ -8,9 +8,9 @@ import com.synergism.blog.core.email.note.EmailCodeVerifyNote;
 import com.synergism.blog.api.userAPI.service.UserAPIService;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
-import com.synergism.blog.security.authentication.note.AuthenticationLogoutNote;
-import com.synergism.blog.security.cryptography.note.CryptographyPasswordNote;
-import com.synergism.blog.security.sessionManagement.note.SessionManagementLoginNote;
+import com.synergism.blog.security.authentication.note.UnbundledLogout;
+import com.synergism.blog.security.cryptography.note.CheckPassword;
+import com.synergism.blog.security.authentication.note.BundleLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,8 +40,8 @@ public class UserAPIController {
      * @return 结果[用户信息]
      */
     @PostMapping("/login")
-    @CryptographyPasswordNote //安全框架密码加密注解
-    @SessionManagementLoginNote //安全框架登录绑定会话注解
+    @CheckPassword //安全框架密码加密注解
+    @BundleLogin //安全框架登录绑定会话注解
     public Result<UserInformation> login(@RequestBody @Valid Login login) {
         return service.login(login);
     }
@@ -53,7 +53,7 @@ public class UserAPIController {
      * @return 结果[null]
      */
     @PostMapping("/register")
-    @CryptographyPasswordNote //安全框架密码加密注解
+    @CheckPassword //安全框架密码加密注解
     @EmailCodeVerifyNote //邮箱验证码校验注解
     public Result<String> register(@RequestBody @Valid Register register) {
         if (!register.getPassword().equals(register.getPasswordAgain())){
@@ -69,7 +69,7 @@ public class UserAPIController {
      * @return 结果[String]
      */
     @PostMapping("/logout")
-    @AuthenticationLogoutNote //登出解绑会话注解
+    @UnbundledLogout //登出解绑会话注解
     public Result<String> logout(@RequestBody @Valid Logout logout) {
         return Result.success("账号" + logout.getNickname() + "已登出");
     }

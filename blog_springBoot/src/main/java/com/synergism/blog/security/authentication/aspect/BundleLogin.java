@@ -1,4 +1,4 @@
-package com.synergism.blog.security.sessionManagement.aspect;
+package com.synergism.blog.security.authentication.aspect;
 
 import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.result.CodeMsg;
@@ -22,19 +22,19 @@ import javax.servlet.http.HttpServletResponse;
 
 @Aspect
 @Component
-public class SessionManagementLoginAspect {
+public class BundleLogin {
 
     final SessionService sessionService;
     final CacheRedisService cacheRedisService;
 
     @Autowired
-    SessionManagementLoginAspect(SessionService sessionService, CacheRedisService cacheRedisService) {
+    BundleLogin(SessionService sessionService, CacheRedisService cacheRedisService) {
         this.sessionService = sessionService;
         this.cacheRedisService = cacheRedisService;
     }
 
-    @Pointcut(value = "@annotation(com.synergism.blog.security.sessionManagement.note.SessionManagementLoginNote)")
-    public void SessionManagementLogin() {
+    @Pointcut(value = "@annotation(com.synergism.blog.security.authentication.note.BundleLogin)")
+    public void BundleLogin() {
     }
 
     /**
@@ -44,7 +44,7 @@ public class SessionManagementLoginAspect {
      *
      * @param point 切面数据
      */
-    @Around(value = "SessionManagementLogin()")
+    @Around(value = "BundleLogin()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
 
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -72,7 +72,7 @@ public class SessionManagementLoginAspect {
         if (result.getCode() == 200) {
             userInformation = (UserInformation) result.getData();
             loginID = cacheRedisService.put(userInformation, TimeUtil.weeks(1));
-            sessionService.updateSession(request, loginID, response);
+            sessionService.update(request, loginID, response);
             return Result.success(new Object[]{loginID, userInformation});
         }
         return result;

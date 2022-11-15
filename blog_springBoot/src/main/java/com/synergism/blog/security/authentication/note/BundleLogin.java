@@ -1,4 +1,4 @@
-package com.synergism.blog.security.sessionManagement.note;
+package com.synergism.blog.security.authentication.note;
 
 import java.lang.annotation.*;
 
@@ -8,5 +8,5 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SessionManagementLoginNote {
+public @interface BundleLogin {
 }

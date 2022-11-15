@@ -1,6 +1,5 @@
 package com.synergism.blog.security.cryptography.aspect;
 
-import com.synergism.blog.exception.custom.PermissionFailureException;
 import com.synergism.blog.security.cryptography.service.CryptographyService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -13,17 +12,17 @@ import java.lang.reflect.Field;
 
 @Aspect
 @Component
-public class CryptographyPasswordAspect {
+public class CheckPassword {
 
     CryptographyService cryptographyService;
 
     @Autowired
-    CryptographyPasswordAspect(CryptographyService cryptographyService) {
+    CheckPassword(CryptographyService cryptographyService) {
         this.cryptographyService = cryptographyService;
     }
 
-    @Pointcut(value = "@annotation(com.synergism.blog.security.cryptography.note.CryptographyPasswordNote)")
-    public void CryptographyPassword() {
+    @Pointcut(value = "@annotation(com.synergism.blog.security.cryptography.note.CheckPassword)")
+    public void CheckPassword() {
     }
 
     /**
@@ -34,7 +33,7 @@ public class CryptographyPasswordAspect {
      * @return 参数
      * @throws Throwable 函数运行抛出的异常
      */
-    @Around(value = "CryptographyPassword()")
+    @Around(value = "CheckPassword()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
             Object[] args = point.getArgs();
             for (Object arg : args) {

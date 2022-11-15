@@ -20,20 +20,20 @@ import java.lang.reflect.Field;
 
 @Aspect
 @Component
-public class AuthenticationLogoutAspect {
+public class UnbundledLogout {
 
     SessionService sessionService;
 
     @Autowired
-    AuthenticationLogoutAspect(SessionService sessionService){
+    UnbundledLogout(SessionService sessionService){
         this.sessionService = sessionService;
     }
 
-    @Pointcut(value = "@annotation(com.synergism.blog.security.authentication.note.AuthenticationLogoutNote)")
-    public void AuthenticationLogout() {
+    @Pointcut(value = "@annotation(com.synergism.blog.security.authentication.note.UnbundledLogout)")
+    public void UnbundledLogout() {
     }
 
-    @Around(value = "AuthenticationLogout()")
+    @Around(value = "UnbundledLogout()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         String loginID = "";
         Object[] args = point.getArgs();
