@@ -1,3 +1,5 @@
+import { store } from "src/store";
+
 export default class ArticleForm {
   /**账号 */
   username: string;
@@ -19,7 +21,7 @@ export default class ArticleForm {
   tagIDList: Array<number>;
 
   constructor() {
-    this.username = "";
+    this.username = store.getters.getUsername;
     this.id = -1;
     this.title = "";
     this.icon = "";

@@ -344,7 +344,6 @@ export default defineComponent({
       formRef.value
         .validate()
         .then((): void => {
-          viewData.articleForm.username = viewData.username;
           api.saveWriteArticle(viewData.articleForm).then(({ data }): void => {
             data;
             Message.successMessage("提交成功");
@@ -362,7 +361,6 @@ export default defineComponent({
       formRef.value
         .validate()
         .then((): void => {
-          viewData.articleForm.username = viewData.username;
           api
             .updateWriteArticle(viewData.articleForm)
             .then(({ data }): void => {
