@@ -1,15 +1,12 @@
 package com.synergism.blog.core.file.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -33,13 +30,17 @@ public class File {
     @TableField("name")
     private String name;
 
+    @ApiModelProperty("文件后缀(有点)")
+    @TableField("suffix")
+    private String suffix;
+
     @ApiModelProperty("文件类型")
     @TableField("type")
     private String type;
 
     @ApiModelProperty("文件大小(MB)")
     @TableField("size")
-    private Long size;
+    private double size;
 
     @ApiModelProperty("存储路径")
     @TableField("path")
@@ -57,5 +58,12 @@ public class File {
     @TableField(value = "modify_time", fill = FieldFill.INSERT_UPDATE)
     private Date modifyTime;
 
-
+    public File(String name, String suffix, String type, double size, String path, String href){
+        this.name = name;
+        this.suffix = suffix;
+        this.type = type;
+        this.size = size;
+        this.path = path;
+        this.href = href;
+    }
 }
