@@ -102,7 +102,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public boolean isExist(Long commentID) {
+    public boolean isExist(long commentID) {
         return this.getOne(new LambdaQueryWrapper<Comment>().eq(Comment::getId, commentID)) != null;
     }
 }

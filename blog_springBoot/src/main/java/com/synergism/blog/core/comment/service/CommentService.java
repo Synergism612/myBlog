@@ -42,8 +42,8 @@ public interface CommentService extends IService<Comment> {
     /**
      * 保存新的评论
      * @param body 评论内容
-     * @param rootId 根评论id
-     * @param parentId 父评论id
+     * @param rootId 根评论id 可为空
+     * @param parentId 父评论id 可为空
      * @param articleID 文章id
      * @param userID 用户id
      */
@@ -54,5 +54,5 @@ public interface CommentService extends IService<Comment> {
      * @param commentID 评论id
      * @return 存在为真，反之为假
      */
-    boolean isExist(Long commentID);
+    boolean isExist(long commentID);
 }
