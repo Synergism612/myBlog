@@ -14,6 +14,9 @@ import javax.validation.constraints.Size;
 @Setter
 @Getter
 public class CollectionForm {
+    //账号
+    @NotEmpty(message = "账号不能为空")
+    private String username;
     //标题
     @NotEmpty(message = "标题不能为空")
     @Size(max = 10,message = "标题长度不能超过10")
