@@ -59,17 +59,19 @@ export default class Homepage {
       this.author = data;
       this.userInit();
     });
-    api.getHomepageFavoriteInformationList(this.username).then(({ data }): void => {
-      this.favoriteInformationList = data || [new FavoriteInformation()];
-      this.favoriteInformationList.forEach(
-        (favoriteInformation: FavoriteInformation): void => {
-          if (favoriteInformation.collectionList.length === 0) {
-            favoriteInformation.collectionList = [new Collection()];
+    api
+      .getHomepageFavoriteInformationList(this.username)
+      .then(({ data }): void => {
+        this.favoriteInformationList = data || [new FavoriteInformation()];
+        this.favoriteInformationList.forEach(
+          (favoriteInformation: FavoriteInformation): void => {
+            if (favoriteInformation.collectionList.length === 0) {
+              favoriteInformation.collectionList = [new Collection()];
+            }
           }
-        }
-      );
-      this.collapseName = this.favoriteInformationList[0].name;
-    });
+        );
+        this.collapseName = this.favoriteInformationList[0].name;
+      });
   }
 
   public updateAuthor(): void {
@@ -80,9 +82,11 @@ export default class Homepage {
   }
 
   public updateMyFavorite(): void {
-    api.getHomepageFavoriteInformationList(this.username).then(({ data }): void => {
-      this.favoriteInformationList = data;
-    });
+    api
+      .getHomepageFavoriteInformationList(this.username)
+      .then(({ data }): void => {
+        this.favoriteInformationList = data;
+      });
   }
 
   public userInit(): void {

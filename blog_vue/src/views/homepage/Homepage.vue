@@ -440,10 +440,12 @@ export default defineComponent({
       favoriteID: number,
       collectionIDList: Array<number>
     ): void => {
-      api.removeHomepageCollection(favoriteID, collectionIDList).then((): void => {
-        saveCollectionSucceed();
-        Message.successMessage("删除成功");
-      });
+      api
+        .removeHomepageCollection(favoriteID, collectionIDList)
+        .then((): void => {
+          saveCollectionSucceed();
+          Message.successMessage("删除成功");
+        });
     };
 
     const favoriteFormRef = ref();
@@ -452,7 +454,6 @@ export default defineComponent({
       favoriteFormRef.value
         .validate()
         .then((): void => {
-          viewData.favoriteForm.username = viewData.username;
           if (viewData.isFavoriteFormEdit) {
             api.updateHomepageFavorite(viewData.favoriteForm).then((): void => {
               Message.successMessage("更新成功");
