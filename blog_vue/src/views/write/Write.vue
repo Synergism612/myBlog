@@ -421,7 +421,6 @@ export default defineComponent({
       classifyFormRef.value
         .validate()
         .then((): void => {
-          viewData.classifyForm.username = viewData.username;
           api.saveWriteClassify(viewData.classifyForm).then((): void => {
             viewData.init();
             Message.successMessage("新建成功");
@@ -438,7 +437,6 @@ export default defineComponent({
       tagFormRef.value
         .validate()
         .then((): void => {
-          viewData.tagForm.username = viewData.username;
           api.saveWriteTag(viewData.tagForm).then((): void => {
             viewData.init();
             Message.successMessage("新建成功");
