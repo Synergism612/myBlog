@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RepositoryService extends IService<Repository> {
 
+    /**
+     * 保存文件仓库
+     * @param userID 用户id
+     * @param username 账号
+     */
+    void save(long userID,String username);
 }

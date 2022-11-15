@@ -15,4 +15,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RepositoryMapper extends BaseMapper<Repository> {
 
+    /**
+     * 绑定文件仓库
+     * @param repositoryID 文件仓库id
+     * @param userID 用户id
+     */
+    void bundle(Long repositoryID, long userID);
 }

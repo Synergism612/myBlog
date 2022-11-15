@@ -29,13 +29,17 @@ public class Repository {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @ApiModelProperty("路径")
+    @TableField("path")
+    private String path;
+
     @ApiModelProperty("容量(MB)")
     @TableField("size")
     private Long size;
 
     @ApiModelProperty("已使用(MB)")
     @TableField("used")
-    private Long used;
+    private double used;
 
     @ApiModelProperty("创建时间")
     @TableField("creation_time")
@@ -45,5 +49,10 @@ public class Repository {
     @TableField(value = "modify_time", fill = FieldFill.INSERT_UPDATE)
     private Date modifyTime;
 
+    public Repository(){}
 
+    public Repository(String path, Long size) {
+        this.path = path;
+        this.size = size;
+    }
 }
