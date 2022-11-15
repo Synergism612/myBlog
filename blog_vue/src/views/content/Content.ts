@@ -5,7 +5,6 @@ import Classify from "src/model/classify/Classify";
 import Tag from "src/model/tag/Tag";
 import Author from "src/model/user/Author";
 import { store } from "src/store";
-import StringUtil from "src/utils/StringUtil";
 
 export default class Content {
   article: Article;
@@ -46,7 +45,7 @@ export default class Content {
     this.collectionShow = false;
 
     this.username = store.getters.getUsername;
-    this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
+    this.isLogin = store.getters.getIsLogin;
   }
 
   public init(articleID: number): void {

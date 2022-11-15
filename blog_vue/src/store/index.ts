@@ -1,3 +1,4 @@
+import StringUtil from "src/utils/StringUtil";
 import { createStore } from "vuex";
 import StoreUtil from "src/utils/StoreUtil";
 import UserInformation from "src/model/user/UserInformation";
@@ -108,13 +109,26 @@ export const store = createStore({
   },
   //
   getters: {
-    //get方法，也可以不写
+    /**
+     * 获取登录用户信息
+     * @returns 用户信息
+     */
     getUser: (state): UserInformation => {
       return state.userInfo as UserInformation;
     },
-    //get方法，也可以不写
+    /**
+     * 获取登录用户账号
+     * @returns 账号
+     */
     getUsername: (state): string => {
       return state.userInfo.username as string;
+    },
+    /**
+     * 获取是否登录
+     * @returns 登录为真，反之为否
+     */
+    getIsLogin: (state): boolean => {
+      return !StringUtil.checkStringIfEmpty(state.userInfo.username as string);
     },
   },
   //异步函数

@@ -4,7 +4,6 @@ import ArticleForm from "src/api/entity/ArticleForm";
 import Classify from "src/model/classify/Classify";
 import Tag from "src/model/tag/Tag";
 import { store } from "src/store";
-import StringUtil from "src/utils/StringUtil";
 import { ToolbarNames } from "md-editor-v3";
 import ArticleInformation from "src/model/article/ArticleInformation";
 
@@ -36,7 +35,7 @@ export default class Write {
 
   constructor() {
     this.username = store.getters.getUsername;
-    this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
+    this.isLogin = store.getters.getIsLogin;
     this.articleForm = new ArticleForm();
     this.toolbars = toolbars as Array<ToolbarNames>;
     this.classifyInformationList = [new Classify()];

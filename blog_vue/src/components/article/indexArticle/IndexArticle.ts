@@ -2,7 +2,6 @@ import { api } from "src/api/api";
 import ArticleInformation from "src/model/article/ArticleInformation";
 import ArticleSort from "src/model/article/ArticleSort";
 import { store } from "src/store";
-import StringUtil from "src/utils/StringUtil";
 
 export default class IndexArticle {
   /**文章排序列表*/
@@ -36,7 +35,7 @@ export default class IndexArticle {
   articleIDList: Array<number>;
   constructor() {
     this.username = store.getters.getUsername;
-    this.isLogin = !StringUtil.checkStringIfEmpty(this.username);
+    this.isLogin = store.getters.getIsLogin;
     this.isMy = false;
     this.refresh = true;
     this.currentPage = 1;

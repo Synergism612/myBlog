@@ -4,8 +4,6 @@ import CommentChild from "src/model/comment/CommentChild";
 import CommentParent from "src/model/comment/CommentParent";
 import UserInformation from "src/model/user/UserInformation";
 import { store } from "src/store";
-import Message from "src/utils/MessageUtil";
-import StringUtil from "src/utils/StringUtil";
 
 export default class Forum {
   articleID: number;
@@ -30,7 +28,7 @@ export default class Forum {
 
     this.commentInput = "";
     this.userInfo = store.getters.getUser;
-    this.isLogin = !StringUtil.checkStringIfEmpty(this.userInfo.username);
+    this.isLogin = store.getters.getIsLogin;
 
     this.rootID = -1;
     this.rootUsername = "";
