@@ -74,4 +74,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<Archive> selectArchiveByUserID(long userID);
 
     List<Archive> selectPublicArchive();
+
+    Article selectOneByUsernameAndArticleID(String username, long articleID);
 }

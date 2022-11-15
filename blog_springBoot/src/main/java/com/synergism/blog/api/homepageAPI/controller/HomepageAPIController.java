@@ -50,6 +50,7 @@ public class HomepageAPIController {
     /**
      * 个人主页删除收藏
      *
+     * @param username 账号
      * @param favoriteID       收藏夹id
      * @param collectionIDList 收藏id列表
      * @return 成功
@@ -58,10 +59,11 @@ public class HomepageAPIController {
     @Validated
     @DeleteMapping("collection")
     public Result<String> removeCollection(
+            @RequestParam @NotEmpty(message = "账号不能为空") String username,
             @RequestParam @NotNull(message = "收藏夹不存在") @Min(value = 1,message = "收藏夹不存在") Long favoriteID,
             @RequestParam @Size(min = 1,message = "收藏不存在") List<Long> collectionIDList
     ) {
-        return service.removeCollection(favoriteID, collectionIDList);
+        return service.removeCollection(username,favoriteID, collectionIDList);
     }
 
     //需要登录验证

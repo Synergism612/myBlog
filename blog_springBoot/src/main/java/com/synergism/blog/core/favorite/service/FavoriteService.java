@@ -32,10 +32,11 @@ public interface FavoriteService extends IService<Favorite> {
 
     /**
      * 是否存在收藏夹
+     * @param username 账号
      * @param favoriteID 收藏夹id
      * @return 存在为真，反之为夹
      */
-    boolean isExist(Long favoriteID);
+    boolean isExist(String username,long favoriteID);
 
     /**
      * 保存新的收藏

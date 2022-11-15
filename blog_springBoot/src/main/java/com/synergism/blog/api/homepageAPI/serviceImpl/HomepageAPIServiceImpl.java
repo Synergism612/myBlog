@@ -45,7 +45,10 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
     }
 
     @Override
-    public Result<String> removeCollection(long favoriteID, List<Long> collectionIDList) {
+    public Result<String> removeCollection(String username, long favoriteID, List<Long> collectionIDList) {
+        if (!favoriteService.isExist(username, favoriteID)) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
+        }
         favoriteService.remove(favoriteID, collectionIDList);
         return Result.success();
     }
@@ -62,26 +65,32 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
 
     @Override
     public Result<String> updateFavorite(FavoriteForm favoriteForm) {
-        Favorite favorite = favoriteService.getById(favoriteForm.getId());
-        if (favorite != null) {
-            favorite.update(favoriteForm.getName(),
-                    favoriteForm.getAnnotation(),
-                    favoriteForm.getIfPrivate());
-            return favoriteService.updateById(favorite)
-                    ? Result.success()
-                    : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
+        if (!favoriteService.isExist(favoriteForm.getUsername(), favoriteForm.getId())) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在不存在"));
         }
-        return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
+        Favorite favorite = favoriteService.getById(favoriteForm.getId());
+        if (favorite == null) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
+        }
+        favorite.update(favoriteForm.getName(),
+                favoriteForm.getAnnotation(),
+                favoriteForm.getIfPrivate());
+        return favoriteService.updateById(favorite)
+                ? Result.success()
+                : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
     }
 
     @Override
     public Result<String> removeFavorite(String username, long favoriteID) {
         long userID = userService.getID(username);
-        if (userID != -1) {
-            favoriteService.remove(userID, favoriteID);
-            return Result.success();
+        if (userID == -1) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
         }
-        return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+        if (!favoriteService.isExist(username, favoriteID)) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在不存在"));
+        }
+        favoriteService.remove(userID, favoriteID);
+        return Result.success();
     }
 
     @Override

@@ -27,10 +27,11 @@ public interface writeAPIService {
 
     /**
      * 获取文章
+     * @param username 账号
      * @param articleID 文章id
      * @return 文章信息
      */
-    Result<ArticleInformation> getArticle(Long articleID);
+    Result<ArticleInformation> getArticle(String username,long articleID);
 
     /**
      * 保存文章

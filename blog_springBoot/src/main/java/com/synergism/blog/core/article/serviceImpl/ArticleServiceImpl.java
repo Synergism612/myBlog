@@ -78,8 +78,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public boolean isExist(Long articleID) {
-        return this.getOne(new LambdaQueryWrapper<Article>().eq(Article::getId, articleID)) != null;
+    public boolean isExist(String username,long articleID) {
+        return mapper.selectOneByUsernameAndArticleID(username,articleID) != null;
     }
 
     @Override

@@ -124,4 +124,21 @@
                      uf.user_id = u.id
         where u.username = #{username}
     </select>
+    <select id="selectOneByUsernameAndFavoriteID"
+            resultType="com.synergism.blog.core.favorite.entity.Favorite">
+        select f.id,
+               f.name,
+               f.annotation,
+               f.if_private
+        from user_favorite uf
+                 join
+             (favorite f ,
+                 `user` u
+                 )
+             on
+                     uf.favorite_id = f.id and
+                     uf.user_id = u.id
+        where u.username = #{username}
+          and uf.favorite_id = #{favoriteID}
+    </select>
 </mapper>

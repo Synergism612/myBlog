@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -57,9 +58,10 @@ public class WriteAPIController {
     @Validated
     @GetMapping("article")
     public Result<ArticleInformation> getArticle(
+            @RequestParam @NotEmpty(message = "账号不能为空") String username,
             @RequestParam @NotNull(message = "文章id不能为空") @Min(value = 1,message = "文章不存在") Long articleID
     ){
-        return service.getArticle(articleID);
+        return service.getArticle(username,articleID);
     }
 
     /**

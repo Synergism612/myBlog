@@ -27,11 +27,12 @@ public interface HomepageAPIService {
 
     /**
      * 删除收藏夹中的收藏
+     * @param username 账号
      * @param favoriteID 收藏夹id
      * @param collectionIDList 收藏id列表
      * @return 成功
      */
-    Result<String> removeCollection(long favoriteID, List<Long> collectionIDList);
+    Result<String> removeCollection(String username,long favoriteID, List<Long> collectionIDList);
 
     /**
      * 保存新的收藏夹

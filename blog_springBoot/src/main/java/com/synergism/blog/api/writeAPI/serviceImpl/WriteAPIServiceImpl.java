@@ -47,11 +47,11 @@ public class WriteAPIServiceImpl implements writeAPIService {
     }
 
     @Override
-    public Result<ArticleInformation> getArticle(Long articleID) {
-        if (articleService.isExist(articleID)) {
-            return Result.success(articleService.getArticleInformationByID(articleID));
+    public Result<ArticleInformation> getArticle(String username, long articleID) {
+        if (!articleService.isExist(username, articleID)) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         }
-        return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        return Result.success(articleService.getArticleInformationByID(articleID));
 
     }
 
@@ -67,25 +67,28 @@ public class WriteAPIServiceImpl implements writeAPIService {
 
     @Override
     public Result<String> updateArticle(ArticleForm articleForm) {
-        Article article = articleService.getById(articleForm.getId());
-        if (article != null) {
-            article.update(article.getIcon(),
-                    article.getTitle(),
-                    article.getBody(),
-                    article.getSynopsis(),
-                    article.getIfPrivate());
-            return articleService.updateById(article)
-                    ? Result.success()
-                    : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
+        if (!articleService.isExist(articleForm.getUsername(), articleForm.getId())) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         }
-        return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        Article article = articleService.getById(articleForm.getId());
+        if (article == null) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        }
+        article.update(article.getIcon(),
+                article.getTitle(),
+                article.getBody(),
+                article.getSynopsis(),
+                article.getIfPrivate());
+        return articleService.updateById(article)
+                ? Result.success()
+                : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
     }
 
     @Override
     public Result<String> saveClassify(ClassifyForm classifyForm) {
         long userID = userService.getID(classifyForm.getUsername());
         if (userID != -1) {
-            classifyService.save(userID,classifyForm.getName(),classifyForm.getAnnotation());
+            classifyService.save(userID, classifyForm.getName(), classifyForm.getAnnotation());
             return Result.success();
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
@@ -95,7 +98,7 @@ public class WriteAPIServiceImpl implements writeAPIService {
     public Result<String> saveTag(TagForm tagForm) {
         long userID = userService.getID(tagForm.getUsername());
         if (userID != -1) {
-            tagService.save(userID,tagForm.getName(),tagForm.getAnnotation());
+            tagService.save(userID, tagForm.getName(), tagForm.getAnnotation());
             return Result.success();
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));

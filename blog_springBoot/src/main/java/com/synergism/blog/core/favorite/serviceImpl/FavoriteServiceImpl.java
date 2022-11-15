@@ -1,6 +1,5 @@
 package com.synergism.blog.core.favorite.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.favorite.entity.Collection;
 import com.synergism.blog.core.favorite.entity.Favorite;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
@@ -46,8 +45,8 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     }
 
     @Override
-    public boolean isExist(Long favoriteID) {
-        return this.getOne(new LambdaQueryWrapper<Favorite>().eq(Favorite::getId, favoriteID)) != null;
+    public boolean isExist(String username,long favoriteID) {
+        return mapper.selectOneByUsernameAndFavoriteID(username,favoriteID) != null;
     }
 
     @Override

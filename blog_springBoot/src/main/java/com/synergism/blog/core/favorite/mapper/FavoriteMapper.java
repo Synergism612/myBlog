@@ -61,4 +61,7 @@ public interface FavoriteMapper extends BaseMapper<Favorite> {
      * @param favoriteID 收藏夹id
      */
     void unbundled(Long userID, Long favoriteID);
+
+
+    Favorite selectOneByUsernameAndFavoriteID(String username, long favoriteID);
 }

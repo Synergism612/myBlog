@@ -24,14 +24,16 @@ public class EnshrineAPIServiceImpl implements EnshrineAPIService {
 
     @Override
     public Result<List<Favorite>> getFavorite(String username) {
-        if (!userService.isExist(username)) return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户错误"));
+        if (!userService.isExist(username)) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+        }
         return Result.success(favoriteService.getListByUsername(username));
     }
 
     @Override
     public Result<String> saveCollection(CollectionForm addCollection) {
-        if (!favoriteService.isExist(addCollection.getFavoriteID()))
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("不存在该收藏夹"));
+        if (!favoriteService.isExist(addCollection.getUsername(), addCollection.getFavoriteID()))
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("收藏夹不存在"));
         if (favoriteService.isExist(addCollection.getFavoriteID(), addCollection.getHref()))
             return Result.error(CodeMsg.MESSAGE.fillArgs("您已收藏"));
         favoriteService.save(addCollection.getTitle(), addCollection.getHref(), addCollection.getSynopsis(), addCollection.getFavoriteID());
