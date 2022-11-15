@@ -29,6 +29,10 @@ public class Folder {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @ApiModelProperty("路径")
+    @TableField("path")
+    private String path;
+
     @ApiModelProperty("文件夹名")
     @TableField("name")
     private String name;
@@ -45,5 +49,11 @@ public class Folder {
     @TableField(value = "modify_time", fill = FieldFill.INSERT_UPDATE)
     private Date modifyTime;
 
+    public Folder(){}
 
+    public Folder(String path, String name, Long parentId) {
+        this.path = path;
+        this.name = name;
+        this.parentId = parentId;
+    }
 }
