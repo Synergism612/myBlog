@@ -68,27 +68,26 @@ public class GlobalInterceptor implements HandlerInterceptor {
         }
 
         //检查权限ID是否为空
-        if (!EVIL_EYE.isEmpty()) {
-            //获取权限
-            Session session = sessionService.getSession(EVIL_EYE);
-            if (TypeUtil.isNull(session)) {
-                //为null则重新分配一个新的会话
-                session = sessionService.newSession(request, response);
-            }
-            if (session.getUserKey().isEmpty())
-                //用户密钥为空则写入用户密钥
-                session.setUserKey(cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY));
-            if (!session.getSessionID().equals(sessionID)) {
-                //处理sessionID不同的情况，使用最新的sessionID
-                session.setSessionID(sessionID);
-            }
-            //鉴权
-//            URLUtil.checkURLIsPower(uri, session.getPower());
-            //更新最新的会话信息
-            sessionService.update(EVIL_EYE, session, response);
-            return true;
+        if (EVIL_EYE.isEmpty()) {return false;}
+
+        //获取权限
+        Session session = sessionService.getSession(EVIL_EYE);
+        if (TypeUtil.isNull(session)) {
+            //为null则重新分配一个新的会话
+            session = sessionService.newSession(request, response);
         }
-        return false;
+        if (session.getUserKey().isEmpty())
+            //用户密钥为空则写入用户密钥
+            session.setUserKey(cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY));
+        if (!session.getSessionID().equals(sessionID)) {
+            //处理sessionID不同的情况，使用最新的sessionID
+            session.setSessionID(sessionID);
+        }
+        //鉴权
+//            URLUtil.checkURLIsPower(uri, session.getPower());
+        //更新最新的会话信息
+        sessionService.update(EVIL_EYE, session, response);
+        return true;
     }
 
     /**

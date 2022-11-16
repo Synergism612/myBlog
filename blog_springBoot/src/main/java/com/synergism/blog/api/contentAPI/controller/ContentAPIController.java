@@ -78,12 +78,12 @@ public class ContentAPIController {
      * @return 标签信息
      */
     @Validated
-    @GetMapping("tagList")
-    public Result<List<Tag>> tagList(
+    @GetMapping("tag")
+    public Result<List<Tag>> tag(
             @RequestParam @NotNull(message = "文章id不能为空")
             @Min(value = 1,message = "文章不存在") Long articleID
     ){
-        return service.getTagList(articleID);
+        return service.getTag(articleID);
     }
     /**
      * 内容页评论获取接口
@@ -91,12 +91,12 @@ public class ContentAPIController {
      * @return 评论信息列表
      */
     @Validated
-    @GetMapping("commentList")
-    public Result<List<CommentParent>> commentList(
+    @GetMapping("comment")
+    public Result<List<CommentParent>> comment(
             @RequestParam @NotNull(message = "文章id不能为空")
             @Min(value = 1,message = "文章不存在") Long articleID
     ){
-        return service.getCommentList(articleID);
+        return service.getComment(articleID);
     }
     /**
      * 内容页同分类推荐获取接口

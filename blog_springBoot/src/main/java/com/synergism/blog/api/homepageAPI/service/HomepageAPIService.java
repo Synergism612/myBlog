@@ -61,5 +61,5 @@ public interface HomepageAPIService {
      * @param userInformationForm 用户信息表单
      * @return 成功
      */
-    Result<String> updateUserInformation(UserInformationForm userInformationForm);
+    Result<String> updateUser(UserInformationForm userInformationForm);
 }

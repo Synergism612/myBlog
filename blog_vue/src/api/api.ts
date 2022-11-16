@@ -243,7 +243,7 @@ export class api {
    */
   static getContentTagList(articleID: number): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/content/tagList",
+      url: "/api/blog/content/tag",
       method: "get",
       params: { articleID: articleID },
     });
@@ -256,7 +256,7 @@ export class api {
    */
   static getContentCommentList(articleID: number): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/content/commentList",
+      url: "/api/blog/content/comment",
       method: "get",
       params: { articleID: articleID },
     });
@@ -499,7 +499,7 @@ export class api {
     userInformationForm: UserInformationForm
   ): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/homepage/userInformation",
+      url: "/api/blog/homepage/user",
       method: "put",
       data: userInformationForm,
     });

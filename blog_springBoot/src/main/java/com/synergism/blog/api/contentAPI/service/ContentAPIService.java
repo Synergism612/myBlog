@@ -38,14 +38,14 @@ public interface ContentAPIService {
      * @param articleID 文章id
      * @return 标签列表
      */
-    Result<List<Tag>> getTagList(long articleID);
+    Result<List<Tag>> getTag(long articleID);
 
     /**
      * 获得文章下评论
      * @param articleID 文章id
      * @return 父评论列表
      */
-    Result<List<CommentParent>> getCommentList(long articleID);
+    Result<List<CommentParent>> getComment(long articleID);
 
     /**
      * 获得同类下的文章列表

@@ -94,7 +94,7 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
     }
 
     @Override
-    public Result<String> updateUserInformation(UserInformationForm userInformationForm) {
+    public Result<String> updateUser(UserInformationForm userInformationForm) {
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, userInformationForm.getUsername()));
         if (user != null) {
             user.update(user.getIcon(),

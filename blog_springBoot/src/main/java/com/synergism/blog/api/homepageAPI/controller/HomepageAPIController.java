@@ -97,9 +97,9 @@ public class HomepageAPIController {
     }
 
     //需要登录验证
-    @PutMapping("userInformation")
-    public Result<String> updateUserInformation(@RequestBody @Valid UserInformationForm userInformationForm) {
-        return service.updateUserInformation(userInformationForm);
+    @PutMapping("user")
+    public Result<String> updateUser(@RequestBody @Valid UserInformationForm userInformationForm) {
+        return service.updateUser(userInformationForm);
     }
 
 }

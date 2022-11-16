@@ -67,7 +67,6 @@ public class BundleLogin {
         if (object instanceof Result<?>) {
             result = (Result<?>) object;
         }
-        TypeUtil.ifNull(result);
         assert result != null;
         if (result.getCode() == 200) {
             userInformation = (UserInformation) result.getData();

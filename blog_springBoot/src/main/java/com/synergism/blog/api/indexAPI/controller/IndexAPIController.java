@@ -83,7 +83,12 @@ public class IndexAPIController {
         return service.getIndexClassify();
     }
 
-
+    /**
+     * 首页删除文章接口
+     * @param username 账号
+     * @param articleIDList 文章id列表
+     * @return
+     */
     @DeleteMapping("/article")
     public Result<String> removeArticle(
             @RequestParam @NotEmpty(message = "用户不存在") String username,

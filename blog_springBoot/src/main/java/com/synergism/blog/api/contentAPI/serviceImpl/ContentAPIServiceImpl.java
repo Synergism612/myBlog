@@ -54,12 +54,12 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     }
 
     @Override
-    public Result<List<Tag>> getTagList(long articleID) {
+    public Result<List<Tag>> getTag(long articleID) {
         return Result.success(tagService.getListByArticleID(articleID));
     }
 
     @Override
-    public Result<List<CommentParent>> getCommentList(long articleID) {
+    public Result<List<CommentParent>> getComment(long articleID) {
         return Result.success(commentService.getCommentParentListByArticleID(articleID));
     }
 
