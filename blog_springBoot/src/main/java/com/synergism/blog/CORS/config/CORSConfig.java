@@ -18,8 +18,8 @@ public class CORSConfig {
     public CORSConfig() {
         Allow_Credentials = "true";
         Allow_Origin = "http://localhost:8080";
-        Allow_Methods = "GET, POST, DELETE, PUT";
-        Allow_Headers = "content-type,Accept,"+KeyManagementService.AllToString();
+        Allow_Methods = "GET,POST,DELETE,PUT,PATCH";
+        Allow_Headers = "content-type,Accept," + KeyManagementService.AllToString();
         Expose_Headers = KeyManagementService.AllToString();
     }
 }
