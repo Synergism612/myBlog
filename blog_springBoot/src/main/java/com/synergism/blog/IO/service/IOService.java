@@ -26,4 +26,19 @@ public interface IOService {
      * @return 成功为真，反之为否
      */
     boolean mkdir(String parentPath,String name);
+
+    /**
+     * 创库
+     * @param username 账号
+     * @return 成功为真，反之为否
+     */
+    boolean repository(String username);
+
+
+    /**
+     * 创建用户博客存储文件夹
+     * @param username 账号
+     * @return 返回用户博客路径
+     */
+    String blog(String username);
 }

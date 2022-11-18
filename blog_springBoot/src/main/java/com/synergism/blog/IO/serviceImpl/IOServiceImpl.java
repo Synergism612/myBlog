@@ -10,7 +10,7 @@ import java.io.File;
 @Service
 public class IOServiceImpl implements IOService {
 
-    private final String base = System.getProperty("user.dir") + "/";
+    private final String base = System.getProperty("user.dir") + "/blogResources/";
 
     @Override
     public boolean write(String parentPath, MultipartFile file) {
@@ -41,5 +41,18 @@ public class IOServiceImpl implements IOService {
         File dest = new File(parentPath);
         if (dest.exists()) return true;
         return dest.mkdir();
+    }
+
+    @Override
+    public boolean repository(String username) {
+        String path = base + username;
+        File dest = new File(path);
+        if (dest.exists()) return true;
+        return dest.mkdir();
+    }
+
+    @Override
+    public String blog(String username) {
+        return this.mkdir(username,"blog")?username+"/blog":"";
     }
 }
