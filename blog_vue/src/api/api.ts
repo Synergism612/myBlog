@@ -211,6 +211,40 @@ export class api {
   }
 
   /**
+   * 内容页文章是否点赞接口
+   * @param articleID 文章id
+   * @returns Result[评论列表]
+   */
+  static getContentArticleLike(articleID: number): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/content/article/like",
+      method: "get",
+      params: { username: store.getters.getUsername, articleID: articleID },
+    });
+  }
+
+  /**
+   * 内容页文章点赞接口
+   * @param articleID 文章id
+   * @param state 状态
+   * @returns Result[评论列表]
+   */
+  static updateContentArticleLike(
+    articleID: number,
+    state: boolean
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/content/article/like",
+      method: "patch",
+      params: {
+        username: store.getters.getUsername,
+        articleID: articleID,
+        state: state.toString(),
+      },
+    });
+  }
+
+  /**
    * 内容页作者接口
    * @param articleID 文章id
    * @returns Result[作者信息]
@@ -259,6 +293,40 @@ export class api {
       url: "/api/blog/content/comment",
       method: "get",
       params: { articleID: articleID },
+    });
+  }
+
+  /**
+   * 内容页文章点过赞的文章
+   * @param articleID 文章id
+   * @returns Result[评论列表]
+   */
+  static getContentCommentLike(): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/content/comment/like",
+      method: "get",
+      params: { username: store.getters.getUsername },
+    });
+  }
+
+  /**
+   * 内容页文章点赞接口
+   * @param commentID 文章id
+   * @param state 状态
+   * @returns Result[评论列表]
+   */
+  static updateContentCommentLike(
+    commentID: number,
+    state: boolean
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/content/comment/like",
+      method: "patch",
+      params: {
+        username: store.getters.getUsername,
+        commentID: commentID,
+        state: state.toString(),
+      },
     });
   }
 
