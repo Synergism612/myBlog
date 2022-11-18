@@ -78,14 +78,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public boolean isExist(String username,long articleID) {
-        return mapper.selectOneByUsernameAndArticleID(username,articleID) != null;
+    public boolean isExist(String username, long articleID) {
+        return mapper.selectOneByUsernameAndArticleID(username, articleID) != null;
     }
 
     @Override
     public boolean isExist(List<Long> articleIDList) {
         List<Article> articleList = mapper.selectList(new LambdaQueryWrapper<Article>().in(Article::getId, articleIDList));
         return articleList.size() != 0;
+    }
+
+    @Override
+    public boolean isExist(long articleID) {
+        return mapper.selectOne(new LambdaQueryWrapper<Article>().eq(Article::getId, articleID)) != null;
     }
 
     @Override
@@ -193,6 +198,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public List<Archive> getArchiveByUserID(long userID) {
         List<Archive> result = mapper.selectArchiveByUserID(userID);
         return result.size() == 0 ? null : result;
+    }
+
+    @Override
+    public void updateViews(long articleID, long number) {
+        mapper.updateViews(articleID, number);
+    }
+
+    @Override
+    public void updateLike(long articleID, long number) {
+        mapper.updateLike(articleID, number);
     }
 
 }

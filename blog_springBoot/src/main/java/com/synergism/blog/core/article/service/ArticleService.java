@@ -70,6 +70,13 @@ public interface ArticleService extends IService<Article> {
     boolean isExist(List<Long> articleIDList);
 
     /**
+     * 根据文章id列表判断是否都存在
+     * @param articleID 文章id
+     * @return 都存在为真，反之为假
+     */
+    boolean isExist(long articleID);
+
+    /**
      * 根据关键字从文章列表中筛选
      * 该方法要求传入的文章列表不可为null
      * 文章列表size为0时返回null
@@ -159,4 +166,18 @@ public interface ArticleService extends IService<Article> {
      * @return 归档信息列表
      */
     List<Archive> getArchiveByUserID(long userID);
+
+    /**
+     * 更新阅读量
+     * @param articleID 文章id
+     * @param number 数量
+     */
+    void updateViews(long articleID , long number);
+
+    /**
+     * 更新点赞数
+     * @param articleID 文章id
+     * @param number 数量
+     */
+    void updateLike(long articleID , long number);
 }

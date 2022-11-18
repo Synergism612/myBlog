@@ -71,9 +71,38 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     ArticleInformation selectArticleInformationByArticleID(long articleID);
 
+    /**
+     * 查询用户下的档案信息
+     * @param userID 用户id
+     * @return 档案
+     */
     List<Archive> selectArchiveByUserID(long userID);
 
+    /**
+     * 查询公共档案信息
+     * @return 档案
+     */
     List<Archive> selectPublicArchive();
 
+    /**
+     * 查询对应用户下的对应文章
+     * @param username 账号
+     * @param articleID 文章id
+     * @return 文章信息
+     */
     Article selectOneByUsernameAndArticleID(String username, long articleID);
+
+    /**
+     * 更新阅读量
+     * @param articleID 文章id
+     * @param number 数量
+     */
+    void updateViews(long articleID, long number);
+
+    /**
+     * 更新点赞量
+     * @param articleID 文章id
+     * @param number 数量
+     */
+    void updateLike(long articleID, long number);
 }

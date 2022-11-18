@@ -57,6 +57,12 @@
         </foreach>
         ;
     </insert>
+    <update id="updateViews">
+        update article set views=article.views+#{number} where id = #{articleID}
+    </update>
+    <update id="updateLike">
+        update article set like_count=article.like_count+#{number} where id = #{articleID}
+    </update>
     <delete id="unbundled">
         # 删除用户文章对照表信息
         delete from user_article where user_id = #{userID} and article_id in
