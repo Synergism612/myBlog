@@ -41,20 +41,14 @@ public class IndexAPIServiceImpl implements IndexAPIService {
     @Override
     public Result<List<TagInformation>> getIndexTag() {
         List<TagInformation> result;
-        result = tagService.getAllTagInformationList();
-        if (result != null) {
-            result = result.subList(0, Math.min(20, result.size()));
-        }
+        result = tagService.getTagInformationList(20);
         return Result.success(result);
     }
 
     @Override
     public Result<List<ClassifyInformation>> getIndexClassify() {
         List<ClassifyInformation> result;
-        result = classifyService.getAllClassifyInformationList();
-        if (result != null) {
-            result = result.subList(0, Math.min(20, result.size()));
-        }
+        result = classifyService.getClassifyInformationList(20);
         return Result.success(result);
     }
 

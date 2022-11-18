@@ -9,6 +9,7 @@ import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.service.ClassifyService;
 import com.synergism.blog.core.comment.entity.CommentParent;
 import com.synergism.blog.core.comment.service.CommentService;
+import com.synergism.blog.core.like.service.LikeService;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.core.user.entity.Author;
@@ -28,18 +29,21 @@ public class ContentAPIServiceImpl implements ContentAPIService {
     private final ClassifyService classifyService;
     private final TagService tagService;
     private final CommentService commentService;
+    private final LikeService likeService;
 
     @Autowired
-    public ContentAPIServiceImpl(ArticleService articleService, UserService userService, ClassifyService classifyService, TagService tagService, CommentService commentService) {
+    public ContentAPIServiceImpl(ArticleService articleService, UserService userService, ClassifyService classifyService, TagService tagService, CommentService commentService, LikeService likeService) {
         this.articleService = articleService;
         this.userService = userService;
         this.classifyService = classifyService;
         this.tagService = tagService;
         this.commentService = commentService;
+        this.likeService = likeService;
     }
 
     @Override
     public Result<Article> getArticle(long articleID) {
+        articleService.updateViews(articleID,1);
         return Result.success(articleService.getById(articleID));
     }
 
@@ -79,7 +83,7 @@ public class ContentAPIServiceImpl implements ContentAPIService {
         if (userID == -1) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
         }
-        if (!articleService.isExist(commentForm.getUsername(),commentForm.getArticleID())) {
+        if (!articleService.isExist(commentForm.getArticleID())) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         }
         if (commentForm.getRootID() != null && !commentService.isExist(commentForm.getRootID())) {
@@ -90,5 +94,48 @@ public class ContentAPIServiceImpl implements ContentAPIService {
         }
         commentService.save(commentForm.getComment(), commentForm.getRootID(), commentForm.getParentID(), commentForm.getArticleID(), userID);
         return Result.success();
+    }
+
+    @Override
+    public Result<String> updateArticleLike(String username,long articleID,boolean state) {
+        if (!userService.isExist(username)){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+        }
+        if (!articleService.isExist(articleID)){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        }
+        likeService.likeArticle(username,articleID,state);
+        return Result.success();
+    }
+
+    @Override
+    public Result<Boolean> getArticleLike(String username, long articleID) {
+        if (!userService.isExist(username)){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+        }
+        if (!articleService.isExist(articleID)){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
+        }
+        return Result.success(likeService.isLikeArticle(username,articleID));
+    }
+
+    @Override
+    public Result<String> updateCommentLike(String username, long commentID, boolean state) {
+        if (!userService.isExist(username)){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+        }
+        if (!commentService.isExist(commentID)){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("评论不存在"));
+        }
+        likeService.likeComment(username,commentID,state);
+        return Result.success();
+    }
+
+    @Override
+    public Result<List<Long>> getCommentLike(String username) {
+        if (!userService.isExist(username)){
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+        }
+        return Result.success(likeService.getLikeCommentIDList(username));
     }
 }

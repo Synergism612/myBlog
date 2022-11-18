@@ -1,5 +1,6 @@
 package com.synergism.blog.api.writeAPI.serviceImpl;
 
+import com.synergism.blog.IO.service.IOService;
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
 import com.synergism.blog.api.writeAPI.entity.ClassifyForm;
 import com.synergism.blog.api.writeAPI.entity.TagForm;
@@ -16,6 +17,7 @@ import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,13 +29,15 @@ public class WriteAPIServiceImpl implements writeAPIService {
     private final ArticleService articleService;
     private final ClassifyService classifyService;
     private final TagService tagService;
+    private final IOService ioService;
 
     @Autowired
-    public WriteAPIServiceImpl(UserService userService, ArticleService articleService, ClassifyService classifyService, TagService tagService) {
+    public WriteAPIServiceImpl(UserService userService, ArticleService articleService, ClassifyService classifyService, TagService tagService, IOService ioService) {
         this.userService = userService;
         this.articleService = articleService;
         this.classifyService = classifyService;
         this.tagService = tagService;
+        this.ioService = ioService;
     }
 
     @Override
@@ -102,5 +106,11 @@ public class WriteAPIServiceImpl implements writeAPIService {
             return Result.success();
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+    }
+
+    @Override
+    public Result<String> saveArticleIcon(String username, MultipartFile file) {
+        String path = ioService.blog(username);
+        return ioService.write(path, file) ? Result.success() : Result.error(CodeMsg.SERVER_ERROR);
     }
 }

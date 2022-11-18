@@ -11,6 +11,7 @@ import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -108,5 +109,13 @@ public class WriteAPIController {
     @PostMapping("tag")
     public Result<String> saveTag(@RequestBody @Valid TagForm tagForm){
         return service.saveTag(tagForm);
+    }
+
+    @Validated
+    @PostMapping("article/icon")
+    public Result<String> saveArticleIcon(
+            @RequestParam @NotEmpty(message = "账号不能为空") String username,
+            @RequestBody MultipartFile file){
+        return service.saveArticleIcon(username,file);
     }
 }

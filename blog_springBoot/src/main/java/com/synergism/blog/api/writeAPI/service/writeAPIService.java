@@ -8,6 +8,7 @@ import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.result.Result;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -60,4 +61,12 @@ public interface writeAPIService {
      * @return 成功
      */
     Result<String> saveTag(TagForm tagForm);
+
+    /**
+     * 保存文章头像
+     * @param username 账号
+     * @param file 文件
+     * @return 图片链接
+     */
+    Result<String> saveArticleIcon(String username, MultipartFile file);
 }

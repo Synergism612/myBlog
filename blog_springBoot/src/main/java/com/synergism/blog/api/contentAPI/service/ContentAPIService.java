@@ -68,4 +68,37 @@ public interface ContentAPIService {
      * @return 成功
      */
     Result<String> saveComment(CommentForm commentForm);
+
+    /**
+     * 文章点赞
+     * @param username 账号
+     * @param articleID 文章id
+     * @param state 状态
+     * @return 成功
+     */
+    Result<String> updateArticleLike(String username,long articleID,boolean state);
+
+    /**
+     * 获取点赞状态
+     * @param username 账号
+     * @param articleID 文章id
+     * @return 是否点赞
+     */
+    Result<Boolean> getArticleLike(String username, long articleID);
+
+    /**
+     * 评论点赞
+     * @param username 账号
+     * @param commentID 评论id
+     * @param state 状态
+     * @return 成功
+     */
+    Result<String> updateCommentLike(String username,long commentID,boolean state);
+
+    /**
+     * 获取点过赞的评论
+     * @param username 账号
+     * @return 评论id列表
+     */
+    Result<List<Long>> getCommentLike(String username);
 }
