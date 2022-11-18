@@ -19,17 +19,10 @@ import java.util.List;
 public interface ClassifyMapper extends BaseMapper<Classify> {
 
     /**
-     * 查询全部分类信息
+     * 查询分类信息
      * @return 分类信息列表
      */
-    List<ClassifyInformation> selectAllClassifyInformationList();
-
-    /**
-     * 查询该用户下的分类信息
-     * @param username 账号
-     * @return 分类信息列表
-     */
-    List<ClassifyInformation> selectClassifyInformationListByUsername(String username);
+    List<ClassifyInformation> selectAllClassifyInformationList(int limit);
 
     /**
      * 查询该文章对应的分类

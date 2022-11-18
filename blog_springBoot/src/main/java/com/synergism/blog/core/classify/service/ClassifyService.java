@@ -16,17 +16,10 @@ import java.util.List;
  */
 public interface ClassifyService extends IService<Classify> {
     /**
-     * 获得全部分类信息列表
+     * 获得分类云
      * @return 分类信息列表
      */
-    List<ClassifyInformation> getAllClassifyInformationList();
-
-    /**
-     * 通过用户名筛选分类列表
-     * @param username 用户名
-     * @return 分类列表
-     */
-    List<ClassifyInformation> getClassifyInformationListByUsername(String username);
+    List<ClassifyInformation> getClassifyInformationList(int limit);
 
     /**
      * 通过文章id找到对应分类

@@ -30,14 +30,8 @@ public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify> i
     }
 
     @Override
-    public List<ClassifyInformation> getAllClassifyInformationList() {
-        List<ClassifyInformation> result = mapper.selectAllClassifyInformationList();
-        return result.size()==0?null:result;
-    }
-
-    @Override
-    public List<ClassifyInformation> getClassifyInformationListByUsername(String username) {
-        List<ClassifyInformation> result = mapper.selectClassifyInformationListByUsername(username);
+    public List<ClassifyInformation> getClassifyInformationList(int limit) {
+        List<ClassifyInformation> result = mapper.selectAllClassifyInformationList(limit);
         return result.size()==0?null:result;
     }
 

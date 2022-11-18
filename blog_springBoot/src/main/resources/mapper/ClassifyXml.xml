@@ -3,33 +3,27 @@
 <mapper namespace="com.synergism.blog.core.classify.mapper.ClassifyMapper">
     <select id="selectAllClassifyInformationList"
             resultType="com.synergism.blog.core.classify.entity.ClassifyInformation">
-        select c.id,
-               c.name,
-               c.annotation,
-               c.creation_time,
-               c.modify_time,
-               count(ac.article_id) as article_count,
-               u.username,
-               u.nickname
-        from article_classify ac
-                 left join
-             (classify c,
-                 user_classify uc, `user` u)
-             on
-                     ac.classify_id = c.id
-                     and
-                     uc.classify_id = c.id
-                     and
-                     u.id = uc.user_id
+        select
+            c.id,
+            c.name,
+            c.annotation,
+            c.creation_time,
+            c.modify_time,
+            count(ac.article_id) as article_count
+        from
+            classify c
+                left join
+            article_classify ac
+            on
+                ac.classify_id = c.id
 
         group by c.id,
                  c.name,
                  c.annotation,
                  c.creation_time,
-                 c.modify_time,
-                 u.username,
-                 u.nickname
+                 c.modify_time
         order by article_count desc
+        limit #{li/**/mit}
     </select>
     <select id="selectOneByArticleID" resultType="com.synergism.blog.core.classify.entity.Classify">
         select c.id,
@@ -42,36 +36,6 @@
              classify c
              on ac.classify_id = c.id
         where ac.article_id = #{articleID}
-    </select>
-    <select id="selectClassifyInformationListByUsername"
-            resultType="com.synergism.blog.core.classify.entity.ClassifyInformation">
-        select c.id,
-               c.name,
-               c.annotation,
-               c.creation_time,
-               c.modify_time,
-               count(ac.article_id) as article_count,
-               u.username,
-               u.nickname
-        from article_classify ac
-                 left join
-             (classify c,
-                 user_classify uc, `user` u)
-             on
-                     ac.classify_id = c.id
-                     and
-                     uc.classify_id = c.id
-                     and
-                     u.id = uc.user_id
-        where u.username = #{username}
-        group by c.id,
-                 c.name,
-                 c.annotation,
-                 c.creation_time,
-                 c.modify_time,
-                 u.username,
-                 u.nickname
-        order by article_count desc
     </select>
     <select id="selectUsedListByUsername" resultType="com.synergism.blog.core.classify.entity.Classify">
         select c.id,
