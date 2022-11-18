@@ -29,7 +29,7 @@ public class RepositoryServiceImpl extends ServiceImpl<RepositoryMapper, Reposit
     @Override
     @Transactional
     public void save(long userID, String username) {
-        Repository repository = new Repository(username.substring(0, username.indexOf('@')), 1024L);
+        Repository repository = new Repository(username, 1024L);
         mapper.insert(repository);
         mapper.bundle(repository.getId(), userID);
     }
