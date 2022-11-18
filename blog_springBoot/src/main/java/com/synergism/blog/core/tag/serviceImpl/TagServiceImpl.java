@@ -30,14 +30,8 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     }
 
     @Override
-    public List<TagInformation> getAllTagInformationList() {
-        List<TagInformation> result = mapper.selectAllTagInformationList();
-        return result.size()==0?null:result;
-    }
-
-    @Override
-    public List<TagInformation> getTagInformationListByUsername(String username) {
-        List<TagInformation> result = mapper.selectTagInformationListByUsername(username);
+    public List<TagInformation> getTagInformationList(int limit) {
+        List<TagInformation> result = mapper.selectTagInformationList(limit);
         return result.size()==0?null:result;
     }
 

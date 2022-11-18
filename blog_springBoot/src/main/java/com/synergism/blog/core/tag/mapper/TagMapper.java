@@ -19,17 +19,10 @@ import java.util.List;
 public interface TagMapper extends BaseMapper<Tag> {
 
     /**
-     * 查询全部标签信息列表
+     * 查询标签信息列表
      * @return 标签信息列表
      */
-    List<TagInformation> selectAllTagInformationList();
-
-    /**
-     * 查询该用户下标签信息
-     * @param username 账号
-     * @return 标签信息列表
-     */
-    List<TagInformation> selectTagInformationListByUsername(String username);
+    List<TagInformation> selectTagInformationList(int limit);
 
     /**
      * 查询该文章下标签信息

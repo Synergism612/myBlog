@@ -14,8 +14,4 @@ public class TagInformation extends Tag {
 
     //标签下文章数
     private int articleCount;
-    //标签所属账号
-    private String username;
-    //标签所属账号昵称
-    private String nickname;
 }

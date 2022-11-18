@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.tag.mapper.TagMapper">
-    <select id="selectAllTagInformationList" resultType="com.synergism.blog.core.tag.entity.TagInformation">
+    <select id="selectTagInformationList" resultType="com.synergism.blog.core.tag.entity.TagInformation">
         select t.id,
                t.name,
                t.annotation,
                t.creation_time,
                t.modify_time,
-               count(atg.article_id) as article_count,
-               u.username,
-               u.nickname
-        from article_tag atg
-                 join(tag t ,user_tag ut ,`user` u )
-                     on
-                             atg.tag_id = t.id and
-                             ut.tag_id = t.id and
-                             u.id = ut.user_id
+               count(atg.article_id) as article_count
+        from tag t
+                 left join
+             article_tag atg
+             on atg.tag_id = t.id
         group by t.id,
                  t.name,
                  t.annotation,
                  t.creation_time,
-                 t.modify_time,
-                 u.username,
-                 u.nickname
+                 t.modify_time
         order by article_count desc
+            limit #{limit}
     </select>
     <select id="selectListByArticleID" resultType="com.synergism.blog.core.tag.entity.Tag">
         select t.id,
@@ -36,32 +31,6 @@
              tag t
              on atg.tag_id = t.id
         where atg.article_id = #{articleID}
-    </select>
-    <select id="selectTagInformationListByUsername"
-            resultType="com.synergism.blog.core.tag.entity.TagInformation">
-        select t.id,
-               t.name,
-               t.annotation,
-               t.creation_time,
-               t.modify_time,
-               count(atg.article_id) as article_count,
-               u.username,
-               u.nickname
-        from article_tag atg
-                 join(tag t ,user_tag ut ,`user` u )
-                     on
-                             atg.tag_id = t.id and
-                             ut.tag_id = t.id and
-                             u.id = ut.user_id
-        where u.username = #{username}
-        group by t.id,
-                 t.name,
-                 t.annotation,
-                 t.creation_time,
-                 t.modify_time,
-                 u.username,
-                 u.nickname
-        order by article_count desc
     </select>
     <select id="selectUsedListByUsername" resultType="com.synergism.blog.core.tag.entity.Tag">
         select t.id,

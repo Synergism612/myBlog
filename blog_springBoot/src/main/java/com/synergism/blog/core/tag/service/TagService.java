@@ -17,17 +17,10 @@ import java.util.List;
 public interface TagService extends IService<Tag> {
 
     /**
-     * 获取全部标签信息列表
+     * 获取标签信息列表
      * @return 标签信息列表
      */
-    List<TagInformation> getAllTagInformationList();
-
-    /**
-     * 通过用户名筛选标签列表
-     * @param username 用户名
-     * @return 标签列表
-     */
-    List<TagInformation> getTagInformationListByUsername(String username);
+    List<TagInformation> getTagInformationList(int limit);
 
     /**
      * 通过文章id获取标签列表
