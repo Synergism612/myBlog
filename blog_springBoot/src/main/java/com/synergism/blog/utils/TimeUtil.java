@@ -44,7 +44,8 @@ public class TimeUtil {
      * @return 时间差秒数
      */
     public static int timeDifference(Date start,Date end){
-        return ((int)(end.getTime()-start.getTime()))/1000;
+        int result = ((int)(end.getTime()-start.getTime()))/1000;
+        return result<0?-result:result;
     }
 
 
