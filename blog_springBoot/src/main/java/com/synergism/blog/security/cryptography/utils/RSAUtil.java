@@ -16,8 +16,6 @@ import java.util.Map;
 
 import javax.crypto.Cipher;
 
-import static com.synergism.blog.utils.StringUtil.asString;
-
 /**
  * <p>
  * RSA公钥/私钥/签名工具包
@@ -48,13 +46,13 @@ public class RSAUtil {
     /**
      * 获取公钥的key
      */
-    private static final String PUBLIC_KEY = asString(RSAEnum.PUBLIC_KEY);
+    private static final String PUBLIC_KEY = RSAEnum.PUBLIC_KEY.toString();
 
 
     /**
      * 获取私钥的key
      */
-    private static final String PRIVATE_KEY = asString(RSAEnum.PRIVATE_KEY);
+    private static final String PRIVATE_KEY = RSAEnum.PRIVATE_KEY.toString();
 
 
     /**

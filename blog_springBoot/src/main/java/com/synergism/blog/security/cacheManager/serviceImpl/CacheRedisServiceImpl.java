@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import static com.synergism.blog.utils.StringUtil.asString;
+import java.util.stream.Collectors;
 
 @Service
 public class CacheRedisServiceImpl implements CacheRedisService {
@@ -23,8 +23,8 @@ public class CacheRedisServiceImpl implements CacheRedisService {
     }
 
     @Override
-    public String put(Object value,long time) {
-        String key = asString(new SnowflakeIdWorker(0, 0).nextId());
+    public String put(Object value, long time) {
+        String key = String.valueOf(new SnowflakeIdWorker(0, 0).nextId());
         try {
             if (time > 0) {
                 redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
@@ -52,17 +52,35 @@ public class CacheRedisServiceImpl implements CacheRedisService {
 
     @Override
     public Object update(String key, Object value, long time) {
-        Object result = this.get(key);
-        try {
-            if (time > 0) {
-                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
-            } else {
-                redisTemplate.opsForValue().set(key, value);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (key.isEmpty()) {
             return "";
         }
+        Object result = this.get(key);
+        if (time > 0) {
+            redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+        } else {
+            redisTemplate.opsForValue().set(key, value);
+        }
+        return result;
+    }
+
+    @Override
+    public Object getHash(String key, String hashKey) {
+        return key == null ? null : redisTemplate.opsForHash().get(key, hashKey);
+    }
+
+    @Override
+    public List<String> getHashKey(String key) {
+        return key == null ? null : redisTemplate.opsForHash().keys(key).stream().map(Object::toString).collect(Collectors.toList());
+    }
+
+    @Override
+    public Object putHash(String key, String hashKey, Object hashValue) {
+        if (key.isEmpty()) {
+            return "";
+        }
+        Object result = this.getHash(key,hashKey);
+            redisTemplate.opsForHash().put(key,hashKey,hashValue);
         return result;
     }
 }

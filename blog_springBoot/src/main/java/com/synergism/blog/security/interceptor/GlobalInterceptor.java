@@ -6,7 +6,6 @@ import com.synergism.blog.security.keyManagement.service.KeyManagementService;
 import com.synergism.blog.security.sessionManagement.entity.Session;
 import com.synergism.blog.security.sessionManagement.service.SessionService;
 import com.synergism.blog.security.utils.URLUtil;
-import com.synergism.blog.utils.TypeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -52,42 +51,46 @@ public class GlobalInterceptor implements HandlerInterceptor {
         String EVIL_EYE = request.getHeader(KeyManagementService.EVIL_EYE());
 
         //检查是否需要跳过
-        if (URLUtil.checkURLIfToError(uri) || method.equals("OPTIONS")) {return true;}
+        if (URLUtil.checkURLIfToError(uri) || method.equals("OPTIONS")) {
+            return true;
+        }
 
-        //检查密钥是否为空
-        if (ANOTHER_WORLD_KEY.isEmpty()) {
-            if (URLUtil.checkURLIfToPublic(uri) && EVIL_EYE.isEmpty()) {
-                //分配新的会话
-                sessionService.newSession(sessionID, response);
-                return true;
-            }
-        } else {
+        if (!ANOTHER_WORLD_KEY.isEmpty() && !EVIL_EYE.isEmpty()) {
+            //获取权限
+            Session session = sessionService.getSession(EVIL_EYE);
             if (!cryptographyService.filterVerify(ANOTHER_WORLD_KEY)) {
+                sessionService.remove(session.getLoginKey());
+                sessionService.remove(EVIL_EYE);
                 throw new KeyFailureException("或许你可以刷新一下？");
             }
-        }
-
-        //检查权限ID是否为空
-        if (EVIL_EYE.isEmpty()) {return false;}
-
-        //获取权限
-        Session session = sessionService.getSession(EVIL_EYE);
-        if (TypeUtil.isNull(session)) {
-            //为null则重新分配一个新的会话
-            session = sessionService.newSession(request, response);
-        }
-        if (session.getUserKey().isEmpty())
-            //用户密钥为空则写入用户密钥
-            session.setUserKey(cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY));
-        if (!session.getSessionID().equals(sessionID)) {
-            //处理sessionID不同的情况，使用最新的sessionID
-            session.setSessionID(sessionID);
-        }
-        //鉴权
+            if (session == null) {
+                //为null则重新分配一个新的会话
+                session = sessionService.newSession(request, response);
+            }
+            if (session.getUserKey().isEmpty())
+                //用户密钥为空则写入用户密钥
+                session.setUserKey(cryptographyService.RSADecrypt(ANOTHER_WORLD_KEY));
+            if (!session.getSessionID().equals(sessionID)) {
+                //处理sessionID不同的情况，使用最新的sessionID
+                session.setSessionID(sessionID);
+            }
+            //鉴权
 //            URLUtil.checkURLIsPower(uri, session.getPower());
-        //更新最新的会话信息
-        sessionService.update(EVIL_EYE, session, response);
-        return true;
+            //更新最新的会话信息
+            sessionService.update(EVIL_EYE, session, response);
+            return true;
+        }
+
+        //检查密钥是否为空
+        if (ANOTHER_WORLD_KEY.isEmpty()
+                && EVIL_EYE.isEmpty()
+                && URLUtil.checkURLIfToPublic(uri)
+        ) {
+            //分配新的会话
+            sessionService.newSession(sessionID, response);
+            return true;
+        }
+        return false;
     }
 
     /**

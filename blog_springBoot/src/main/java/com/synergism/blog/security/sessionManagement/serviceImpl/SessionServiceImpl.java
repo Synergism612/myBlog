@@ -108,7 +108,7 @@ public class SessionServiceImpl implements SessionService {
         String EVIL_EYE = this.getEVIL_EYE(request);
         Session session = this.getSession(EVIL_EYE);
         //更新数据
-        session.setLoginID(loginID);
+        session.setLoginKey(loginID);
         this.update(EVIL_EYE, session, response);
     }
 
@@ -128,19 +128,19 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public boolean checkSessionExistLoginID(HttpServletRequest request) {
         Session session = this.getSession(request);
-        return !session.getLoginID().isEmpty();
+        return !session.getLoginKey().isEmpty();
     }
 
     @Override
     public boolean removeLoginIDElement(HttpServletRequest request, String loginID, HttpServletResponse response) {
         String EVIL_EYE = this.getEVIL_EYE(request);
         Session session = this.getSession(EVIL_EYE);
-        if (session.getLoginID().isEmpty()) {
+        if (session.getLoginKey().isEmpty()) {
             return true;
         }
-        if (loginID.equals(session.getLoginID())) {
-            cacheRedisService.remove(session.getLoginID());
-            session.setLoginID("");
+        if (loginID.equals(session.getLoginKey())) {
+            cacheRedisService.remove(session.getLoginKey());
+            session.setLoginKey("");
             this.update(EVIL_EYE, session, response);
             return true;
         } else

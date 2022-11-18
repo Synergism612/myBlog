@@ -15,10 +15,10 @@ import java.io.Serializable;
 public class Session implements Serializable {
     //sessionID
     private String sessionID;
-    //用户密钥
+    //用户对称密钥
     private String userKey;
-    //登录用户对应主键id
-    private String loginID;
+    //登录后存储用户信息密钥
+    private String loginKey;
     //权限
     private String[] power;
 
@@ -32,20 +32,20 @@ public class Session implements Serializable {
      * 构造函数
      * @param sessionID sessionID
      * @param userKey 用户密钥
-     * @param loginID 账号
+     * @param loginKey 账号
      * @param power 权限
      */
-    public Session(String sessionID, String userKey, String loginID, String[] power) {
+    public Session(String sessionID, String userKey, String loginKey, String[] power) {
         //判空
         if (StringUtil.isEmpty(sessionID)) throw new PermissionFailureException("存在空值");
         this.sessionID = sessionID;
         //若没有登录，给空字符串
-        if (StringUtil.isEmpty(userKey, loginID)) {
+        if (StringUtil.isEmpty(userKey, loginKey)) {
             this.userKey = "";
-            this.loginID = "";
+            this.loginKey = "";
         } else {
             this.userKey = userKey;
-            this.loginID = loginID;
+            this.loginKey = loginKey;
         }
         this.power = power;
     }
@@ -59,7 +59,7 @@ public class Session implements Serializable {
         return "User{" +
                 "sessionID='" + sessionID + '\'' +
                 ", userKey='" + userKey + '\'' +
-                ", loginID='" + loginID + '\'' +
+                ", loginID='" + loginKey + '\'' +
                 '}';
     }
 }
