@@ -7,7 +7,14 @@ import StringUtil from "src/utils/StringUtil";
 import Message from "src/utils/MessageUtil";
 
 //请求根路径
-const baseURL = "http://localhost:8088";
+export const baseURL = "http://localhost:8088";
+
+export const getHeaders = (): Headers => {
+  const headers = new Headers();
+  headers.set("ANOTHER_WORLD_KEY", store.state.ANOTHER_WORLD_KEY || "");
+  headers.set("EVIL_EYE", store.state.EVIL_EYE || "");
+  return headers;
+};
 
 // const publicKeyURL = "/api/public/key";
 class Axios {
