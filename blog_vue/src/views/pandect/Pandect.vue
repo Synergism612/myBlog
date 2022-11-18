@@ -46,64 +46,74 @@
                 </el-col>
                 <!-- 右侧 -->
                 <el-col :xs="0" :sm="6" :md="6" :span="6">
-                  <div class="right">
-                    <el-col :span="24" class="child frame">
-                      <div class="center">搜索</div>
-                      <el-row class="search">
-                        <el-col :span="20">
-                          <el-input
-                            v-model="keyword"
-                            placeholder="请输入搜索内容"
-                            @keyup.enter="search()"
-                          />
-                        </el-col>
-                        <el-col :span="3" :offset="1">
-                          <span class="click" @click="search">
-                            <font-awesome-icon
-                              :icon="['fas', 'magnifying-glass']"
+                  <transition
+                    appear
+                    appear-active-class="animate__animated animate__backInUp"
+                  >
+                    <div class="right">
+                      <el-col :span="24" class="child frame">
+                        <div class="center">搜索</div>
+                        <el-row class="search">
+                          <el-col :span="20">
+                            <el-input
+                              v-model="keyword"
+                              placeholder="请输入搜索内容"
+                              @keyup.enter="search()"
                             />
-                          </span>
-                        </el-col>
-                      </el-row>
-                    </el-col>
-                    <el-col :span="24" class="child frame">
-                      <div class="center">分类</div>
-                      <el-row :gutter="5" class="elements">
-                        <el-col
-                          v-for="classify in classifyList"
-                          :key="classify.id"
-                          :span="12"
-                        >
-                          <div
-                            :class="
-                              (classifyIDList.indexOf(classify.id) != -1
-                                ? 'down'
-                                : '') + ' element'
-                            "
-                            @click="classifyClick(classify.id)"
+                          </el-col>
+                          <el-col :span="3" :offset="1">
+                            <span class="click" @click="search">
+                              <font-awesome-icon
+                                :icon="['fas', 'magnifying-glass']"
+                              />
+                            </span>
+                          </el-col>
+                        </el-row>
+                      </el-col>
+                      <el-col :span="24" class="child frame">
+                        <div class="center">分类</div>
+                        <el-row :gutter="5" class="elements">
+                          <el-col
+                            v-for="classify in classifyList"
+                            :key="classify.id"
+                            :span="12"
                           >
-                            {{ classify.name }}
-                          </div>
-                        </el-col>
-                      </el-row>
-                    </el-col>
-                    <el-col :span="24" class="child frame">
-                      <div class="center">标签</div>
-                      <el-row :gutter="5" class="elements">
-                        <el-col v-for="tag in tagList" :key="tag.id" :span="12">
-                          <div
-                            :class="
-                              (tagIDList.indexOf(tag.id) != -1 ? 'down' : '') +
-                              ' element'
-                            "
-                            @click="tagClick(tag.id)"
+                            <div
+                              :class="
+                                (classifyIDList.indexOf(classify.id) != -1
+                                  ? 'down'
+                                  : '') + ' element'
+                              "
+                              @click="classifyClick(classify.id)"
+                            >
+                              {{ classify.name }}
+                            </div>
+                          </el-col>
+                        </el-row>
+                      </el-col>
+                      <el-col :span="24" class="child frame">
+                        <div class="center">标签</div>
+                        <el-row :gutter="5" class="elements">
+                          <el-col
+                            v-for="tag in tagList"
+                            :key="tag.id"
+                            :span="12"
                           >
-                            {{ tag.name }}
-                          </div>
-                        </el-col>
-                      </el-row>
-                    </el-col>
-                  </div>
+                            <div
+                              :class="
+                                (tagIDList.indexOf(tag.id) != -1
+                                  ? 'down'
+                                  : '') + ' element'
+                              "
+                              @click="tagClick(tag.id)"
+                            >
+                              {{ tag.name }}
+                            </div>
+                          </el-col>
+                        </el-row>
+                      </el-col>
+                    </div>
+                  </transition>
                 </el-col>
               </el-row>
             </el-col>
@@ -111,7 +121,7 @@
         </el-main>
       </el-container>
     </div>
-    <Toolboxe/>
+    <Toolboxe />
   </div>
 </template>
 <script lang="ts">

@@ -27,139 +27,136 @@
           <!-- 主要内容 -->
           <el-row justify="space-around">
             <!-- 主体框架 -->
-            <el-col :xs="24" :sm="24" :md="24" :lg="20" class="frame">
-              <div class="from">
-                <el-form
-                  label-position="top"
-                  :model="articleForm"
-                  :rules="rules"
-                  ref="formRef"
-                  :hide-required-asterisk="true"
-                >
-                  <el-row :gutter="20">
-                    <el-col :span="6">
-                      <el-form-item label="封面" prop="icon">
-                        <el-upload
-                          class="avatar-uploader"
-                          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-                          :show-file-list="false"
-                          :on-success="handleAvatarSuccess"
-                          :before-upload="beforeAvatarUpload"
-                        >
-                          <img
-                            v-if="articleForm.icon"
+            <el-col :xs="24" :sm="24" :md="24" :lg="20">
+              <transition
+                appear
+                appear-active-class="animate__animated animate__zoomIn"
+              >
+                <div class="from frame">
+                  <el-form
+                    label-position="top"
+                    :model="articleForm"
+                    :rules="rules"
+                    ref="formRef"
+                    :hide-required-asterisk="true"
+                  >
+                    <el-row :gutter="20">
+                      <el-col :span="6">
+                        <el-form-item label="封面" prop="icon">
+                          <el-avatar
+                            class="icon"
+                            shape="square"
+                            fit="cover"
                             :src="articleForm.icon"
-                            class="avatar"
                           />
-                          <font-awesome-icon :icon="['fas', 'plus']" />
-                        </el-upload>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                      <el-form-item label="标题" prop="title">
-                        <el-input
-                          clearable
-                          v-model="articleForm.title"
-                          placeholder="请输入标题"
-                        />
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                      <el-form-item
-                        label="分类"
-                        prop="classifyID"
-                        :disabled="isUpdate"
-                      >
-                        <el-select
-                          v-model="articleForm.classifyID"
-                          placeholder="选择一个分类"
-                          filterable
-                          ref="classifySelect"
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="4">
+                        <el-form-item label="标题" prop="title">
+                          <el-input
+                            clearable
+                            v-model="articleForm.title"
+                            placeholder="请输入标题"
+                          />
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="4">
+                        <el-form-item
+                          label="分类"
+                          prop="classifyID"
+                          :disabled="isUpdate"
                         >
-                          <el-option
-                            v-for="element in classifyInformationList"
-                            :key="element.id"
-                            :label="element.name"
-                            :value="element.id"
-                          />
-                        </el-select>
-                        <div class="button" @click="saveClassifyShow = true">
-                          <span class="click">
-                            <font-awesome-icon :icon="['fas', 'plus']" />
-                            新增分类
-                          </span>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                      <el-form-item
-                        label="标签"
-                        prop="tagIDList"
-                        :disabled="isUpdate"
-                      >
-                        <el-select
-                          v-model="articleForm.tagIDList"
-                          placeholder="选择至少一个标签"
-                          multiple
-                          filterable
+                          <el-select
+                            v-model="articleForm.classifyID"
+                            placeholder="选择一个分类"
+                            filterable
+                            ref="classifySelect"
+                          >
+                            <el-option
+                              v-for="element in classifyInformationList"
+                              :key="element.id"
+                              :label="element.name"
+                              :value="element.id"
+                            />
+                          </el-select>
+                          <div class="button" @click="saveClassifyShow = true">
+                            <span class="click">
+                              <font-awesome-icon :icon="['fas', 'plus']" />
+                              新增分类
+                            </span>
+                          </div>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="6">
+                        <el-form-item
+                          label="标签"
+                          prop="tagIDList"
+                          :disabled="isUpdate"
                         >
-                          <el-option
-                            v-for="element in tagInformationList"
-                            :key="element.id"
-                            :label="element.name"
-                            :value="element.id"
-                          />
-                        </el-select>
-                        <div class="button" @click="saveTagShow = true">
-                          <span class="click">
-                            <font-awesome-icon :icon="['fas', 'plus']" />
-                            新增标签
-                          </span>
-                        </div>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                      <el-form-item label="隐私设置" prop="ifPrivate">
-                        <el-radio-group v-model="articleForm.ifPrivate">
-                          <el-radio :label="0">公开</el-radio>
-                          <el-radio :label="1">私密</el-radio>
-                        </el-radio-group>
-                      </el-form-item>
-                    </el-col>
+                          <el-select
+                            v-model="articleForm.tagIDList"
+                            placeholder="选择至少一个标签"
+                            multiple
+                            filterable
+                          >
+                            <el-option
+                              v-for="element in tagInformationList"
+                              :key="element.id"
+                              :label="element.name"
+                              :value="element.id"
+                            />
+                          </el-select>
+                          <div class="button" @click="saveTagShow = true">
+                            <span class="click">
+                              <font-awesome-icon :icon="['fas', 'plus']" />
+                              新增标签
+                            </span>
+                          </div>
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="4">
+                        <el-form-item label="隐私设置" prop="ifPrivate">
+                          <el-radio-group v-model="articleForm.ifPrivate">
+                            <el-radio :label="0">公开</el-radio>
+                            <el-radio :label="1">私密</el-radio>
+                          </el-radio-group>
+                        </el-form-item>
+                      </el-col>
 
-                    <el-col :span="20">
-                      <el-form-item label="摘要" prop="synopsis">
-                        <el-input
-                          v-model="articleForm.synopsis"
-                          :rows="2"
-                          type="textarea"
-                          autosize
-                          placeholder="为空时将会自动截取正文前20个字"
+                      <el-col :span="20">
+                        <el-form-item label="摘要" prop="synopsis">
+                          <el-input
+                            v-model="articleForm.synopsis"
+                            :rows="2"
+                            type="textarea"
+                            autosize
+                            placeholder="为空时将会自动截取正文前20个字"
+                          />
+                        </el-form-item>
+                      </el-col>
+                      <el-col :span="4">
+                        <div class="save">
+                          <span v-if="!isUpdate" @click="save" class="click">
+                            提交
+                          </span>
+                          <span v-if="isUpdate" @click="update" class="click">
+                            保存
+                          </span>
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-form-item label="正文" prop="body">
+                      <div class="mdEditor">
+                        <MdEditor
+                          v-model="articleForm.body"
+                          :showCodeRowNumber="true"
+                          :toolbars="toolbars"
                         />
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                      <div class="save">
-                        <span v-if="!isUpdate" @click="save" class="click">
-                          提交
-                        </span>
-                        <span v-if="isUpdate" @click="update" class="click">
-                          保存
-                        </span>
                       </div>
-                    </el-col>
-                  </el-row>
-                  <el-form-item label="正文" prop="body">
-                    <div class="mdEditor">
-                      <MdEditor
-                        v-model="articleForm.body"
-                        :showCodeRowNumber="true"
-                        :toolbars="toolbars"
-                      />
-                    </div>
-                  </el-form-item>
-                </el-form>
-              </div>
+                    </el-form-item>
+                  </el-form>
+                </div>
+              </transition>
             </el-col>
           </el-row>
         </el-main>
@@ -244,17 +241,18 @@
         </el-col>
       </el-row>
     </el-dialog>
+    <Upload :upload-show="true"></Upload>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
 import Write from "./Write";
 import Menu from "src/components/menu/Menu.vue";
+import Upload from "src/components/upload/Upload.vue";
 import MdEditor from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
 import { api } from "src/api/api";
 import Message from "src/utils/MessageUtil";
-import { UploadProps } from "element-plus";
 import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
@@ -375,26 +373,6 @@ export default defineComponent({
           Message.warningMessage("校验未通过");
         });
     };
-
-    const handleAvatarSuccess: UploadProps["onSuccess"] = (
-      response,
-      uploadFile
-    ): void => {
-      viewData.articleForm.icon = URL.createObjectURL(uploadFile.raw!);
-    };
-
-    const beforeAvatarUpload: UploadProps["beforeUpload"] = (
-      rawFile
-    ): boolean => {
-      if (rawFile.type !== "image/jpeg/png") {
-        Message.warningMessage("只能上传图片类型");
-        return false;
-      } else if (rawFile.size / 1024 / 1024 > 5) {
-        Message.warningMessage("请勿上传超过5MB的图片");
-        return false;
-      }
-      return true;
-    };
     const classifyFormRef = ref();
     const tagFormRef = ref();
 
@@ -461,8 +439,6 @@ export default defineComponent({
       ...toRefs(viewData),
       save,
       update,
-      handleAvatarSuccess,
-      beforeAvatarUpload,
       formRef,
       rules,
       classifyFormRef,
@@ -472,7 +448,7 @@ export default defineComponent({
       saveTag,
     };
   },
-  components: { Menu, MdEditor },
+  components: { Menu, MdEditor, Upload },
 });
 </script>
 <style lang="less">

@@ -26,6 +26,8 @@ export default class Content {
 
   isLogin: boolean;
 
+  likeState: boolean;
+
   constructor() {
     this.article = new Article();
     this.author = new Author();
@@ -44,6 +46,7 @@ export default class Content {
     this.collectionShow = false;
 
     this.isLogin = store.getters.getIsLogin;
+    this.likeState = false;
   }
 
   public init(articleID: number): void {
@@ -80,11 +83,25 @@ export default class Content {
       });
     };
 
+    const likeArticle = (): void => {
+      api.getContentArticleLike(articleID).then(({ data }): void => {
+        this.likeState = data;
+      });
+    };
+
     article();
     author();
     classify();
     tagList();
     classifyNominate();
     tagNominate();
+
+    if (this.isLogin) {
+      likeArticle();
+    }
+  }
+
+  public updateArticleLike(): void {
+    api.updateContentArticleLike(this.article.id, this.likeState);
   }
 }

@@ -32,68 +32,77 @@
               <el-row :gutter="20" justify="space-around">
                 <!-- 左侧 -->
                 <el-col :xs="24" :sm="18" :md="18" :span="18">
-                  <div class="left">
-                    <el-timeline>
-                      <el-timeline-item
-                        v-for="archive in archiveList"
-                        :key="archive.month"
-                        :timestamp="archive.month"
-                        placement="top"
-                      >
-                        <el-timeline :id="'archive_' + archive.month">
-                          <el-timeline-item
-                            class="article"
-                            v-for="article in archive.articleList"
-                            :key="article.id"
-                            :timestamp="article.creationTime"
-                            placement="top"
-                            @click="toContent(article.id)"
-                          >
-                            <div class="frame">
-                              <span>{{ article.title }}</span>
-                              <p>{{ article.synopsis }}</p>
-                            </div>
-                          </el-timeline-item>
-                          <el-timeline-item
-                            timestamp="本月没有更多了"
-                            placement="top"
-                          />
-                        </el-timeline>
-                      </el-timeline-item>
-                      <el-timeline-item
-                        timestamp="没有更多了"
-                        placement="top"
-                      />
-                    </el-timeline>
-                  </div>
+                  <transition
+                    appear
+                    appear-active-class="animate__animated animate__backInUp"
+                  >
+                    <div class="left">
+                      <el-timeline>
+                        <el-timeline-item
+                          v-for="archive in archiveList"
+                          :key="archive.month"
+                          :timestamp="archive.month"
+                          placement="top"
+                        >
+                          <el-timeline :id="'archive_' + archive.month">
+                            <el-timeline-item
+                              class="article"
+                              v-for="article in archive.articleList"
+                              :key="article.id"
+                              :timestamp="article.creationTime"
+                              placement="top"
+                            >
+                              <div class="frame" @click="toContent(article.id)">
+                                <span>{{ article.title }}</span>
+                                <p>{{ article.synopsis }}</p>
+                              </div>
+                            </el-timeline-item>
+                            <el-timeline-item
+                              timestamp="本月没有更多了"
+                              placement="top"
+                            />
+                          </el-timeline>
+                        </el-timeline-item>
+                        <el-timeline-item
+                          timestamp="没有更多了"
+                          placement="top"
+                        />
+                      </el-timeline>
+                    </div>
+                  </transition>
                 </el-col>
                 <!-- 右侧 -->
                 <el-col :xs="0" :sm="6" :md="6" :span="6">
-                  <div class="right">
-                    <span style="margin-right;: 0.5em"> 只显示我的文章 </span>
-                    <el-switch
-                      v-model="isMy"
-                      class="ml-2"
-                      @change="change"
-                      style="--el-switch-on-color: #3fc4c2"
-                    />
-                    <el-timeline>
-                      <el-timeline-item
-                        v-for="month in monthList"
-                        :key="month"
-                        placement="top"
-                        center
-                      >
-                        <span @click="toDate(month)" class="click">{{
-                          month
-                        }}</span>
-                      </el-timeline-item>
-                      <el-timeline-item
-                        timestamp="没有更多了"
-                        placement="top"
+                  <transition
+                    appear
+                    appear-active-class="animate__animated animate__backInUp"
+                  >
+                    <div class="right">
+                      <span style="margin-right;: 0.5em"> 只显示我的文章 </span>
+                      <el-switch
+                        v-model="isMy"
+                        class="ml-2"
+                        @change="change"
+                        style="--el-switch-on-color: #3fc4c2"
                       />
-                    </el-timeline>
-                  </div>
+                      <el-timeline>
+                        <el-timeline-item
+                          v-for="month in monthList"
+                          :key="month"
+                          placement="top"
+                          center
+                        >
+                          <span @click="toDate(month)" class="click">{{
+                            month
+                          }}</span>
+                        </el-timeline-item>
+                        <el-timeline-item
+                          timestamp="没有更多了"
+                          placement="top"
+                        />
+                      </el-timeline>
+                    </div>
+                  </transition>
                 </el-col>
               </el-row>
             </el-col>

@@ -69,14 +69,19 @@
                     </span>
                   </el-col>
                   <el-col :span="24">
-                    <span class="click function">
-                      <font-awesome-icon :icon="['fas', 'thumbs-up']" />
-                      点赞
-                      {{ article.likeCount }}
+                    <span class="click function" @click="likeArticle">
+                      <span v-if="likeState">
+                        <font-awesome-icon :icon="['fas', 'thumbs-up']" />
+                        取消点赞
+                      </span>
+                      <span v-if="!likeState">
+                        <font-awesome-icon :icon="['far', 'thumbs-up']" />
+                        点赞
+                      </span>
                     </span>
                     <span class="click function" @click="myfavorite(true)">
                       <font-awesome-icon :icon="['fas', 'heart']" />
-                      添加进收藏
+                      添加至收藏夹
                     </span>
                   </el-col>
                 </el-row>
@@ -160,7 +165,7 @@
                       <span>粉丝数:{{ author.fansCount }}</span>
                       <br />
                       <span>
-                        <span class="click">关注他</span>
+                        <text class="click">关注他</text>
                       </span>
                     </div>
                   </el-col>
@@ -343,6 +348,11 @@ export default defineComponent({
       }
     };
 
+    const likeArticle = (): void => {
+      viewData.likeState = !viewData.likeState;
+      viewData.updateArticleLike();
+    };
+
     onMounted((): void => {
       viewData.init(id);
     });
@@ -359,6 +369,7 @@ export default defineComponent({
       href,
       classifyClick,
       tagClick,
+      likeArticle,
     };
   },
   components: { Menu, MdEditor, MdCatalog, Forum, Toolboxe, Enshrine },

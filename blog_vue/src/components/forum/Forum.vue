@@ -59,7 +59,16 @@
           <span class="click">{{ comment.nickname }}</span>
           <p class="body">{{ comment.body }}</p>
           <span>{{ comment.creationTime }}</span>
-          <span class="click">点赞{{ comment.likeCount }}</span>
+          <span class="click function" @click="likeComment(comment.id)">
+            <span v-if="likeCommentIDList.indexOf(comment.id) !== -1">
+              <font-awesome-icon :icon="['fas', 'thumbs-up']" />
+              取消点赞
+            </span>
+            <span v-if="likeCommentIDList.indexOf(comment.id) === -1">
+              <font-awesome-icon :icon="['far', 'thumbs-up']" />
+              点赞
+            </span>
+          </span>
           <span>评论{{ comment.childCount }}</span>
           <span
             class="click"
@@ -88,7 +97,16 @@
                 </span>
                 <p class="body">{{ child.body }}</p>
                 <span>{{ child.creationTime }}</span>
-                <span class="click">点赞{{ child.likeCount }}</span>
+                <span class="click function" @click="likeComment(child.id)">
+                  <span v-if="likeCommentIDList.indexOf(child.id) !== -1">
+                    <font-awesome-icon :icon="['fas', 'thumbs-up']" />
+                    取消点赞
+                  </span>
+                  <span v-if="likeCommentIDList.indexOf(child.id) === -1">
+                    <font-awesome-icon :icon="['far', 'thumbs-up']" />
+                    点赞
+                  </span>
+                </span>
                 <span
                   class="click"
                   @click="
@@ -201,6 +219,16 @@ export default defineComponent({
       viewData.parentID = -1;
     };
 
+    const likeComment = (commentID: number): void => {
+      const index = viewData.likeCommentIDList.indexOf(commentID);
+      if (index !== -1) {
+        viewData.likeCommentIDList.splice(index, 1);
+      } else {
+        viewData.likeCommentIDList.push(commentID);
+      }
+      viewData.updateCommentLike(commentID, index !== -1);
+    };
+
     onMounted((): void => {
       viewData.init();
     });
@@ -213,6 +241,7 @@ export default defineComponent({
       cancel,
       rules,
       formRef,
+      likeComment,
     };
   },
   components: {},

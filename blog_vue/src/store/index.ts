@@ -15,7 +15,9 @@ export const store = createStore({
     KEY: StoreUtil.fetch("KEY") || "",
     EVIL_EYE: StoreUtil.fetch("EVIL_EYE") || "",
     loginID: StoreUtil.fetch("loginID") || "",
-    userInfo: JSON.parse(StoreUtil.fetch("userInfo") || "{}"),
+    userInfo:
+      JSON.parse(StoreUtil.fetch("userInfo") || "null") ||
+      new UserInformation(),
   },
   //同步函数
   mutations: {

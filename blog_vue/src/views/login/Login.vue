@@ -2,42 +2,44 @@
   <div id="login_background"></div>
   <div id="login_container">
     <Menu></Menu>
-    <div id="login_from" class="frame">
-      <p id="title">登录</p>
-      <el-form
-        id="login_form"
-        ref="loginFormRef"
-        label-position="top"
-        label-width="0px"
-        :model="LoginFrom"
-        :rules="rules"
-        style="max-width: 100%"
-        :hide-required-asterisk="true"
-      >
-        <el-form-item label="账号" prop="username">
-          <el-input
-            v-model="LoginFrom.username"
-            placeholder="请输入账号"
-            clearable
-          />
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input
-            v-model="LoginFrom.password"
-            type="password"
-            placeholder="请输入密码"
-            clearable
-          />
-        </el-form-item>
-        <el-form-item class="button_float">
-          <el-button link>忘记密码</el-button>
-          <el-button link @click="goRegister()">注册账号</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="login()">登录</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+    <transition appear appear-active-class="animate__animated animate__zoomIn">
+      <div id="login_from" class="frame">
+        <p id="title">登录</p>
+        <el-form
+          id="login_form"
+          ref="loginFormRef"
+          label-position="top"
+          label-width="0px"
+          :model="LoginFrom"
+          :rules="rules"
+          style="max-width: 100%"
+          :hide-required-asterisk="true"
+        >
+          <el-form-item label="账号" prop="username">
+            <el-input
+              v-model="LoginFrom.username"
+              placeholder="请输入账号"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input
+              v-model="LoginFrom.password"
+              type="password"
+              placeholder="请输入密码"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item class="button_float">
+            <el-button link>忘记密码</el-button>
+            <el-button link @click="goRegister()">注册账号</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="login()">登录</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </transition>
   </div>
 </template>
 

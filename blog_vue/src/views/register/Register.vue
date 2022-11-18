@@ -2,59 +2,61 @@
   <div id="register_background"></div>
   <div id="register_container">
     <Menu></Menu>
-    <div id="register_from" class="frame">
-      <p id="title">注册</p>
-      <el-form
-        id="register_form"
-        ref="registerFormRef"
-        label-position="top"
-        label-width="0px"
-        :model="registerFrom"
-        :rules="rules"
-        style="max-width: 100%"
-        :hide-required-asterisk="true"
-      >
-        <el-form-item label="邮箱" prop="username">
-          <el-input
-            v-model="registerFrom.username"
-            placeholder="请输入邮箱"
-            clearable
-          />
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input
-            v-model="registerFrom.password"
-            type="password"
-            placeholder="请输入密码"
-            clearable
-          />
-        </el-form-item>
-        <el-form-item label="确认密码" prop="passwordAgain">
-          <el-input
-            v-model="registerFrom.passwordAgain"
-            type="password"
-            placeholder="请确认密码"
-            clearable
-          />
-        </el-form-item>
-        <el-form-item label="验证码" prop="code" id="security_code">
-          <el-input
-            v-model="registerFrom.code"
-            placeholder="请输入验证码"
-            clearable
-          />
-          <el-button
-            type="string"
-            @click="getSecurityCode()"
-            :disabled="codeButton.disabled"
-            >{{ codeButton.text }}</el-button
-          >
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="register()">注册</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+    <transition appear appear-active-class="animate__animated animate__zoomIn">
+      <div id="register_from" class="frame">
+        <p id="title">注册</p>
+        <el-form
+          id="register_form"
+          ref="registerFormRef"
+          label-position="top"
+          label-width="0px"
+          :model="registerFrom"
+          :rules="rules"
+          style="max-width: 100%"
+          :hide-required-asterisk="true"
+        >
+          <el-form-item label="邮箱" prop="username">
+            <el-input
+              v-model="registerFrom.username"
+              placeholder="请输入邮箱"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input
+              v-model="registerFrom.password"
+              type="password"
+              placeholder="请输入密码"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item label="确认密码" prop="passwordAgain">
+            <el-input
+              v-model="registerFrom.passwordAgain"
+              type="password"
+              placeholder="请确认密码"
+              clearable
+            />
+          </el-form-item>
+          <el-form-item label="验证码" prop="code" id="security_code">
+            <el-input
+              v-model="registerFrom.code"
+              placeholder="请输入验证码"
+              clearable
+            />
+            <el-button
+              type="string"
+              @click="getSecurityCode()"
+              :disabled="codeButton.disabled"
+              >{{ codeButton.text }}</el-button
+            >
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="register()">注册</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </transition>
   </div>
 </template>
 

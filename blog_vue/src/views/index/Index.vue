@@ -38,59 +38,66 @@
                 </el-col>
                 <!-- 右侧 -->
                 <el-col :xs="0" :sm="6" :md="6" :span="6">
-                  <!-- 用户信息 -->
-                  <el-row class="user frame">
-                    <el-col :span="24">
-                      <div
-                        class="icon"
-                        :style="{
-                          backgroundImage: 'url(' + userInfo.icon + ')',
-                        }"
-                      ></div>
-                    </el-col>
-                    <el-col :span="24">
-                      <div class="name">
-                        {{ userInfo.nickname }}
-                      </div>
-                    </el-col>
-                    <el-col :span="24">
-                      <div class="intro">
-                        {{ userInfo.intro }}
-                      </div>
-                    </el-col>
-                  </el-row>
+                  <transition
+                    appear
+                    appear-active-class="animate__animated animate__zoomIn"
+                  >
+                    <div>
+                      <!-- 用户信息 -->
+                      <el-row class="user frame">
+                        <el-col :span="24">
+                          <div
+                            class="icon"
+                            :style="{
+                              backgroundImage: 'url(' + userInfo.icon + ')',
+                            }"
+                          ></div>
+                        </el-col>
+                        <el-col :span="24">
+                          <div class="name">
+                            {{ userInfo.nickname }}
+                          </div>
+                        </el-col>
+                        <el-col :span="24">
+                          <div class="intro">
+                            {{ userInfo.intro }}
+                          </div>
+                        </el-col>
+                      </el-row>
 
-                  <!-- 日历 -->
-                  <el-row class="calender frame">
-                    <el-calendar id="calender-body" v-model="calender" />
-                  </el-row>
+                      <!-- 日历 -->
+                      <el-row class="calender frame">
+                        <el-calendar id="calender-body" v-model="calender" />
+                      </el-row>
 
-                  <!-- 分类云 -->
-                  <el-row class="classifyCloud frame">
-                    <span>分类云</span>
-                    <Cloud
-                      v-if="classifyInformationList[0].id != -1"
-                      :data-list="classifyInformationList"
-                      @element-click="classifyClick"
-                    ></Cloud>
-                  </el-row>
+                      <!-- 分类云 -->
+                      <el-row class="classifyCloud frame">
+                        <span>分类云</span>
+                        <Cloud
+                          v-if="classifyInformationList[0].id != -1"
+                          :data-list="classifyInformationList"
+                          @element-click="classifyClick"
+                        ></Cloud>
+                      </el-row>
 
-                  <!-- 标签云 -->
-                  <el-row class="tagCloud frame">
-                    <span>标签云</span>
-                    <Cloud
-                      v-if="tagInformationList[0].id != -1"
-                      :data-list="tagInformationList"
-                      @element-click="tagClick"
-                    ></Cloud>
-                  </el-row>
+                      <!-- 标签云 -->
+                      <el-row class="tagCloud frame">
+                        <span>标签云</span>
+                        <Cloud
+                          v-if="tagInformationList[0].id != -1"
+                          :data-list="tagInformationList"
+                          @element-click="tagClick"
+                        ></Cloud>
+                      </el-row>
+                    </div>
+                  </transition>
                 </el-col>
               </el-row>
             </el-col>
           </el-row>
         </el-main>
       </el-container>
-      <Toolboxe/>
+      <Toolboxe />
     </div>
   </div>
 </template>

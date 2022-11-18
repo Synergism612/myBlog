@@ -18,12 +18,12 @@ export default defineComponent({
   setup() {
     const viewData = reactive({});
 
-    const particlesInit = async (engine: Engine): void => {
+    const particlesInit = async (engine: Engine): Promise<void> => {
       await loadFull(engine);
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const particlesLoaded = async (container: any): void => {
+    const particlesLoaded = async (container: any): Promise<void> => {
       console.log("Particles container loaded", container);
     };
     const options = reactive({

@@ -19,6 +19,8 @@ export default class Forum {
 
   commentForm: CommentForm;
 
+  likeCommentIDList:Array<number>;
+
   constructor(articleID: number) {
     this.articleID = articleID;
 
@@ -33,6 +35,8 @@ export default class Forum {
     this.parentUsername = "";
 
     this.commentForm = new CommentForm();
+
+    this.likeCommentIDList = [0];
   }
   public getCommentForm(): CommentForm {
     this.commentForm.comment = this.commentInput;
@@ -52,6 +56,19 @@ export default class Forum {
         });
       });
     };
+
+    const likeComment = (): void => {
+      api.getContentCommentLike().then(({ data }): void => {
+        this.likeCommentIDList = data;
+      });
+    };
     commentList();
+
+    if (this.isLogin) {
+      likeComment();
+    }
+  }
+  public updateCommentLike(commentID: number, state: boolean): void {
+    api.updateContentCommentLike(commentID, state);
   }
 }

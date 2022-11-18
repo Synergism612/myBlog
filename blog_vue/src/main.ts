@@ -28,12 +28,13 @@ import Particles from "particles.vue3";
 import "animate.css";
 
 /* fontawesome 核心 */
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { IconDefinition, library } from "@fortawesome/fontawesome-svg-core";
 /* awesome图库 */
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 /* specific图库 */
 import { fas } from "@fortawesome/free-solid-svg-icons";
-library.add(fas);
+import { faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+library.add(fas, faThumbsUp as IconDefinition);
 
 const app = createApp(App);
 api.getPublicKey().then((): void => {

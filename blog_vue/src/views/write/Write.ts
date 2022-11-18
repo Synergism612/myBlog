@@ -30,7 +30,7 @@ export default class Write {
   tagForm: TagForm;
 
   isUpdate: boolean;
-
+  
   constructor() {
     this.isLogin = store.getters.getIsLogin;
     this.articleForm = new ArticleForm();

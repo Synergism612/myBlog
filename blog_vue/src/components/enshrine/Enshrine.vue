@@ -10,7 +10,7 @@
       <template #header>
         <div class="my-header">
           <div class="close">
-            <span class="title">添加到收藏夹</span>
+            <span class="title">添加至收藏夹</span>
             <span @click="close" class="click rotate">
               <font-awesome-icon :icon="['fas', 'times']" />
             </span>
@@ -105,12 +105,14 @@ export default defineComponent({
       viewData.collectionForm.favoriteID = props.favoriteID || 0;
       viewData.collectionShow = props.show;
 
-      viewData.init(
-        props.title || "",
-        props.href || "",
-        props.synopsis || "",
-        props.favoriteID || 0
-      );
+      if (viewData.collectionShow) {
+        viewData.init(
+          props.title || "",
+          props.href || "",
+          props.synopsis || "",
+          props.favoriteID || 0
+        );
+      }
     });
 
     const rules = {
