@@ -1,6 +1,7 @@
 package com.synergism.blog.IO.serviceImpl;
 
 import com.synergism.blog.IO.service.IOService;
+import com.synergism.blog.exception.custom.IOErrorException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,23 +11,30 @@ import java.io.File;
 @Service
 public class IOServiceImpl implements IOService {
 
-    private final String base = System.getProperty("user.dir") + "/blogResources/";
+    //分隔符
+    private final String separator = File.separator;
+
+    private final String base = System.getProperty("user.dir") + separator + "blog_resources" + separator;
 
     @Override
-    public boolean write(String parentPath, MultipartFile file) {
-        parentPath = base + parentPath;
-        File dest = new File(parentPath + '/' + file.getOriginalFilename());
+    public String write(String parentPath, MultipartFile file) {
+        parentPath = parentPath + separator + file.getOriginalFilename();
+        String path = base + parentPath;
+        File dest = new File(path);
+        if (dest.exists()) {
+            throw new IOErrorException("文件已存在");
+        }
         if (!dest.getParentFile().exists()) {
             if (!dest.getParentFile().mkdirs()) {
-                return false;
+                throw new IOErrorException("目录创建失败");
             }
         }
         try {
             file.transferTo(dest);
         } catch (Exception e) {
-            return false;
+            throw new IOErrorException(e.getMessage());
         }
-        return true;
+        return parentPath;
     }
 
     @Override
@@ -37,10 +45,18 @@ public class IOServiceImpl implements IOService {
 
     @Override
     public boolean mkdir(String parentPath, String name) {
-        parentPath = base + parentPath + "/" + name;
-        File dest = new File(parentPath);
+        String path = base + parentPath + separator + name;
+        File dest = new File(path);
         if (dest.exists()) return true;
-        return dest.mkdir();
+        return dest.mkdirs();
+    }
+
+    @Override
+    public boolean mkdir(String path) {
+        path = base + path;
+        File dest = new File(path);
+        if (dest.exists()) return true;
+        return dest.mkdirs();
     }
 
     @Override
@@ -48,11 +64,6 @@ public class IOServiceImpl implements IOService {
         String path = base + username;
         File dest = new File(path);
         if (dest.exists()) return true;
-        return dest.mkdir();
-    }
-
-    @Override
-    public String blog(String username) {
-        return this.mkdir(username,"blog")?username+"/blog":"";
+        return dest.mkdirs();
     }
 }
