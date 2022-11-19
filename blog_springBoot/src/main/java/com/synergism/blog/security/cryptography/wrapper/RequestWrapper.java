@@ -1,8 +1,6 @@
 package com.synergism.blog.security.cryptography.wrapper;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,11 +8,12 @@ import com.synergism.blog.security.cryptography.service.CryptographyService;
 import com.synergism.blog.utils.StringUtil;
 
 import javax.servlet.ReadListener;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.Part;
 import java.io.*;
-import java.util.Vector;
 
 /**
  * 自定义请求
@@ -27,7 +26,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     private final Map<String, Object> params;
 
     ObjectMapper objectMapper = new ObjectMapper();
-
 
 
     /**
@@ -44,6 +42,23 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
         InputStream inputStream = null;
+
+        //获取参数体
+        String paramsBody = request.getParameter("params");
+        //解密
+        String paramsJSON = cryptographyService.AESDecrypt(paramsBody, key);
+        if (StringUtil.isEmpty(paramsJSON))
+            this.params = null;
+        else
+            //转为Map
+            this.params = (Map<String, Object>) objectMapper.readValue(paramsJSON, Map.class);
+
+        if (request.getContentType() != null &&
+                request.getContentType().contains("multipart/form-data;")) {
+            body = "";
+            return;
+        }
+
         //开启异常处理
         try {
             //获得数据流
@@ -82,16 +97,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         }
         //解密请求体
         this.body = cryptographyService.AESDecrypt(stringBuilder.toString(), key);
-
-        //获取参数体
-        String paramsBody = request.getParameter("params");
-        //解密
-        String paramsJSON = cryptographyService.AESDecrypt(paramsBody, key);
-        if (StringUtil.isEmpty(paramsJSON))
-            this.params = null;
-        else
-            //转为Map
-            this.params = (Map<String, Object>) objectMapper.readValue(paramsJSON, Map.class);
     }
 
     /**
@@ -187,7 +192,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     @Override
     public Map<String, String[]> getParameterMap() {
         Map<String, String[]> results = new HashMap<>();
-        if (params==null){
+        if (params == null) {
             return results;
         }
         params.forEach((key, object) -> {
@@ -199,5 +204,10 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             }
         });
         return results;
+    }
+
+    @Override
+    public Collection<Part> getParts() throws IOException, ServletException {
+        return super.getParts();
     }
 }
