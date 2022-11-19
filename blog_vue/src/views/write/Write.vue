@@ -44,6 +44,7 @@
                       <el-col :span="6">
                         <el-form-item label="封面" prop="icon">
                           <el-avatar
+                            @click="uploadArticleIcon"
                             class="icon"
                             shape="square"
                             fit="cover"
@@ -241,7 +242,11 @@
         </el-col>
       </el-row>
     </el-dialog>
-    <Upload :upload-show="true"></Upload>
+    <Upload
+      v-model:upload-show="uploadShow"
+      @upload-url="uploadURL"
+      @close="uploadShow = false"
+    ></Upload>
   </div>
 </template>
 <script lang="ts">
@@ -427,6 +432,18 @@ export default defineComponent({
         });
     };
 
+    const uploadArticleIcon = (): void => {
+      viewData.uploadShow = true;
+    };
+
+    const uploadURL = (url: string): void => {
+      if (url) {
+        console.log(url);
+        viewData.articleForm.icon = url;
+        console.log(viewData.articleForm);
+      }
+    };
+
     onMounted((): void => {
       if (id > 0) {
         viewData.isUpdate = true;
@@ -446,6 +463,8 @@ export default defineComponent({
       elementFormRules,
       saveClassify,
       saveTag,
+      uploadArticleIcon,
+      uploadURL,
     };
   },
   components: { Menu, MdEditor, Upload },

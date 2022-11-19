@@ -30,7 +30,8 @@ export default class Write {
   tagForm: TagForm;
 
   isUpdate: boolean;
-  
+
+  uploadShow: boolean;
   constructor() {
     this.isLogin = store.getters.getIsLogin;
     this.articleForm = new ArticleForm();
@@ -43,6 +44,7 @@ export default class Write {
     this.saveTagShow = false;
     this.tagForm = new TagForm();
     this.isUpdate = false;
+    this.uploadShow = false;
   }
 
   public init(): void {
