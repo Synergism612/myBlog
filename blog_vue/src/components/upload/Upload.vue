@@ -4,16 +4,17 @@
       <el-upload
         class="upload-demo"
         drag
-        :action="config.action"
-        :headers="config.headers"
+        ref="uploadRef"
         :multiple="config.multiple"
         :limit="config.limit"
         :on-exceed="exceed"
         :before-upload="beforeAvatarUpload"
-        :auto-upload="false"
+        :http-request="upload"
       >
-        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-        <div class="el-upload__text">拖入文件或 <em>点击上传</em></div>
+        <span style="font-size: 5em">
+          <font-awesome-icon :icon="['fas', 'upload']" />
+        </span>
+        <div class="el-upload__text">拖入文件或 <em>点击此处上传</em></div>
         <template #tip>
           <div class="el-upload__tip">jpg/png 格式的文件</div>
         </template>
@@ -23,11 +24,16 @@
 </template>
 <script lang="ts">
 import Upload, { Config } from "./Upload";
-import { defineComponent, reactive, toRefs, watchEffect } from "vue";
+import { defineComponent, reactive, ref, toRefs, watchEffect } from "vue";
 import Message from "src/utils/MessageUtil";
-import { UploadProps } from "element-plus";
+import { UploadProps, UploadRequestOptions } from "element-plus";
+import { api } from "src/api/api";
 
 export default defineComponent({
+  emits: {
+    "upload-url": null,
+    "close":null,
+  },
   props: {
     uploadShow: {
       type: Boolean,
@@ -38,8 +44,10 @@ export default defineComponent({
       required: false,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const viewData = reactive(new Upload());
+
+    const uploadRef = ref();
 
     watchEffect((): void => {
       viewData.show = props.uploadShow;
@@ -65,7 +73,24 @@ export default defineComponent({
       return true;
     };
 
-    return { ...toRefs(viewData), exceed, beforeAvatarUpload };
+    const upload = (options: UploadRequestOptions): Promise<unknown> => {
+      const file = options.file;
+      const formData = new FormData();
+      formData.append("file", file);
+      return api.saveWriteArticleIcon(formData).then(({ data }): void => {
+        viewData.show = false;
+        emit("upload-url", data);
+        emit("close", false);
+      });
+    };
+
+    return {
+      ...toRefs(viewData),
+      uploadRef,
+      exceed,
+      beforeAvatarUpload,
+      upload,
+    };
   },
 });
 </script>
