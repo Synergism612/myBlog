@@ -93,6 +93,18 @@ public class GlobalException extends RuntimeException{
     }
 
     /**
+     * 拦截IOErrorException异常
+     * 文件异常
+     * @param e 异常
+     * @return 结果[异常信息]
+     */
+    @ExceptionHandler(value = IOErrorException.class)
+    @ResponseBody
+    public Result<String> IOErrorException(IOErrorException e){
+        return Result.error(CodeMsg.File_ERROR.fillArgs(e.getMessage()));
+    }
+
+    /**
      * 拦截MethodArgumentNotValidException异常
      * 参数校验失败异常
      * @param e 异常
