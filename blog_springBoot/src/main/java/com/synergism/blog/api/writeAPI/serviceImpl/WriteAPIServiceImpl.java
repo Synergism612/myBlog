@@ -1,5 +1,6 @@
 package com.synergism.blog.api.writeAPI.serviceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.IO.service.IOService;
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
 import com.synergism.blog.api.writeAPI.entity.ClassifyForm;
@@ -10,6 +11,10 @@ import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.service.ClassifyService;
+import com.synergism.blog.core.repository.entity.Repository;
+import com.synergism.blog.core.repository.service.FileService;
+import com.synergism.blog.core.repository.service.FolderService;
+import com.synergism.blog.core.repository.service.RepositoryService;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.core.user.service.UserService;
@@ -19,24 +24,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 
 @Service
 public class WriteAPIServiceImpl implements writeAPIService {
 
+    //分隔符
+    private final String separator = File.separator;
+
     private final UserService userService;
     private final ArticleService articleService;
     private final ClassifyService classifyService;
     private final TagService tagService;
+    private final RepositoryService repositoryService;
+    private final FolderService folderService;
+    private final FileService fileService;
     private final IOService ioService;
 
     @Autowired
-    public WriteAPIServiceImpl(UserService userService, ArticleService articleService, ClassifyService classifyService, TagService tagService, IOService ioService) {
+    public WriteAPIServiceImpl(UserService userService, ArticleService articleService, ClassifyService classifyService, TagService tagService, RepositoryService repositoryService, FolderService folderService, FileService fileService, IOService ioService) {
         this.userService = userService;
         this.articleService = articleService;
         this.classifyService = classifyService;
         this.tagService = tagService;
+        this.repositoryService = repositoryService;
+        this.folderService = folderService;
+        this.fileService = fileService;
         this.ioService = ioService;
     }
 
@@ -110,7 +125,14 @@ public class WriteAPIServiceImpl implements writeAPIService {
 
     @Override
     public Result<String> saveArticleIcon(String username, MultipartFile file) {
-        String path = ioService.blog(username);
-        return ioService.write(path, file) ? Result.success() : Result.error(CodeMsg.SERVER_ERROR);
+        String path = username + separator + "blog" + separator + "icon" + separator;
+        Repository repository = repositoryService.getOne(new LambdaQueryWrapper<Repository>().eq(Repository::getPath, username + separator));
+        if (repository == null) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("仓库不存在"));
+        }
+        long folderID = folderService.update(repository.getId(), path);
+        String resultPath = ioService.write(path, file);
+        fileService.saveToFolder(folderID,file,resultPath);
+        return Result.success();
     }
 }

@@ -7,6 +7,7 @@ import com.synergism.blog.api.writeAPI.service.writeAPIService;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.tag.entity.Tag;
+import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -114,8 +115,12 @@ public class WriteAPIController {
     @Validated
     @PostMapping("article/icon")
     public Result<String> saveArticleIcon(
-            @RequestParam @NotEmpty(message = "账号不能为空") String username,
-            @RequestBody MultipartFile file){
+            @RequestParam String username,
+            @RequestPart MultipartFile file){
+        String type = file.getContentType();
+        if (type!=null&&!type.equals("image/jpeg")){
+            return Result.error(CodeMsg.MESSAGE.fillArgs("只能为图片(image/jpeg)类型"));
+        }
         return service.saveArticleIcon(username,file);
     }
 }
