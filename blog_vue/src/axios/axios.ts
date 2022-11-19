@@ -9,11 +9,9 @@ import Message from "src/utils/MessageUtil";
 //请求根路径
 export const baseURL = "http://localhost:8088";
 
-export const getHeaders = (): Headers => {
-  const headers = new Headers();
-  headers.set("ANOTHER_WORLD_KEY", store.state.ANOTHER_WORLD_KEY || "");
-  headers.set("EVIL_EYE", store.state.EVIL_EYE || "");
-  return headers;
+export const JSONHeaders = {
+  "Content-Type": "application/json; charset=utf-8",
+  Accept: "application/json",
 };
 
 // const publicKeyURL = "/api/public/key";
@@ -30,8 +28,6 @@ class Axios {
     headers: {
       ANOTHER_WORLD_KEY: "",
       EVIL_EYE: "",
-      "Content-Type": "application/json; charset=utf-8",
-      Accept: "application/json",
     },
   };
 
@@ -51,12 +47,6 @@ class Axios {
           request.headers["ANOTHER_WORLD_KEY"] = store.state.ANOTHER_WORLD_KEY;
           request.headers["EVIL_EYE"] = store.state.EVIL_EYE;
         }
-        // 对 data 进行加密
-        request.data = AESUtil.encrypt(
-          JSON.stringify(request.data),
-          store.state.KEY
-        );
-
         // 对 params 进行加密
         request.params = {
           params: AESUtil.encrypt(
@@ -64,6 +54,15 @@ class Axios {
             store.state.KEY
           ),
         };
+        // 若是文件上传，则不对data做处理
+        if (request.data instanceof FormData) {
+          return request;
+        }
+        // 对 data 进行加密
+        request.data = AESUtil.encrypt(
+          JSON.stringify(request.data),
+          store.state.KEY
+        );
         return request;
       }
     );

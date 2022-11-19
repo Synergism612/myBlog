@@ -1,6 +1,6 @@
 import FavoriteForm from "src/api/entity/FavoriteForm";
 import { ClassifyForm, TagForm } from "src/api/entity/ElementForm";
-import axios from "src/axios/axios";
+import axios, { JSONHeaders } from "src/axios/axios";
 import { store } from "src/store";
 import AESUtil from "src/utils/AESUtil";
 import RSAUtil from "src/utils/RSAUtil";
@@ -22,6 +22,7 @@ export class api {
       const { data } = await axios({
         url: "/api/public/key",
         method: "get",
+        headers: JSONHeaders,
       });
       //更改公钥值
       store.commit("SET_PUBLIC_KEY", data);
@@ -58,6 +59,7 @@ export class api {
     return axios({
       url: "/api/blog/user/login",
       method: "post",
+      headers: JSONHeaders,
       data: {
         username: username,
         password: password,
@@ -74,6 +76,7 @@ export class api {
     return axios({
       url: "/api/mail/register/code",
       method: "get",
+      headers: JSONHeaders,
       params: {
         mail: mail,
         key: key,
@@ -93,6 +96,7 @@ export class api {
     return axios({
       url: "/api/blog/user/register",
       method: "post",
+      headers: JSONHeaders,
       data: registerForm,
     });
   }
@@ -112,6 +116,7 @@ export class api {
     return axios({
       url: "/api/blog/user/logout",
       method: "post",
+      headers: JSONHeaders,
       data: {
         loginID: loginID,
         nickname: nickname,
@@ -137,6 +142,7 @@ export class api {
     return axios({
       url: "/api/blog/index/article",
       method: "get",
+      headers: JSONHeaders,
       params: {
         currentPage: currentPage,
         pageSize: pageSize,
@@ -190,6 +196,7 @@ export class api {
     return axios({
       url: "/api/blog/index/article",
       method: "delete",
+      headers: JSONHeaders,
       params: {
         username: store.getters.getUsername,
         articleIDList: articleIDList.toString(),
@@ -206,6 +213,7 @@ export class api {
     return axios({
       url: "/api/blog/content/article",
       method: "get",
+      headers: JSONHeaders,
       params: { articleID: articleID },
     });
   }
@@ -219,6 +227,7 @@ export class api {
     return axios({
       url: "/api/blog/content/article/like",
       method: "get",
+      headers: JSONHeaders,
       params: { username: store.getters.getUsername, articleID: articleID },
     });
   }
@@ -236,6 +245,7 @@ export class api {
     return axios({
       url: "/api/blog/content/article/like",
       method: "patch",
+      headers: JSONHeaders,
       params: {
         username: store.getters.getUsername,
         articleID: articleID,
@@ -253,6 +263,7 @@ export class api {
     return axios({
       url: "/api/blog/content/author",
       method: "get",
+      headers: JSONHeaders,
       params: { articleID: articleID },
     });
   }
@@ -266,6 +277,7 @@ export class api {
     return axios({
       url: "/api/blog/content/classify",
       method: "get",
+      headers: JSONHeaders,
       params: { articleID: articleID },
     });
   }
@@ -279,6 +291,7 @@ export class api {
     return axios({
       url: "/api/blog/content/tag",
       method: "get",
+      headers: JSONHeaders,
       params: { articleID: articleID },
     });
   }
@@ -292,6 +305,7 @@ export class api {
     return axios({
       url: "/api/blog/content/comment",
       method: "get",
+      headers: JSONHeaders,
       params: { articleID: articleID },
     });
   }
@@ -305,6 +319,7 @@ export class api {
     return axios({
       url: "/api/blog/content/comment/like",
       method: "get",
+      headers: JSONHeaders,
       params: { username: store.getters.getUsername },
     });
   }
@@ -322,6 +337,7 @@ export class api {
     return axios({
       url: "/api/blog/content/comment/like",
       method: "patch",
+      headers: JSONHeaders,
       params: {
         username: store.getters.getUsername,
         commentID: commentID,
@@ -339,6 +355,7 @@ export class api {
     return axios({
       url: "/api/blog/content/nominate/classify",
       method: "get",
+      headers: JSONHeaders,
       params: { articleID: articleID },
     });
   }
@@ -352,6 +369,7 @@ export class api {
     return axios({
       url: "/api/blog/content/nominate/tag",
       method: "get",
+      headers: JSONHeaders,
       params: { articleID: articleID },
     });
   }
@@ -365,6 +383,7 @@ export class api {
     return axios({
       url: "/api/blog/content/comment",
       method: "post",
+      headers: JSONHeaders,
       data: commentForm,
     });
   }
@@ -378,6 +397,7 @@ export class api {
     return axios({
       url: "/api/blog/pandect/classify",
       method: "get",
+      headers: JSONHeaders,
       params: {
         username: username || "",
       },
@@ -393,6 +413,7 @@ export class api {
     return axios({
       url: "/api/blog/pandect/tag",
       method: "get",
+      headers: JSONHeaders,
       params: {
         username: username || "",
       },
@@ -422,6 +443,7 @@ export class api {
     return axios({
       url: "/api/blog/pandect/article",
       method: "get",
+      headers: JSONHeaders,
       params: {
         currentPage: currentPage,
         pageSize: pageSize,
@@ -442,6 +464,7 @@ export class api {
     return axios({
       url: "/api/blog/enshrine/favorite",
       method: "get",
+      headers: JSONHeaders,
       params: {
         username: store.getters.getUsername,
       },
@@ -462,6 +485,7 @@ export class api {
     return axios({
       url: "/api/blog/enshrine/collection",
       method: "post",
+      headers: JSONHeaders,
       data: collectionForm,
     });
   }
@@ -474,6 +498,7 @@ export class api {
     return axios({
       url: "/api/blog/homepage/author",
       method: "get",
+      headers: JSONHeaders,
       params: { username: store.getters.getUsername },
     });
   }
@@ -486,6 +511,7 @@ export class api {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "get",
+      headers: JSONHeaders,
       params: { username: store.getters.getUsername },
     });
   }
@@ -504,6 +530,7 @@ export class api {
     return axios({
       url: "/api/blog/homepage/collection",
       method: "delete",
+      headers: JSONHeaders,
       params: {
         username: store.getters.getUsername,
         favoriteID: favoriteID,
@@ -523,6 +550,7 @@ export class api {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "post",
+      headers: JSONHeaders,
       data: favoriteForm,
     });
   }
@@ -538,6 +566,7 @@ export class api {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "put",
+      headers: JSONHeaders,
       data: favoriteForm,
     });
   }
@@ -551,6 +580,7 @@ export class api {
     return axios({
       url: "/api/blog/homepage/favorite",
       method: "delete",
+      headers: JSONHeaders,
       params: {
         username: store.getters.getUsername,
         favoriteID: favoriteID,
@@ -569,6 +599,7 @@ export class api {
     return axios({
       url: "/api/blog/homepage/user",
       method: "put",
+      headers: JSONHeaders,
       data: userInformationForm,
     });
   }
@@ -602,6 +633,7 @@ export class api {
     return axios({
       url: "/api/blog/write/article",
       method: "get",
+      headers: JSONHeaders,
       params: {
         username: store.getters.getUsername,
         articleID: articleID,
@@ -618,6 +650,7 @@ export class api {
     return axios({
       url: "/api/blog/write/article",
       method: "post",
+      headers: JSONHeaders,
       data: articleForm,
     });
   }
@@ -631,6 +664,7 @@ export class api {
     return axios({
       url: "/api/blog/write/article",
       method: "put",
+      headers: JSONHeaders,
       data: articleForm,
     });
   }
@@ -644,6 +678,7 @@ export class api {
     return axios({
       url: "/api/blog/write/classify",
       method: "post",
+      headers: JSONHeaders,
       data: classifyForm,
     });
   }
@@ -657,7 +692,22 @@ export class api {
     return axios({
       url: "/api/blog/write/tag",
       method: "post",
+      headers: JSONHeaders,
       data: tagForm,
+    });
+  }
+
+  /**
+   * 创作页面保存封面接口
+   * @param formData 文件信息
+   * @returns 成功
+   */
+  static saveWriteArticleIcon(formData: FormData): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/write/article/icon",
+      method: "post",
+      params: { username: store.getters.getUsername },
+      data: formData,
     });
   }
 
@@ -670,6 +720,7 @@ export class api {
     return axios({
       url: "/api/blog/pigeonhole/archive",
       method: "get",
+      headers: JSONHeaders,
       params: {
         username: username || "",
       },
