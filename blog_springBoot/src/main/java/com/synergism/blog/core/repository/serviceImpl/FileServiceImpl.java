@@ -1,12 +1,14 @@
-package com.synergism.blog.core.file.serviceImpl;
+package com.synergism.blog.core.repository.serviceImpl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.synergism.blog.core.file.entity.File;
-import com.synergism.blog.core.file.mapper.FileMapper;
-import com.synergism.blog.core.file.service.FileService;
+import com.synergism.blog.core.repository.entity.File;
+import com.synergism.blog.core.repository.mapper.FileMapper;
+import com.synergism.blog.core.repository.service.FileService;
+import com.synergism.blog.exception.custom.IllegalRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -61,5 +63,14 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     public void delete(List<Long> fileIDList) {
         mapper.unbundled(fileIDList);
         mapper.deleteBatchIds(fileIDList);
+    }
+
+    @Override
+    public void saveToFolder(long folderID, MultipartFile file, String resultPath) {
+        String name = file.getOriginalFilename();
+        if (name==null){
+            throw new IllegalRequestException("文件名称错误");
+        }
+        this.saveToFolder(folderID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')+1),file.getContentType(),file.getSize(),resultPath,resultPath);
     }
 }

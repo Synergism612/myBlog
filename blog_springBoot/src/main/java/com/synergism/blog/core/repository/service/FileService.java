@@ -1,7 +1,8 @@
-package com.synergism.blog.core.file.service;
+package com.synergism.blog.core.repository.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.synergism.blog.core.file.entity.File;
+import com.synergism.blog.core.repository.entity.File;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public interface FileService extends IService<File> {
     void saveToRepository(long repositoryID, String name,String suffix, String type, double size, String path, String href);
 
     /**
-     * 保存mulu下的文件
+     * 保存目录下的文件
      * @param folderID 目录id
      * @param name 文件名
      * @param suffix 文件后缀
@@ -58,4 +59,12 @@ public interface FileService extends IService<File> {
      * @param fileIDList 文件id列表
      */
     void delete(List<Long> fileIDList);
+
+    /**
+     * 保存目录下的文件
+     * @param folderID 目录id
+     * @param file 文件
+     * @param resultPath 结果路径
+     */
+    void saveToFolder(long folderID, MultipartFile file, String resultPath);
 }

@@ -1,6 +1,6 @@
-package com.synergism.blog.core.folder.service;
+package com.synergism.blog.core.repository.service;
 
-import com.synergism.blog.core.folder.entity.Folder;
+import com.synergism.blog.core.repository.entity.Folder;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -44,4 +44,13 @@ public interface FolderService extends IService<Folder> {
      * @param folderID 文件夹id
      */
     void delete(long folderID);
+
+    /**
+     * 从路径中更新文件夹
+     * @param repositoryID 仓库
+     * @param path 路径
+     * @return 最后一级的文件夹id
+     */
+    long update(long repositoryID, String path);
+
 }

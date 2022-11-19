@@ -1,6 +1,6 @@
-package com.synergism.blog.core.folder.mapper;
+package com.synergism.blog.core.repository.mapper;
 
-import com.synergism.blog.core.folder.entity.Folder;
+import com.synergism.blog.core.repository.entity.Folder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,6 +1,7 @@
 package com.synergism.blog.core.repository.serviceImpl;
 
 import com.synergism.blog.core.repository.entity.Repository;
+import com.synergism.blog.core.repository.entity.RepositoryInformation;
 import com.synergism.blog.core.repository.mapper.RepositoryMapper;
 import com.synergism.blog.core.repository.service.RepositoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -29,8 +30,13 @@ public class RepositoryServiceImpl extends ServiceImpl<RepositoryMapper, Reposit
     @Override
     @Transactional
     public void save(long userID, String username) {
-        Repository repository = new Repository(username, 1024L);
+        Repository repository = new Repository(username+"\\", 1024L);
         mapper.insert(repository);
         mapper.bundle(repository.getId(), userID);
+    }
+
+    @Override
+    public RepositoryInformation getRepositoryInformation(String username) {
+        return mapper.selectRepositoryInformationByUsername(username);
     }
 }

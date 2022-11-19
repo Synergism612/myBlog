@@ -1,4 +1,4 @@
-package com.synergism.blog.core.folder.entity;
+package com.synergism.blog.core.repository.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;

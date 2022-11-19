@@ -1,7 +1,7 @@
-package com.synergism.blog.core.file.mapper;
+package com.synergism.blog.core.repository.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.synergism.blog.core.file.entity.File;
+import com.synergism.blog.core.repository.entity.File;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

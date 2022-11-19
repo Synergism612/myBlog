@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.synergism.blog.core.folder.mapper.FolderMapper">
-    <select id="selectListByRepositoryID" resultType="com.synergism.blog.core.folder.entity.Folder">
+<mapper namespace="com.synergism.blog.core.repository.mapper.FolderMapper">
+    <select id="selectListByRepositoryID" resultType="com.synergism.blog.core.repository.entity.Folder">
         select f.id,
                f.`path`,
                f.name,
@@ -15,7 +15,7 @@
                  rf.folder_id = f.id
         where rf.repository_id
     </select>
-    <select id="selectListByFolderID" resultType="com.synergism.blog.core.folder.entity.Folder">
+    <select id="selectListByFolderID" resultType="com.synergism.blog.core.repository.entity.Folder">
         select f.id,
                f.`path`,
                f.name,

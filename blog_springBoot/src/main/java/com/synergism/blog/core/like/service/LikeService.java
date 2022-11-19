@@ -1,8 +1,5 @@
 package com.synergism.blog.core.like.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.synergism.blog.core.folder.entity.Folder;
-
 import java.util.List;
 
 /**

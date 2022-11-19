@@ -1,4 +1,4 @@
-package com.synergism.blog.core.file.entity;
+package com.synergism.blog.core.repository.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
