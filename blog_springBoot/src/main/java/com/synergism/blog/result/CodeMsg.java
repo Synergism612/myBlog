@@ -20,6 +20,8 @@ public class CodeMsg {
     public static CodeMsg KEY_FAILURE = new CodeMsg(500104, "密钥失效：%s");
     public static CodeMsg PERMISSION_FAILURE = new CodeMsg(500105, "鉴权失败：%s");
     public static CodeMsg MAIL_ERROR = new CodeMsg(500106, "邮箱异常：%s");
+    public static CodeMsg File_ERROR = new CodeMsg(500106, "文件异常：%s");
+
 
     public static CodeMsg MESSAGE = new CodeMsg(12008, "%s");
 
