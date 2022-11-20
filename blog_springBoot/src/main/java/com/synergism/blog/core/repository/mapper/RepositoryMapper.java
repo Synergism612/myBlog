@@ -2,7 +2,7 @@ package com.synergism.blog.core.repository.mapper;
 
 import com.synergism.blog.core.repository.entity.Repository;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.synergism.blog.core.repository.entity.RepositoryInformation;
+import com.synergism.blog.core.repository.entity.FolderInformation;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -28,5 +28,5 @@ public interface RepositoryMapper extends BaseMapper<Repository> {
      * @param username 账号
      * @return 仓库信息
      */
-    RepositoryInformation selectRepositoryInformationByUsername(String username);
+    FolderInformation selectRepositoryInformationByUsername(String username);
 }

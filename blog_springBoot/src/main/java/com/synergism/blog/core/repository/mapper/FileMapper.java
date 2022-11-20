@@ -43,7 +43,7 @@ public interface FileMapper extends BaseMapper<File> {
      * @param fileID 文件id
      * @param folderID muluid
      */
-    void bundleToFolder(long fileID, long folderID);
+    void bundleToFolder(long fileID, long folderID,long repositoryID);
 
     /**
      * 解绑文件

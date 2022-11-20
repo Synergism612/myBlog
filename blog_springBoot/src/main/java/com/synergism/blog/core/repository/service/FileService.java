@@ -52,13 +52,13 @@ public interface FileService extends IService<File> {
      * @param path 文件路径
      * @param href 文件链接
      */
-    void saveToFolder(long folderID, String name,String suffix, String type, double size, String path, String href);
+    void saveToFolder(long repositoryID,long folderID, String name,String suffix, String type, double size, String path, String href);
 
     /**
      * 删除文件
      * @param fileIDList 文件id列表
      */
-    void delete(List<Long> fileIDList);
+    void remove(List<Long> fileIDList);
 
     /**
      * 保存目录下的文件
@@ -66,5 +66,13 @@ public interface FileService extends IService<File> {
      * @param file 文件
      * @param resultPath 结果路径
      */
-    String saveToFolder(long folderID, MultipartFile file, String resultPath);
+    String saveToFolder(long repositoryID,long folderID, MultipartFile file, String resultPath);
+
+    /**
+     * 保存目录下的文件
+     * @param repositoryID 仓库id
+     * @param file 文件
+     * @param resultPath 结果路径
+     */
+    String saveToRepository(long repositoryID, MultipartFile file, String resultPath);
 }

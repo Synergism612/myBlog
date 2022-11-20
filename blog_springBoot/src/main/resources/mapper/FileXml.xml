@@ -44,15 +44,17 @@
     <insert id="bundleToFolder">
         INSERT INTO folder_file(folder_id, file_id)
         values (#{folderID}, #{fileID});
+        INSERT INTO repository_file(repository_id, file_id)
+        values (#{repositoryID}, #{fileID});
     </insert>
     <delete id="unbundled">
-        delete repository_file where file_id in
+        delete from repository_file where file_id in
         <foreach collection="fileIDList" item="fileID" open="(" separator="," close=")">
-            fileID
-        </foreach>
-        delete folder_file where file_id in
+            #{fileID}
+        </foreach>;
+        delete from folder_file where file_id in
         <foreach collection="fileIDList" item="fileID" open="(" separator="," close=")">
-            fileID
-        </foreach>
+            #{fileID}
+        </foreach>;
     </delete>
 </mapper>

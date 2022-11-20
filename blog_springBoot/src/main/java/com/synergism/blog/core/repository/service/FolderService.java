@@ -2,6 +2,7 @@ package com.synergism.blog.core.repository.service;
 
 import com.synergism.blog.core.repository.entity.Folder;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.synergism.blog.core.repository.entity.FolderInformation;
 
 import java.util.List;
 
@@ -38,12 +39,27 @@ public interface FolderService extends IService<Folder> {
      */
     void save(long repositoryID,String path,String name,Long parentID);
 
+    /**
+     * 保存文件夹
+     * @param repositoryID 仓库id
+     * @param parentPath 父路径
+     * @param name 文件夹名
+     */
+    void save(long repositoryID,String parentPath,String name);
+
+    /**
+     * 保存文件夹
+     * @param repositoryID 仓库id
+     * @param parentPath 父路径
+     * @param name 文件夹名
+     */
+    void saveToRepository(long repositoryID,String parentPath,String name);
 
     /**
      * 删除文件
      * @param folderID 文件夹id
      */
-    void delete(long folderID);
+    void remove(long folderID);
 
     /**
      * 从路径中更新文件夹
@@ -53,4 +69,17 @@ public interface FolderService extends IService<Folder> {
      */
     long update(long repositoryID, String path);
 
+    /**
+     * 获取用户名下文件夹
+     * @param userID 用户id
+     * @param  folderID 文件夹id
+     */
+    FolderInformation getFolderInformationByUserIDAndFolderID(long userID, long folderID);
+
+    /**
+     * 获取用户名下文件夹
+     * @param userID 用户id
+     * @param  path 路径
+     */
+    FolderInformation getFolderInformationByUserIDAndPath(long userID, String path);
 }

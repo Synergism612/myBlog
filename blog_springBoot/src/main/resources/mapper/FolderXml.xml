@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.repository.mapper.FolderMapper">
+
+    <resultMap id="FolderInformationMap" type="com.synergism.blog.core.repository.entity.FolderInformation">
+        <id column="id" property="id"/>
+        <result column="path" property="path"/>
+        <result column="creation_time" property="creationTime"/>
+        <collection property="folderList" ofType="com.synergism.blog.core.repository.entity.Folder">
+            <result column="folder_id" property="id"/>
+            <result column="folder_path" property="path"/>
+            <result column="folder_name" property="name"/>
+            <result column="folder_creation_time" property="creationTime"/>
+        </collection>
+        <collection property="fileList" ofType="com.synergism.blog.core.repository.entity.File">
+            <result column="file_id" property="id"/>
+            <result column="file_name" property="name"/>
+            <result column="file_suffix" property="suffix"/>
+            <result column="file_type" property="type"/>
+            <result column="file_size" property="size"/>
+            <result column="file_path" property="path"/>
+            <result column="file_href" property="href"/>
+            <result column="file_creation_time" property="creationTime"/>
+        </collection>
+    </resultMap>
     <select id="selectListByRepositoryID" resultType="com.synergism.blog.core.repository.entity.Folder">
         select f.id,
                f.`path`,
@@ -29,12 +51,83 @@
                  f.parent_id = f2.id
         where f2.id = #{folderID}
     </select>
+    <select id="selectFolderInformationByUserIDAndFolderID"
+            resultMap="FolderInformationMap">
+        select f.id,
+               f.`path`,
+               f.creation_time,
+               fr.id            as folder_id,
+               fr.`path`        as folder_path,
+               fr.name          as folder_name,
+               fr.creation_time as folder_creation_time,
+               fe.id            as file_id,
+               fe.name          as file_name,
+               fe.suffix        as file_suffix,
+               fe.`type`        as file_type,
+               fe.`size`        as file_size,
+               fe.`path`        as file_path,
+               fe.href          as file_href,
+               fe.creation_time as file_creation_time
+        from folder f
+                 left join
+             repository_folder rf on
+                 f.id = rf.folder_id
+                 left join
+             user_repository ur on
+                 ur.repository_id = rf.repository_id
+                 left join
+             folder fr on
+                 fr.parent_id = f.id
+                 left join
+             (folder_file ff,
+                 file fe) on
+                     ff.folder_id = f.id
+                     and ff.file_id = fe.id
+        where ur.user_id = #{userID}
+          and f.id = #{folderID}
+    </select>
+    <select id="selectFolderInformationByUserIDAndPath"
+            resultMap="FolderInformationMap">
+        select f.id,
+               f.`path`,
+               f.creation_time,
+               fr.id            as folder_id,
+               fr.`path`        as folder_path,
+               fr.name          as folder_name,
+               fr.creation_time as folder_creation_time,
+               fe.id            as file_id,
+               fe.name          as file_name,
+               fe.suffix        as file_suffix,
+               fe.`type`        as file_type,
+               fe.`size`        as file_size,
+               fe.`path`        as file_path,
+               fe.href          as file_href,
+               fe.creation_time as file_creation_time
+        from folder f
+                 left join
+             repository_folder rf on
+                 f.id = rf.folder_id
+                 left join
+             user_repository ur on
+                 ur.repository_id = rf.repository_id
+                 left join
+             folder fr on
+                 fr.parent_id = f.id
+                 left join
+             (folder_file ff,
+                 file fe) on
+                     ff.folder_id = f.id
+                     and ff.file_id = fe.id
+        where ur.user_id = #{userID}
+          and f.path = #{path}
+    </select>
     <insert id="bundle">
         INSERT INTO repository_folder(repository_id, folder_id)
         values (#{repositoryID}, #{folderID});
     </insert>
     <delete id="unbundled">
-        delete repository_folder
+        delete
+        from repository_folder
         where folder_id = #{folderID}
     </delete>
 </mapper>

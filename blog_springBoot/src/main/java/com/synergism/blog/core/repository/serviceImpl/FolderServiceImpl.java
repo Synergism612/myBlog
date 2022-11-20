@@ -2,10 +2,10 @@ package com.synergism.blog.core.repository.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.core.repository.entity.Folder;
+import com.synergism.blog.core.repository.entity.FolderInformation;
 import com.synergism.blog.core.repository.mapper.FolderMapper;
 import com.synergism.blog.core.repository.service.FolderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.synergism.blog.exception.custom.IOErrorException;
 import com.synergism.blog.exception.custom.IllegalRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,7 +57,25 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
 
     @Override
     @Transactional
-    public void delete(long folderID) {
+    public void save(long repositoryID, String parentPath, String name) {
+        long parentID = mapper.selectOne(new LambdaQueryWrapper<Folder>().eq(Folder::getPath, parentPath)).getId();
+        parentPath += separator + name;
+        Folder folder = new Folder(parentPath, name, parentID);
+        mapper.insert(folder);
+        mapper.bundle(folder.getId(), repositoryID);
+    }
+
+    @Override
+    public void saveToRepository(long repositoryID, String parentPath, String name) {
+        parentPath += separator + name;
+        Folder folder = new Folder(parentPath, name, null);
+        mapper.insert(folder);
+        mapper.bundle(folder.getId(), repositoryID);
+    }
+
+    @Override
+    @Transactional
+    public void remove(long folderID) {
         mapper.unbundled(folderID);
         mapper.deleteById(folderID);
     }
@@ -66,25 +84,41 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
     @Transactional
     public long update(long repositoryID, String path) {
         String[] nameArray = path.split("/|\\\\");
-        if (nameArray.length < 2) {
-            throw new IllegalRequestException("地址错误");
-        }
         Folder folder = null;
-        String thePath = "";
-        for (int i = 0; i < nameArray.length; i++) {
-            String name = nameArray[i];
-            if (i < 1) {
-                thePath += name;
-                continue;
+        if (nameArray.length < 2) {
+            folder = mapper.selectOne(new LambdaQueryWrapper<Folder>().eq(Folder::getPath, path));
+            if (folder == null) {
+                throw new IllegalRequestException("地址错误");
             }
-            thePath += separator + name;
-            Folder newFolder = mapper.selectOne(new LambdaQueryWrapper<Folder>().eq(Folder::getPath, thePath));
-            if (newFolder == null) {
-                this.save(repositoryID, thePath, thePath.substring(thePath.lastIndexOf(separator)+1), folder==null?null:folder.getId());
-            }else{
-                folder = newFolder;
+        } else {
+            String thePath = "";
+            for (int i = 0; i < nameArray.length; i++) {
+                String name = nameArray[i];
+                if (i < 1) {
+                    thePath += name;
+                    continue;
+                }
+                thePath += separator + name;
+                Folder newFolder = mapper.selectOne(new LambdaQueryWrapper<Folder>().eq(Folder::getPath, thePath));
+                if (newFolder == null) {
+                    this.save(repositoryID, thePath, thePath.substring(thePath.lastIndexOf(separator) + 1), folder == null ? null : folder.getId());
+                    folder = mapper.selectOne(new LambdaQueryWrapper<Folder>().eq(Folder::getPath, thePath));
+                } else {
+                    folder = newFolder;
+                }
             }
         }
+        assert folder != null;
         return folder.getId();
+    }
+
+    @Override
+    public FolderInformation getFolderInformationByUserIDAndFolderID(long userID, long folderID) {
+        return mapper.selectFolderInformationByUserIDAndFolderID(userID, folderID);
+    }
+
+    @Override
+    public FolderInformation getFolderInformationByUserIDAndPath(long userID, String path) {
+        return mapper.selectFolderInformationByUserIDAndPath(userID, path);
     }
 }

@@ -2,6 +2,7 @@ package com.synergism.blog.core.repository.mapper;
 
 import com.synergism.blog.core.repository.entity.Folder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.synergism.blog.core.repository.entity.FolderInformation;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -43,4 +44,18 @@ public interface FolderMapper extends BaseMapper<Folder> {
      * @param folderID 文件夹id
      */
     void unbundled(long folderID);
+
+    /**
+     * 查询用户名下的文件夹
+     * @param userID 用户id
+     * @param folderID 文件夹id
+     */
+    FolderInformation selectFolderInformationByUserIDAndFolderID(long userID, long folderID);
+
+    /**
+     * 查询用户名下的文件夹
+     * @param userID 用户id
+     * @param path 路径
+     */
+    FolderInformation selectFolderInformationByUserIDAndPath(long userID, String path);
 }

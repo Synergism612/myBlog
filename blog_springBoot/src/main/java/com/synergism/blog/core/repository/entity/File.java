@@ -1,6 +1,7 @@
 package com.synergism.blog.core.repository.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -52,11 +53,15 @@ public class File {
 
     @ApiModelProperty("创建时间")
     @TableField("creation_time")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date creationTime;
 
     @ApiModelProperty("修改时间")
     @TableField(value = "modify_time", fill = FieldFill.INSERT_UPDATE)
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
+
+    File(){}
 
     public File(String name, String suffix, String type, double size, String path, String href){
         this.name = name;

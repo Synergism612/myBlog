@@ -2,7 +2,7 @@ package com.synergism.blog.core.repository.service;
 
 import com.synergism.blog.core.repository.entity.Repository;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.synergism.blog.core.repository.entity.RepositoryInformation;
+import com.synergism.blog.core.repository.entity.FolderInformation;
 
 /**
  * <p>
@@ -26,5 +26,7 @@ public interface RepositoryService extends IService<Repository> {
      * @param username 用户
      * @return 仓库信息
      */
-    RepositoryInformation getRepositoryInformation(String username);
+    FolderInformation getRepositoryInformation(String username);
+
+    Repository getOne(String username);
 }
