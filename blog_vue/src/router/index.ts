@@ -7,6 +7,7 @@ import Index from "src/views/index/Index.vue";
 import Login from "src/views/login/Login.vue";
 import Register from "src/views/register/Register.vue";
 import Pigeonhole from "src/views/pigeonhole/Pigeonhole.vue";
+import DBank from "src/views/dbank/DBank.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     redirect: {
       name: "Index",
     },
+  },
+  {
+    path: "/blog/dbank",
+    name: "DBank",
+    component: DBank,
   },
   {
     path: "/blog/pigeonhole",
