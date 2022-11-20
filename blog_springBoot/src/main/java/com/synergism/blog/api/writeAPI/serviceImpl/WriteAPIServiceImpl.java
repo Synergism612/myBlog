@@ -18,6 +18,7 @@ import com.synergism.blog.core.repository.service.RepositoryService;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.core.user.service.UserService;
+import com.synergism.blog.exception.custom.IOErrorException;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,13 +126,19 @@ public class WriteAPIServiceImpl implements writeAPIService {
 
     @Override
     public Result<String> saveArticleIcon(String username, MultipartFile file) {
-        String path = username + separator + "blog" + separator + "icon" + separator;
-        Repository repository = repositoryService.getOne(new LambdaQueryWrapper<Repository>().eq(Repository::getPath, username + separator));
+        String path = username + separator + "blog" + separator + "icon";
+        Repository repository = repositoryService.getOne(username);
         if (repository == null) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("仓库不存在"));
         }
         long folderID = folderService.update(repository.getId(), path);
         String resultPath = ioService.write(path, file);
-        return Result.success(fileService.saveToFolder(folderID,file,resultPath));
+        String href = "";
+        try {
+            href = fileService.saveToFolder(repository.getId(),folderID, file, resultPath);
+        }catch (Exception e){
+            ioService.delete(resultPath);
+        }
+        return Result.success(href);
     }
 }
