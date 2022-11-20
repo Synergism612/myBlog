@@ -11,6 +11,7 @@ import CollectionForm from "./entity/CollectionForm";
 import CommentForm from "./entity/CommentForm";
 import RegisterForm from "./entity/RegisterForm";
 import ArticleForm from "./entity/ArticleForm";
+import FolderForm from "./entity/FolderForm";
 export class api {
   /**
    * 获取公钥接口
@@ -724,6 +725,99 @@ export class api {
       params: {
         username: username || "",
       },
+    });
+  }
+
+  /**
+   * 资源页面获取仓库信息接口
+   * @returns 档案信息
+   */
+  static getDBankRepository(): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/DBank/repository",
+      method: "get",
+      headers: JSONHeaders,
+      params: {
+        username: store.getters.getUsername,
+      },
+    });
+  }
+
+  /**
+   * 资源页面获取文件夹信息接口
+   * @returns 档案信息
+   */
+  static getDBankFolder(path: string): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/DBank/folder",
+      method: "get",
+      headers: JSONHeaders,
+      params: {
+        username: store.getters.getUsername,
+        path: path,
+      },
+    });
+  }
+
+  /**
+   * 资源页面保存文件接口
+   * @param formData 文件信息
+   * @returns 成功
+   */
+  static saveDBankFile(
+    formData: FormData,
+    path: string
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/DBank/file",
+      method: "post",
+      params: { username: store.getters.getUsername, path: path },
+      data: formData,
+    });
+  }
+
+  /**
+   * 资源页面获取文件夹信息接口
+   * @returns 档案信息
+   */
+  static removeDBankFolder(folderID: number): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/DBank/folder",
+      method: "delete",
+      headers: JSONHeaders,
+      params: {
+        username: store.getters.getUsername,
+        folderID: folderID,
+      },
+    });
+  }
+
+  /**
+   * 资源页面获取文件夹信息接口
+   * @returns 档案信息
+   */
+  static removeDBankFile(fileID: number): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/DBank/file",
+      method: "delete",
+      headers: JSONHeaders,
+      params: {
+        username: store.getters.getUsername,
+        fileID: fileID,
+      },
+    });
+  }
+
+  /**
+   * 资源页面获取文件夹信息接口
+   * @returns 档案信息
+   */
+  static saveDBankFolder(folderForm: FolderForm): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/DBank/folder",
+      method: "post",
+      headers: JSONHeaders,
+      data: folderForm,
     });
   }
 }
