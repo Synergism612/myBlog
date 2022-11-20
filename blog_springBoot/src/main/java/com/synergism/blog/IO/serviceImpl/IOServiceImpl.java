@@ -18,7 +18,7 @@ public class IOServiceImpl implements IOService {
 
     @Override
     public String write(String parentPath, MultipartFile file) {
-        parentPath = parentPath + file.getOriginalFilename();
+        parentPath = parentPath + separator + file.getOriginalFilename();
         String path = base + parentPath;
         File dest = new File(path);
         if (dest.exists()) {

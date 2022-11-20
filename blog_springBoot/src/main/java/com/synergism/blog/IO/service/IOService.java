@@ -29,7 +29,7 @@ public interface IOService {
 
     /**
      * 创建文件夹
-     * @param parentPath 全路径
+     * @param path 全路径
      * @return 成功为真，反之为否
      */
     boolean mkdir(String path);
