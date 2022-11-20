@@ -27,12 +27,10 @@ import Upload, { Config } from "./Upload";
 import { defineComponent, reactive, ref, toRefs, watchEffect } from "vue";
 import Message from "src/utils/MessageUtil";
 import { UploadProps, UploadRequestOptions } from "element-plus";
-import { api } from "src/api/api";
 
 export default defineComponent({
   emits: {
-    "upload-url": null,
-    "close":null,
+    upload: null,
   },
   props: {
     uploadShow: {
@@ -73,15 +71,11 @@ export default defineComponent({
       return true;
     };
 
-    const upload = (options: UploadRequestOptions): Promise<unknown> => {
+    const upload = (options: UploadRequestOptions): void => {
       const file = options.file;
       const formData = new FormData();
       formData.append("file", file);
-      return api.saveWriteArticleIcon(formData).then(({ data }): void => {
-        viewData.show = false;
-        emit("upload-url", data);
-        emit("close", false);
-      });
+      emit("upload", formData);
     };
 
     return {

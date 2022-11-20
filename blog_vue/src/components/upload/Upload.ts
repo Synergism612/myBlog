@@ -19,10 +19,15 @@ export class Config {
   /**总文件大小 */
   size: number;
 
-  constructor() {
-    this.multiple = false;
-    this.limit = 1;
-    this.type = "image/jpeg";
-    this.size = 5;
+  constructor(
+    multiple?: boolean,
+    limit?: number,
+    type?: string,
+    size?: number
+  ) {
+    this.multiple = multiple || false;
+    this.limit = limit || 1;
+    this.type = type || "image/jpeg";
+    this.size = size || 5;
   }
 }
