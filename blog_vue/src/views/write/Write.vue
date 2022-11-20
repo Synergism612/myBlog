@@ -50,6 +50,11 @@
                             fit="cover"
                             :src="articleForm.icon"
                           />
+                          <el-input
+                            clearable
+                            v-model="articleForm.icon"
+                            placeholder="请输入图片链接或点击上方上传"
+                          />
                         </el-form-item>
                       </el-col>
                       <el-col :span="4">
@@ -168,11 +173,12 @@
       :show-close="false"
       class="favoriteBox"
       destroy-on-close
+      @close="saveElementClose"
     >
       <template #header>
         <div class="my-header">
           <div class="close">
-            <span class="title">新建收藏夹</span>
+            <span class="title">新建分类</span>
             <span @click="saveClassifyShow = false" class="click rotate">
               <font-awesome-icon :icon="['fas', 'times']" />
             </span>
@@ -208,11 +214,12 @@
       :show-close="false"
       class="favoriteBox"
       destroy-on-close
+      @close="saveElementClose"
     >
       <template #header>
         <div class="my-header">
           <div class="close">
-            <span class="title">新建收藏夹</span>
+            <span class="title">新建标签</span>
             <span @click="saveTagShow = false" class="click rotate">
               <font-awesome-icon :icon="['fas', 'times']" />
             </span>
@@ -226,7 +233,7 @@
             :model="tagForm"
             :rules="elementFormRules"
             :hide-required-asterisk="true"
-            ref="classifyFormRef"
+            ref="tagFormRef"
           >
             <el-form-item label="名称" prop="name">
               <el-input clearable v-model="tagForm.name" />
@@ -244,9 +251,9 @@
     </el-dialog>
     <Upload
       v-model:upload-show="uploadShow"
-      @upload-url="uploadURL"
+      @upload="upload"
       @close="uploadShow = false"
-    ></Upload>
+    />
   </div>
 </template>
 <script lang="ts">
@@ -436,12 +443,17 @@ export default defineComponent({
       viewData.uploadShow = true;
     };
 
-    const uploadURL = (url: string): void => {
-      if (url) {
-        console.log(url);
-        viewData.articleForm.icon = url;
-        console.log(viewData.articleForm);
+    const upload = (formData: FormData): void => {
+      if (formData) {
+        api.saveWriteArticleIcon(formData).then(({ data }): void => {
+          viewData.uploadShow = false;
+          viewData.articleForm.icon = data;
+        });
       }
+    };
+
+    const saveElementClose = (): void => {
+      viewData.saveElementClose();
     };
 
     onMounted((): void => {
@@ -464,7 +476,8 @@ export default defineComponent({
       saveClassify,
       saveTag,
       uploadArticleIcon,
-      uploadURL,
+      upload,
+      saveElementClose,
     };
   },
   components: { Menu, MdEditor, Upload },

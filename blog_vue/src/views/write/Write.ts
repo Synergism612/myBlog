@@ -79,6 +79,11 @@ export default class Write {
       );
     });
   }
+
+  public saveElementClose(): void {
+    this.classifyForm = new ClassifyForm();
+    this.tagForm = new TagForm();
+  }
 }
 
 export const toolbars = [
