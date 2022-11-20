@@ -101,7 +101,7 @@ public class GlobalException extends RuntimeException{
     @ExceptionHandler(value = IOErrorException.class)
     @ResponseBody
     public Result<String> IOErrorException(IOErrorException e){
-        return Result.error(CodeMsg.File_ERROR.fillArgs(e.getMessage()));
+        return Result.error(CodeMsg.FILE_ERROR.fillArgs(e.getMessage()));
     }
 
     /**
