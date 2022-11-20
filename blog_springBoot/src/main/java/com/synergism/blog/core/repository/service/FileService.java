@@ -66,5 +66,5 @@ public interface FileService extends IService<File> {
      * @param file 文件
      * @param resultPath 结果路径
      */
-    void saveToFolder(long folderID, MultipartFile file, String resultPath);
+    String saveToFolder(long folderID, MultipartFile file, String resultPath);
 }

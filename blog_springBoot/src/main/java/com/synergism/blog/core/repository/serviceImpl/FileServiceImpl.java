@@ -23,6 +23,10 @@ import java.util.List;
 @Service
 public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements FileService {
 
+    private final String separator = java.io.File.separator;
+
+    private final String hrefBase = "http://localhost:8000"+separator;
+
     private final FileMapper mapper;
 
     @Autowired
@@ -66,11 +70,13 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     }
 
     @Override
-    public void saveToFolder(long folderID, MultipartFile file, String resultPath) {
+    public String saveToFolder(long folderID, MultipartFile file, String resultPath) {
         String name = file.getOriginalFilename();
         if (name==null){
             throw new IllegalRequestException("文件名称错误");
         }
-        this.saveToFolder(folderID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')+1),file.getContentType(),file.getSize(),resultPath,resultPath);
+        String href = hrefBase+resultPath;
+        this.saveToFolder(folderID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),(file.getSize()),resultPath,href);
+        return href;
     }
 }
