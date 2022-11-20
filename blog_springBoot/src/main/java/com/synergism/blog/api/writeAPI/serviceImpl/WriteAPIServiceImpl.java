@@ -132,7 +132,6 @@ public class WriteAPIServiceImpl implements writeAPIService {
         }
         long folderID = folderService.update(repository.getId(), path);
         String resultPath = ioService.write(path, file);
-        fileService.saveToFolder(folderID,file,resultPath);
-        return Result.success();
+        return Result.success(fileService.saveToFolder(folderID,file,resultPath));
     }
 }
