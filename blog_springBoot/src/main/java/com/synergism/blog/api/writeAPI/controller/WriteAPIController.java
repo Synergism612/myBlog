@@ -60,7 +60,7 @@ public class WriteAPIController {
     @Validated
     @GetMapping("article")
     public Result<ArticleInformation> getArticle(
-            @RequestParam @NotEmpty(message = "账号不能为空") String username,
+            @RequestParam @NotEmpty(message = "用户不存在") String username,
             @RequestParam @NotNull(message = "文章id不能为空") @Min(value = 1,message = "文章不存在") Long articleID
     ){
         return service.getArticle(username,articleID);
@@ -115,10 +115,13 @@ public class WriteAPIController {
     @Validated
     @PostMapping("article/icon")
     public Result<String> saveArticleIcon(
-            @RequestParam String username,
+            @RequestParam @NotEmpty(message = "用户不存在") String username,
             @RequestPart MultipartFile file){
         String type = file.getContentType();
-        if (type!=null&&!type.equals("image/jpeg")){
+        if (type==null||type.isEmpty()){
+            return Result.error(CodeMsg.MESSAGE.fillArgs("类型不可知"));
+        }
+        if (!type.equals("image/jpeg")){
             return Result.error(CodeMsg.MESSAGE.fillArgs("只能为图片(image/jpeg)类型"));
         }
         return service.saveArticleIcon(username,file);
