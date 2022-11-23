@@ -17,6 +17,6 @@
       "src":["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/assets/less/el-avatar.less"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
