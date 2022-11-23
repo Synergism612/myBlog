@@ -303,8 +303,7 @@ export default defineComponent({
           trigger: "blur",
         },
         {
-          pattern:
-            /^https?:\/\/(.+\/)+.+(\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i,
+          pattern: /.+(.JPG|.jpg|.PNG|.png)$/,
           message: "必须为图片链接",
           trigger: "blur",
         },
