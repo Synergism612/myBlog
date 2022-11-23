@@ -17,7 +17,7 @@ public class ArticleForm {
     private Long id;
     //封面
     @NotEmpty(message = "封面不能为空")
-    @Pattern(regexp = "/^https?:\\/\\/(.+\\/)+.+(\\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i",message = "封面必须是图片链接")
+    @Pattern(regexp = ".+(.JPG|.jpg|.PNG|.png)$",message = "封面必须是图片链接")
     private String icon;
     //标题
     @NotEmpty(message = "标题不能为空")
@@ -41,6 +41,6 @@ public class ArticleForm {
     private Long classifyID;
     //标签id列表
     @NotNull(message = "文章需要至少一个标签")
-    @Min(value = 1,message = "标签不存在")
+    @Size(min = 1,message = "标签不存在")
     private List<Long> tagIDList;
 }

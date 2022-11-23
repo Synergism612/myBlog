@@ -121,8 +121,8 @@ public class WriteAPIController {
         if (type==null||type.isEmpty()){
             return Result.error(CodeMsg.MESSAGE.fillArgs("类型不可知"));
         }
-        if (!type.equals("image/jpeg")){
-            return Result.error(CodeMsg.MESSAGE.fillArgs("只能为图片(image/jpeg)类型"));
+        if (!type.equals("image/jpeg")&&!type.equals("image/png")){
+            return Result.error(CodeMsg.MESSAGE.fillArgs("只能为image/jpeg,image/png类型"));
         }
         return service.saveArticleIcon(username,file);
     }
