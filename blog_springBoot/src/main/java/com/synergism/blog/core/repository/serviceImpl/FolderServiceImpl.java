@@ -67,7 +67,7 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
 
     @Override
     public void saveToRepository(long repositoryID, String parentPath, String name) {
-        parentPath += separator + name;
+        parentPath += name;
         Folder folder = new Folder(parentPath, name, null);
         mapper.insert(folder);
         mapper.bundle(folder.getId(), repositoryID);
