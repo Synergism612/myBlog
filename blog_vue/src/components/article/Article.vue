@@ -10,13 +10,14 @@
             enter-active-class="animate__animated animate__zoomIn"
           >
             <div class="article frame">
-              <el-col
-                :span="4"
-                class="left"
-                :style="{
-                  backgroundImage: 'url(' + article.icon + ')',
-                }"
-              >
+              <el-col :span="4" class="left">
+                <el-avatar
+                  @click="toContent(article.id)"
+                  class="icon"
+                  shape="square"
+                  fit="cover"
+                  :src="article.icon"
+                />
               </el-col>
               <el-col :span="20" class="right">
                 <el-row class="title">

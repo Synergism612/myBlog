@@ -11,16 +11,19 @@
       transition: 1s;
 
       .left {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center 0;
-        border-radius: 0.2em;
-        cursor: pointer;
+        .icon {
+          cursor: pointer;
+          width: 12em;
+          height: 10em;
+        }
       }
 
       .right {
         padding-left: 0.5em;
-
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: space-between;
         .title {
           font-size: 1.5em;
           .lock {
