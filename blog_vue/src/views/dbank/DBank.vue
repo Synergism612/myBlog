@@ -154,6 +154,7 @@
     </el-dialog>
     <Upload
       v-model:upload-show="uploadShow"
+      :upload-config="config"
       @upload="upload"
       @close="uploadShow = false"
     />

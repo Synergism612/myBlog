@@ -59,10 +59,13 @@ export default defineComponent({
     };
 
     const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
-      console.log(rawFile.type);
-
-      if (rawFile.type !== viewData.config.type) {
-        Message.warningMessage("文件类型错误");
+      if (
+        viewData.config.type.indexOf(rawFile.type) === -1 &&
+        viewData.config.type !== "*"
+      ) {
+        Message.warningMessage(
+          "只允许上传" + viewData.config.type.toString() + "类型的文件"
+        );
         return false;
       } else if (rawFile.size / 1024 / 1024 > viewData.config.size) {
         Message.warningMessage("文件大小超过" + viewData.config.size + "MB!");

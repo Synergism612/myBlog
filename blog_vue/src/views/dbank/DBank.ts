@@ -37,7 +37,7 @@ export default class DBank {
     this.folderInformation = new FolderInformation();
     this.DataList = this.getDataArray();
     this.uploadShow = false;
-    this.config = new Config();
+    this.config = new Config(false, 10, "*", 20);
     this.folderForm = new FolderForm();
     this.saveFolderShow = false;
   }

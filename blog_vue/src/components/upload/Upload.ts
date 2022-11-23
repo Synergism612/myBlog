@@ -15,19 +15,19 @@ export class Config {
   /**文件数量 */
   limit: number;
   /**文件类型 */
-  type: string;
+  type: Array<string> | string;
   /**总文件大小 */
   size: number;
 
   constructor(
     multiple?: boolean,
     limit?: number,
-    type?: string,
+    type?: Array<string> | string,
     size?: number
   ) {
     this.multiple = multiple || false;
     this.limit = limit || 1;
-    this.type = type || "image/jpeg";
+    this.type = type || ["image/jpeg", "image/png"];
     this.size = size || 5;
   }
 }
