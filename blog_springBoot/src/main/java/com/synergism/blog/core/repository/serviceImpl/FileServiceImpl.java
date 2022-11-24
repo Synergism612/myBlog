@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -76,7 +78,8 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             throw new IllegalRequestException("文件名称错误");
         }
         String href = hrefBase+resultPath;
-        this.saveToFolder(repositoryID,folderID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),(file.getSize()/1024.0),resultPath,href);
+        double fileSizeMB = new BigDecimal(file.getSize()/1024/1024).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        this.saveToFolder(repositoryID,folderID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),fileSizeMB,resultPath,href);
         return href;
     }
 
@@ -87,7 +90,8 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             throw new IllegalRequestException("文件名称错误");
         }
         String href = hrefBase+resultPath;
-        this.saveToRepository(repositoryID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),(file.getSize()/1024.0),resultPath,href);
+        double fileSizeMB = new BigDecimal(file.getSize()/1024/1024).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        this.saveToRepository(repositoryID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),fileSizeMB,resultPath,href);
         return href;
     }
 }
