@@ -157,6 +157,7 @@
                           v-model="articleForm.body"
                           :showCodeRowNumber="true"
                           :toolbars="toolbars"
+                          @on-upload-img="onUploadImg"
                         />
                       </div>
                     </el-form-item>
@@ -455,6 +456,22 @@ export default defineComponent({
       viewData.saveElementClose();
     };
 
+    const onUploadImg = async (
+      files: Array<File>,
+      callback: (urls: Array<string>) => void
+    ) => {
+      const res = await Promise.all(
+        files.map((file) => {
+          const formData = new FormData();
+          formData.append("file", file);
+          return api.saveWriteArticleImg(formData);
+        })
+      ).then((values) => {
+        console.log(values);
+        callback(values.map((item) => item.data));
+      });
+    };
+
     onMounted((): void => {
       if (id > 0) {
         viewData.isUpdate = true;
@@ -477,6 +494,7 @@ export default defineComponent({
       uploadArticleIcon,
       upload,
       saveElementClose,
+      onUploadImg,
     };
   },
   components: { Menu, MdEditor, Upload },
