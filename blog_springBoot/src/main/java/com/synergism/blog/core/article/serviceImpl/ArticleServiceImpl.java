@@ -184,8 +184,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    public ArticleInformation getArticleInformationNotBodyByID(long articleID) {
+        return mapper.selectArticleInformationNotBodyByID(articleID);
+    }
+
+    @Override
     public ArticleInformation getArticleInformationByID(long articleID) {
-        return mapper.selectArticleInformationByArticleID(articleID);
+        return mapper.selectArticleInformationByID(articleID);
     }
 
     @Override

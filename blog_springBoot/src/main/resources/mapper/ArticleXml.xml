@@ -6,6 +6,7 @@
         <id column="id" property="id"/>
         <result column="icon" property="icon"/>
         <result column="title" property="title"/>
+        <result column="body" property="body"/>
         <result column="synopsis" property="synopsis"/>
         <result column="views" property="views"/>
         <result column="like_count" property="likeCount"/>
@@ -58,10 +59,14 @@
         ;
     </insert>
     <update id="updateViews">
-        update article set views=article.views+#{number} where id = #{articleID}
+        update article
+        set views=article.views + #{number}
+        where id = #{articleID}
     </update>
     <update id="updateLike">
-        update article set like_count=#{number} where id = #{articleID}
+        update article
+        set like_count=#{number}
+        where id = #{articleID}
     </update>
     <delete id="unbundled">
         # 删除用户文章对照表信息
@@ -261,7 +266,7 @@
                  t.name,
                  t.annotation
     </select>
-    <select id="selectArticleInformationByArticleID"
+    <select id="selectArticleInformationNotBodyByID"
             resultMap="ArticleInformationMap">
         select a.id,
                a.icon,
@@ -325,6 +330,74 @@
                  t.name,
                  t.annotation
     </select>
+
+    <select id="selectArticleInformationByID"
+            resultMap="ArticleInformationMap">
+        select a.id,
+               a.icon,
+               a.title,
+               a.body,
+               a.synopsis,
+               a.views,
+               a.like_count,
+               a.creation_time,
+               a.modify_time,
+               a.if_private,
+               u.nickname,
+               u.username,
+               cy.id         as classify_id,
+               cy.name       as classify_name,
+               cy.annotation as classify_annotation,
+               t.id          as tag_id,
+               t.name        as tag_name,
+               t.annotation  as tag_annotation,
+               count(ac.id)  as comment_count
+        from user_article ua
+                 left join(
+            `user` u ,
+                article a ,
+                article_classify acy ,
+                classify cy ,
+                article_tag atg ,
+                tag t
+            )
+                          on
+                                  ua.user_id = u.id
+                                  and
+                                  ua.article_id = a.id
+                                  and
+                                  acy.article_id = a.id
+                                  and
+                                  cy.id = acy.classify_id
+                                  and
+                                  atg.article_id = a.id
+                                  and
+                                  t.id = atg.tag_id
+                 left join
+             article_comment ac
+             on
+                 ac.article_id = a.id
+        where a.id = #{articleID}
+        group by a.id,
+                 a.icon,
+                 a.title,
+                 a.synopsis,
+                 a.views,
+                 a.like_count,
+                 a.creation_time,
+                 a.modify_time,
+                 a.if_private,
+                 u.nickname,
+                 u.username,
+                 cy.id,
+                 cy.name,
+                 cy.annotation,
+                 t.id,
+                 t.name,
+                 t.annotation
+    </select>
+
+
     <select id="selectArchiveByUserID" resultMap="ArchiveMap">
         select date_format(a.creation_time, '%Y-%m')    as month,
                date_format(a.creation_time, '%Y-%m-%d') as date,
@@ -376,5 +449,4 @@
         where u.username = #{username}
           and a.id = #{articleID}
     </select>
-
 </mapper>

@@ -22,6 +22,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 查询公开的所有文章
+     *
      * @return 文章信息列表
      */
     List<ArticleInformation> selectPublicArticleInformationList();
@@ -29,6 +30,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 查询用户下的所有文章
+     *
      * @param username 账号
      * @return 文章信息列表
      */
@@ -37,6 +39,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 查询与文章id对应文章相同分类的文章
+     *
      * @param id 文章id
      * @return 文章列表
      */
@@ -44,6 +47,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 查询与文章id对应的文章有相同标签的文章
+     *
      * @param id 文章id
      * @return 文章标签推荐列表
      */
@@ -51,28 +55,42 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 绑定新的文章
+     *
      * @param articleID 文章id
-     * @param userID 用户id
+     * @param userID    用户id
      */
     void bundle(long articleID, long userID, long classifyID, List<Long> tagIDList);
 
     /**
      * 解绑文章
+     *
      * @param articleIDList 文章id列表
-     * @param userID 用户id
+     * @param userID        用户id
      */
     void unbundled(List<Long> articleIDList, long userID);
 
     /**
      * 查询对应的文章信息
+     * 不包含主体
      * 具有唯一性
+     *
      * @param articleID 文章id
      * @return 文章信息
      */
-    ArticleInformation selectArticleInformationByArticleID(long articleID);
+    ArticleInformation selectArticleInformationNotBodyByID(long articleID);
+
+    /**
+     * 查询对应的文章信息
+     * 具有唯一性
+     *
+     * @param articleID 文章id
+     * @return 文章信息
+     */
+    ArticleInformation selectArticleInformationByID(long articleID);
 
     /**
      * 查询用户下的档案信息
+     *
      * @param userID 用户id
      * @return 档案
      */
@@ -80,13 +98,15 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 查询公共档案信息
+     *
      * @return 档案
      */
     List<Archive> selectPublicArchive();
 
     /**
      * 查询对应用户下的对应文章
-     * @param username 账号
+     *
+     * @param username  账号
      * @param articleID 文章id
      * @return 文章信息
      */
@@ -94,15 +114,18 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 更新阅读量
+     *
      * @param articleID 文章id
-     * @param number 数量
+     * @param number    数量
      */
     void updateViews(long articleID, long number);
 
     /**
      * 更新点赞量
+     *
      * @param articleID 文章id
-     * @param number 数量
+     * @param number    数量
      */
     void updateLike(long articleID, long number);
+
 }

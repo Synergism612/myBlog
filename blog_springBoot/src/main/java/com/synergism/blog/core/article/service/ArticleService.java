@@ -150,6 +150,14 @@ public interface ArticleService extends IService<Article> {
 
     /**
      * 查询对应文章信息
+     * 该方法不返回文章的具体内容
+     * @param articleID 文章id
+     * @return 文章信息
+     */
+    ArticleInformation getArticleInformationNotBodyByID(long articleID);
+
+    /**
+     * 查询对应文章信息
      * @param articleID 文章id
      * @return 文章信息
      */
