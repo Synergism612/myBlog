@@ -4,6 +4,7 @@ import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.core.user.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.user.entity.UserInformation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -43,4 +44,12 @@ public interface UserService extends IService<User> {
      * @return 作者信息
      */
     Author getAuthorByUsername(String username);
+
+    /**
+     * 修改用户头像
+     * @param username 账号
+     * @param href 链接
+     */
+    @Transactional
+    void updateIcon(String username, String href);
 }

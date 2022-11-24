@@ -50,4 +50,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         result.replenish();
         return result;
     }
+
+    @Override
+    public void updateIcon(String username, String href) {
+        mapper.updateIcon(username,href);
+    }
 }

@@ -29,4 +29,11 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 作者信息
      */
     Author selectAuthorByUsername(String username);
+
+    /**
+     * 更新用户头像
+     * @param username 账号
+     * @param href 链接
+     */
+    void updateIcon(String username, String href);
 }

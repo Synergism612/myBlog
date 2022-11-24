@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.synergism.blog.core.user.mapper.UserMapper">
+    <update id="updateIcon">
+        update user set icon = #{href} where username = #{username}
+    </update>
     <select id="selectAuthorByArticleID" resultType="com.synergism.blog.core.user.entity.Author">
         select
             u.id,
             u.icon,
             u.nickname,
             u.username,
-            u.password,
             u.birthday,
             u.sex,
             u.intro,
@@ -40,7 +42,6 @@
             u.icon,
             u.nickname,
             u.username,
-            u.password,
             u.birthday,
             u.sex,
             u.intro,
@@ -53,7 +54,6 @@
             u.icon,
             u.nickname,
             u.username,
-            u.password,
             u.birthday,
             u.sex,
             u.intro,
@@ -63,11 +63,7 @@
             count(un.id) as notable_count,
             count(un2.id) as fans_count
         from
-            user_article ua
-                join
             `user` u
-            on
-                ua.user_id = u.id
                 join
             user_article ua2
             on
@@ -80,13 +76,13 @@
             user_notable un2
             on
                 un2.notable_id = u.id
-        where u.username = #{username}
+        where
+            u.username = #{username}
         group by
             u.id,
             u.icon,
             u.nickname,
             u.username,
-            u.password,
             u.birthday,
             u.sex,
             u.intro,
