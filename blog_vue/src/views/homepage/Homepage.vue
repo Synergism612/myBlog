@@ -37,7 +37,9 @@
                     <el-col :span="12">
                       <el-col :span="24" class="icon">
                         <el-avatar :size="200" :src="icon" />
-                        <div>更改头像</div>
+                        <span class="click" @click="uploadShow = true">
+                          更改头像
+                        </span>
                       </el-col>
                     </el-col>
                     <el-col :span="12">
@@ -329,12 +331,18 @@
         </el-row>
       </el-dialog>
     </div>
+    <Upload
+      v-model:upload-show="uploadShow"
+      @upload="upload"
+      @close="uploadShow = false"
+    />
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, toRefs } from "vue";
 import Menu from "src/components/menu/Menu.vue";
 import Homepage from "./Homepage";
+import Upload from "src/components/upload/Upload.vue";
 import Enshrine from "src/components/enshrine/Enshrine.vue";
 import Message from "src/utils/MessageUtil";
 import { api } from "src/api/api";
@@ -489,6 +497,14 @@ export default defineComponent({
         viewData.init();
       });
     };
+    const upload = (formData: FormData): void => {
+      if (formData) {
+        api.saveHomepageUserInformationIcon(formData).then(({ data }): void => {
+          viewData.uploadShow = false;
+          viewData.icon = data;
+        });
+      }
+    };
 
     onMounted((): void => {
       viewData.init();
@@ -510,9 +526,10 @@ export default defineComponent({
       userInformationFormRules,
       userInformationFormRef,
       favoriteFormRef,
+      upload,
     };
   },
-  components: { Menu, Enshrine },
+  components: { Menu, Enshrine, Upload },
 });
 </script>
 <style lang="less">

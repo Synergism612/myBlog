@@ -12,7 +12,7 @@ export default class Homepage {
   username: string;
 
   changeShow: boolean;
-  //头像
+
   icon: string;
 
   userInformationForm: UserInformationForm;
@@ -31,13 +31,15 @@ export default class Homepage {
   favoriteForm: FavoriteForm;
   isFavoriteFormEdit: boolean;
 
+  uploadShow: boolean;
+
   constructor() {
     this.author = new Author();
     this.username = store.getters.getUsername;
     this.changeShow = true;
-    this.icon = "";
 
     this.userInformationForm = new UserInformationForm();
+    this.icon = "";
 
     this.tabsName = "first";
     this.collapseName = "";
@@ -51,6 +53,8 @@ export default class Homepage {
     this.saveFavoriteShow = false;
     this.favoriteForm = new FavoriteForm();
     this.isFavoriteFormEdit = false;
+
+    this.uploadShow = false;
   }
 
   public init(): void {
