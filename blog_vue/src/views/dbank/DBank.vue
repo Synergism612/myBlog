@@ -246,18 +246,16 @@ export default defineComponent({
     };
 
     const refresh = (): void => {
-      if (viewData.path.indexOf("/") != -1) {
-        if (viewData.path.split("/").length <= 2) {
-          getRepository();
-        } else {
-          open("", viewData.folderInformation.path);
-        }
+      const array = viewData.path.split(RegExp("/|\\\\")).filter((s) => {
+        return s;
+      });
+      console.log(array);
+
+      if (array.length < 2) {
+        console.log(array.length);
+        getRepository();
       } else {
-        if (viewData.path.split("\\").length <= 2) {
-          getRepository();
-        } else {
-          open("", viewData.folderInformation.path);
-        }
+        open("", viewData.folderInformation.path);
       }
     };
 
