@@ -76,7 +76,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             throw new IllegalRequestException("文件名称错误");
         }
         String href = hrefBase+resultPath;
-        this.saveToFolder(repositoryID,folderID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),(file.getSize()),resultPath,href);
+        this.saveToFolder(repositoryID,folderID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),(file.getSize()/1024.0),resultPath,href);
         return href;
     }
 
@@ -87,7 +87,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             throw new IllegalRequestException("文件名称错误");
         }
         String href = hrefBase+resultPath;
-        this.saveToRepository(repositoryID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),(file.getSize()),resultPath,href);
+        this.saveToRepository(repositoryID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),(file.getSize()/1024.0),resultPath,href);
         return href;
     }
 }
