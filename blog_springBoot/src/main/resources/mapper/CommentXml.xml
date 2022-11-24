@@ -8,7 +8,7 @@
         values (#{userID}, #{commentID});
     </insert>
     <update id="updateLike">
-        update comment set like_count=#{number} where id = #{articleID}
+        update comment set like_count=#{number} where id = #{commentID}
     </update>
 
     <select id="selectAllCommentInformationList"
