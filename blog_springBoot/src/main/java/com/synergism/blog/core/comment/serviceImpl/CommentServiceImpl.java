@@ -105,4 +105,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public boolean isExist(long commentID) {
         return this.getOne(new LambdaQueryWrapper<Comment>().eq(Comment::getId, commentID)) != null;
     }
+
+    @Override
+    public void updateLike(long commentID, long number) {
+        mapper.updateLike(commentID,number);
+    }
 }

@@ -7,6 +7,9 @@
         INSERT INTO user_comment(user_id, comment_id)
         values (#{userID}, #{commentID});
     </insert>
+    <update id="updateLike">
+        update comment set like_count=#{number} where id = #{articleID}
+    </update>
 
     <select id="selectAllCommentInformationList"
             resultType="com.synergism.blog.core.comment.entity.CommentInformation">

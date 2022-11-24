@@ -10,6 +10,7 @@ import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -67,8 +68,9 @@ public class PandectAPIController {
      * @param username 账号 可以为空
      * @return 分类列表
      */
+    @Validated
     @GetMapping("classify")
-    public Result<List<Classify>> getClassifyList(@RequestParam String username) {
+    public Result<List<Classify>> getClassifyList(@RequestParam @NotEmpty(message = "用户不存在") String username) {
         return service.getClassifyList(username);
     }
 
@@ -78,8 +80,9 @@ public class PandectAPIController {
      * @param username 账号 可以为空
      * @return 标签列表
      */
+    @Validated
     @GetMapping("tag")
-    public Result<List<Tag>> getTag(@RequestParam String username) {
+    public Result<List<Tag>> getTag(@RequestParam @NotEmpty(message = "用户不存在") String username) {
         return service.getTagList(username);
     }
 }

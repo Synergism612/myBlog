@@ -146,6 +146,7 @@ public class ContentAPIController {
      * @return 成功
      */
     //需要登录验证
+    @Validated
     @PostMapping("comment")
     public Result<String> saveComment(@RequestBody @Valid CommentForm commentForm) {
         if (commentForm.getRootID() == -1) commentForm.setRootID(null);
@@ -160,6 +161,7 @@ public class ContentAPIController {
      * @return 点过为真，反之为假
      */
     //需要登录验证
+    @Validated
     @GetMapping("article/like")
     public Result<Boolean> getArticleLike(
             @RequestParam @NotEmpty(message = "用户不存在") String username,
@@ -177,6 +179,7 @@ public class ContentAPIController {
      * @return 成功
      */
     //需要登录验证
+    @Validated
     @PatchMapping("article/like")
     public Result<String> updateArticleLike(
             @RequestParam @NotEmpty(message = "用户不存在") String username,
@@ -194,6 +197,7 @@ public class ContentAPIController {
      * @return 评论id列表
      */
     //需要登录验证
+    @Validated
     @GetMapping("comment/like")
     public Result<List<Long>> getCommentLike(
             @RequestParam @NotEmpty(message = "用户不存在") String username
@@ -209,6 +213,7 @@ public class ContentAPIController {
      * @return 成功
      */
     //需要登录验证
+    @Validated
     @PatchMapping("comment/like")
     public Result<String> updateCommentLike(
             @RequestParam @NotEmpty(message = "用户不存在") String username,

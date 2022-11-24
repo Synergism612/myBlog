@@ -67,6 +67,7 @@ public class HomepageAPIController {
     }
 
     //需要登录验证
+    @Validated
     @GetMapping("favorite")
     public Result<List<FavoriteInformation>> getMyFavoriteList(
             @RequestParam @NotEmpty(message = "账号不能为空") String username
@@ -88,6 +89,7 @@ public class HomepageAPIController {
     }
 
     //需要登录验证
+    @Validated
     @DeleteMapping("favorite")
     public Result<String> removeFavorite(
             @RequestParam @NotEmpty(message = "账号不能为空") String username,

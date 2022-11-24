@@ -1,6 +1,7 @@
 package com.synergism.blog.core.like.service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -42,5 +43,17 @@ public interface LikeService {
      * @param state 状态
      */
     void likeComment(String username, long commentID,boolean state);
+
+    /**
+     * 获取文章点赞信息
+     * @return Map<文章id,点赞数>
+     */
+    Map<Long,Long> getArticleLikeInformation();
+
+    /**
+     * 获取文章点赞信息
+     * @return Map<文章id,点赞数>
+     */
+    Map<Long,Long> getCommentLikeInformation();
 
 }

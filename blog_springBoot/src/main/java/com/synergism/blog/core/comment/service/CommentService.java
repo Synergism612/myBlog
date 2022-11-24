@@ -55,4 +55,11 @@ public interface CommentService extends IService<Comment> {
      * @return 存在为真，反之为假
      */
     boolean isExist(long commentID);
+
+    /**
+     * 更新点赞数
+     * @param commentID 评论id
+     * @param number 更新数
+     */
+    void updateLike(long commentID, long number);
 }

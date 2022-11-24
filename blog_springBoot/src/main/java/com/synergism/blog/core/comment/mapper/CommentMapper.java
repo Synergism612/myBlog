@@ -37,4 +37,11 @@ public interface CommentMapper extends BaseMapper<Comment> {
      * @param userID 用户id
      */
     void bundle(long commentID, long articleID, long userID);
+
+    /**
+     * 更新点赞数
+     * @param commentID 评论id
+     * @param number 点赞量
+     */
+    void updateLike(long commentID, long number);
 }
