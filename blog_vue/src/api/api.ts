@@ -157,10 +157,13 @@ export class api {
    * 首页用户信息接口
    * @returns Result[用户信息]
    */
-  static getIndexUserInformation(): Promise<AxiosResponse> {
+  static getIndexAuthor(): Promise<AxiosResponse> {
     return axios({
-      url: "/api/blog/index/userInfo",
+      url: "/api/blog/index/author",
       method: "get",
+      params: {
+        username: store.getters.getUsername,
+      },
     });
   }
 
@@ -604,6 +607,23 @@ export class api {
       data: userInformationForm,
     });
   }
+
+  /**
+   * 个人页面保存头像接口
+   * @param formData 文件信息
+   * @returns 成功
+   */
+  static saveHomepageUserInformationIcon(
+    formData: FormData
+  ): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/homepage/user/icon",
+      method: "post",
+      params: { username: store.getters.getUsername },
+      data: formData,
+    });
+  }
+
   /**
    * 创作页面用户分类获取接口
    * @returns 分类列表
@@ -706,6 +726,20 @@ export class api {
   static saveWriteArticleIcon(formData: FormData): Promise<AxiosResponse> {
     return axios({
       url: "/api/blog/write/article/icon",
+      method: "post",
+      params: { username: store.getters.getUsername },
+      data: formData,
+    });
+  }
+
+  /**
+   * 创作页面保存封面接口
+   * @param formData 文件信息
+   * @returns 成功
+   */
+  static saveWriteArticleImg(formData: FormData): Promise<AxiosResponse> {
+    return axios({
+      url: "/api/blog/write/article/img",
       method: "post",
       params: { username: store.getters.getUsername },
       data: formData,
