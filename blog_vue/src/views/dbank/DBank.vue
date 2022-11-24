@@ -28,88 +28,106 @@
           <el-row justify="space-around">
             <!-- 主体框架 -->
             <el-col :xs="24" :sm="24" :md="24" :lg="20">
-              <div v-if="isLogin" class="body frame">
-                <el-row>
-                  <el-col :span="24">
-                    <div class="button">
-                      <span class="click" @click="back">
-                        <font-awesome-icon :icon="['fas', 'arrow-left']" />
-                        返回上一级
-                      </span>
-                      <span class="click" @click="uploadShow = true">
-                        <font-awesome-icon :icon="['fas', 'upload']" />
-                        上传文件
-                      </span>
-                      <span class="click" @click="saveFolderShow = true">
-                        <font-awesome-icon :icon="['fas', 'folder-plus']" />
-                        新建文件夹
-                      </span>
-                      <span class="click" @click="refresh">
-                        <font-awesome-icon :icon="['fas', 'sync']" />
-                        刷新
-                      </span>
-                    </div>
-                  </el-col>
-                </el-row>
-                <el-divider />
-                <el-row>
-                  <el-col :span="24">
-                    <div class="path">
-                      当前路径：
-                      <span class="click" @click="getRepository">仓库 | </span>
-                      {{ path }}
-                    </div>
-                  </el-col>
-                </el-row>
-                <el-divider />
-                <el-row>
-                  <el-col :span="24">
-                    <div class="file">
-                      <el-table :data="DataList" style="width: 100%" stripe>
-                        <el-table-column
-                          fixed
-                          prop="name"
-                          label="名称"
-                          width="150"
-                        />
-                        <el-table-column
-                          prop="suffix"
-                          label="后缀"
-                          width="120"
-                        />
-                        <el-table-column prop="type" label="类型" width="120" />
-                        <el-table-column prop="size" label="大小" width="120" />
-                        <el-table-column prop="href" label="链接" width="520" />
-                        <el-table-column
-                          prop="creationTime"
-                          label="创建时间"
-                          width="200"
-                        />
-                        <el-table-column fixed="right" label="选项" width="120">
-                          <template v-slot="scope">
-                            <el-button
-                              link
-                              type="primary"
-                              size="small"
-                              @click="open(scope.row.href, scope.row.path)"
-                            >
-                              打开
-                            </el-button>
-                            <el-button
-                              link
-                              type="primary"
-                              size="small"
-                              @click="remove(scope.row.id, scope.row.href)"
-                            >
-                              删除
-                            </el-button>
-                          </template>
-                        </el-table-column>
-                      </el-table>
-                    </div>
-                  </el-col>
-                </el-row>
-              </div>
+              <transition
+                appear
+                appear-active-class="animate__animated animate__backInUp"
+              >
+                <div v-if="isLogin" class="body frame">
+                  <el-row>
+                    <el-col :span="24">
+                      <div class="button">
+                        <span class="click" @click="back">
+                          <font-awesome-icon :icon="['fas', 'arrow-left']" />
+                          返回上一级
+                        </span>
+                        <span class="click" @click="uploadShow = true">
+                          <font-awesome-icon :icon="['fas', 'upload']" />
+                          上传文件
+                        </span>
+                        <span class="click" @click="saveFolderShow = true">
+                          <font-awesome-icon :icon="['fas', 'folder-plus']" />
+                          新建文件夹
+                        </span>
+                        <span class="click" @click="refresh">
+                          <font-awesome-icon :icon="['fas', 'sync']" />
+                          刷新
+                        </span>
+                      </div>
+                    </el-col>
+                  </el-row>
+                  <el-divider />
+                  <el-row>
+                    <el-col :span="24">
+                      <div class="path">
+                        当前路径：
+                        <span class="click" @click="getRepository"
+                          >仓库 |
+                        </span>
+                        {{ path }}
+                      </div>
+                    </el-col>
+                  </el-row>
+                  <el-divider />
+                  <el-row>
+                    <el-col :span="24">
+                      <div class="file">
+                        <el-table :data="DataList" style="width: 100%" stripe>
+                          <el-table-column
+                            fixed
+                            prop="name"
+                            label="名称"
+                            min-width="150"
+                          />
+                          <el-table-column
+                            prop="suffix"
+                            label="后缀"
+                            min-width="120"
+                          />
+                          <el-table-column
+                            prop="size"
+                            label="大小"
+                            min-width="100"
+                          />
+                          <el-table-column
+                            prop="href"
+                            label="链接"
+                            min-width="500"
+                          />
+                          <el-table-column
+                            prop="creationTime"
+                            label="创建时间"
+                            min-width="150"
+                          />
+                          <el-table-column
+                            fixed="right"
+                            label="选项"
+                            min-width="120"
+                          >
+                            <template v-slot="scope">
+                              <el-button
+                                link
+                                type="primary"
+                                size="small"
+                                @click="open(scope.row.href, scope.row.path)"
+                              >
+                                打开
+                              </el-button>
+                              <el-button
+                                link
+                                type="primary"
+                                size="small"
+                                @click="remove(scope.row.id, scope.row.href)"
+                              >
+                                删除
+                              </el-button>
+                            </template>
+                          </el-table-column>
+                        </el-table>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </transition>
               <div v-if="!isLogin" style="text-align: center">您未登录</div>
             </el-col>
           </el-row>
