@@ -22,7 +22,7 @@ public class UserInformation {
     //账号
     private String username;
     //生日
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     private Date birthday;
     //性别代码
     private Integer sex;
