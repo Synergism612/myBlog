@@ -107,7 +107,7 @@
                               </span>
                             </li>
                           </ul>
-                          <ul v-if="classifyNominate[0].id == -1">
+                          <ul v-if="classifyNominate[0].id === -1">
                             <li>该分类下没有其他文章</li>
                           </ul>
                         </el-col>
@@ -128,7 +128,7 @@
                               </span>
                             </li>
                           </ul>
-                          <ul v-if="classifyNominate[0].id != -1">
+                          <ul v-if="tagNominate[0].id === -1">
                             <li>没有查到含有相同标签的其他文章</li>
                           </ul>
                         </el-col>
@@ -349,8 +349,12 @@ export default defineComponent({
     };
 
     const likeArticle = (): void => {
-      viewData.likeState = !viewData.likeState;
-      viewData.updateArticleLike();
+      if (viewData.isLogin) {
+        viewData.likeState = !viewData.likeState;
+        viewData.updateArticleLike();
+      } else {
+        Message.warningMessage("您未登录");
+      }
     };
 
     onMounted((): void => {
