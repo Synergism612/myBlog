@@ -107,7 +107,7 @@
                               </span>
                             </li>
                           </ul>
-                          <ul v-if="classifyNominate[0].id === -1">
+                          <ul v-if="classifyNominate[0].id == -1">
                             <li>该分类下没有其他文章</li>
                           </ul>
                         </el-col>
@@ -115,7 +115,7 @@
                       <el-row>
                         <el-col :span="24">
                           标签匹配文章
-                          <ul v-if="tagNominate[0].id != -1">
+                          <ul v-if="tagNominate[0].id !== -1">
                             <li
                               v-for="nominate in tagNominate"
                               :key="nominate.id"
@@ -149,21 +149,20 @@
                   <!-- 作者信息 -->
                   <el-col :xs="0" :sm="4" :md="4" :lg="4">
                     <div class="author">
-                      <div
-                        class="icon"
-                        :style="{
-                          backgroundImage: 'url(' + author.icon + ')',
-                        }"
-                      ></div>
-                      <span>昵称:{{ author.nickname }}</span>
-                      <span>性别:{{ author.sexName }}</span>
-                      <span> 生日:{{ author.birthday || "不愿透露" }} </span>
-                      <span>园龄:{{ author.upToNow }}</span>
-                      <span>简介:{{ author.intro }}</span>
-                      <span>文章数:{{ author.articleCount }}</span>
-                      <span>关注数:{{ author.notableCount }}</span>
-                      <span>粉丝数:{{ author.fansCount }}</span>
-                      <br />
+                      <div>
+                        <el-avatar :size="200" :src="author.icon" />
+                      </div>
+                      <div class="info">
+                        <span>昵称:{{ author.nickname }}</span>
+                        <span>性别:{{ author.sexName }}</span>
+                        <span>文章数:{{ author.articleCount }}</span>
+                        <span>关注数:{{ author.notableCount }}</span>
+                        <span>粉丝数:{{ author.fansCount }}</span>
+                        <span>园龄:{{ author.upToNow }}</span>
+                        <span> 生日:{{ author.birthday || "不愿透露" }} </span>
+                        <span>简介:{{ author.intro }}</span>
+                        <br />
+                      </div>
                       <span>
                         <text class="click">关注他</text>
                       </span>
