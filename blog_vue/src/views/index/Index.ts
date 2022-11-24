@@ -1,9 +1,8 @@
+import Author from "src/model/user/Author";
 import { api } from "src/api/api";
 import ClassifyInformation from "src/model/classify/ClassifyInformation";
 import TagInformation from "src/model/tag/TagInformation";
-import UserInformation from "src/model/user/UserInformation";
 import { store } from "src/store";
-import StringUtil from "src/utils/StringUtil";
 
 export default class Index {
   /**是否已经登录*/
@@ -12,14 +11,14 @@ export default class Index {
   /**日历日期*/
   calender: Date;
   /**用户信息*/
-  userInfo: UserInformation;
+  author: Author;
   /**标签云列表*/
   tagInformationList: Array<TagInformation>;
   /**分类云列表 */
   classifyInformationList: Array<ClassifyInformation>;
 
   constructor() {
-    this.userInfo = store.getters.getUser;
+    this.author = new Author();
     this.isLogin = store.getters.getIsLogin;
     this.calender = new Date();
     this.tagInformationList = [new TagInformation()];
@@ -27,13 +26,11 @@ export default class Index {
   }
 
   public init(): void {
-    const userInfo = (): void => {
-      if (!this.isLogin) {
-        api.getIndexUserInformation().then(({ data }): void => {
-          this.userInfo = data;
-          this.isLogin = false;
-        });
-      }
+    const author = (): void => {
+      api.getIndexAuthor().then(({ data }): void => {
+        this.author = data;
+        this.isLogin = false;
+      });
     };
 
     const tags = (): void => {
@@ -47,7 +44,9 @@ export default class Index {
         this.classifyInformationList = data;
       });
     };
-    userInfo();
+    if (this.isLogin) {
+      author();
+    }
     tags();
     classify();
   }

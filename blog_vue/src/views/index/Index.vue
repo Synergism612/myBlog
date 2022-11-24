@@ -46,21 +46,32 @@
                       <!-- 用户信息 -->
                       <el-row class="user frame">
                         <el-col :span="24">
-                          <div
-                            class="icon"
-                            :style="{
-                              backgroundImage: 'url(' + userInfo.icon + ')',
-                            }"
-                          ></div>
-                        </el-col>
-                        <el-col :span="24">
-                          <div class="name">
-                            {{ userInfo.nickname }}
+                          <div class="author" v-if="author.username">
+                            <div>
+                              <el-avatar :size="200" :src="author.icon" />
+                            </div>
+                            <div class="info">
+                              <span>昵称:{{ author.nickname }}</span>
+                              <span>性别:{{ author.sexName }}</span>
+                              <span>文章数:{{ author.articleCount }}</span>
+                              <span>关注数:{{ author.notableCount }}</span>
+                              <span>粉丝数:{{ author.fansCount }}</span>
+                              <span>园龄:{{ author.upToNow }}</span>
+                              <span>
+                                生日:{{ author.birthday || "不愿透露" }}
+                              </span>
+                              <span>简介:{{ author.intro }}</span>
+                              <br />
+                            </div>
+                            <span>
+                              <text class="click">我的关注</text>
+                            </span>
                           </div>
-                        </el-col>
-                        <el-col :span="24">
-                          <div class="intro">
-                            {{ userInfo.intro }}
+                          <div
+                            style="text-align: center"
+                            v-if="!author.username"
+                          >
+                            您未登录
                           </div>
                         </el-col>
                       </el-row>
