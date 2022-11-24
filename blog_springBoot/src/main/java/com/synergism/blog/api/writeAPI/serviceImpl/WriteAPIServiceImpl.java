@@ -1,7 +1,6 @@
 package com.synergism.blog.api.writeAPI.serviceImpl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.synergism.blog.IO.service.IOService;
+import com.synergism.blog.api.dbankAPI.service.DBankAPIService;
 import com.synergism.blog.api.writeAPI.entity.ArticleForm;
 import com.synergism.blog.api.writeAPI.entity.ClassifyForm;
 import com.synergism.blog.api.writeAPI.entity.TagForm;
@@ -11,14 +10,9 @@ import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.article.service.ArticleService;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.classify.service.ClassifyService;
-import com.synergism.blog.core.repository.entity.Repository;
-import com.synergism.blog.core.repository.service.FileService;
-import com.synergism.blog.core.repository.service.FolderService;
-import com.synergism.blog.core.repository.service.RepositoryService;
 import com.synergism.blog.core.tag.entity.Tag;
 import com.synergism.blog.core.tag.service.TagService;
 import com.synergism.blog.core.user.service.UserService;
-import com.synergism.blog.exception.custom.IOErrorException;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,21 +33,15 @@ public class WriteAPIServiceImpl implements writeAPIService {
     private final ArticleService articleService;
     private final ClassifyService classifyService;
     private final TagService tagService;
-    private final RepositoryService repositoryService;
-    private final FolderService folderService;
-    private final FileService fileService;
-    private final IOService ioService;
+    private final DBankAPIService dBankAPIService;
 
     @Autowired
-    public WriteAPIServiceImpl(UserService userService, ArticleService articleService, ClassifyService classifyService, TagService tagService, RepositoryService repositoryService, FolderService folderService, FileService fileService, IOService ioService) {
+    public WriteAPIServiceImpl(UserService userService, ArticleService articleService, ClassifyService classifyService, TagService tagService, DBankAPIService dBankAPIService) {
         this.userService = userService;
         this.articleService = articleService;
         this.classifyService = classifyService;
         this.tagService = tagService;
-        this.repositoryService = repositoryService;
-        this.folderService = folderService;
-        this.fileService = fileService;
-        this.ioService = ioService;
+        this.dBankAPIService = dBankAPIService;
     }
 
     @Override
@@ -94,11 +82,11 @@ public class WriteAPIServiceImpl implements writeAPIService {
         if (article == null) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         }
-        article.update(article.getIcon(),
-                article.getTitle(),
-                article.getBody(),
-                article.getSynopsis(),
-                article.getIfPrivate());
+        article.update(articleForm.getIcon(),
+                articleForm.getTitle(),
+                articleForm.getBody(),
+                articleForm.getSynopsis(),
+                articleForm.getIfPrivate());
         return articleService.updateById(article)
                 ? Result.success()
                 : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
@@ -125,20 +113,8 @@ public class WriteAPIServiceImpl implements writeAPIService {
     }
 
     @Override
-    public Result<String> saveArticleIcon(String username, MultipartFile file) {
-        String path = username + separator + "blog" + separator + "icon";
-        Repository repository = repositoryService.getOne(username);
-        if (repository == null) {
-            return Result.error(CodeMsg.BIND_ERROR.fillArgs("仓库不存在"));
-        }
-        long folderID = folderService.update(repository.getId(), path);
-        String resultPath = ioService.write(path, file);
-        String href = "";
-        try {
-            href = fileService.saveToFolder(repository.getId(),folderID, file, resultPath);
-        }catch (Exception e){
-            ioService.delete(resultPath);
-        }
-        return Result.success(href);
+    public Result<String> saveArticleImg(String username, MultipartFile file, String type) {
+        String path = username + separator + "blog" + separator + type;
+        return dBankAPIService.autoSaveFile(username, file, path);
     }
 }

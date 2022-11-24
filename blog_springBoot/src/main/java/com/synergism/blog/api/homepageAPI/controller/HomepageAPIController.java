@@ -10,6 +10,7 @@ import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -104,4 +105,25 @@ public class HomepageAPIController {
         return service.updateUser(userInformationForm);
     }
 
+    /**
+     * 上传用户头像接口
+     *
+     * @param username 账号
+     * @param file     图片文件
+     * @return 成功
+     */
+    @Validated
+    @PostMapping("user/icon")
+    public Result<String> saveArticleImg(
+            @RequestParam @NotEmpty(message = "用户不存在") String username,
+            @RequestPart MultipartFile file) {
+        String contentType = file.getContentType();
+        if (contentType == null || contentType.isEmpty()) {
+            return Result.error(CodeMsg.MESSAGE.fillArgs("类型不可知"));
+        }
+        if (!contentType.equals("image/jpeg") && !contentType.equals("image/png")) {
+            return Result.error(CodeMsg.MESSAGE.fillArgs("只能为image/jpeg,image/png类型"));
+        }
+        return service.saveUserIcon(username, file);
+    }
 }

@@ -63,10 +63,10 @@ public interface writeAPIService {
     Result<String> saveTag(TagForm tagForm);
 
     /**
-     * 保存文章头像
+     * 保存文章图片
      * @param username 账号
      * @param file 文件
      * @return 图片链接
      */
-    Result<String> saveArticleIcon(String username, MultipartFile file);
+    Result<String> saveArticleImg(String username, MultipartFile file,String type);
 }

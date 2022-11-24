@@ -32,7 +32,7 @@ public interface DBankAPIService {
      * @param file     文件
      * @return 成功
      */
-    Result<FolderInformation> saveFile(String username, String path, MultipartFile file);
+    Result<String> saveFile(String username, String path, MultipartFile file);
 
     /**
      * 删除文件夹
@@ -58,4 +58,13 @@ public interface DBankAPIService {
      * @return 成功
      */
     Result<String> saveFolder(FolderForm folderForm);
+
+    /**
+     * 自动保存文件
+     * @param username 账号
+     * @param file 文件
+     * @param path 路径
+     * @return href
+     */
+    Result<String> autoSaveFile(String username, MultipartFile file, String path);
 }

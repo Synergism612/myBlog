@@ -1,9 +1,11 @@
 package com.synergism.blog.api.dbankAPI.serviceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.synergism.blog.IO.service.IOService;
 import com.synergism.blog.api.dbankAPI.entity.FolderForm;
 import com.synergism.blog.api.dbankAPI.service.DBankAPIService;
 import com.synergism.blog.core.repository.entity.File;
+import com.synergism.blog.core.repository.entity.Folder;
 import com.synergism.blog.core.repository.entity.FolderInformation;
 import com.synergism.blog.core.repository.entity.Repository;
 import com.synergism.blog.core.repository.service.FileService;
@@ -54,7 +56,7 @@ public class DBankAPIServiceImpl implements DBankAPIService {
     }
 
     @Override
-    public Result<FolderInformation> saveFile(String username, String path, MultipartFile file) {
+    public Result<String> saveFile(String username, String path, MultipartFile file) {
         Repository repository = repositoryService.getOne(username);
         String resultPath;
         if (repository == null) {
@@ -124,5 +126,28 @@ public class DBankAPIServiceImpl implements DBankAPIService {
             ioService.mkdir(folderForm.getParentPath(), folderForm.getName());
         }
         return Result.success();
+    }
+
+    @Override
+    public Result<String> autoSaveFile(String username, MultipartFile file, String path) {
+        Repository repository = repositoryService.getOne(username);
+        if (repository == null) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("仓库不存在"));
+        }
+        Folder folder = folderService.getOne(new LambdaQueryWrapper<Folder>().eq(Folder::getPath, path));
+        Long folderID;
+        if (folder == null) {
+            folderID = folderService.update(repository.getId(), path);
+        }else{
+            folderID = folder.getId();
+        }
+        String resultPath = ioService.write(path, file);
+        String href = "";
+        try {
+            href = fileService.saveToFolder(repository.getId(), folderID, file, resultPath);
+        } catch (Exception e) {
+            ioService.delete(resultPath);
+        }
+        return Result.success(href);
     }
 }

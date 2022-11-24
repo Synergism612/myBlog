@@ -8,6 +8,7 @@ import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.classify.service.ClassifyService;
 import com.synergism.blog.core.tag.entity.TagInformation;
 import com.synergism.blog.core.tag.service.TagService;
+import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.core.user.entity.UserInformation;
 import com.synergism.blog.core.user.service.UserService;
 import com.synergism.blog.result.CodeMsg;
@@ -34,8 +35,8 @@ public class IndexAPIServiceImpl implements IndexAPIService {
     }
 
     @Override
-    public Result<UserInformation> getIndexUserInfo() {
-        return Result.success(UserInformation.getInstance(userService.getById(1)));
+    public Result<Author> getIndexAuthor(String username) {
+        return Result.success(userService.getAuthorByUsername(username));
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.synergism.blog.core.article.entity.Pagination;
 import com.synergism.blog.core.article.enumeration.ArticleSort;
 import com.synergism.blog.core.classify.entity.ClassifyInformation;
 import com.synergism.blog.core.tag.entity.TagInformation;
-import com.synergism.blog.core.user.entity.UserInformation;
+import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.apache.commons.lang3.EnumUtils;
@@ -30,13 +30,13 @@ public class IndexAPIController {
     }
 
     /**
-     * 首页默认用户信息
-     *
+     * 首页作者信息
+     * @param username 账号
      * @return 结果[用户信息]
      */
-    @GetMapping("/userInfo")
-    public Result<UserInformation> userInfo() {
-        return service.getIndexUserInfo();
+    @GetMapping("/author")
+    public Result<Author> author(@RequestParam @NotEmpty(message = "用户不存在") String username) {
+        return service.getIndexAuthor(username);
     }
 
 
@@ -85,7 +85,8 @@ public class IndexAPIController {
 
     /**
      * 首页删除文章接口
-     * @param username 账号
+     *
+     * @param username      账号
      * @param articleIDList 文章id列表
      * @return 成功
      */
@@ -93,7 +94,7 @@ public class IndexAPIController {
     @DeleteMapping("/article")
     public Result<String> removeArticle(
             @RequestParam @NotEmpty(message = "用户不存在") String username,
-            @RequestParam @NotNull(message = "文章不存在") @Size(min = 1,message = "文章不存在") List<Long> articleIDList
+            @RequestParam @NotNull(message = "文章不存在") @Size(min = 1, message = "文章不存在") List<Long> articleIDList
     ) {
         return service.removeArticle(username, articleIDList);
     }

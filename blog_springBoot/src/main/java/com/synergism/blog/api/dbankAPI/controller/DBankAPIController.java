@@ -47,7 +47,7 @@ public class DBankAPIController {
 
     @Validated
     @PostMapping("file")
-    public Result<FolderInformation> file(
+    public Result<String> file(
             @RequestParam @NotEmpty(message = "用户不存在") String username,
             @RequestParam @NotEmpty(message = "路径不存在") String path,
             @RequestPart MultipartFile file

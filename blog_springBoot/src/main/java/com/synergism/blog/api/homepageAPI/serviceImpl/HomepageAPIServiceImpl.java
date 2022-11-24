@@ -1,6 +1,7 @@
 package com.synergism.blog.api.homepageAPI.serviceImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.synergism.blog.api.dbankAPI.service.DBankAPIService;
 import com.synergism.blog.api.homepageAPI.entity.FavoriteForm;
 import com.synergism.blog.api.homepageAPI.entity.UserInformationForm;
 import com.synergism.blog.api.homepageAPI.service.HomepageAPIService;
@@ -15,20 +16,26 @@ import com.synergism.blog.result.Result;
 import com.synergism.blog.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @Service
 public class HomepageAPIServiceImpl implements HomepageAPIService {
 
-    private final UserService userService;
+    //分隔符
+    private final String separator = File.separator;
 
+    private final UserService userService;
     private final FavoriteService favoriteService;
+    private final DBankAPIService dBankAPIService;
 
     @Autowired
-    public HomepageAPIServiceImpl(UserService userService, FavoriteService favoriteService) {
+    public HomepageAPIServiceImpl(UserService userService, FavoriteService favoriteService, DBankAPIService dBankAPIService) {
         this.userService = userService;
         this.favoriteService = favoriteService;
+        this.dBankAPIService = dBankAPIService;
     }
 
     @Override
@@ -107,6 +114,14 @@ public class HomepageAPIServiceImpl implements HomepageAPIService {
                     : Result.error(CodeMsg.MESSAGE.fillArgs("更新失败"));
         }
         return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+    }
+
+    @Override
+    public Result<String> saveUserIcon(String username, MultipartFile file) {
+        String path = username + separator + "user" + separator + "icon";
+        Result<String> result = dBankAPIService.autoSaveFile(username, file, path);
+        userService.updateIcon(username,result.getData());
+        return result;
     }
 
 }

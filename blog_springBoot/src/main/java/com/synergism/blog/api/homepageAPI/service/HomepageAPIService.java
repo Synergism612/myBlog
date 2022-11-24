@@ -5,6 +5,7 @@ import com.synergism.blog.api.homepageAPI.entity.UserInformationForm;
 import com.synergism.blog.core.favorite.entity.FavoriteInformation;
 import com.synergism.blog.core.user.entity.Author;
 import com.synergism.blog.result.Result;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -62,4 +63,12 @@ public interface HomepageAPIService {
      * @return 成功
      */
     Result<String> updateUser(UserInformationForm userInformationForm);
+
+    /**
+     * 保存用户头像
+     * @param username 账号
+     * @param file 文件
+     * @return 成功
+     */
+    Result<String> saveUserIcon(String username, MultipartFile file);
 }
