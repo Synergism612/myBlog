@@ -6,8 +6,8 @@
       <el-menu-item index="/blog/pandect">文章专栏</el-menu-item>
       <el-menu-item index="/blog/pigeonhole">归档记录</el-menu-item>
       <el-menu-item index="/blog/dbank">资源分享</el-menu-item>
-      <el-menu-item index="3">点点滴滴</el-menu-item>
-      <el-menu-item index="3">关于本站</el-menu-item>
+      <!-- <el-menu-item index="3">点点滴滴</el-menu-item>
+      <el-menu-item index="3">关于本站</el-menu-item> -->
       <el-menu-item index="/blog/login" v-if="!ifLogin">登录</el-menu-item>
       <el-menu-item index="/blog/register" v-if="!ifLogin">注册</el-menu-item>
       <el-sub-menu v-if="ifLogin" index="">
