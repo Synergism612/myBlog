@@ -20,11 +20,11 @@ public class Register {
     private String username;
     //密码
     @NotEmpty(message = "密码不能为空")
-    @Pattern(regexp = "/^[a-zA-Z0-9_-]{8,100}$/", message = "密码应为8到100位的字母、数字、下划线或减号")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{8,100}$", message = "密码应为8到100位的字母、数字、下划线或减号")
     private String password;
     //二次密码输入
     @NotEmpty(message = "再次输入密码不能为空")
-    @Pattern(regexp = " /^[a-zA-Z0-9_-]{8,100}$/", message = "密码应为8到100位的字母、数字、下划线或减号")
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{8,100}$", message = "密码应为8到100位的字母、数字、下划线或减号")
     private String passwordAgain;
     //验证码
     @NotEmpty(message = "验证码不能为空")
