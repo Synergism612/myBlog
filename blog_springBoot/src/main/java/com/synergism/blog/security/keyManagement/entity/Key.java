@@ -19,10 +19,13 @@ public class Key {
 
     /**
      * 将全部钥匙名组成字符串
+     *
      * @return 字符串
      */
     public static String AllToString() {
         return ANOTHER_WORLD_KEY + "," +
-                EVIL_EYE ;
+                EVIL_EYE + "," +
+                ANOTHER_WORLD_KEY.toLowerCase() + "," +
+                EVIL_EYE.toLowerCase();
     }
 }
