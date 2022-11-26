@@ -27,7 +27,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     private final String separator = java.io.File.separator;
 
-    private final String hrefBase = "http://localhost:8000"+separator;
+    private final String hrefBase = "http://http://139.198.106.228:9010" + separator;
 
     private final FileMapper mapper;
 
@@ -58,10 +58,10 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     @Override
     @Transactional
-    public void saveToFolder(long repositoryID,long folderID, String name, String suffix, String type, double size, String path, String href) {
+    public void saveToFolder(long repositoryID, long folderID, String name, String suffix, String type, double size, String path, String href) {
         File file = new File(name, suffix, type, size, path, href);
         mapper.insert(file);
-        mapper.bundleToFolder(file.getId(), folderID,repositoryID);
+        mapper.bundleToFolder(file.getId(), folderID, repositoryID);
     }
 
     @Override
@@ -72,26 +72,26 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     }
 
     @Override
-    public String saveToFolder(long repositoryID,long folderID, MultipartFile file, String resultPath) {
+    public String saveToFolder(long repositoryID, long folderID, MultipartFile file, String resultPath) {
         String name = file.getOriginalFilename();
-        if (name==null){
+        if (name == null) {
             throw new IllegalRequestException("文件名称错误");
         }
-        String href = hrefBase+resultPath;
-        double fileSizeMB = new BigDecimal(file.getSize()/1024/1024).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        this.saveToFolder(repositoryID,folderID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),fileSizeMB,resultPath,href);
+        String href = hrefBase + resultPath;
+        double fileSizeMB = new BigDecimal(file.getSize() / 1024 / 1024).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        this.saveToFolder(repositoryID, folderID, name.substring(0, name.indexOf('.')), name.substring(name.indexOf('.')), file.getContentType(), fileSizeMB, resultPath, href);
         return href;
     }
 
     @Override
     public String saveToRepository(long repositoryID, MultipartFile file, String resultPath) {
         String name = file.getOriginalFilename();
-        if (name==null){
+        if (name == null) {
             throw new IllegalRequestException("文件名称错误");
         }
-        String href = hrefBase+resultPath;
-        double fileSizeMB = new BigDecimal(file.getSize()/1024/1024).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        this.saveToRepository(repositoryID,name.substring(0,name.indexOf('.')),name.substring(name.indexOf('.')),file.getContentType(),fileSizeMB,resultPath,href);
+        String href = hrefBase + resultPath;
+        double fileSizeMB = new BigDecimal(file.getSize() / 1024 / 1024).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        this.saveToRepository(repositoryID, name.substring(0, name.indexOf('.')), name.substring(name.indexOf('.')), file.getContentType(), fileSizeMB, resultPath, href);
         return href;
     }
 }
