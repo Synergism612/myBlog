@@ -34,16 +34,18 @@ public class CORSFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletResponse res = (HttpServletResponse) servletResponse;
-        res.addHeader("Access-Control-Allow-Credentials", config.getAllow_Credentials());
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+        response.addHeader("Access-Control-Allow-Credentials", config.getAllow_Credentials());
         //允许该url访问，url返回
-        res.addHeader("Access-Control-Allow-Origin",  config.getAllow_Origin());
+        response.addHeader("Access-Control-Allow-Origin",  request.getHeader("Origin"));
         //允许的请求方式，方式返回
-        res.addHeader("Access-Control-Allow-Methods",  config.getAllow_Methods());
+        response.addHeader("Access-Control-Allow-Methods",  config.getAllow_Methods());
         //允许的头部，自定义头部返回
-        res.addHeader("Access-Control-Allow-Headers",  config.getAllow_Headers());
+        response.addHeader("Access-Control-Allow-Headers",  config.getAllow_Headers());
         //允许访问的头部
-        res.addHeader("Access-Control-Expose-Headers", config.getExpose_Headers());
+        response.addHeader("Access-Control-Expose-Headers", config.getExpose_Headers());
         //如果是预请求，直接返回
         if (((HttpServletRequest) servletRequest).getMethod().equals("OPTIONS")) {
             servletResponse.getWriter().println("ok");
