@@ -110,8 +110,8 @@
           </el-row>
         </el-main>
       </el-container>
-      <Toolboxe />
     </div>
+    <Toolboxe />
   </div>
 </template>
 <script lang="ts">

@@ -42,7 +42,7 @@ export default defineComponent({
     const viewData = reactive(new Toolboxe());
 
     const html = document.documentElement;
-    const screen = html.clientHeight;
+    const screen = html.clientHeight / 2;
 
     const router = useRouter();
 
@@ -107,6 +107,8 @@ export default defineComponent({
     };
 
     onMounted((): void => {
+      console.log("运行");
+
       switch (props.pageName) {
         case "content": {
           viewData.show = true;
