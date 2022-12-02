@@ -2,7 +2,7 @@
   <div class="indexBox">
     <div class="background">
       <Menu></Menu>
-      <Screen></Screen>
+      <Screen v-model:on="animate"></Screen>
     </div>
     <div class="container">
       <el-container>
@@ -33,7 +33,7 @@
               <!-- 分左右区 -->
               <el-row :gutter="20" justify="space-around">
                 <!-- 左侧 -->
-                <el-col :xs="24" :sm="24" :md="18" :span="18">
+                <el-col :xs="24" :sm="18" :md="18" :span="18">
                   <IndexArticle></IndexArticle>
                 </el-col>
                 <!-- 右侧 -->
@@ -87,6 +87,7 @@
                         <Cloud
                           v-if="classifyInformationList[0].id != -1"
                           :data-list="classifyInformationList"
+                          v-model:on="animate"
                           @element-click="classifyClick"
                         ></Cloud>
                       </el-row>
@@ -97,6 +98,7 @@
                         <Cloud
                           v-if="tagInformationList[0].id != -1"
                           :data-list="tagInformationList"
+                          v-model:on="animate"
                           @element-click="tagClick"
                         ></Cloud>
                       </el-row>

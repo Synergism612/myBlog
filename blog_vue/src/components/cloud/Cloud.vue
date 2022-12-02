@@ -29,6 +29,7 @@ import {
   reactive,
   ref,
   toRefs,
+  watchEffect,
 } from "vue";
 import { Cloud, CloudElement } from "./Cloud";
 
@@ -37,6 +38,10 @@ export default defineComponent({
     dataList: {
       type: Array as PropType<Array<TagInformation | ClassifyInformation>>,
       required: true, //该参数不可为空
+    },
+    on: {
+      type: Boolean,
+      required: true,
     },
   },
   emits: {
@@ -198,6 +203,14 @@ export default defineComponent({
     onMounted((): void => {
       init();
       initCustomFormatter();
+    });
+
+    watchEffect((): void => {
+      if (props.on) {
+        animate();
+      } else {
+        clearInterval(time);
+      }
     });
 
     return {

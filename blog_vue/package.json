@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview --port 8080"
+    "preview": "vite preview --port 9020"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",

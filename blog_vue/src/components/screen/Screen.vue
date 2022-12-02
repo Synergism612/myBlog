@@ -1,13 +1,15 @@
 <template>
-  <div id="screen_container" ref="screenRef">
-    <Particles
-      id="tsparticles"
-      :particlesInit="particlesInit"
-      :particlesLoaded="particlesLoaded"
-      :options="options"
-    />
+  <div class="screen_box" ref="screenRef">
+    <div v-if="on">
+      <Particles
+        id="tsparticles"
+        :particlesInit="particlesInit"
+        :particlesLoaded="particlesLoaded"
+        :options="options"
+      />
+    </div>
   </div>
-  <div id="screen_shade"></div>
+  <div class="screen_shade"></div>
 </template>
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue";
@@ -15,6 +17,12 @@ import { loadFull } from "tsparticles";
 import { Engine } from "tsparticles-engine/types/engine";
 
 export default defineComponent({
+  props: {
+    on: {
+      type: Boolean,
+      required: true, //该参数不可为空
+    },
+  },
   setup() {
     const viewData = reactive({});
 

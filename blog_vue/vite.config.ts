@@ -15,7 +15,7 @@ export default defineConfig({
   define: { "process.env": {} },
   server: {
     host: "0.0.0.0",
-    port: 8080,
+    port: 9020,
     https: false,
   },
   build: {

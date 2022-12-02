@@ -17,12 +17,15 @@ export default class Index {
   /**分类云列表 */
   classifyInformationList: Array<ClassifyInformation>;
 
+  animate: boolean;
+
   constructor() {
     this.author = new Author();
     this.isLogin = store.getters.getIsLogin;
     this.calender = new Date();
     this.tagInformationList = [new TagInformation()];
     this.classifyInformationList = [new ClassifyInformation()];
+    this.animate = false;
   }
 
   public init(): void {
