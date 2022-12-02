@@ -25,7 +25,8 @@ public class EmailAPIServiceImpl implements EmailAPIService {
     public Result<String> getRegisterMailCode(String mail, String key) {
         if (userService.isExist(mail)) {
             return Result.error(CodeMsg.REGISTER_ERROR.fillArgs("账号已存在"));
-        } else
+        } else {
             return Result.success(emailService.getMailCode(mail, key));
+        }
     }
 }

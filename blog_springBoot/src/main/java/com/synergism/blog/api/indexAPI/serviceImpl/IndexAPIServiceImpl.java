@@ -35,19 +35,19 @@ public class IndexAPIServiceImpl implements IndexAPIService {
     }
 
     @Override
-    public Result<Author> getIndexAuthor(String username) {
+    public Result<Author> getAuthor(String username) {
         return Result.success(userService.getAuthorByUsername(username));
     }
 
     @Override
-    public Result<List<TagInformation>> getIndexTag() {
+    public Result<List<TagInformation>> getTag() {
         List<TagInformation> result;
         result = tagService.getTagInformationList(20);
         return Result.success(result);
     }
 
     @Override
-    public Result<List<ClassifyInformation>> getIndexClassify() {
+    public Result<List<ClassifyInformation>> getClassify() {
         List<ClassifyInformation> result;
         result = classifyService.getClassifyInformationList(20);
         return Result.success(result);
@@ -61,13 +61,13 @@ public class IndexAPIServiceImpl implements IndexAPIService {
     @Override
     public Result<String> removeArticle(String username, List<Long> articleIDList) {
         long userID = userService.getID(username);
-        if (!articleService.isExist(articleIDList)) {
+        if (!articleService.isExist(username,articleIDList)) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         }
-        if (userID != -1) {
-            articleService.remove(articleIDList, userID);
-            return Result.success();
+        if (userID == -1) {
+            return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
         }
-        return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
+        articleService.remove(articleIDList, userID);
+        return Result.success();
     }
 }

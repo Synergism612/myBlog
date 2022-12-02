@@ -15,19 +15,19 @@ public interface IndexAPIService {
      * @param username 账号
      * @return 结果[用户信息]
      */
-    Result<Author> getIndexAuthor(String username);
+    Result<Author> getAuthor(String username);
 
     /**
      * 首页显示的标签云、
      * @return 标签列表
      */
-    Result<List<TagInformation>> getIndexTag();
+    Result<List<TagInformation>> getTag();
 
     /**
      * 首页显示的分类云
      * @return 分类列表
      */
-    Result<List<ClassifyInformation>> getIndexClassify();
+    Result<List<ClassifyInformation>> getClassify();
 
     /**
      * 首页文章获取接口

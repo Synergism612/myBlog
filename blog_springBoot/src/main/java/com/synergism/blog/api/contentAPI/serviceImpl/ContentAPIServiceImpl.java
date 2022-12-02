@@ -83,7 +83,7 @@ public class ContentAPIServiceImpl implements ContentAPIService {
         if (userID == -1) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
         }
-        if (!articleService.isExist(commentForm.getArticleID())) {
+        if (!articleService.isExist(commentForm.getUsername(),commentForm.getArticleID())) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         }
         if (commentForm.getRootID() != null && !commentService.isExist(commentForm.getRootID())) {
@@ -101,7 +101,7 @@ public class ContentAPIServiceImpl implements ContentAPIService {
         if (!userService.isExist(username)){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
         }
-        if (!articleService.isExist(articleID)){
+        if (!articleService.isExist(username,articleID)){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         }
         likeService.likeArticle(username,articleID,state);
@@ -113,7 +113,7 @@ public class ContentAPIServiceImpl implements ContentAPIService {
         if (!userService.isExist(username)){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("用户不存在"));
         }
-        if (!articleService.isExist(articleID)){
+        if (!articleService.isExist(username,articleID)){
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("文章不存在"));
         }
         return Result.success(likeService.isLikeArticle(username,articleID));

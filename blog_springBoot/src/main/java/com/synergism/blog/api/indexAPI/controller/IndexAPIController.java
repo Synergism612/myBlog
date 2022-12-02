@@ -36,7 +36,7 @@ public class IndexAPIController {
      */
     @GetMapping("/author")
     public Result<Author> author(@RequestParam @NotEmpty(message = "用户不存在") String username) {
-        return service.getIndexAuthor(username);
+        return service.getAuthor(username);
     }
 
 
@@ -70,7 +70,7 @@ public class IndexAPIController {
      */
     @GetMapping("/tag")
     public Result<List<TagInformation>> tag() {
-        return service.getIndexTag();
+        return service.getTag();
     }
 
     /**
@@ -80,7 +80,7 @@ public class IndexAPIController {
      */
     @GetMapping("/classify")
     public Result<List<ClassifyInformation>> classify() {
-        return service.getIndexClassify();
+        return service.getClassify();
     }
 
     /**
