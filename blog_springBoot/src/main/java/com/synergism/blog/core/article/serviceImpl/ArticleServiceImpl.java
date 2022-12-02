@@ -83,8 +83,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public boolean isExist(List<Long> articleIDList) {
-        List<Article> articleList = mapper.selectList(new LambdaQueryWrapper<Article>().in(Article::getId, articleIDList));
+    public boolean isExist(String username,List<Long> articleIDList) {
+        List<Article> articleList = mapper.selectByUsernameAndArticleID(username, articleIDList);
         return articleList.size() != 0;
     }
 

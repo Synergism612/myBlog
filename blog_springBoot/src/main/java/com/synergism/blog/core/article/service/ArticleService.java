@@ -67,7 +67,7 @@ public interface ArticleService extends IService<Article> {
      * @param articleIDList 文章id列表
      * @return 都存在为真，反之为假
      */
-    boolean isExist(List<Long> articleIDList);
+    boolean isExist(String username,List<Long> articleIDList);
 
     /**
      * 根据文章id列表判断是否都存在

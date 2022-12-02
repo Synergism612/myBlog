@@ -27,7 +27,10 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     private final String separator = java.io.File.separator;
 
-    private final String hrefBase = "http://http://139.198.106.228:9010" + separator;
+//    private final String hrefBase = "http://139.198.106.228:9010" + separator;
+
+    private final String hrefBase = "http://localhost:9010" + separator;
+
 
     private final FileMapper mapper;
 

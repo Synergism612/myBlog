@@ -113,6 +113,15 @@ public interface ArticleMapper extends BaseMapper<Article> {
     Article selectOneByUsernameAndArticleID(String username, long articleID);
 
     /**
+     * 查询对应用户下的对应文章
+     *
+     * @param username  账号
+     * @param articleIDList 文章id列表
+     * @return 文章信息
+     */
+    List<Article> selectByUsernameAndArticleID(String username, List<Long> articleIDList);
+
+    /**
      * 更新阅读量
      *
      * @param articleID 文章id
