@@ -449,4 +449,23 @@
         where u.username = #{username}
           and a.id = #{articleID}
     </select>
+    <select id="selectByUsernameAndArticleID" resultType="com.synergism.blog.core.article.entity.Article">
+        select a.id,
+        a.icon,
+        a.title,
+        a.synopsis,
+        a.views,
+        a.like_count,
+        a.creation_time,
+        a.modify_time
+        from user_article ua
+        join (article a,`user` u )
+        on ua.article_id = a.id and
+        ua.user_id = u.id
+        where u.username = #{username}
+        and a.id in
+        <foreach collection="articleIDList" item="articleID" open="(" separator="," close=")">
+            #{articleID}
+        </foreach>
+    </select>
 </mapper>
