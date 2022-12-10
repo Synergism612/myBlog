@@ -114,9 +114,19 @@
     <Toolboxe />
   </div>
   <div class="effectsBox">
-    <span @click="effect" :class="[animate ? 'on' : 'off']">
-      <font-awesome-icon :icon="['fas', 'yin-yang']" />
-    </span>
+    <el-popconfirm
+      title="动画效果会调用不小的GPU资源"
+      confirm-button-text="开启"
+      cancel-button-text="关闭"
+      @confirm="animate = true"
+      @cancel="animate = false"
+    >
+      <template #reference>
+        <span :class="[animate ? 'on' : 'off']">
+          <font-awesome-icon :icon="['fas', 'yin-yang']" />
+        </span>
+      </template>
+    </el-popconfirm>
   </div>
 </template>
 <script lang="ts">
@@ -128,6 +138,7 @@ import Cloud from "src/components/cloud/Cloud.vue";
 import IndexArticle from "src/components/article/indexArticle/IndexArticle.vue";
 import Toolboxe from "src/components/toolboxe/Toolboxe.vue";
 import { useRouter } from "vue-router";
+import { animate } from "tsparticles-engine";
 
 export default defineComponent({
   setup() {
@@ -154,10 +165,6 @@ export default defineComponent({
       });
     };
 
-    const effect = (): void => {
-      viewData.animate = !viewData.animate;
-    };
-
     onMounted((): void => {
       viewData.init();
     });
@@ -166,7 +173,6 @@ export default defineComponent({
       ...toRefs(viewData),
       classifyClick,
       tagClick,
-      effect,
     };
   },
   components: {
