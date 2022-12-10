@@ -57,3 +57,31 @@
     }
   }
 }
+
+.effectsBox {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  span {
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 2em;
+    cursor: pointer;
+    transition: 0.5s;
+    svg{
+      transition: 1s;
+    }
+  }
+  span:hover {
+    color: black;
+  }
+  .on {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+  .off {
+    svg {
+      transform: rotate(360deg);
+    }
+  }
+}

@@ -113,6 +113,11 @@
     </div>
     <Toolboxe />
   </div>
+  <div class="effectsBox">
+    <span @click="effect" :class="[animate ? 'on' : 'off']">
+      <font-awesome-icon :icon="['fas', 'yin-yang']" />
+    </span>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
@@ -149,6 +154,10 @@ export default defineComponent({
       });
     };
 
+    const effect = (): void => {
+      viewData.animate = !viewData.animate;
+    };
+
     onMounted((): void => {
       viewData.init();
     });
@@ -157,6 +166,7 @@ export default defineComponent({
       ...toRefs(viewData),
       classifyClick,
       tagClick,
+      effect,
     };
   },
   components: {
