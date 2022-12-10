@@ -2,7 +2,6 @@ package com.synergism.blog.security.cacheManager.service;
 
 
 import java.util.List;
-import java.util.Map;
 
 public interface CacheRedisService {
 
