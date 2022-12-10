@@ -50,7 +50,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         //获取文章下全部评论
         List<CommentInformation> list = this.getCommentInformationListByArticleID(articleID);
         //判空
-        if (list.size() == 0) return null;
+        if (list == null) return null;
 
         //筛选根或子评论列表 根据if(commentInformation.getRootId()==null)
         Map<Boolean, List<CommentInformation>> listMap = list
