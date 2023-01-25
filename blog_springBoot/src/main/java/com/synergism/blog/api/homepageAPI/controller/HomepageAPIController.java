@@ -19,6 +19,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+import static com.synergism.blog.utils.FileUtil.ifImg;
+
 /**
  * 个人主页接口
  */
@@ -117,13 +119,7 @@ public class HomepageAPIController {
     public Result<String> saveArticleImg(
             @RequestParam @NotEmpty(message = "用户不存在") String username,
             @RequestPart MultipartFile file) {
-        String contentType = file.getContentType();
-        if (contentType == null || contentType.isEmpty()) {
-            return Result.error(CodeMsg.MESSAGE.fillArgs("类型不可知"));
-        }
-        if (!contentType.equals("image/jpeg") && !contentType.equals("image/png")) {
-            return Result.error(CodeMsg.MESSAGE.fillArgs("只能为image/jpeg,image/png类型"));
-        }
+        ifImg(file);
         return service.saveUserIcon(username, file);
     }
 }

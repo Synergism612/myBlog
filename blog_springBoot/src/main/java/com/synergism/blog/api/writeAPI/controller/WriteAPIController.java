@@ -7,7 +7,6 @@ import com.synergism.blog.api.writeAPI.service.writeAPIService;
 import com.synergism.blog.core.article.entity.ArticleInformation;
 import com.synergism.blog.core.classify.entity.Classify;
 import com.synergism.blog.core.tag.entity.Tag;
-import com.synergism.blog.result.CodeMsg;
 import com.synergism.blog.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +18,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+
+import static com.synergism.blog.utils.FileUtil.ifImg;
 
 /**
  * 博客创作页面接口
@@ -147,13 +148,7 @@ public class WriteAPIController {
             @RequestParam @NotEmpty(message = "用户不存在") String username,
             @RequestPart MultipartFile file,
             @RequestParam(required = false, defaultValue = "img") String type) {
-        String contentType = file.getContentType();
-        if (contentType == null || contentType.isEmpty()) {
-            return Result.error(CodeMsg.MESSAGE.fillArgs("类型不可知"));
-        }
-        if (!contentType.equals("image/jpeg") && !contentType.equals("image/png")) {
-            return Result.error(CodeMsg.MESSAGE.fillArgs("只能为image/jpeg,image/png类型"));
-        }
+        ifImg(file);
         return service.saveArticleImg(username, file, type);
     }
 }
