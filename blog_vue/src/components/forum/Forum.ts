@@ -9,7 +9,6 @@ export default class Forum {
 
   commentList: Array<CommentParent>;
 
-  commentInput: string;
   isLogin: boolean;
 
   rootID: number;
@@ -26,7 +25,6 @@ export default class Forum {
 
     this.commentList = [new CommentParent()];
 
-    this.commentInput = "";
     this.isLogin = store.getters.getIsLogin;
 
     this.rootID = -1;
@@ -39,7 +37,6 @@ export default class Forum {
     this.likeCommentIDList = [0];
   }
   public getCommentForm(): CommentForm {
-    this.commentForm.comment = this.commentInput;
     this.commentForm.articleID = this.articleID;
     this.commentForm.rootID = this.rootID;
     this.commentForm.parentID = this.parentID;

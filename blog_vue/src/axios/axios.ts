@@ -7,7 +7,7 @@ import StringUtil from "src/utils/StringUtil";
 import Message from "src/utils/MessageUtil";
 
 //请求根路径
-export const baseURL = "http://localhost:8088";
+export const baseURL = "http://localhost:9000";
 
 export const JSONHeaders = {
   "Content-Type": "application/json; charset=utf-8",

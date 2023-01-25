@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="88a8b238-4a79-4329-8ac3-2a2d2b93e7ff" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/blog_springBoot/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/blog_springBoot/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog_vue/src/axios/axios.ts" beforeDir="false" afterPath="$PROJECT_DIR$/blog_vue/src/axios/axios.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2IfLWYLAnG1pw4bvxZttleqx1q6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/blog_springBoot" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="88a8b238-4a79-4329-8ac3-2a2d2b93e7ff" name="Default Changelist" comment="" />
+      <created>1670567722825</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1670567722825</updated>
+      <workItem from="1670567726164" duration="28000" />
+    </task>
+    <servers />
+  </component>
+</project>

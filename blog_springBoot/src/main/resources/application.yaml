@@ -53,11 +53,11 @@ spring:
 # 服务配置
 server:
   # 端口号
-  port: 8088
+  port: 9000
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*
 
 logging:
   level:
-    root: debug
+    root: info

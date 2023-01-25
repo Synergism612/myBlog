@@ -5,12 +5,13 @@
         <el-form
           label-position="left"
           ref="formRef"
+          :model="commentForm"
           :rules="rules"
           :hide-required-asterisk="true"
         >
-          <el-form-item label="发表评论" prop="content">
+          <el-form-item label="发表评论" prop="comment">
             <el-input
-              v-model="commentInput"
+              v-model="commentForm.comment"
               :rows="2"
               type="textarea"
               autosize
@@ -154,7 +155,7 @@ export default defineComponent({
     const viewData = reactive(new Forum(props.articleID));
 
     const rules = {
-      content: [
+      comment: [
         {
           required: true,
           message: "评论不能为空",
@@ -173,7 +174,6 @@ export default defineComponent({
           .validate()
           .then((): void => {
             api.saveContentComment(viewData.getCommentForm()).then((): void => {
-              viewData.commentInput = "";
               Message.successMessage("评论成功");
               viewData.init();
             });
