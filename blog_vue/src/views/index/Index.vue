@@ -115,7 +115,7 @@
   </div>
   <div class="effectsBox">
     <el-popconfirm
-      title="动画效果会调用不小的GPU资源"
+      title="动画效果会占用较大的GPU资源"
       confirm-button-text="开启"
       cancel-button-text="关闭"
       @confirm="animate = true"
@@ -138,7 +138,6 @@ import Cloud from "src/components/cloud/Cloud.vue";
 import IndexArticle from "src/components/article/indexArticle/IndexArticle.vue";
 import Toolboxe from "src/components/toolboxe/Toolboxe.vue";
 import { useRouter } from "vue-router";
-import { animate } from "tsparticles-engine";
 
 export default defineComponent({
   setup() {
