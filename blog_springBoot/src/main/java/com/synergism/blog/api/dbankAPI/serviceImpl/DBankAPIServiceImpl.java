@@ -62,15 +62,14 @@ public class DBankAPIServiceImpl implements DBankAPIService {
         if (repository == null) {
             return Result.error(CodeMsg.BIND_ERROR.fillArgs("仓库不存在"));
         }
-        long repositoryID = repository.getId();
         resultPath = ioService.write(path, file);
         String[] nameArray = path.split("/|\\\\");
         try {
             if (nameArray.length < 2) {
-                fileService.saveToRepository(repositoryID, file, resultPath);
+                fileService.saveToRepository(repository, file, resultPath);
             } else {
                 long folderID = folderService.update(repository.getId(), path);
-                fileService.saveToFolder(repositoryID,folderID, file, resultPath);
+                fileService.saveToFolder(repository,folderID, file, resultPath);
             }
         } catch (Exception e) {
             ioService.delete(resultPath);
@@ -144,7 +143,7 @@ public class DBankAPIServiceImpl implements DBankAPIService {
         String resultPath = ioService.write(path, file);
         String href = "";
         try {
-            href = fileService.saveToFolder(repository.getId(), folderID, file, resultPath);
+            href = fileService.saveToFolder(repository, folderID, file, resultPath);
         } catch (Exception e) {
             ioService.delete(resultPath);
         }

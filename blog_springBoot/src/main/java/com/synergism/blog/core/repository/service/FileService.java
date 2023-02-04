@@ -2,6 +2,7 @@ package com.synergism.blog.core.repository.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.synergism.blog.core.repository.entity.File;
+import com.synergism.blog.core.repository.entity.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -31,30 +32,6 @@ public interface FileService extends IService<File> {
     List<File> getListByFolderID(long folderID);
 
     /**
-     * 保存仓库下的文件
-     * @param repositoryID 文件仓库id
-     * @param name 文件名
-     * @param suffix 文件后缀
-     * @param type 文件类型
-     * @param size 文件大小
-     * @param path 文件路径
-     * @param href 文件链接
-     */
-    void saveToRepository(long repositoryID, String name,String suffix, String type, double size, String path, String href);
-
-    /**
-     * 保存目录下的文件
-     * @param folderID 目录id
-     * @param name 文件名
-     * @param suffix 文件后缀
-     * @param type 文件类型
-     * @param size 文件大小
-     * @param path 文件路径
-     * @param href 文件链接
-     */
-    void saveToFolder(long repositoryID,long folderID, String name,String suffix, String type, double size, String path, String href);
-
-    /**
      * 删除文件
      * @param fileIDList 文件id列表
      */
@@ -62,17 +39,20 @@ public interface FileService extends IService<File> {
 
     /**
      * 保存目录下的文件
-     * @param folderID 目录id
-     * @param file 文件
+     * @param repository 仓库信息
+     * @param folderID 文件夹id
+     * @param multipartFile 文件
      * @param resultPath 结果路径
+     * @return 返回代理网址
      */
-    String saveToFolder(long repositoryID,long folderID, MultipartFile file, String resultPath);
+    String saveToFolder(Repository repository,long folderID,MultipartFile multipartFile,String resultPath);
 
     /**
      * 保存目录下的文件
-     * @param repositoryID 仓库id
-     * @param file 文件
+     * @param repository 仓库信息
+     * @param multipartFile 文件
      * @param resultPath 结果路径
+     * @return 返回代理网址
      */
-    String saveToRepository(long repositoryID, MultipartFile file, String resultPath);
+    String saveToRepository(Repository repository, MultipartFile multipartFile,String resultPath);
 }

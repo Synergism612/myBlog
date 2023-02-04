@@ -2,8 +2,10 @@ package com.synergism.blog.core.repository.serviceImpl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.synergism.blog.core.repository.entity.File;
+import com.synergism.blog.core.repository.entity.Repository;
 import com.synergism.blog.core.repository.mapper.FileMapper;
 import com.synergism.blog.core.repository.service.FileService;
+import com.synergism.blog.exception.custom.IOErrorException;
 import com.synergism.blog.exception.custom.IllegalRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     private final String hrefBase = "http://localhost:9010" + separator;
 
-
     private final FileMapper mapper;
 
     @Autowired
@@ -53,48 +54,49 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     @Override
     @Transactional
-    public void saveToRepository(long repositoryID, String name, String suffix, String type, double size, String path, String href) {
-        File file = new File(name, suffix, type, size, path, href);
-        mapper.insert(file);
-        mapper.bundleToRepository(file.getId(), repositoryID);
-    }
-
-    @Override
-    @Transactional
-    public void saveToFolder(long repositoryID, long folderID, String name, String suffix, String type, double size, String path, String href) {
-        File file = new File(name, suffix, type, size, path, href);
-        mapper.insert(file);
-        mapper.bundleToFolder(file.getId(), folderID, repositoryID);
-    }
-
-    @Override
-    @Transactional
     public void remove(List<Long> fileIDList) {
         mapper.unbundled(fileIDList);
         mapper.deleteBatchIds(fileIDList);
     }
 
     @Override
-    public String saveToFolder(long repositoryID, long folderID, MultipartFile file, String resultPath) {
-        String name = file.getOriginalFilename();
-        if (name == null) {
-            throw new IllegalRequestException("文件名称错误");
-        }
+    @Transactional
+    public String saveToFolder(Repository repository, long folderID, MultipartFile multipartFile, String resultPath) {
         String href = hrefBase + resultPath;
-        double fileSizeMB = new BigDecimal(file.getSize() / 1024 / 1024).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        this.saveToFolder(repositoryID, folderID, name.substring(0, name.indexOf('.')), name.substring(name.indexOf('.')), file.getContentType(), fileSizeMB, resultPath, href);
+        File file = getFile(repository,multipartFile,resultPath,href);
+        mapper.insert(file);
+        mapper.bundleToFolder(file.getId(), folderID, repository.getId());
         return href;
     }
 
     @Override
-    public String saveToRepository(long repositoryID, MultipartFile file, String resultPath) {
-        String name = file.getOriginalFilename();
-        if (name == null) {
+    @Transactional
+    public String saveToRepository(Repository repository, MultipartFile multipartFile, String resultPath) {
+        String href = hrefBase + resultPath;
+        File file = getFile(repository,multipartFile,resultPath,href);
+        mapper.insert(file);
+        mapper.bundleToRepository(file.getId(), repository.getId());
+        return href;
+    }
+
+    private void checkRepositoryUsed(Repository repository, Double fileSizeMB) {
+        double residue = repository.getSize() - repository.getUsed();
+        if (residue < fileSizeMB) {
+            throw new IOErrorException("云盘剩余容量(" + residue + ")不足");
+        }
+    }
+
+    private void checkName(String filename){
+        if (filename == null) {
             throw new IllegalRequestException("文件名称错误");
         }
-        String href = hrefBase + resultPath;
+    }
+
+    private File getFile(Repository repository, MultipartFile file,String resultPath ,String href){
         double fileSizeMB = new BigDecimal(file.getSize() / 1024 / 1024).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        this.saveToRepository(repositoryID, name.substring(0, name.indexOf('.')), name.substring(name.indexOf('.')), file.getContentType(), fileSizeMB, resultPath, href);
-        return href;
+        this.checkRepositoryUsed(repository,fileSizeMB);
+        String filename = file.getOriginalFilename();
+        this.checkName(filename);
+        return new File(filename.substring(0, filename.indexOf('.')), filename.substring(filename.indexOf('.')), file.getContentType(), fileSizeMB, resultPath, href);
     }
 }
